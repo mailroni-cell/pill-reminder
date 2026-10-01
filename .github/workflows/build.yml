@@ -77,6 +77,7 @@ jobs:
         run: |
           cat << 'EOF' > lib/main.dart
           import 'dart:convert';
+          import 'dart:math' as math;
           import 'package:flutter/cupertino.dart';
           import 'package:flutter/material.dart';
           import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -123,9 +124,9 @@ jobs:
               'welcome': 'שלום',
               'creator': 'נוצר ופותח על ידי רוני שניידר',
               'select_language': 'בחר שפת ממשק',
-              'enter_name_title': 'ברוך הבא! איך קוראים לך?',
+              'enter_name_title': 'הגדרת פרופיל ראשונית',
               'name_hint': 'הקלד את שמך...',
-              'continue_btn': 'כניסה לאפליקציה',
+              'continue_btn': 'המשך לאפליקציה',
               'meds_tab': 'תזמוני תרופות',
               'appointments_tab': 'תורים ובדיקות',
               'add_med': 'הוסף תזמון תרופות',
@@ -155,13 +156,13 @@ jobs:
               'empty_meds': 'אין עדיין תרופות במעקב',
               'empty_apps': 'אין תורים קרובים',
               'settings': 'הגדרות מערכת',
-              'language': 'שפה (Language)',
-              'voice_alerts': 'התראות קוליות',
+              'language': 'שפה',
+              'voice_alerts': 'התראות קוליות מלאות',
               'alert_sound': 'סגנון צליל התראה',
               'sound_vol': 'עוצמת שמע',
               'confirm_sound': 'שמור הגדרות',
               'themes_title': 'ערכות צבע ועיצוב',
-              'high_contrast': 'מצב כבדי ראייה (שחור-צהוב ניגודי)',
+              'high_contrast': 'מצב כבדי ראייה (ניגודיות מוגברת)',
               'tts_phrase': 'הגיע הזמן ליטול: {name}',
               'alert_popup_title': 'תזכורת נטילת תרופות',
               'btn_taken': 'נלקח כעת',
@@ -176,9 +177,9 @@ jobs:
               'welcome': 'Welcome',
               'creator': 'Created & Developed by Roni Schneider',
               'select_language': 'Select Language',
-              'enter_name_title': 'Welcome! What is your name?',
+              'enter_name_title': 'Initial Setup',
               'name_hint': 'Enter your name...',
-              'continue_btn': 'Enter App',
+              'continue_btn': 'Continue to App',
               'meds_tab': 'Medicine Schedules',
               'appointments_tab': 'Appointments',
               'add_med': 'Add Medicine Schedule',
@@ -214,7 +215,7 @@ jobs:
               'sound_vol': 'Alert Volume',
               'confirm_sound': 'Save Settings',
               'themes_title': '3D Color Themes',
-              'high_contrast': 'High Contrast Mode (Black & Yellow)',
+              'high_contrast': 'High Contrast Mode',
               'tts_phrase': 'Time to take: {name}',
               'alert_popup_title': 'Medicine Alert',
               'btn_taken': 'Taken Now',
@@ -229,9 +230,9 @@ jobs:
               'welcome': 'Здравствуйте',
               'creator': 'Создано и разработано Рони Шнайдером',
               'select_language': 'Выберите язык',
-              'enter_name_title': 'Добро пожаловать! Как вас зовут?',
+              'enter_name_title': 'Первоначальная настройка',
               'name_hint': 'Введите имя...',
-              'continue_btn': 'Войти',
+              'continue_btn': 'Продолжить',
               'meds_tab': 'Расписание',
               'appointments_tab': 'Визиты к врачу',
               'add_med': 'Добавить прием',
@@ -282,9 +283,9 @@ jobs:
               'welcome': 'Bine ați venit',
               'creator': 'Creat și dezvoltat de Roni Schneider',
               'select_language': 'Selectați limba',
-              'enter_name_title': 'Cum vă numiți?',
+              'enter_name_title': 'Configurare inițială',
               'name_hint': 'Introduceți numele...',
-              'continue_btn': 'Intră în aplicație',
+              'continue_btn': 'Continuă',
               'meds_tab': 'Orare pastile',
               'appointments_tab': 'Programări',
               'add_med': 'Adaugă orar',
@@ -335,7 +336,7 @@ jobs:
               'welcome': 'أهلاً بك',
               'creator': 'تم الإنشاء والتطوير بواسطة روني شنايدר',
               'select_language': 'اختر لغة التطبيق',
-              'enter_name_title': 'ما هو اسمك؟',
+              'enter_name_title': 'الإعداد الأولي',
               'name_hint': 'اكتب اسمك...',
               'continue_btn': 'دخول التطبيق',
               'meds_tab': 'مواعيد الأدوية',
@@ -388,7 +389,7 @@ jobs:
               'welcome': 'Willkommen',
               'creator': 'Erstellt und entwickelt von Roni Schneider',
               'select_language': 'Sprache auswählen',
-              'enter_name_title': 'Wie heißen Sie?',
+              'enter_name_title': 'Ersteinrichtung',
               'name_hint': 'Name eingeben...',
               'continue_btn': 'App starten',
               'meds_tab': 'Medikamente',
@@ -498,6 +499,7 @@ jobs:
             String _soundType = 'electric';
             double _soundVolume = 1.0;
             String _themeKey = 'cyber';
+            bool _firstRun = true;
             bool _initialized = false;
             Key _appKey = UniqueKey();
 
@@ -525,6 +527,7 @@ jobs:
                 _soundType = prefs.getString('c_sound') ?? 'electric';
                 _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
                 _themeKey = prefs.getString('c_theme') ?? 'cyber';
+                _firstRun = prefs.getBool('c_first_run') ?? true;
                 _initialized = true;
               });
             }
@@ -538,10 +541,17 @@ jobs:
               });
             }
 
-            void setUserName(String name) async {
+            void completeOnboarding(String name, String lang) async {
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('c_user_name', name);
-              setState(() => _userName = name);
+              await prefs.setString('c_lang', lang);
+              await prefs.setBool('c_first_run', false);
+              setState(() {
+                _userName = name;
+                _lang = lang;
+                _firstRun = false;
+                _appKey = UniqueKey();
+              });
             }
 
             void setThemeKey(String key) async {
@@ -579,7 +589,7 @@ jobs:
               final bool isRtl = _lang == 'he' || _lang == 'ar';
               final palette = themePalettes[_themeKey] ?? themePalettes['cyber']!;
               final Color bg = _highContrast ? Colors.black : palette['bg']!;
-              final Color primary = _highContrast ? Colors.yellowAccent : palette['accent']!;
+              final Color primary = _highContrast ? const Color(0xFFFFD700) : palette['accent']!;
 
               return KeyedSubtree(
                 key: _appKey,
@@ -593,11 +603,97 @@ jobs:
                   ),
                   home: Directionality(
                     textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-                    child: const CyberSplashScreen(),
+                    child: _firstRun ? const FirstTimeSetupScreen() : const MainDashboard(),
                   ),
                 ),
               );
             }
+          }
+
+          // Animated Live Water Waves Painter
+          class DynamicWaterBackground extends StatefulWidget {
+            final Widget child;
+            final Color waveColor;
+            final bool isHighContrast;
+            const DynamicWaterBackground({
+              super.key,
+              required this.child,
+              required this.waveColor,
+              this.isHighContrast = false,
+            });
+
+            @override
+            State<DynamicWaterBackground> createState() => _DynamicWaterBackgroundState();
+          }
+
+          class _DynamicWaterBackgroundState extends State<DynamicWaterBackground>
+              with SingleTickerProviderStateMixin {
+            late AnimationController _anim;
+
+            @override
+            void initState() {
+              super.initState();
+              _anim = AnimationController(vsync: this, duration: const Duration(seconds: 4))
+                ..repeat();
+            }
+
+            @override
+            void dispose() {
+              _anim.dispose();
+              super.dispose();
+            }
+
+            @override
+            Widget build(BuildContext context) {
+              if (widget.isHighContrast) {
+                return widget.child;
+              }
+              return AnimatedBuilder(
+                animation: _anim,
+                builder: (context, child) {
+                  return CustomPaint(
+                    painter: WaterWavePainter(
+                      progress: _anim.value,
+                      waveColor: widget.waveColor.withOpacity(0.08),
+                    ),
+                    child: widget.child,
+                  );
+                },
+              );
+            }
+          }
+
+          class WaterWavePainter extends CustomPainter {
+            final double progress;
+            final Color waveColor;
+            WaterWavePainter({required this.progress, required this.waveColor});
+
+            @override
+            void paint(Canvas canvas, Size size) {
+              final paint = Paint()
+                ..color = waveColor
+                ..style = PaintingStyle.fill;
+
+              final path = Path();
+              final h = size.height;
+              final w = size.width;
+
+              path.moveTo(0, h * 0.75);
+              for (double x = 0; x <= w; x += 10) {
+                double y = math.sin((x / w * 2 * math.pi) + (progress * 2 * math.pi)) * 18 +
+                    math.cos((x / w * 3 * math.pi) + (progress * 2 * math.pi)) * 8 +
+                    h * 0.82;
+                path.lineTo(x, y);
+              }
+              path.lineTo(w, h);
+              path.lineTo(0, h);
+              path.close();
+
+              canvas.drawPath(path, paint);
+            }
+
+            @override
+            bool shouldRepaint(covariant WaterWavePainter oldDelegate) => true;
           }
 
           BoxDecoration cyber3D({
@@ -609,11 +705,11 @@ jobs:
           }) {
             if (highContrast) {
               return BoxDecoration(
-                color: isPressed ? const Color(0xFF222200) : Colors.black,
+                color: isPressed ? const Color(0xFF2B2800) : Colors.black,
                 borderRadius: BorderRadius.circular(radius),
-                border: Border.all(color: Colors.yellowAccent, width: 2.5),
+                border: Border.all(color: const Color(0xFFFFD700), width: 3.0),
                 boxShadow: const [
-                  BoxShadow(color: Colors.yellowAccent, blurRadius: 4, offset: Offset(1, 1))
+                  BoxShadow(color: Color(0xFFFFD700), blurRadius: 4, offset: Offset(1, 1))
                 ],
               );
             }
@@ -648,209 +744,138 @@ jobs:
             );
           }
 
-          class CyberSplashScreen extends StatelessWidget {
-            const CyberSplashScreen({super.key});
+          class FirstTimeSetupScreen extends StatefulWidget {
+            const FirstTimeSetupScreen({super.key});
+
+            @override
+            State<FirstTimeSetupScreen> createState() => _FirstTimeSetupScreenState();
+          }
+
+          class _FirstTimeSetupScreenState extends State<FirstTimeSetupScreen> {
+            final TextEditingController _ctrl = TextEditingController();
+            String _selectedLang = 'he';
+
+            final languages = [
+              {'code': 'he', 'label': 'עברית'},
+              {'code': 'en', 'label': 'English'},
+              {'code': 'ru', 'label': 'Русский'},
+              {'code': 'ro', 'label': 'Română'},
+              {'code': 'ar', 'label': 'العربية'},
+              {'code': 'de', 'label': 'Deutsch'},
+            ];
 
             @override
             Widget build(BuildContext context) {
-              final app = CyberPillMasterApp.of(context);
-              final t = dict[app.currentLang]!;
-              final hc = app.highContrast;
+              final t = dict[_selectedLang]!;
+              final bool isRtl = _selectedLang == 'he' || _selectedLang == 'ar';
 
-              final languages = [
-                {'code': 'he', 'label': 'עברית'},
-                {'code': 'en', 'label': 'English'},
-                {'code': 'ru', 'label': 'Русский'},
-                {'code': 'ro', 'label': 'Română'},
-                {'code': 'ar', 'label': 'العربية'},
-                {'code': 'de', 'label': 'Deutsch'},
-              ];
-
-              return Scaffold(
-                body: SafeArea(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 130,
-                            height: 130,
-                            decoration: cyber3D(context: context, radius: 45, highContrast: hc),
-                            child: Icon(Icons.bolt, size: 80, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            t['app_name']!,
-                            style: TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.5,
-                              color: hc ? Colors.yellowAccent : Colors.white,
+              return Directionality(
+                textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                child: Scaffold(
+                  body: SafeArea(
+                    child: Center(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 120,
+                              height: 120,
+                              decoration: cyber3D(context: context, radius: 40),
+                              child: const Icon(Icons.bolt, size: 75, color: Color(0xFF06B6D4)),
                             ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            t['creator']!,
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: hc ? Colors.yellow.shade100 : Colors.white60),
-                          ),
-                          const SizedBox(height: 30),
-                          Text(
-                            t['select_language']!,
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.cyanAccent),
-                          ),
-                          const SizedBox(height: 14),
-                          Wrap(
-                            spacing: 10,
-                            runSpacing: 10,
-                            alignment: WrapAlignment.center,
-                            children: languages.map((lang) {
-                              final bool isSelected = app.currentLang == lang['code'];
-                              return GestureDetector(
-                                onTap: () => app.setLanguage(lang['code']!),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                                  decoration: cyber3D(
-                                    context: context,
-                                    radius: 14,
-                                    isPressed: isSelected,
-                                    highContrast: hc,
-                                    customGlow: isSelected ? Colors.cyanAccent : null,
+                            const SizedBox(height: 20),
+                            Text(
+                              t['app_name']!,
+                              style: const TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 1.5,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              t['creator']!,
+                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white60),
+                            ),
+                            const SizedBox(height: 25),
+                            Text(
+                              t['select_language']!,
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.cyanAccent),
+                            ),
+                            const SizedBox(height: 12),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: languages.map((lang) {
+                                final bool isSelected = _selectedLang == lang['code'];
+                                return GestureDetector(
+                                  onTap: () => setState(() => _selectedLang = lang['code']!),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                    decoration: cyber3D(
+                                      context: context,
+                                      radius: 12,
+                                      isPressed: isSelected,
+                                      customGlow: isSelected ? Colors.cyanAccent : null,
+                                    ),
+                                    child: Text(
+                                      lang['label']!,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: isSelected ? Colors.cyanAccent : Colors.white60,
+                                      ),
+                                    ),
                                   ),
+                                );
+                              }).toList(),
+                            ),
+                            const SizedBox(height: 25),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 18),
+                              decoration: cyber3D(context: context, radius: 18, isPressed: true),
+                              child: TextField(
+                                controller: _ctrl,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.cyanAccent,
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: t['name_hint']!,
+                                  hintStyle: const TextStyle(color: Colors.white38),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 25),
+                            GestureDetector(
+                              onTap: () {
+                                final name = _ctrl.text.trim().isEmpty ? 'אורח' : _ctrl.text.trim();
+                                CyberPillMasterApp.of(context).completeOnboarding(name, _selectedLang);
+                              },
+                              child: Container(
+                                height: 52,
+                                width: double.infinity,
+                                decoration: cyber3D(context: context, radius: 18, customGlow: const Color(0xFF10B981)),
+                                child: Center(
                                   child: Text(
-                                    lang['label']!,
-                                    style: TextStyle(
+                                    t['continue_btn']!,
+                                    style: const TextStyle(
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      color: isSelected ? (hc ? Colors.yellowAccent : Colors.cyanAccent) : (hc ? Colors.white70 : Colors.white60),
+                                      color: Color(0xFF10B981),
                                     ),
                                   ),
                                 ),
-                              );
-                            }).toList(),
-                          ),
-                          const SizedBox(height: 35),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (ctx) => app.userName.isEmpty ? const OnboardingNameScreen() : const MainDashboard(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              height: 54,
-                              width: double.infinity,
-                              decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFF10B981)),
-                              child: Center(
-                                child: Text(
-                                  t['continue_btn']!,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: hc ? Colors.yellowAccent : const Color(0xFF10B981),
-                                  ),
-                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }
-          }
-
-          class OnboardingNameScreen extends StatefulWidget {
-            const OnboardingNameScreen({super.key});
-
-            @override
-            State<OnboardingNameScreen> createState() => _OnboardingNameScreenState();
-          }
-
-          class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
-            final TextEditingController _ctrl = TextEditingController();
-
-            @override
-            Widget build(BuildContext context) {
-              final app = CyberPillMasterApp.of(context);
-              final t = dict[app.currentLang]!;
-              final hc = app.highContrast;
-
-              return Scaffold(
-                body: SafeArea(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(horizontal: 28),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: cyber3D(context: context, radius: 35, highContrast: hc),
-                            child: Icon(Icons.person_pin, size: 55, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            t['enter_name_title']!,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: hc ? 26 : 22,
-                              fontWeight: FontWeight.bold,
-                              color: hc ? Colors.yellowAccent : Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 18),
-                            decoration: cyber3D(context: context, radius: 20, isPressed: true, highContrast: hc),
-                            child: TextField(
-                              controller: _ctrl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: hc ? Colors.yellowAccent : Colors.cyanAccent,
-                              ),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: t['name_hint']!,
-                                hintStyle: TextStyle(color: hc ? Colors.yellow.shade100.withOpacity(0.5) : Colors.white38),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 25),
-                          GestureDetector(
-                            onTap: () {
-                              if (_ctrl.text.trim().isNotEmpty) {
-                                app.setUserName(_ctrl.text.trim());
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (ctx) => const MainDashboard()),
-                                );
-                              }
-                            },
-                            child: Container(
-                              height: 52,
-                              width: double.infinity,
-                              decoration: cyber3D(context: context, radius: 20, highContrast: hc),
-                              child: Center(
-                                child: Text(
-                                  t['continue_btn']!,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: hc ? Colors.yellowAccent : const Color(0xFF38BDF8),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -982,12 +1007,12 @@ jobs:
 
             Future<void> _loadData() async {
               final prefs = await SharedPreferences.getInstance();
-              final String? schedsRaw = prefs.getString('c_multi_scheds_store_v4');
+              final String? schedsRaw = prefs.getString('c_multi_scheds_store_v5');
               if (schedsRaw != null) {
                 final List decoded = jsonDecode(schedsRaw);
                 setState(() => _schedules = decoded.map((e) => ScheduleGroup.fromMap(e)).toList());
               }
-              final String? appsRaw = prefs.getString('c_apps_store_v4');
+              final String? appsRaw = prefs.getString('c_apps_store_v5');
               if (appsRaw != null) {
                 final List decodedA = jsonDecode(appsRaw);
                 setState(() => _apps = decodedA.map((e) => AppointmentModel.fromMap(e)).toList());
@@ -996,12 +1021,12 @@ jobs:
 
             Future<void> _saveSchedules() async {
               final prefs = await SharedPreferences.getInstance();
-              await prefs.setString('c_multi_scheds_store_v4', jsonEncode(_schedules.map((m) => m.toMap()).toList()));
+              await prefs.setString('c_multi_scheds_store_v5', jsonEncode(_schedules.map((m) => m.toMap()).toList()));
             }
 
             Future<void> _saveApps() async {
               final prefs = await SharedPreferences.getInstance();
-              await prefs.setString('c_apps_store_v4', jsonEncode(_apps.map((a) => a.toMap()).toList()));
+              await prefs.setString('c_apps_store_v5', jsonEncode(_apps.map((a) => a.toMap()).toList()));
             }
 
             void _speak(String text) async {
@@ -1039,16 +1064,16 @@ jobs:
                     backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
-                      side: BorderSide(color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4), width: 2),
+                      side: BorderSide(color: hc ? const Color(0xFFFFD700) : const Color(0xFF06B6D4), width: 3),
                     ),
                     title: Column(
                       children: [
-                        Icon(Icons.alarm_on, size: 50, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
+                        Icon(Icons.alarm_on, size: 50, color: hc ? const Color(0xFFFFD700) : const Color(0xFF06B6D4)),
                         const SizedBox(height: 8),
                         Text(
                           t['alert_popup_title']!,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: hc ? Colors.yellowAccent : Colors.white),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: hc ? const Color(0xFFFFD700) : Colors.white),
                         ),
                       ],
                     ),
@@ -1066,7 +1091,7 @@ jobs:
                             padding: const EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               '• ${p.name} - ${t['dosage']!}: ${p.dosage} | ${t['stock']!}: ${p.stock}',
-                              style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white70, fontSize: 14),
+                              style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white70, fontSize: 15, fontWeight: hc ? FontWeight.bold : FontWeight.normal),
                             ),
                           )),
                           const SizedBox(height: 20),
@@ -1082,7 +1107,7 @@ jobs:
                               Navigator.pop(ctx);
                             },
                             child: Container(
-                              height: 46,
+                              height: 48,
                               margin: const EdgeInsets.only(bottom: 10),
                               decoration: cyber3D(context: context, radius: 14, highContrast: hc, customGlow: const Color(0xFF10B981)),
                               child: Center(
@@ -1093,7 +1118,7 @@ jobs:
                           GestureDetector(
                             onTap: () => Navigator.pop(ctx),
                             child: Container(
-                              height: 42,
+                              height: 44,
                               decoration: cyber3D(context: context, radius: 14, highContrast: hc, customGlow: Colors.redAccent),
                               child: Center(
                                 child: Text(t['btn_skip']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent)),
@@ -1103,6 +1128,50 @@ jobs:
                         ],
                       ),
                     ),
+                  ),
+                ),
+              );
+            }
+
+            void _openLanguagePicker() {
+              final app = CyberPillMasterApp.of(context);
+              final hc = app.highContrast;
+
+              final languages = [
+                {'code': 'he', 'label': 'עברית'},
+                {'code': 'en', 'label': 'English'},
+                {'code': 'ru', 'label': 'Русский'},
+                {'code': 'ro', 'label': 'Română'},
+                {'code': 'ar', 'label': 'العربية'},
+                {'code': 'de', 'label': 'Deutsch'},
+              ];
+
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+                builder: (ctx) => SafeArea(
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    children: languages.map((lang) {
+                      return ListTile(
+                        title: Text(
+                          lang['label']!,
+                          style: TextStyle(
+                            color: hc ? const Color(0xFFFFD700) : Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        trailing: app.currentLang == lang['code']
+                            ? Icon(Icons.check, color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent)
+                            : null,
+                        onTap: () {
+                          Navigator.pop(ctx);
+                          app.setLanguage(lang['code']!);
+                        },
+                      );
+                    }).toList(),
                   ),
                 ),
               );
@@ -1143,7 +1212,7 @@ jobs:
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: hc ? Colors.yellowAccent : const Color(0xFF38BDF8),
+                                  color: hc ? const Color(0xFFFFD700) : const Color(0xFF38BDF8),
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -1160,7 +1229,7 @@ jobs:
                               ),
                               const SizedBox(height: 16),
                               Text('${t['time']!}: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
-                                  style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white)),
+                                  style: TextStyle(fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white)),
                               const SizedBox(height: 6),
                               Container(
                                 height: 80,
@@ -1173,18 +1242,18 @@ jobs:
                                         scrollController: FixedExtentScrollController(initialItem: hour),
                                         onSelectedItemChanged: (i) => setDlg(() => hour = i),
                                         children: List.generate(24, (i) => Center(
-                                          child: Text(i.toString().padLeft(2, '0'), style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
+                                          child: Text(i.toString().padLeft(2, '0'), style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                         )),
                                       ),
                                     ),
-                                    Text(':', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white)),
+                                    Text(':', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                     Expanded(
                                       child: CupertinoPicker(
                                         itemExtent: 32,
                                         scrollController: FixedExtentScrollController(initialItem: minute ~/ 5),
                                         onSelectedItemChanged: (i) => setDlg(() => minute = i * 5),
                                         children: List.generate(12, (i) => Center(
-                                          child: Text((i * 5).toString().padLeft(2, '0'), style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
+                                          child: Text((i * 5).toString().padLeft(2, '0'), style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                         )),
                                       ),
                                     ),
@@ -1217,7 +1286,7 @@ jobs:
                                             style: TextStyle(color: hc ? Colors.white : Colors.white),
                                             decoration: InputDecoration(
                                               labelText: t['pill_name'],
-                                              labelStyle: TextStyle(color: hc ? Colors.yellowAccent : Colors.cyanAccent),
+                                              labelStyle: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent),
                                               border: InputBorder.none,
                                             ),
                                             onChanged: (val) => pill.name = val,
@@ -1228,7 +1297,7 @@ jobs:
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text('${t['dosage']!}: ${pill.dosage}', style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
+                                          Text('${t['dosage']!}: ${pill.dosage}', style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                           Row(
                                             children: [
                                               IconButton(
@@ -1237,7 +1306,7 @@ jobs:
                                                   if (pill.dosage > 1) setDlg(() => pill.dosage--);
                                                 },
                                               ),
-                                              Text('${pill.dosage}', style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white)),
+                                              Text('${pill.dosage}', style: TextStyle(fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                               IconButton(
                                                 icon: const Icon(Icons.add_circle_outline, color: Colors.cyanAccent),
                                                 onPressed: () => setDlg(() => pill.dosage++),
@@ -1258,7 +1327,7 @@ jobs:
                               TextButton.icon(
                                 onPressed: () => setDlg(() => workingPills.add(PillItem(name: 'נורופן (Nurofen)', dosage: 1, stock: 30))),
                                 icon: const Icon(Icons.add, color: Color(0xFF06B6D4)),
-                                label: Text(t['add_pill_btn']!, style: TextStyle(color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4), fontWeight: FontWeight.bold)),
+                                label: Text(t['add_pill_btn']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : const Color(0xFF06B6D4), fontWeight: FontWeight.bold)),
                               ),
                               const SizedBox(height: 16),
                               GestureDetector(
@@ -1285,7 +1354,7 @@ jobs:
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
-                                        color: hc ? Colors.yellowAccent : const Color(0xFF10B981),
+                                        color: hc ? const Color(0xFFFFD700) : const Color(0xFF10B981),
                                       ),
                                     ),
                                   ),
@@ -1308,7 +1377,7 @@ jobs:
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: cyber3D(context: context, radius: 12, highContrast: hc),
-                  child: Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.cyanAccent)),
+                  child: Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent)),
                 ),
               );
             }
@@ -1350,11 +1419,11 @@ jobs:
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: hc ? Colors.yellowAccent : const Color(0xFFA855F7),
+                                  color: hc ? const Color(0xFFFFD700) : const Color(0xFFA855F7),
                                 ),
                               ),
                               const SizedBox(height: 14),
-                              Text(t['doctor_type']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white70, fontWeight: FontWeight.bold)),
+                              Text(t['doctor_type']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white70, fontWeight: FontWeight.bold)),
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1369,7 +1438,7 @@ jobs:
                                         type,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: isSel ? (hc ? Colors.yellowAccent : Colors.purpleAccent) : (hc ? Colors.white60 : Colors.white70),
+                                          color: isSel ? (hc ? const Color(0xFFFFD700) : Colors.purpleAccent) : (hc ? Colors.white60 : Colors.white70),
                                         ),
                                       ),
                                     ),
@@ -1383,7 +1452,7 @@ jobs:
                                 child: TextField(
                                   controller: docCtrl,
                                   textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
-                                  style: TextStyle(color: hc ? Colors.yellowAccent : Colors.purpleAccent),
+                                  style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.purpleAccent),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: t['doctor_name']!,
@@ -1398,7 +1467,7 @@ jobs:
                                 child: TextField(
                                   controller: clinicCtrl,
                                   textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
-                                  style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white),
+                                  style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: t['clinic_address']!,
@@ -1461,7 +1530,7 @@ jobs:
                                         child: Center(
                                           child: Text(
                                             '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-                                            style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white),
+                                            style: TextStyle(fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white),
                                           ),
                                         ),
                                       ),
@@ -1483,7 +1552,7 @@ jobs:
                                         child: Center(
                                           child: Text(
                                             selectedTime.format(context),
-                                            style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white),
+                                            style: TextStyle(fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white),
                                           ),
                                         ),
                                       ),
@@ -1517,7 +1586,7 @@ jobs:
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
-                                        color: hc ? Colors.yellowAccent : const Color(0xFFA855F7),
+                                        color: hc ? const Color(0xFFFFD700) : const Color(0xFFA855F7),
                                       ),
                                     ),
                                   ),
@@ -1566,12 +1635,12 @@ jobs:
                             children: [
                               Text(
                                 t['settings']!,
-                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
+                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : const Color(0xFF06B6D4)),
                               ),
                               const SizedBox(height: 16),
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['themes_title']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white, fontWeight: FontWeight.bold)),
+                                child: Text(t['themes_title']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white, fontWeight: FontWeight.bold)),
                               ),
                               const SizedBox(height: 8),
                               SingleChildScrollView(
@@ -1603,25 +1672,28 @@ jobs:
                               ),
                               const SizedBox(height: 14),
                               SwitchListTile(
-                                title: Text(t['high_contrast']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
+                                title: Text(t['high_contrast']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white, fontWeight: FontWeight.bold)),
                                 value: app.highContrast,
                                 onChanged: (v) => setDlg(() => app.updateSettings(hc: v)),
                               ),
                               SwitchListTile(
-                                title: Text(t['voice_alerts']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
+                                title: Text(t['voice_alerts']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                 value: app.voiceAlerts,
                                 onChanged: (v) => setDlg(() => app.updateSettings(voice: v)),
                               ),
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  Icon(Icons.volume_up, color: hc ? Colors.yellowAccent : Colors.cyanAccent),
+                                  Icon(Icons.volume_up, color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent),
                                   const SizedBox(width: 8),
-                                  Text('${t['sound_vol']!}: ${(currentVol * 100).toInt()}%', style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
+                                  Text('${t['sound_vol']!}: ${(currentVol * 100).toInt()}%', style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                   Expanded(
                                     child: Slider(
                                       value: currentVol,
-                                      onChanged: (v) => setDlg(() => currentVol = v),
+                                      onChanged: (v) {
+                                        setDlg(() => currentVol = v);
+                                        flutterTts.setVolume(v);
+                                      },
                                     ),
                                   ),
                                 ],
@@ -1637,18 +1709,20 @@ jobs:
                                     final bool selected = selectedSound == opt['key'];
                                     return ListTile(
                                       dense: true,
-                                      title: Text(opt['label']!, style: TextStyle(color: selected ? (hc ? Colors.yellowAccent : Colors.cyanAccent) : (hc ? Colors.white70 : Colors.white60))),
+                                      title: Text(opt['label']!, style: TextStyle(color: selected ? (hc ? const Color(0xFFFFD700) : Colors.cyanAccent) : (hc ? Colors.white70 : Colors.white60))),
                                       trailing: IconButton(
                                         icon: const Icon(Icons.play_circle_fill, color: Colors.cyanAccent),
                                         onPressed: () async {
                                           await flutterTts.setVolume(currentVol);
-                                          await flutterTts.speak('בדיקה: ' + opt['label']!);
+                                          await flutterTts.speak('צליל נבחר: ' + opt['label']!);
                                         },
                                       ),
                                       leading: Radio<String>(
                                         value: opt['key']!,
                                         groupValue: selectedSound,
-                                        onChanged: (val) => setDlg(() => selectedSound = val!),
+                                        onChanged: (val) {
+                                          if (val != null) setDlg(() => selectedSound = val);
+                                        },
                                       ),
                                     );
                                   },
@@ -1684,202 +1758,211 @@ jobs:
               final t = dict[app.currentLang]!;
               final hc = app.highContrast;
               final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
-              final Color accent = hc ? Colors.yellowAccent : palette['accent']!;
+              final Color accent = hc ? const Color(0xFFFFD700) : palette['accent']!;
 
-              return Scaffold(
-                appBar: AppBar(
+              return DynamicWaterBackground(
+                waveColor: accent,
+                isHighContrast: hc,
+                child: Scaffold(
                   backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  centerTitle: true,
-                  title: Column(
-                    children: [
-                      Text(
-                        t['app_name']!,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 22,
-                          color: accent,
+                  appBar: AppBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    centerTitle: true,
+                    title: Column(
+                      children: [
+                        Text(
+                          t['app_name']!,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 22,
+                            color: accent,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '${t['welcome']!}, ${app.userName}',
-                        style: TextStyle(fontSize: 13, color: hc ? Colors.yellow.shade100 : Colors.white60),
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    IconButton(
-                      icon: Icon(Icons.settings, color: hc ? Colors.yellowAccent : null),
-                      onPressed: _openSettingsDialog,
+                        Text(
+                          '${t['welcome']!}, ${app.userName}',
+                          style: TextStyle(fontSize: 13, color: hc ? const Color(0xFFFFD700) : Colors.white60),
+                        ),
+                      ],
                     ),
-                  ],
-                  bottom: TabBar(
-                    controller: _tabController,
-                    indicatorColor: accent,
-                    labelColor: accent,
-                    unselectedLabelColor: Colors.white38,
-                    tabs: [
-                      Tab(icon: const Icon(Icons.medication), text: t['meds_tab']!),
-                      Tab(icon: const Icon(Icons.event_note), text: t['appointments_tab']!),
+                    actions: [
+                      IconButton(
+                        icon: Icon(Icons.language, color: hc ? const Color(0xFFFFD700) : null),
+                        onPressed: _openLanguagePicker,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.settings, color: hc ? const Color(0xFFFFD700) : null),
+                        onPressed: _openSettingsDialog,
+                      ),
                     ],
+                    bottom: TabBar(
+                      controller: _tabController,
+                      indicatorColor: accent,
+                      labelColor: accent,
+                      unselectedLabelColor: Colors.white38,
+                      tabs: [
+                        Tab(icon: const Icon(Icons.medication), text: t['meds_tab']!),
+                        Tab(icon: const Icon(Icons.event_note), text: t['appointments_tab']!),
+                      ],
+                    ),
                   ),
-                ),
-                body: SafeArea(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      // Medicines Tab
-                      _schedules.isEmpty
-                          ? Center(child: Text(t['empty_meds']!, style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white38, fontSize: 18)))
-                          : ListView.builder(
-                              padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 90),
-                              itemCount: _schedules.length,
-                              itemBuilder: (ctx, i) {
-                                final sched = _schedules[i];
-                                final timeStr = '${sched.hour.toString().padLeft(2, '0')}:${sched.minute.toString().padLeft(2, '0')}';
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 14),
-                                  decoration: cyber3D(context: context, radius: 20, isPressed: sched.isTaken, highContrast: hc),
-                                  child: ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                    leading: Icon(
-                                      sched.isTaken ? Icons.check_circle : Icons.alarm,
-                                      color: sched.isTaken ? Colors.greenAccent : accent,
+                  body: SafeArea(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        // Medicines Tab
+                        _schedules.isEmpty
+                            ? Center(child: Text(t['empty_meds']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white38, fontSize: 18)))
+                            : ListView.builder(
+                                padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 90),
+                                itemCount: _schedules.length,
+                                itemBuilder: (ctx, i) {
+                                  final sched = _schedules[i];
+                                  final timeStr = '${sched.hour.toString().padLeft(2, '0')}:${sched.minute.toString().padLeft(2, '0')}';
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 14),
+                                    decoration: cyber3D(context: context, radius: 20, isPressed: sched.isTaken, highContrast: hc),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                      leading: Icon(
+                                        sched.isTaken ? Icons.check_circle : Icons.alarm,
+                                        color: sched.isTaken ? Colors.greenAccent : accent,
+                                      ),
+                                      title: Text(
+                                        sched.title.isNotEmpty ? sched.title : timeStr,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: hc ? const Color(0xFFFFD700) : Colors.white,
+                                          decoration: sched.isTaken ? TextDecoration.lineThrough : null,
+                                        ),
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text('$timeStr • ${sched.pills.length} תרופות', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
+                                          ...sched.pills.map((p) => Text('• ${p.name} (${p.dosage})', style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent, fontWeight: hc ? FontWeight.bold : FontWeight.normal))),
+                                        ],
+                                      ),
+                                      trailing: IconButton(
+                                        icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                                        onPressed: () {
+                                          setState(() => _schedules.removeAt(i));
+                                          _saveSchedules();
+                                        },
+                                      ),
+                                      onTap: () => _showAlarmActionDialog(sched),
                                     ),
-                                    title: Text(
-                                      sched.title.isNotEmpty ? sched.title : timeStr,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: hc ? Colors.yellowAccent : Colors.white,
-                                        decoration: sched.isTaken ? TextDecoration.lineThrough : null,
+                                  );
+                                },
+                              ),
+                        // Appointments Tab
+                        _apps.isEmpty
+                            ? Center(child: Text(t['empty_apps']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white38, fontSize: 18)))
+                            : ListView.builder(
+                                padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 90),
+                                itemCount: _apps.length,
+                                itemBuilder: (ctx, i) {
+                                  final appItem = _apps[i];
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 14),
+                                    decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFFA855F7)),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.all(14),
+                                      leading: Icon(Icons.medical_services_outlined, size: 36, color: hc ? const Color(0xFFFFD700) : const Color(0xFFA855F7)),
+                                      title: Text(
+                                        '${appItem.type}: ${appItem.doctor}',
+                                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white),
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text('${appItem.date}  •  ${appItem.time}', style: TextStyle(color: hc ? Colors.cyanAccent : const Color(0xFF38BDF8), fontWeight: FontWeight.bold)),
+                                          if (appItem.clinic.isNotEmpty) ...[
+                                            const SizedBox(height: 4),
+                                            Text('📍 ${appItem.clinic}', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
+                                            const SizedBox(height: 8),
+                                            Row(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () => _launchMap(appItem.clinic, true),
+                                                  child: Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                                    decoration: BoxDecoration(color: const Color(0xFF00D1FF).withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                                                    child: Row(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        const Icon(Icons.navigation, size: 14, color: Color(0xFF00D1FF)),
+                                                        const SizedBox(width: 4),
+                                                        Text(t['nav_waze']!, style: const TextStyle(fontSize: 12, color: Color(0xFF00D1FF), fontWeight: FontWeight.bold)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                GestureDetector(
+                                                  onTap: () => _launchMap(appItem.clinic, false),
+                                                  child: Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                                    decoration: BoxDecoration(color: const Color(0xFF34A853).withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                                                    child: Row(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        const Icon(Icons.map, size: 14, color: Color(0xFF34A853)),
+                                                        const SizedBox(width: 4),
+                                                        Text(t['nav_google']!, style: const TextStyle(fontSize: 12, color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ],
+                                      ),
+                                      trailing: IconButton(
+                                        icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                                        onPressed: () {
+                                          setState(() => _apps.removeAt(i));
+                                          _saveApps();
+                                        },
                                       ),
                                     ),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('$timeStr • ${sched.pills.length} תרופות', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
-                                        ...sched.pills.map((p) => Text('• ${p.name} (${p.dosage})', style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.cyanAccent))),
-                                      ],
-                                    ),
-                                    trailing: IconButton(
-                                      icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-                                      onPressed: () {
-                                        setState(() => _schedules.removeAt(i));
-                                        _saveSchedules();
-                                      },
-                                    ),
-                                    onTap: () => _showAlarmActionDialog(sched),
-                                  ),
-                                );
-                              },
-                            ),
-                      // Appointments Tab
-                      _apps.isEmpty
-                          ? Center(child: Text(t['empty_apps']!, style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white38, fontSize: 18)))
-                          : ListView.builder(
-                              padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 90),
-                              itemCount: _apps.length,
-                              itemBuilder: (ctx, i) {
-                                final appItem = _apps[i];
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 14),
-                                  decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFFA855F7)),
-                                  child: ListTile(
-                                    contentPadding: const EdgeInsets.all(14),
-                                    leading: Icon(Icons.medical_services_outlined, size: 36, color: hc ? Colors.yellowAccent : const Color(0xFFA855F7)),
-                                    title: Text(
-                                      '${appItem.type}: ${appItem.doctor}',
-                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('${appItem.date}  •  ${appItem.time}', style: TextStyle(color: hc ? Colors.cyanAccent : const Color(0xFF38BDF8), fontWeight: FontWeight.bold)),
-                                        if (appItem.clinic.isNotEmpty) ...[
-                                          const SizedBox(height: 4),
-                                          Text('📍 ${appItem.clinic}', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
-                                          const SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () => _launchMap(appItem.clinic, true),
-                                                child: Container(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                                  decoration: BoxDecoration(color: const Color(0xFF00D1FF).withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
-                                                  child: Row(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      const Icon(Icons.navigation, size: 14, color: Color(0xFF00D1FF)),
-                                                      const SizedBox(width: 4),
-                                                      Text(t['nav_waze']!, style: const TextStyle(fontSize: 12, color: Color(0xFF00D1FF), fontWeight: FontWeight.bold)),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 8),
-                                              GestureDetector(
-                                                onTap: () => _launchMap(appItem.clinic, false),
-                                                child: Container(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                                  decoration: BoxDecoration(color: const Color(0xFF34A853).withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
-                                                  child: Row(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      const Icon(Icons.map, size: 14, color: Color(0xFF34A853)),
-                                                      const SizedBox(width: 4),
-                                                      Text(t['nav_google']!, style: const TextStyle(fontSize: 12, color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ],
-                                    ),
-                                    trailing: IconButton(
-                                      icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-                                      onPressed: () {
-                                        setState(() => _apps.removeAt(i));
-                                        _saveApps();
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                    ],
+                                  );
+                                },
+                              ),
+                      ],
+                    ),
                   ),
-                ),
-                floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (_tabController.index == 0) {
-                        _openAddScheduleDialog();
-                      } else {
-                        _openAddAppointmentDialog();
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                      decoration: cyber3D(context: context, radius: 26, highContrast: hc),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.add, color: hc ? Colors.yellowAccent : Colors.white),
-                          const SizedBox(width: 8),
-                          Text(
-                            _tabController.index == 0 ? t['add_med']! : t['add_appointment']!,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: hc ? Colors.yellowAccent : Colors.white,
+                  floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+                  floatingActionButton: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_tabController.index == 0) {
+                          _openAddScheduleDialog();
+                        } else {
+                          _openAddAppointmentDialog();
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                        decoration: cyber3D(context: context, radius: 26, highContrast: hc),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.add, color: hc ? const Color(0xFFFFD700) : Colors.white),
+                            const SizedBox(width: 8),
+                            Text(
+                              _tabController.index == 0 ? t['add_med']! : t['add_appointment']!,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: hc ? const Color(0xFFFFD700) : Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
