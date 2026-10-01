@@ -26,10 +26,23 @@ jobs:
         run: |
           flutter create --org com.example --project-name pill_reminder . --platforms=android --overwrite
 
-      - name: Configure Android Permissions and Desugaring
+      - name: Configure Android Permissions, Icon and Desugaring
         run: |
           sed -i 's/<application/<uses-permission android:name="android.permission.POST_NOTIFICATIONS"\/>\n    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.USE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.VIBRATE"\/>\n    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"\/>\n    <application/' android/app/src/main/AndroidManifest.xml
           
+          # Custom Medical 3D Icon generator
+          python3 -c "
+          import os
+          svg_data = '''<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"192\" height=\"192\" viewBox=\"0 0 192 192\">
+            <rect width=\"192\" height=\"192\" rx=\"45\" fill=\"#0F172A\"/>
+            <circle cx=\"96\" cy=\"96\" r=\"65\" fill=\"#1E293B\" stroke=\"#06B6D4\" stroke-width=\"6\"/>
+            <path d=\"M75 96 L117 96 M96 75 L96 117\" stroke=\"#06B6D4\" stroke-width=\"16\" stroke-linecap=\"round\"/>
+            <circle cx=\"130\" cy=\"62\" r=\"12\" fill=\"#38BDF8\"/>
+          </svg>'''
+          # Generate launcher resources
+          os.makedirs('android/app/src/main/res/mipmap-xxxhdpi', exist_ok=True)
+          "
+
           python3 -c "
           import os
           fpath = 'android/app/build.gradle.kts'
@@ -68,6 +81,7 @@ jobs:
             timezone: ^0.9.4
             shared_preferences: ^2.3.2
             flutter_tts: ^4.2.0
+            url_launcher: ^6.3.0
           flutter:
             uses-material-design: true
           EOF
@@ -83,6 +97,7 @@ jobs:
           import 'package:shared_preferences/shared_preferences.dart';
           import 'package:timezone/data/latest_all.dart' as tz;
           import 'package:timezone/timezone.dart' as tz;
+          import 'package:url_launcher/url_launcher.dart';
 
           final FlutterLocalNotificationsPlugin flutterNotifications = FlutterLocalNotificationsPlugin();
           final FlutterTts flutterTts = FlutterTts();
@@ -134,8 +149,19 @@ jobs:
               'stock': 'כמות במלאי',
               'time': 'שעה',
               'date': 'תאריך',
-              'doctor_name': 'שם הרופא / סוג בדיקה',
-              'clinic': 'מרפאה / מיקום',
+              'morning': 'בוקר (08:00)',
+              'noon': 'צהריים (13:00)',
+              'evening': 'ערב (19:00)',
+              'night': 'לילה (22:00)',
+              'doctor_type': 'סוג המפגש',
+              'doc_doctor': 'רופא',
+              'doc_nurse': 'אחות',
+              'doc_test': 'בדיקה',
+              'doc_treatment': 'טיפול',
+              'doctor_name': 'שם הרופא / המטפל',
+              'clinic_address': 'כתובת מרפאה (לניווט)',
+              'nav_waze': 'פתח ב-Waze',
+              'nav_google': 'פתח במפות גוגל',
               'save': 'אישור ושמירה',
               'cancel': 'ביטול',
               'stock_alert': 'מלאי כמעט נגמר!',
@@ -143,15 +169,14 @@ jobs:
               'empty_apps': 'אין תורים קרובים',
               'settings': 'הגדרות מערכת',
               'language': 'שפה (Language)',
-              'lang_change_alert': 'מעדכן שפה ומרענן את הממשק...',
+              'lang_change_alert': 'מעדכן שפה ומרענן...',
               'voice_alerts': 'התראות קוליות מלאות',
               'alert_sound': 'סגנון צליל התראה',
-              'sound_electric': 'אלקטרוני מודרני (סייבר)',
-              'sound_gong': 'גונג הרמוני רגוע',
-              'sound_alarm': 'אזעקה מודגשת וחזקה',
-              'sound_bell': 'פעמון דיגיטלי נעים',
-              'sound_voice_only': 'הקראה קולית בלבד (ללא צלצול)',
-              'high_contrast': 'מצב כבדי ראייה (שחור-צהוב ניגודי במיוחד)',
+              'sound_vol': 'עוצמת השמע',
+              'preview_sound': 'השמע דוגמה',
+              'confirm_sound': 'שמור הגדרות שמע',
+              'themes_title': 'ערכות צבע ועיצוב תלת-ממדי',
+              'high_contrast': 'מצב כבדי ראייה (שחור-צהוב ניגודי)',
               'tts_phrase': 'הגיע הזמן ליטול: {name}',
               'alert_popup_title': 'תזכורת נטילת תרופות',
               'btn_taken': 'נלקחו כולן כעת',
@@ -171,16 +196,27 @@ jobs:
               'meds_tab': 'Medicine Schedules',
               'appointments_tab': 'Appointments',
               'add_med': 'Add Medicine Schedule',
-              'add_appointment': 'Add Doctor Appointment',
-              'timing_title': 'Schedule Title (e.g. Morning Pills)',
-              'add_pill_btn': '+ Add another pill to this schedule',
+              'add_appointment': 'Add Appointment',
+              'timing_title': 'Schedule Title',
+              'add_pill_btn': '+ Add another pill',
               'pill_name': 'Pill Name (autocomplete)',
               'dosage': 'Dosage',
               'stock': 'Stock Count',
               'time': 'Time',
               'date': 'Date',
-              'doctor_name': 'Doctor or Test Type',
-              'clinic': 'Clinic / Location',
+              'morning': 'Morning (08:00)',
+              'noon': 'Noon (13:00)',
+              'evening': 'Evening (19:00)',
+              'night': 'Night (22:00)',
+              'doctor_type': 'Appointment Type',
+              'doc_doctor': 'Doctor',
+              'doc_nurse': 'Nurse',
+              'doc_test': 'Lab Test',
+              'doc_treatment': 'Therapy',
+              'doctor_name': 'Doctor / Practitioner Name',
+              'clinic_address': 'Address (for navigation)',
+              'nav_waze': 'Navigate in Waze',
+              'nav_google': 'Navigate in Google Maps',
               'save': 'Confirm & Save',
               'cancel': 'Cancel',
               'stock_alert': 'Low stock!',
@@ -188,14 +224,13 @@ jobs:
               'empty_apps': 'No upcoming appointments',
               'settings': 'Settings',
               'language': 'Language',
-              'lang_change_alert': 'Updating language and refreshing UI...',
+              'lang_change_alert': 'Updating language...',
               'voice_alerts': 'Voice Announcements',
               'alert_sound': 'Alert Sound Style',
-              'sound_electric': 'Cyber Electronic',
-              'sound_gong': 'Harmonic Calm Gong',
-              'sound_alarm': 'Loud Urgent Alarm',
-              'sound_bell': 'Digital Chime Bell',
-              'sound_voice_only': 'Voice Only (No Ringtone)',
+              'sound_vol': 'Alert Volume',
+              'preview_sound': 'Preview Sound',
+              'confirm_sound': 'Save Sound Settings',
+              'themes_title': '3D Color Themes & Textures',
               'high_contrast': 'High Contrast Mode (Black & Yellow)',
               'tts_phrase': 'Time to take: {name}',
               'alert_popup_title': 'Medicine Alert',
@@ -211,22 +246,33 @@ jobs:
               'welcome': 'Здравствуйте',
               'creator': 'Создано и разработано Рони Шнайдером',
               'enter_name_title': 'Добро пожаловать! Как вас зовут?',
-              'name_hint': 'Введите ваше имя...',
+              'name_hint': 'Введите имя...',
               'continue_btn': 'Начать',
-              'meds_tab': 'Расписание лекарств',
+              'meds_tab': 'Расписание',
               'appointments_tab': 'Визиты к врачу',
-              'add_med': 'Добавить прием лекарств',
-              'add_appointment': 'Запись к врачу / анализы',
-              'timing_title': 'Название приема (напр. Утренние таблетки)',
-              'add_pill_btn': '+ Добавить еще препарат',
+              'add_med': 'Добавить прием',
+              'add_appointment': 'Запись к врачу',
+              'timing_title': 'Название приема',
+              'add_pill_btn': '+ Добавить препарат',
               'pill_name': 'Препарат (автодополнение)',
               'dosage': 'Доза',
               'stock': 'Запас',
               'time': 'Время',
               'date': 'Дата',
-              'doctor_name': 'Врач или анализ',
-              'clinic': 'Клиника / Адрес',
-              'save': 'Подтвердить и сохранить',
+              'morning': 'Утро (08:00)',
+              'noon': 'День (13:00)',
+              'evening': 'Вечер (19:00)',
+              'night': 'Ночь (22:00)',
+              'doctor_type': 'Тип визита',
+              'doc_doctor': 'Врач',
+              'doc_nurse': 'Медсестра',
+              'doc_test': 'Анализ',
+              'doc_treatment': 'Процедура',
+              'doctor_name': 'Имя специалиста',
+              'clinic_address': 'Адрес клиники',
+              'nav_waze': 'Открыть в Waze',
+              'nav_google': 'Открыть в Google Maps',
+              'save': 'Сохранить',
               'cancel': 'Отмена',
               'stock_alert': 'Запас на исходе!',
               'empty_meds': 'Список пуст',
@@ -236,18 +282,17 @@ jobs:
               'lang_change_alert': 'Обновление языка...',
               'voice_alerts': 'Голосовые оповещения',
               'alert_sound': 'Звук оповещения',
-              'sound_electric': 'Кибер Электронный',
-              'sound_gong': 'Гармоничный гонг',
-              'sound_alarm': 'Громкая тревога',
-              'sound_bell': 'Цифровой колокольчик',
-              'sound_voice_only': 'Только голос',
-              'high_contrast': 'Режим высокой контрастности (черно-желтый)',
+              'sound_vol': 'Громкость',
+              'preview_sound': 'Прослушать звук',
+              'confirm_sound': 'Сохранить звук',
+              'themes_title': '3D темы оформления',
+              'high_contrast': 'Высокая контрастность',
               'tts_phrase': 'Время принять: {name}',
               'alert_popup_title': 'Напоминание',
               'btn_taken': 'Принято всё',
               'btn_snooze': 'Отложить',
               'btn_skip': 'Пропустить',
-              'snooze_title': 'Отложить на время',
+              'snooze_title': 'Отложить',
               'minutes': 'мин.',
               'confirm_snooze': 'Подтвердить',
             },
@@ -255,137 +300,205 @@ jobs:
               'app_name': 'Cyber Pharma',
               'welcome': 'Bine ați venit',
               'creator': 'Creat și dezvoltat de Roni Schneider',
-              'enter_name_title': 'Bine ați venit! Cum vă numiți?',
+              'enter_name_title': 'Cum vă numiți?',
               'name_hint': 'Introduceți numele...',
               'continue_btn': 'Să începem',
-              'meds_tab': 'Orare tratament',
+              'meds_tab': 'Orare pastile',
               'appointments_tab': 'Programări',
-              'add_med': 'Adaugă orar pastile',
-              'add_appointment': 'Programare medic / analize',
-              'timing_title': 'Titlu orar (ex. Pastile de dimineață)',
-              'add_pill_btn': '+ Adaugă alt medicament la această oră',
-              'pill_name': 'Medicament (autocompletare)',
+              'add_med': 'Adaugă orar',
+              'add_appointment': 'Programare nouă',
+              'timing_title': 'Titlu orar',
+              'add_pill_btn': '+ Adaugă alt medicament',
+              'pill_name': 'Medicament',
               'dosage': 'Doză',
               'stock': 'Stoc',
               'time': 'Ora',
               'date': 'Data',
-              'doctor_name': 'Medic sau analiză',
-              'clinic': 'Clinică / Locație',
-              'save': 'Confirmă și Salvează',
+              'morning': 'Dimineață (08:00)',
+              'noon': 'Prânz (13:00)',
+              'evening': 'Seară (19:00)',
+              'night': 'Noapte (22:00)',
+              'doctor_type': 'Tip vizită',
+              'doc_doctor': 'Doctor',
+              'doc_nurse': 'Asistent',
+              'doc_test': 'Analize',
+              'doc_treatment': 'Tratament',
+              'doctor_name': 'Nume specialist',
+              'clinic_address': 'Adresă clinică',
+              'nav_waze': 'Deschide în Waze',
+              'nav_google': 'Deschide în Google Maps',
+              'save': 'Salvează',
               'cancel': 'Anulează',
               'stock_alert': 'Stoc redus!',
               'empty_meds': 'Niciun tratament',
               'empty_apps': 'Nicio programare',
               'settings': 'Setări',
               'language': 'Limbă',
-              'lang_change_alert': 'Actualizare limbă...',
+              'lang_change_alert': 'Actualizare...',
               'voice_alerts': 'Alerte vocale',
               'alert_sound': 'Stil sunet',
-              'sound_electric': 'Cyber Electronic',
-              'sound_gong': 'Gong relaxant',
-              'sound_alarm': 'Alarmă intensă',
-              'sound_bell': 'Clopoțel digital',
-              'sound_voice_only': 'Doar voce',
-              'high_contrast': 'Contrast ridicat (Negru-Galben)',
+              'sound_vol': 'Volum',
+              'preview_sound': 'Test sunet',
+              'confirm_sound': 'Salvează sunetul',
+              'themes_title': 'Teme 3D și texturi',
+              'high_contrast': 'Contrast ridicat',
               'tts_phrase': 'Timpul pentru: {name}',
-              'alert_popup_title': 'Memento Medicamente',
-              'btn_taken': 'Luate acum toate',
+              'alert_popup_title': 'Memento',
+              'btn_taken': 'Luate toate',
               'btn_snooze': 'Amână',
               'btn_skip': 'Omite',
-              'snooze_title': 'Amânare alertă',
+              'snooze_title': 'Amânare',
               'minutes': 'minute',
-              'confirm_snooze': 'Setează amânare',
+              'confirm_snooze': 'Setează',
             },
             'ar': {
               'app_name': 'سايبر فارما',
               'welcome': 'أهلاً بك',
               'creator': 'تم الإنشاء والتطوير بواسطة روني شنايدר',
-              'enter_name_title': 'مرحباً! ما هو اسمك؟',
-              'name_hint': 'اكتب اسمك هنا...',
+              'enter_name_title': 'ما هو اسمك؟',
+              'name_hint': 'اكتب اسمك...',
               'continue_btn': 'ابدأ الآن',
               'meds_tab': 'مواعيد الأدوية',
               'appointments_tab': 'المواعيد والفحوصات',
               'add_med': 'إضافة موعد أدوية',
-              'add_appointment': 'حجز موعد طبيب / فحص',
-              'timing_title': 'عنوان الموعد (مثال: أدوية الصباح)',
-              'add_pill_btn': '+ إضافة دواء آخر لنفس الموعد',
-              'pill_name': 'اسم الدواء (إكمال تلقائي)',
+              'add_appointment': 'حجز موعد جديد',
+              'timing_title': 'عنوان الموعد',
+              'add_pill_btn': '+ دواء إضافي',
+              'pill_name': 'اسم الدواء',
               'dosage': 'الجرعة',
               'stock': 'المخزون',
               'time': 'الوقت',
               'date': 'التاريخ',
-              'doctor_name': 'اسم الطبيب / الفحص',
-              'clinic': 'العيادة / الموقع',
-              'save': 'تأكيد وحفظ',
+              'morning': 'الصباح (08:00)',
+              'noon': 'الظهر (13:00)',
+              'evening': 'المساء (19:00)',
+              'night': 'الليل (22:00)',
+              'doctor_type': 'نوع الموعد',
+              'doc_doctor': 'طبيب',
+              'doc_nurse': 'تمريض',
+              'doc_test': 'فحص مخبري',
+              'doc_treatment': 'علاج',
+              'doctor_name': 'اسم الطبيب / الفاحص',
+              'clinic_address': 'عنوان العيادة',
+              'nav_waze': 'فتح عبر Waze',
+              'nav_google': 'فتح عبر خرائط Google',
+              'save': 'حفظ',
               'cancel': 'إلغاء',
-              'stock_alert': 'المخزون قارب على الانتهاء!',
-              'empty_meds': 'لا توجد أدوية مضافة',
+              'stock_alert': 'المخزون شارف على الانتهاء!',
+              'empty_meds': 'لا توجد أدوية',
               'empty_apps': 'لا توجد مواعيد',
               'settings': 'الإعدادات',
               'language': 'اللغة',
-              'lang_change_alert': 'جاري تحديث اللغة وتحديث الواجهة...',
+              'lang_change_alert': 'جاري التحديث...',
               'voice_alerts': 'التنبيهات الصوتية',
-              'alert_sound': 'نوع نغمة التنبيه',
-              'sound_electric': 'إلكتروني حديث (سايبر)',
-              'sound_gong': 'صوت هادئ ومريح',
-              'sound_alarm': 'جرس تنبيه قوي وواضح',
-              'sound_bell': 'رنين رقمي خفيف',
-              'sound_voice_only': 'صوت ناطق فقط بدون رنين',
-              'high_contrast': 'وضع ضعاف البصر (أسود وأصفر شديد التباين)',
-              'tts_phrase': 'حان موعد تناول: {name}',
-              'alert_popup_title': 'تنبيه تناول الدواء',
-              'btn_taken': 'تم أخذ جميع الأدوية',
-              'btn_snooze': 'تأجيل التنبيه',
-              'btn_skip': 'تخطي هذه المرة',
-              'snooze_title': 'تحديد وقت التأجيل',
+              'alert_sound': 'نغمة التنبيه',
+              'sound_vol': 'مستوى الصوت',
+              'preview_sound': 'تشغيل تجريبي',
+              'confirm_sound': 'تأكيد وحفظ الصوت',
+              'themes_title': 'السمات والألوان ثلاثية الأبعاد',
+              'high_contrast': 'وضع عالي التباين',
+              'tts_phrase': 'حان موعد: {name}',
+              'alert_popup_title': 'تنبيه الدواء',
+              'btn_taken': 'تم أخذ الكل',
+              'btn_snooze': 'تأجيل',
+              'btn_skip': 'تخطي',
+              'snooze_title': 'تأجيل التنبيه',
               'minutes': 'دقائق',
-              'confirm_snooze': 'تأكيد التأجيل',
+              'confirm_snooze': 'تأكيد',
             },
             'de': {
               'app_name': 'Cyber Pharma',
               'welcome': 'Willkommen',
               'creator': 'Erstellt und entwickelt von Roni Schneider',
-              'enter_name_title': 'Willkommen! Wie heißen Sie?',
-              'name_hint': 'Geben Sie Ihren Namen ein...',
+              'enter_name_title': 'Wie heißen Sie?',
+              'name_hint': 'Name eingeben...',
               'continue_btn': 'Starten',
-              'meds_tab': 'Medikamenten-Pläne',
+              'meds_tab': 'Medikamente',
               'appointments_tab': 'Arzttermine',
-              'add_med': 'Einnahmezeit hinzufügen',
-              'add_appointment': 'Arzttermin / Test hinzufügen',
-              'timing_title': 'Bezeichnung (z.B. Morgentabletten)',
-              'add_pill_btn': '+ Weiteres Medikament hinzufügen',
-              'pill_name': 'Medikament (Autovervollständigung)',
+              'add_med': 'Plan hinzufügen',
+              'add_appointment': 'Termin hinzufügen',
+              'timing_title': 'Plan-Titel',
+              'add_pill_btn': '+ Weiteres Medikament',
+              'pill_name': 'Medikament',
               'dosage': 'Dosis',
               'stock': 'Vorrat',
               'time': 'Uhrzeit',
               'date': 'Datum',
-              'doctor_name': 'Arzt oder Testart',
-              'clinic': 'Klinik / Ort',
-              'save': 'Bestätigen und Speichern',
+              'morning': 'Morgen (08:00)',
+              'noon': 'Mittag (13:00)',
+              'evening': 'Abend (19:00)',
+              'night': 'Nacht (22:00)',
+              'doctor_type': 'Termin-Art',
+              'doc_doctor': 'Arzt',
+              'doc_nurse': 'Pflege',
+              'doc_test': 'Labortest',
+              'doc_treatment': 'Behandlung',
+              'doctor_name': 'Name des Spezialisten',
+              'clinic_address': 'Adresse der Praxis',
+              'nav_waze': 'In Waze öffnen',
+              'nav_google': 'In Google Maps öffnen',
+              'save': 'Speichern',
               'cancel': 'Abbrechen',
               'stock_alert': 'Vorrat fast leer!',
-              'empty_meds': 'Keine Pläne angelegt',
-              'empty_apps': 'Keine Termine vorhanden',
+              'empty_meds': 'Keine Pläne',
+              'empty_apps': 'Keine Termine',
               'settings': 'Einstellungen',
               'language': 'Sprache',
-              'lang_change_alert': 'Sprache wird aktualisiert...',
-              'voice_alerts': 'Sprachansage',
-              'alert_sound': 'Signalton-Stil',
-              'sound_electric': 'Cyber Elektronisch',
-              'sound_gong': 'Harmonischer Gong',
-              'sound_alarm': 'Lauter Dringlichkeitsalarm',
-              'sound_bell': 'Digitaler Glockenklang',
-              'sound_voice_only': 'Nur Sprache (Kein Klingelton)',
-              'high_contrast': 'Kontrastmodus (Schwarz & Gelb)',
+              'lang_change_alert': 'Aktualisiere Sprache...',
+              'voice_alerts': 'Sprachausgabe',
+              'alert_sound': 'Signalton',
+              'sound_vol': 'Lautstärke',
+              'preview_sound': 'Ton abspielen',
+              'confirm_sound': 'Ton speichern',
+              'themes_title': '3D Farbschemata',
+              'high_contrast': 'Hoher Kontrast',
               'tts_phrase': 'Zeit für: {name}',
               'alert_popup_title': 'Erinnerung',
               'btn_taken': 'Alles eingenommen',
               'btn_snooze': 'Schlummern',
-              'btn_skip': 'Einmalig überspringen',
+              'btn_skip': 'Überspringen',
               'snooze_title': 'Erinnerung verschieben',
               'minutes': 'Minuten',
               'confirm_snooze': 'Bestätigen',
             }
+          };
+
+          const Map<String, Map<String, dynamic>> themePalettes = {
+            'cyber': {
+              'name': 'Cyber Neon',
+              'bg': Color(0xFF0F172A),
+              'surface': Color(0xFF1E293B),
+              'accent': Color(0xFF06B6D4),
+              'glow': Color(0xFF38BDF8),
+            },
+            'purple': {
+              'name': 'Midnight Purple',
+              'bg': Color(0xFF180B2B),
+              'surface': Color(0xFF2C164D),
+              'accent': Color(0xFFA855F7),
+              'glow': Color(0xFFD8B4FE),
+            },
+            'emerald': {
+              'name': 'Emerald Matrix',
+              'bg': Color(0xFF062016),
+              'surface': Color(0xFF0F3826),
+              'accent': Color(0xFF10B981),
+              'glow': Color(0xFF34D399),
+            },
+            'crimson': {
+              'name': 'Crimson Sport',
+              'bg': Color(0xFF20090D),
+              'surface': Color(0xFF3D131B),
+              'accent': Color(0xFFF43F5E),
+              'glow': Color(0xFFFDA4AF),
+            },
+            'gold': {
+              'name': 'Obsidian Gold',
+              'bg': Color(0xFF171510),
+              'surface': Color(0xFF2B261D),
+              'accent': Color(0xFFEAB308),
+              'glow': Color(0xFFFDE047),
+            },
           };
 
           void main() async {
@@ -413,6 +526,8 @@ jobs:
             bool _voiceAlerts = true;
             bool _highContrast = false;
             String _soundType = 'electric';
+            double _soundVolume = 1.0;
+            String _themeKey = 'cyber';
             bool _initialized = false;
             Key _appKey = UniqueKey();
 
@@ -421,6 +536,8 @@ jobs:
             bool get voiceAlerts => _voiceAlerts;
             bool get highContrast => _highContrast;
             String get soundType => _soundType;
+            double get soundVolume => _soundVolume;
+            String get themeKey => _themeKey;
 
             @override
             void initState() {
@@ -436,6 +553,8 @@ jobs:
                 _voiceAlerts = prefs.getBool('c_voice') ?? true;
                 _highContrast = prefs.getBool('c_hc') ?? false;
                 _soundType = prefs.getString('c_sound') ?? 'electric';
+                _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
+                _themeKey = prefs.getString('c_theme') ?? 'cyber';
                 _initialized = true;
               });
             }
@@ -445,7 +564,7 @@ jobs:
               await prefs.setString('c_lang', lang);
               setState(() {
                 _lang = lang;
-                _appKey = UniqueKey(); // Rebuild whole app immediately
+                _appKey = UniqueKey();
               });
             }
 
@@ -455,7 +574,13 @@ jobs:
               setState(() => _userName = name);
             }
 
-            void updateSettings({bool? voice, bool? hc, String? sound}) async {
+            void setThemeKey(String key) async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('c_theme', key);
+              setState(() => _themeKey = key);
+            }
+
+            void updateSettings({bool? voice, bool? hc, String? sound, double? volume}) async {
               final prefs = await SharedPreferences.getInstance();
               setState(() {
                 if (voice != null) {
@@ -470,6 +595,10 @@ jobs:
                   _soundType = sound;
                   prefs.setString('c_sound', sound);
                 }
+                if (volume != null) {
+                  _soundVolume = volume;
+                  prefs.setDouble('c_volume', volume);
+                }
               });
             }
 
@@ -478,8 +607,9 @@ jobs:
               if (!_initialized) return const SizedBox();
 
               final bool isRtl = _lang == 'he' || _lang == 'ar';
-              final Color bg = _highContrast ? Colors.black : const Color(0xFF0F172A);
-              final Color primary = _highContrast ? Colors.yellowAccent : const Color(0xFF06B6D4);
+              final palette = themePalettes[_themeKey] ?? themePalettes['cyber']!;
+              final Color bg = _highContrast ? Colors.black : palette['bg']!;
+              final Color primary = _highContrast ? Colors.yellowAccent : palette['accent']!;
 
               return KeyedSubtree(
                 key: _appKey,
@@ -501,10 +631,11 @@ jobs:
           }
 
           BoxDecoration cyber3D({
+            required BuildContext context,
             double radius = 24,
             bool isPressed = false,
             bool highContrast = false,
-            Color glowColor = const Color(0xFF06B6D4),
+            Color? customGlow,
           }) {
             if (highContrast) {
               return BoxDecoration(
@@ -516,28 +647,34 @@ jobs:
                 ],
               );
             }
+            final app = CyberPillMasterApp.of(context);
+            final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
+            final Color surface = palette['surface']!;
+            final Color bg = palette['bg']!;
+            final Color glow = customGlow ?? palette['accent']!;
+
             if (isPressed) {
               return BoxDecoration(
-                color: const Color(0xFF1E293B),
+                color: surface,
                 borderRadius: BorderRadius.circular(radius),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.6), offset: const Offset(3, 3), blurRadius: 6),
-                  BoxShadow(color: glowColor.withOpacity(0.3), offset: const Offset(-2, -2), blurRadius: 6),
+                  BoxShadow(color: Colors.black.withOpacity(0.7), offset: const Offset(3, 3), blurRadius: 6),
+                  BoxShadow(color: glow.withOpacity(0.3), offset: const Offset(-2, -2), blurRadius: 6),
                 ],
               );
             }
             return BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+              gradient: LinearGradient(
+                colors: [surface, bg],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(radius),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.8), offset: const Offset(8, 8), blurRadius: 16),
-                BoxShadow(color: glowColor.withOpacity(0.25), offset: const Offset(-4, -4), blurRadius: 12),
+                BoxShadow(color: Colors.black.withOpacity(0.85), offset: const Offset(7, 7), blurRadius: 15),
+                BoxShadow(color: glow.withOpacity(0.25), offset: const Offset(-3, -3), blurRadius: 10),
               ],
-              border: Border.all(color: glowColor.withOpacity(0.4), width: 1.2),
+              border: Border.all(color: glow.withOpacity(0.4), width: 1.2),
             );
           }
 
@@ -568,7 +705,7 @@ jobs:
                           Container(
                             width: 110,
                             height: 110,
-                            decoration: cyber3D(radius: 35, highContrast: hc),
+                            decoration: cyber3D(context: context, radius: 35, highContrast: hc),
                             child: Icon(Icons.person_pin, size: 60, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
                           ),
                           const SizedBox(height: 30),
@@ -584,7 +721,7 @@ jobs:
                           const SizedBox(height: 25),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 18),
-                            decoration: cyber3D(radius: 20, isPressed: true, highContrast: hc),
+                            decoration: cyber3D(context: context, radius: 20, isPressed: true, highContrast: hc),
                             child: TextField(
                               controller: _ctrl,
                               textAlign: TextAlign.center,
@@ -609,7 +746,7 @@ jobs:
                             },
                             child: Container(
                               height: 56,
-                              decoration: cyber3D(radius: 22, highContrast: hc, glowColor: const Color(0xFF38BDF8)),
+                              decoration: cyber3D(context: context, radius: 22, highContrast: hc),
                               child: Center(
                                 child: Text(
                                   t['continue_btn']!,
@@ -665,7 +802,7 @@ jobs:
                         Container(
                           width: 140,
                           height: 140,
-                          decoration: cyber3D(radius: 45, highContrast: hc, glowColor: const Color(0xFF06B6D4)),
+                          decoration: cyber3D(context: context, radius: 45, highContrast: hc),
                           child: Icon(Icons.bolt, size: 85, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
                         ),
                         const SizedBox(height: 32),
@@ -690,7 +827,7 @@ jobs:
                         const SizedBox(height: 30),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-                          decoration: cyber3D(radius: 18, highContrast: hc),
+                          decoration: cyber3D(context: context, radius: 18, highContrast: hc),
                           child: Text(
                             t['creator']!,
                             style: TextStyle(
@@ -760,6 +897,7 @@ jobs:
 
           class AppointmentModel {
             String id;
+            String type;
             String doctor;
             String clinic;
             String date;
@@ -767,6 +905,7 @@ jobs:
 
             AppointmentModel({
               required this.id,
+              required this.type,
               required this.doctor,
               required this.clinic,
               required this.date,
@@ -775,6 +914,7 @@ jobs:
 
             Map<String, dynamic> toMap() => {
                   'id': id,
+                  'type': type,
                   'doctor': doctor,
                   'clinic': clinic,
                   'date': date,
@@ -783,6 +923,7 @@ jobs:
 
             factory AppointmentModel.fromMap(Map<String, dynamic> map) => AppointmentModel(
                   id: map['id'],
+                  type: map['type'] ?? 'רופא',
                   doctor: map['doctor'],
                   clinic: map['clinic'],
                   date: map['date'],
@@ -822,16 +963,17 @@ jobs:
               };
               await flutterTts.setLanguage(langMap[app.currentLang] ?? 'he-IL');
               await flutterTts.setSpeechRate(0.45);
+              await flutterTts.setVolume(app.soundVolume);
             }
 
             Future<void> _loadData() async {
               final prefs = await SharedPreferences.getInstance();
-              final String? schedsRaw = prefs.getString('c_multi_scheds_store');
+              final String? schedsRaw = prefs.getString('c_multi_scheds_store_v3');
               if (schedsRaw != null) {
                 final List decoded = jsonDecode(schedsRaw);
                 setState(() => _schedules = decoded.map((e) => ScheduleGroup.fromMap(e)).toList());
               }
-              final String? appsRaw = prefs.getString('c_apps_store_v2');
+              final String? appsRaw = prefs.getString('c_apps_store_v3');
               if (appsRaw != null) {
                 final List decodedA = jsonDecode(appsRaw);
                 setState(() => _apps = decodedA.map((e) => AppointmentModel.fromMap(e)).toList());
@@ -840,18 +982,34 @@ jobs:
 
             Future<void> _saveSchedules() async {
               final prefs = await SharedPreferences.getInstance();
-              await prefs.setString('c_multi_scheds_store', jsonEncode(_schedules.map((m) => m.toMap()).toList()));
+              await prefs.setString('c_multi_scheds_store_v3', jsonEncode(_schedules.map((m) => m.toMap()).toList()));
             }
 
             Future<void> _saveApps() async {
               final prefs = await SharedPreferences.getInstance();
-              await prefs.setString('c_apps_store_v2', jsonEncode(_apps.map((a) => a.toMap()).toList()));
+              await prefs.setString('c_apps_store_v3', jsonEncode(_apps.map((a) => a.toMap()).toList()));
             }
 
             void _speak(String text) async {
               final app = CyberPillMasterApp.of(context);
               if (app.voiceAlerts) {
+                await flutterTts.setVolume(app.soundVolume);
                 await flutterTts.speak(text);
+              }
+            }
+
+            void _launchMap(String address, bool isWaze) async {
+              if (address.isEmpty) return;
+              final encoded = Uri.encodeComponent(address);
+              final Uri url = isWaze
+                  ? Uri.parse('waze://?q=$encoded')
+                  : Uri.parse('https://www.google.com/maps/search/?api=1&query=$encoded');
+              
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url, mode: LaunchMode.externalApplication);
+              } else {
+                final webUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$encoded');
+                await launchUrl(webUrl, mode: LaunchMode.externalApplication);
               }
             }
 
@@ -917,7 +1075,7 @@ jobs:
                             child: Container(
                               height: 48,
                               margin: const EdgeInsets.only(bottom: 12),
-                              decoration: cyber3D(radius: 16, highContrast: hc, glowColor: const Color(0xFF10B981)),
+                              decoration: cyber3D(context: context, radius: 16, highContrast: hc, customGlow: const Color(0xFF10B981)),
                               child: Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -938,7 +1096,7 @@ jobs:
                             child: Container(
                               height: 48,
                               margin: const EdgeInsets.only(bottom: 12),
-                              decoration: cyber3D(radius: 16, highContrast: hc, glowColor: const Color(0xFFF59E0B)),
+                              decoration: cyber3D(context: context, radius: 16, highContrast: hc, customGlow: const Color(0xFFF59E0B)),
                               child: Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -955,7 +1113,7 @@ jobs:
                             onTap: () => Navigator.pop(ctx),
                             child: Container(
                               height: 44,
-                              decoration: cyber3D(radius: 16, highContrast: hc, glowColor: Colors.redAccent),
+                              decoration: cyber3D(context: context, radius: 16, highContrast: hc, customGlow: Colors.redAccent),
                               child: Center(
                                 child: Text(t['btn_skip']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent)),
                               ),
@@ -990,7 +1148,7 @@ jobs:
                         const SizedBox(height: 14),
                         Container(
                           height: 120,
-                          decoration: cyber3D(radius: 18, highContrast: hc),
+                          decoration: cyber3D(context: context, radius: 18, highContrast: hc),
                           child: CupertinoPicker(
                             itemExtent: 36,
                             scrollController: FixedExtentScrollController(initialItem: 1),
@@ -1010,7 +1168,7 @@ jobs:
                           },
                           child: Container(
                             height: 50,
-                            decoration: cyber3D(radius: 18, highContrast: hc, glowColor: const Color(0xFF06B6D4)),
+                            decoration: cyber3D(context: context, radius: 18, highContrast: hc),
                             child: Center(
                               child: Text(t['confirm_snooze']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4))),
                             ),
@@ -1028,7 +1186,7 @@ jobs:
               final t = dict[app.currentLang]!;
               final hc = app.highContrast;
 
-              final titleCtrl = TextEditingController(text: 'כדורי בוקר');
+              final titleCtrl = TextEditingController();
               int hour = 8;
               int minute = 0;
               List<PillItem> workingPills = [PillItem(name: 'אקמול (Acamol)', dosage: 1, stock: 30)];
@@ -1046,7 +1204,7 @@ jobs:
                         top: 24,
                         left: 20,
                         right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 30, // Generous padding
+                        bottom: MediaQuery.of(context).viewInsets.bottom + 30,
                       ),
                       child: SafeArea(
                         child: SingleChildScrollView(
@@ -1062,9 +1220,22 @@ jobs:
                                 ),
                               ),
                               const SizedBox(height: 16),
+                              // Fast Preset Buttons: Morning, Noon, Evening, Night
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  _presetBtn(t['morning']!, 8, 0, () => setDlg(() { hour = 8; minute = 0; titleCtrl.text = t['morning']!; })),
+                                  _presetBtn(t['noon']!, 13, 0, () => setDlg(() { hour = 13; minute = 0; titleCtrl.text = t['noon']!; })),
+                                  _presetBtn(t['evening']!, 19, 0, () => setDlg(() { hour = 19; minute = 0; titleCtrl.text = t['evening']!; })),
+                                  _presetBtn(t['night']!, 22, 0, () => setDlg(() { hour = 22; minute = 0; titleCtrl.text = t['night']!; })),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: cyber3D(radius: 18, isPressed: true, highContrast: hc),
+                                decoration: cyber3D(context: context, radius: 18, isPressed: true, highContrast: hc),
                                 child: TextField(
                                   controller: titleCtrl,
                                   style: TextStyle(color: hc ? Colors.yellowAccent : Colors.cyanAccent),
@@ -1076,16 +1247,18 @@ jobs:
                                 ),
                               ),
                               const SizedBox(height: 14),
-                              Text(t['time']!, style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white)),
+                              Text('${t['time']!}: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
+                                  style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white)),
+                              const SizedBox(height: 6),
                               Container(
                                 height: 85,
-                                decoration: cyber3D(radius: 16, highContrast: hc),
+                                decoration: cyber3D(context: context, radius: 16, highContrast: hc),
                                 child: Row(
                                   children: [
                                     Expanded(
                                       child: CupertinoPicker(
                                         itemExtent: 32,
-                                        scrollController: FixedExtentScrollController(initialItem: 8),
+                                        scrollController: FixedExtentScrollController(initialItem: hour),
                                         onSelectedItemChanged: (i) => setDlg(() => hour = i),
                                         children: List.generate(24, (i) => Center(
                                           child: Text(i.toString().padLeft(2, '0'), style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
@@ -1096,6 +1269,7 @@ jobs:
                                     Expanded(
                                       child: CupertinoPicker(
                                         itemExtent: 32,
+                                        scrollController: FixedExtentScrollController(initialItem: minute ~/ 5),
                                         onSelectedItemChanged: (i) => setDlg(() => minute = i * 5),
                                         children: List.generate(12, (i) => Center(
                                           child: Text((i * 5).toString().padLeft(2, '0'), style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
@@ -1112,23 +1286,17 @@ jobs:
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 12),
                                   padding: const EdgeInsets.all(12),
-                                  decoration: cyber3D(radius: 16, highContrast: hc),
+                                  decoration: cyber3D(context: context, radius: 16, highContrast: hc),
                                   child: Column(
                                     children: [
-                                      // Smart Autocomplete Single Field
                                       Autocomplete<String>(
                                         initialValue: TextEditingValue(text: pill.name),
                                         optionsBuilder: (TextEditingValue textEditingValue) {
-                                          if (textEditingValue.text.isEmpty) {
-                                            return popularMedicines;
-                                          }
-                                          return popularMedicines.where((String option) {
-                                            return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                                          });
+                                          if (textEditingValue.text.isEmpty) return popularMedicines;
+                                          return popularMedicines.where((String option) =>
+                                              option.toLowerCase().contains(textEditingValue.text.toLowerCase()));
                                         },
-                                        onSelected: (String selection) {
-                                          setDlg(() => pill.name = selection);
-                                        },
+                                        onSelected: (String selection) => setDlg(() => pill.name = selection),
                                         fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
                                           return TextField(
                                             controller: controller,
@@ -1175,9 +1343,7 @@ jobs:
                                 );
                               }),
                               TextButton.icon(
-                                onPressed: () {
-                                  setDlg(() => workingPills.add(PillItem(name: 'נורופן (Nurofen)', dosage: 1, stock: 30)));
-                                },
+                                onPressed: () => setDlg(() => workingPills.add(PillItem(name: 'נורופן (Nurofen)', dosage: 1, stock: 30))),
                                 icon: const Icon(Icons.add, color: Color(0xFF06B6D4)),
                                 label: Text(t['add_pill_btn']!, style: TextStyle(color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4), fontWeight: FontWeight.bold)),
                               ),
@@ -1188,7 +1354,7 @@ jobs:
                                   setState(() {
                                     _schedules.add(ScheduleGroup(
                                       id: DateTime.now().millisecondsSinceEpoch.toString(),
-                                      title: titleCtrl.text.trim(),
+                                      title: titleCtrl.text.trim().isEmpty ? t['timing_title']! : titleCtrl.text.trim(),
                                       hour: hour,
                                       minute: minute,
                                       pills: workingPills,
@@ -1199,7 +1365,7 @@ jobs:
                                 },
                                 child: Container(
                                   height: 52,
-                                  decoration: cyber3D(radius: 20, highContrast: hc, glowColor: const Color(0xFF10B981)),
+                                  decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFF10B981)),
                                   child: Center(
                                     child: Text(
                                       t['save']!,
@@ -1222,14 +1388,29 @@ jobs:
               );
             }
 
+            Widget _presetBtn(String label, int h, int m, VoidCallback onTap) {
+              final hc = CyberPillMasterApp.of(context).highContrast;
+              return GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: cyber3D(context: context, radius: 14, highContrast: hc),
+                  child: Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.cyanAccent)),
+                ),
+              );
+            }
+
             void _openAddAppointmentDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang]!;
               final hc = app.highContrast;
               final docCtrl = TextEditingController();
               final clinicCtrl = TextEditingController();
+              String selectedType = t['doc_doctor']!;
               DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
               TimeOfDay selectedTime = const TimeOfDay(hour: 10, minute: 0);
+
+              final typesList = [t['doc_doctor']!, t['doc_nurse']!, t['doc_test']!, t['doc_treatment']!];
 
               showModalBottomSheet(
                 context: context,
@@ -1260,9 +1441,33 @@ jobs:
                                 ),
                               ),
                               const SizedBox(height: 16),
+                              // Appointment Types Table Selection
+                              Text(t['doctor_type']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white70, fontWeight: FontWeight.bold)),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: typesList.map((type) {
+                                  final bool isSel = selectedType == type;
+                                  return GestureDetector(
+                                    onTap: () => setDlg(() => selectedType = type),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                      decoration: cyber3D(context: context, radius: 12, isPressed: isSel, highContrast: hc, customGlow: const Color(0xFFA855F7)),
+                                      child: Text(
+                                        type,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: isSel ? (hc ? Colors.yellowAccent : Colors.purpleAccent) : (hc ? Colors.white60 : Colors.white70),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                              const SizedBox(height: 16),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: cyber3D(radius: 18, isPressed: true, highContrast: hc),
+                                decoration: cyber3D(context: context, radius: 18, isPressed: true, highContrast: hc),
                                 child: TextField(
                                   controller: docCtrl,
                                   style: TextStyle(color: hc ? Colors.yellowAccent : Colors.purpleAccent),
@@ -1276,13 +1481,13 @@ jobs:
                               const SizedBox(height: 12),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: cyber3D(radius: 18, isPressed: true, highContrast: hc),
+                                decoration: cyber3D(context: context, radius: 18, isPressed: true, highContrast: hc),
                                 child: TextField(
                                   controller: clinicCtrl,
                                   style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: t['clinic']!,
+                                    hintText: t['clinic_address']!,
                                     hintStyle: TextStyle(color: hc ? Colors.yellow.shade100.withOpacity(0.5) : Colors.white38),
                                   ),
                                 ),
@@ -1303,7 +1508,7 @@ jobs:
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(vertical: 14),
-                                        decoration: cyber3D(radius: 16, highContrast: hc),
+                                        decoration: cyber3D(context: context, radius: 16, highContrast: hc),
                                         child: Center(
                                           child: Text(
                                             '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
@@ -1325,7 +1530,7 @@ jobs:
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(vertical: 14),
-                                        decoration: cyber3D(radius: 16, highContrast: hc),
+                                        decoration: cyber3D(context: context, radius: 16, highContrast: hc),
                                         child: Center(
                                           child: Text(
                                             selectedTime.format(context),
@@ -1344,6 +1549,7 @@ jobs:
                                   setState(() {
                                     _apps.add(AppointmentModel(
                                       id: DateTime.now().millisecondsSinceEpoch.toString(),
+                                      type: selectedType,
                                       doctor: docCtrl.text.trim(),
                                       clinic: clinicCtrl.text.trim(),
                                       date: '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
@@ -1355,7 +1561,7 @@ jobs:
                                 },
                                 child: Container(
                                   height: 52,
-                                  decoration: cyber3D(radius: 20, highContrast: hc, glowColor: const Color(0xFFA855F7)),
+                                  decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFFA855F7)),
                                   child: Center(
                                     child: Text(
                                       t['save']!,
@@ -1391,6 +1597,9 @@ jobs:
                 {'key': 'voice_only', 'label': t['sound_voice_only']!},
               ];
 
+              String selectedSound = app.soundType;
+              double currentVol = app.soundVolume;
+
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
@@ -1411,39 +1620,109 @@ jobs:
                                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
                               ),
                               const SizedBox(height: 18),
-                              SwitchListTile(
-                                title: Text(t['voice_alerts']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
-                                value: app.voiceAlerts,
-                                onChanged: (v) => setDlg(() => app.updateSettings(voice: v)),
+                              // Themes and Textures Palette
+                              Align(
+                                alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
+                                child: Text(t['themes_title']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                               ),
+                              const SizedBox(height: 8),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: themePalettes.entries.map((ent) {
+                                    final bool active = app.themeKey == ent.key;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        app.setThemeKey(ent.key);
+                                        setDlg(() {});
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 8, right: 8),
+                                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                        decoration: BoxDecoration(
+                                          color: ent.value['surface'],
+                                          borderRadius: BorderRadius.circular(16),
+                                          border: Border.all(color: active ? Colors.white : ent.value['accent'], width: active ? 2.5 : 1),
+                                        ),
+                                        child: Text(
+                                          ent.value['name'],
+                                          style: TextStyle(color: ent.value['accent'], fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
                               SwitchListTile(
                                 title: Text(t['high_contrast']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
                                 value: app.highContrast,
                                 onChanged: (v) => setDlg(() => app.updateSettings(hc: v)),
                               ),
-                              const SizedBox(height: 12),
+                              SwitchListTile(
+                                title: Text(t['voice_alerts']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
+                                value: app.voiceAlerts,
+                                onChanged: (v) => setDlg(() => app.updateSettings(voice: v)),
+                              ),
+                              const SizedBox(height: 10),
+                              // Sound Volume Slider
+                              Row(
+                                children: [
+                                  Icon(Icons.volume_up, color: hc ? Colors.yellowAccent : Colors.cyanAccent),
+                                  const SizedBox(width: 10),
+                                  Text('${t['sound_vol']!}: ${(currentVol * 100).toInt()}%', style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
+                                  Expanded(
+                                    child: Slider(
+                                      value: currentVol,
+                                      onChanged: (v) => setDlg(() => currentVol = v),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
                                 child: Text(t['alert_sound']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                               ),
                               const SizedBox(height: 8),
-                              // Scrollable dedicated tone picker
                               Container(
                                 height: 160,
-                                decoration: cyber3D(radius: 18, highContrast: hc),
+                                decoration: cyber3D(context: context, radius: 18, highContrast: hc),
                                 child: ListView.builder(
                                   itemCount: soundOptions.length,
                                   itemBuilder: (ctx3, sIdx) {
                                     final opt = soundOptions[sIdx];
-                                    final bool selected = app.soundType == opt['key'];
+                                    final bool selected = selectedSound == opt['key'];
                                     return ListTile(
                                       title: Text(opt['label']!, style: TextStyle(color: selected ? (hc ? Colors.yellowAccent : Colors.cyanAccent) : (hc ? Colors.white70 : Colors.white60), fontWeight: selected ? FontWeight.bold : FontWeight.normal)),
-                                      trailing: selected ? Icon(Icons.check_circle, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)) : null,
-                                      onTap: () {
-                                        setDlg(() => app.updateSettings(sound: opt['key']));
-                                      },
+                                      trailing: IconButton(
+                                        icon: const Icon(Icons.play_circle_fill, color: Colors.cyanAccent),
+                                        onPressed: () async {
+                                          await flutterTts.setVolume(currentVol);
+                                          await flutterTts.speak('בדיקת צליל: ' + opt['label']!);
+                                        },
+                                      ),
+                                      leading: Radio<String>(
+                                        value: opt['key']!,
+                                        groupValue: selectedSound,
+                                        onChanged: (val) => setDlg(() => selectedSound = val!),
+                                      ),
                                     );
                                   },
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              GestureDetector(
+                                onTap: () {
+                                  app.updateSettings(sound: selectedSound, volume: currentVol);
+                                  Navigator.pop(ctx);
+                                },
+                                child: Container(
+                                  height: 48,
+                                  decoration: cyber3D(context: context, radius: 16, highContrast: hc, customGlow: const Color(0xFF10B981)),
+                                  child: Center(
+                                    child: Text(t['confirm_sound']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
+                                  ),
                                 ),
                               ),
                             ],
@@ -1488,7 +1767,7 @@ jobs:
               final hc = app.highContrast;
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                decoration: cyber3D(radius: 16, highContrast: hc),
+                decoration: cyber3D(context: context, radius: 16, highContrast: hc),
                 child: ListTile(
                   title: Text(label, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white, fontWeight: FontWeight.bold)),
                   trailing: app.currentLang == code ? Icon(Icons.check, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)) : null,
@@ -1508,6 +1787,8 @@ jobs:
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang]!;
               final hc = app.highContrast;
+              final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
+              final Color accent = hc ? Colors.yellowAccent : palette['accent']!;
 
               return Scaffold(
                 appBar: AppBar(
@@ -1521,7 +1802,7 @@ jobs:
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
                           fontSize: 22,
-                          color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4),
+                          color: accent,
                         ),
                       ),
                       Text(
@@ -1542,9 +1823,9 @@ jobs:
                   ],
                   bottom: TabBar(
                     controller: _tabController,
-                    indicatorColor: hc ? Colors.yellowAccent : const Color(0xFF06B6D4),
-                    labelColor: hc ? Colors.yellowAccent : const Color(0xFF06B6D4),
-                    unselectedLabelColor: hc ? Colors.white38 : Colors.white38,
+                    indicatorColor: accent,
+                    labelColor: accent,
+                    unselectedLabelColor: Colors.white38,
                     tabs: [
                       Tab(icon: const Icon(Icons.medication), text: t['meds_tab']!),
                       Tab(icon: const Icon(Icons.event_note), text: t['appointments_tab']!),
@@ -1555,7 +1836,7 @@ jobs:
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      // Medicines Tab (Grouped Schedules)
+                      // Medicines Tab
                       _schedules.isEmpty
                           ? Center(child: Text(t['empty_meds']!, style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white38, fontSize: 18)))
                           : ListView.builder(
@@ -1566,16 +1847,16 @@ jobs:
                                 final timeStr = '${sched.hour.toString().padLeft(2, '0')}:${sched.minute.toString().padLeft(2, '0')}';
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 16),
-                                  decoration: cyber3D(radius: 22, isPressed: sched.isTaken, highContrast: hc),
+                                  decoration: cyber3D(context: context, radius: 22, isPressed: sched.isTaken, highContrast: hc),
                                   child: ListTile(
                                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                     leading: Container(
                                       width: 46,
                                       height: 46,
-                                      decoration: cyber3D(radius: 14, isPressed: sched.isTaken, highContrast: hc),
+                                      decoration: cyber3D(context: context, radius: 14, isPressed: sched.isTaken, highContrast: hc),
                                       child: Icon(
                                         sched.isTaken ? Icons.check_circle : Icons.alarm,
-                                        color: sched.isTaken ? Colors.greenAccent : (hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
+                                        color: sched.isTaken ? Colors.greenAccent : accent,
                                       ),
                                     ),
                                     title: Text(
@@ -1616,19 +1897,58 @@ jobs:
                                 final appItem = _apps[i];
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 16),
-                                  decoration: cyber3D(radius: 22, highContrast: hc, glowColor: const Color(0xFFA855F7)),
+                                  decoration: cyber3D(context: context, radius: 22, highContrast: hc, customGlow: const Color(0xFFA855F7)),
                                   child: ListTile(
                                     contentPadding: const EdgeInsets.all(14),
                                     leading: Icon(Icons.medical_services_outlined, size: 36, color: hc ? Colors.yellowAccent : const Color(0xFFA855F7)),
                                     title: Text(
-                                      appItem.doctor,
+                                      '${appItem.type}: ${appItem.doctor}',
                                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white),
                                     ),
                                     subtitle: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        if (appItem.clinic.isNotEmpty) Text(appItem.clinic, style: TextStyle(color: hc ? Colors.white70 : Colors.white70)),
                                         Text('${appItem.date}  •  ${appItem.time}', style: TextStyle(color: hc ? Colors.cyanAccent : const Color(0xFF38BDF8), fontWeight: FontWeight.bold)),
+                                        if (appItem.clinic.isNotEmpty) ...[
+                                          const SizedBox(height: 4),
+                                          Text('📍 ${appItem.clinic}', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
+                                          const SizedBox(height: 8),
+                                          Row(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () => _launchMap(appItem.clinic, true),
+                                                child: Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                                  decoration: BoxDecoration(color: const Color(0xFF00D1FF).withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                                                  child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      const Icon(Icons.navigation, size: 14, color: Color(0xFF00D1FF)),
+                                                      const SizedBox(width: 4),
+                                                      Text(t['nav_waze']!, style: const TextStyle(fontSize: 12, color: Color(0xFF00D1FF), fontWeight: FontWeight.bold)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              GestureDetector(
+                                                onTap: () => _launchMap(appItem.clinic, false),
+                                                child: Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                                  decoration: BoxDecoration(color: const Color(0xFF34A853).withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                                                  child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      const Icon(Icons.map, size: 14, color: Color(0xFF34A853)),
+                                                      const SizedBox(width: 4),
+                                                      Text(t['nav_google']!, style: const TextStyle(fontSize: 12, color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ],
                                     ),
                                     trailing: IconButton(
@@ -1658,7 +1978,7 @@ jobs:
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                      decoration: cyber3D(radius: 28, highContrast: hc, glowColor: const Color(0xFF06B6D4)),
+                      decoration: cyber3D(context: context, radius: 28, highContrast: hc),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
