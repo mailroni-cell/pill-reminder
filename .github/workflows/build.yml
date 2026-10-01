@@ -28,10 +28,8 @@ jobs:
 
       - name: Configure Android Permissions and Desugaring
         run: |
-          # Permissions
-          sed -i 's/<application/<uses-permission android:name="android.permission.POST_NOTIFICATIONS"\/>\n    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.USE_EXACT_ALARM"\/>\n    <application/' android/app/src/main/AndroidManifest.xml
+          sed -i 's/<application/<uses-permission android:name="android.permission.POST_NOTIFICATIONS"\/>\n    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.USE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.VIBRATE"\/>\n    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"\/>\n    <application/' android/app/src/main/AndroidManifest.xml
           
-          # Fix build.gradle.kts with proper Desugaring dependency
           python3 -c "
           import os
           fpath = 'android/app/build.gradle.kts'
@@ -58,7 +56,7 @@ jobs:
         run: |
           cat << 'EOF' > pubspec.yaml
           name: pill_reminder
-          description: Pill reminder app
+          description: Futuristic 3D Pill Reminder & Health Assistant
           publish_to: 'none'
           version: 1.0.0+1
           environment:
@@ -86,11 +84,10 @@ jobs:
           import 'package:timezone/data/latest_all.dart' as tz;
           import 'package:timezone/timezone.dart' as tz;
 
-          final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-              FlutterLocalNotificationsPlugin();
+          final FlutterLocalNotificationsPlugin flutterNotifications = FlutterLocalNotificationsPlugin();
           final FlutterTts flutterTts = FlutterTts();
 
-          const List<String> commonMedicinesList = [
+          const List<String> popularMedicines = [
             'אקמול (Acamol)',
             'אופטלגין (Optalgin)',
             'נורופן (Nurofen)',
@@ -100,302 +97,559 @@ jobs:
             'קרסטור (Crestor)',
             'גלוקופאז (Glucophage)',
             'לוסרטן (Losartan)',
-            'נורווסק (Norvasc)',
             'קונקור (Concor)',
             'נקסיום (Nexium)',
             'לוסק (Losec)',
             'ציפרלקס (Cipralex)',
-            'זולופט (Zoloft)',
-            'קסנקס (Xanax)',
-            'קלונקס (Clonex)',
-            'אוגמנטין (Augmentin)',
-            'מוקסיפן (Moxypen)',
             'אלטרוקסין (Eltroxin)',
-            'ויטמין D3 (Vitamin D3)',
-            'ויטמין B12 (Vitamin B12)',
-            'ברזל (Iron)',
-            'חומצה פולית (Folic Acid)',
-            'מגנזיום (Magnesium)'
+            'אוגמנטין (Augmentin)',
+            'ויטמין D3',
+            'ויטמין B12',
+            'מגנזיום',
+            'ברזל',
+            'אומגה 3'
           ];
 
-          const Map<String, Map<String, String>> translations = {
+          const Map<String, Map<String, String>> dict = {
             'he': {
-              'app_title': 'תזכורת תרופות',
-              'created_by': 'נוצר ופותח על ידי רוני שניידר',
-              'add_med': 'תרופה חדשה',
-              'med_name': 'בחר תרופה או הקלד שם',
-              'dosage': 'מינון (כדורים)',
-              'stock': 'מלאי',
-              'time': 'שעת נטילה',
-              'save': 'שמור',
+              'app_name': 'סייבר פארמה',
+              'welcome': 'שלום',
+              'creator': 'נוצר ופותח על ידי רוני שניידר',
+              'enter_name_title': 'ברוך הבא! איך קוראים לך?',
+              'name_hint': 'הקלד את שמך...',
+              'continue_btn': 'בוא נתחיל',
+              'meds_tab': 'תרופות',
+              'appointments_tab': 'תורים ובדיקות',
+              'add_med': 'הוסף תרופה חדשה',
+              'add_appointment': 'קבע תור לרופא / בדיקה',
+              'med_name': 'שם התרופה',
+              'dosage': 'מינון כדורים',
+              'stock': 'כמות במלאי',
+              'time': 'שעה',
+              'date': 'תאריך',
+              'doctor_name': 'שם הרופא / סוג בדיקה',
+              'clinic': 'מרפאה / מיקום',
+              'save': 'אישור ושמירה',
               'cancel': 'ביטול',
-              'empty_state': 'אין תרופות מוגדרות עדיין',
-              'stock_alert': 'מלאי נמוך - כדאי לחדש מרשם!',
-              'settings': 'הגדרות',
-              'help': 'מדריך עזרה',
-              'voice_alerts': 'התראות קוליות',
-              'high_contrast': 'מצב כבדי ראייה (גופן מוגדל וניגודיות)',
+              'stock_alert': 'מלאי כמעט נגמר! יש לחדש מרשם',
+              'empty_meds': 'אין עדיין תרופות במעקב',
+              'empty_apps': 'אין תורים קרובים',
+              'settings': 'הגדרות מערכת',
+              'language': 'שפה (Language)',
+              'voice_alerts': 'התראות קוליות מלאות',
+              'alert_sound': 'סוג צלצול התראה',
+              'sound_electric': 'אלקטרוני מודרני',
+              'sound_soft': 'עדין ומרגיע',
+              'sound_loud': 'חזק ומודגש',
+              'high_contrast': 'מצב ניגודיות גבוהה (לכבדי ראייה)',
               'tts_phrase': 'הגיע הזמן ליטול את התרופה: {name}',
-              'help_content': 'מדריך שימוש באפליקציה:\n\n1. הוספת תרופה: לחץ על "תרופה חדשה" בתחתית המסך ובחר תרופה או הקלד שם, ולאחר מכן כוון מינון, מלאי ושעה בגלגלות.\n\n2. אישור נטילה: לחץ על סמל השעון כדי לסמן נטילה. המלאי ירד והאפליקציה תשמיע הודעה קולית.\n\n3. הגדרות ונגישות: בתפריט למעלה ניתן להפעיל מצב כבדי ראייה ולהתאים התראות קוליות.'
+              'alert_popup_title': 'תזכורת נטילת תרופה',
+              'btn_taken': 'נלקחה כעת',
+              'btn_snooze': 'דחה לעוד זמן',
+              'btn_skip': 'דלג הפעם',
+              'snooze_title': 'דחיית תזכורת',
+              'minutes': 'דקות',
+              'confirm_snooze': 'קבע דחייה',
             },
             'en': {
-              'app_title': 'Pill Reminder',
-              'created_by': 'Created & Developed by Roni Schneider',
-              'add_med': 'New Medicine',
-              'med_name': 'Select or type medicine',
-              'dosage': 'Dosage (pills)',
-              'stock': 'Stock',
+              'app_name': 'Cyber Pharma',
+              'welcome': 'Welcome',
+              'creator': 'Created & Developed by Roni Schneider',
+              'enter_name_title': 'Welcome! What is your name?',
+              'name_hint': 'Enter your name...',
+              'continue_btn': 'Get Started',
+              'meds_tab': 'Medicines',
+              'appointments_tab': 'Appointments',
+              'add_med': 'Add Medicine',
+              'add_appointment': 'Add Doctor Appointment',
+              'med_name': 'Medicine Name',
+              'dosage': 'Dosage',
+              'stock': 'Stock Count',
               'time': 'Time',
-              'save': 'Save',
+              'date': 'Date',
+              'doctor_name': 'Doctor or Test Type',
+              'clinic': 'Clinic / Location',
+              'save': 'Confirm & Save',
               'cancel': 'Cancel',
-              'empty_state': 'No medicines added yet',
-              'stock_alert': 'Low stock - refill soon!',
+              'stock_alert': 'Low stock! Refill soon',
+              'empty_meds': 'No medicines added yet',
+              'empty_apps': 'No upcoming appointments',
               'settings': 'Settings',
-              'help': 'Help Guide',
-              'voice_alerts': 'Voice Alerts',
+              'language': 'Language',
+              'voice_alerts': 'Voice Announcements',
+              'alert_sound': 'Alert Tone',
+              'sound_electric': 'Electric Cyber',
+              'sound_soft': 'Gentle',
+              'sound_loud': 'Loud Pulse',
               'high_contrast': 'High Contrast Mode',
-              'tts_phrase': 'Time to take medicine: {name}',
-              'help_content': 'User Guide:\n\n1. Add: Tap "New Medicine" below, select or enter name, and scroll wheels for dosage/time.\n\n2. Take: Tap the bell icon to mark taken. Stock decreases with voice confirmation.\n\n3. Accessibility: Use Settings at the top to toggle High Contrast.'
+              'tts_phrase': 'Time to take your medicine: {name}',
+              'alert_popup_title': 'Medicine Alert',
+              'btn_taken': 'Taken Now',
+              'btn_snooze': 'Snooze',
+              'btn_skip': 'Skip Once',
+              'snooze_title': 'Snooze Reminder',
+              'minutes': 'minutes',
+              'confirm_snooze': 'Set Snooze',
             },
             'ru': {
-              'app_title': 'Напоминание о лекарствах',
-              'created_by': 'Создано и разработано Рони Шнайдером',
-              'add_med': 'Новое лекарство',
-              'med_name': 'Выберите или введите название',
-              'dosage': 'Дозировка',
+              'app_name': 'Кибер Фарма',
+              'welcome': 'Здравствуйте',
+              'creator': 'Создано и разработано Рони Шнайдером',
+              'enter_name_title': 'Добро пожаловать! Как вас зовут?',
+              'name_hint': 'Введите ваше имя...',
+              'continue_btn': 'Начать',
+              'meds_tab': 'Лекарства',
+              'appointments_tab': 'Визиты к врачу',
+              'add_med': 'Добавить лекарство',
+              'add_appointment': 'Запись к врачу / анализы',
+              'med_name': 'Название лекарства',
+              'dosage': 'Доза',
               'stock': 'Запас',
               'time': 'Время',
-              'save': 'Сохранить',
+              'date': 'Дата',
+              'doctor_name': 'Врач или тип анализа',
+              'clinic': 'Клиника / Адрес',
+              'save': 'Подтвердить и сохранить',
               'cancel': 'Отмена',
-              'empty_state': 'Список пуст',
-              'stock_alert': 'Мало таблеток!',
+              'stock_alert': 'Запас на исходе!',
+              'empty_meds': 'Лекарства не добавлены',
+              'empty_apps': 'Нет записей к врачу',
               'settings': 'Настройки',
-              'help': 'Помощь',
+              'language': 'Язык',
               'voice_alerts': 'Голосовые оповещения',
+              'alert_sound': 'Звук оповещения',
+              'sound_electric': 'Электронный',
+              'sound_soft': 'Мягкий',
+              'sound_loud': 'Громкий',
               'high_contrast': 'Режим для слабовидящих',
               'tts_phrase': 'Время принять лекарство: {name}',
-              'help_content': 'Инструкция:\n1. Нажмите "Новое лекарство", выберите препарат и задайте время колесиками.\n2. Отметьте прием нажатием на иконку.\n3. В настройках можно включить крупный шрифт.'
+              'alert_popup_title': 'Напоминание о приеме',
+              'btn_taken': 'Принято',
+              'btn_snooze': 'Отложить',
+              'btn_skip': 'Пропустить',
+              'snooze_title': 'Отложить на время',
+              'minutes': 'мин.',
+              'confirm_snooze': 'Подтвердить',
             },
             'ro': {
-              'app_title': 'Memento Medicamente',
-              'created_by': 'Creat și dezvoltat de Roni Schneider',
-              'add_med': 'Medicament nou',
-              'med_name': 'Alegeți sau tastați',
+              'app_name': 'Cyber Pharma',
+              'welcome': 'Bine ați venit',
+              'creator': 'Creat și dezvoltat de Roni Schneider',
+              'enter_name_title': 'Bine ați venit! Cum vă numiți?',
+              'name_hint': 'Introduceți numele...',
+              'continue_btn': 'Să începem',
+              'meds_tab': 'Medicamente',
+              'appointments_tab': 'Programări',
+              'add_med': 'Adaugă medicament',
+              'add_appointment': 'Programare medic / analize',
+              'med_name': 'Nume medicament',
               'dosage': 'Doză',
               'stock': 'Stoc',
               'time': 'Ora',
-              'save': 'Salvează',
+              'date': 'Data',
+              'doctor_name': 'Medic sau analiză',
+              'clinic': 'Clinică / Locație',
+              'save': 'Confirmă și Salvează',
               'cancel': 'Anulează',
-              'empty_state': 'Niciun medicament',
-              'stock_alert': 'Stoc redus!',
+              'stock_alert': 'Stoc aproape epuizat!',
+              'empty_meds': 'Niciun medicament salvat',
+              'empty_apps': 'Nicio programare viitoare',
               'settings': 'Setări',
-              'help': 'Ajutor',
+              'language': 'Limbă',
               'voice_alerts': 'Alerte vocale',
+              'alert_sound': 'Tip alertă',
+              'sound_electric': 'Cyber Electric',
+              'sound_soft': 'Fin',
+              'sound_loud': 'Intens',
               'high_contrast': 'Contrast ridicat',
-              'tts_phrase': 'E timpul pentru: {name}',
-              'help_content': 'Ghid:\n1. Apăsați pe "Medicament nou" și alegeți ora prin rotire.\n2. Bifați la administrare.\n3. Activați modul cu scris mărit din Setări.'
+              'tts_phrase': 'Este timpul pentru medicamentul: {name}',
+              'alert_popup_title': 'Memento Medicament',
+              'btn_taken': 'Luat acum',
+              'btn_snooze': 'Amână',
+              'btn_skip': 'Omite',
+              'snooze_title': 'Amânare alertă',
+              'minutes': 'minute',
+              'confirm_snooze': 'Setează amânare',
             },
             'ar': {
-              'app_title': 'تذكير بالدواء',
-              'created_by': 'تم الإنشاء والتطوير بواسطة روني شنايدר',
-              'add_med': 'دواء جديد',
-              'med_name': 'اختر أو اكتب الدواء',
+              'app_name': 'سايبر فارما',
+              'welcome': 'أهلاً بك',
+              'creator': 'تم الإنشاء والتطوير بواسطة روني شنايدר',
+              'enter_name_title': 'مرحباً! ما هو اسمك؟',
+              'name_hint': 'اكتب اسمك هنا...',
+              'continue_btn': 'ابدأ الآن',
+              'meds_tab': 'الأدوية',
+              'appointments_tab': 'المواعيد والفحوصات',
+              'add_med': 'إضافة دواء جديد',
+              'add_appointment': 'حجز موعد طبيب / فحص',
+              'med_name': 'اسم الدواء',
               'dosage': 'الجرعة',
-              'stock': 'المخزون',
+              'stock': 'الكمية المتوفرة',
               'time': 'الوقت',
-              'save': 'حفظ',
+              'date': 'التاريخ',
+              'doctor_name': 'اسم الطبيب / نوع الفحص',
+              'clinic': 'العيادة / الموقع',
+              'save': 'تأكيد وحفظ',
               'cancel': 'إلغاء',
-              'empty_state': 'لا توجد أدوية',
-              'stock_alert': 'المخزون منخفض!',
+              'stock_alert': 'المخزون قارب على الانتهاء!',
+              'empty_meds': 'لا توجد أدوية مضافة',
+              'empty_apps': 'لا توجد مواعيد قادمة',
               'settings': 'الإعدادات',
-              'help': 'مساعدة',
-              'voice_alerts': 'تنبيه صوتي',
-              'high_contrast': 'وضع ضعاف البصر',
-              'tts_phrase': 'حان وقت تناول الدواء: {name}',
-              'help_content': 'دليل الاستخدام:\n1. اضغط على دواء جديد وحدد الوقت والجرعة.\n2. اضغط على الرمز لتأكيد أخذ الدواء.\n3. يمكنك تفعيل الخط الكبير من الإعدادات.'
+              'language': 'اللغة',
+              'voice_alerts': 'التنبيهات الصوتية',
+              'alert_sound': 'نغمة التنبيه',
+              'sound_electric': 'إلكتروني حديث',
+              'sound_soft': 'هادئ',
+              'sound_loud': 'قوي ومميز',
+              'high_contrast': 'وضع ضعاف البصر (خط عريض وواضح)',
+              'tts_phrase': 'حان موعد الدواء: {name}',
+              'alert_popup_title': 'تنبيه بتناول الدواء',
+              'btn_taken': 'تم التناول الآن',
+              'btn_snooze': 'تأجيل التنبيه',
+              'btn_skip': 'تخطي هذه المرة',
+              'snooze_title': 'تحديد وقت التأجيل',
+              'minutes': 'دقائق',
+              'confirm_snooze': 'تأكيد التأجيل',
             },
             'de': {
-              'app_title': 'Medikamenten-Erinnerung',
-              'created_by': 'Erstellt und entwickelt von Roni Schneider',
-              'add_med': 'Neues Medikament',
-              'med_name': 'Wählen oder eingeben',
+              'app_name': 'Cyber Pharma',
+              'welcome': 'Willkommen',
+              'creator': 'Erstellt und entwickelt von Roni Schneider',
+              'enter_name_title': 'Willkommen! Wie heißen Sie?',
+              'name_hint': 'Geben Sie Ihren Namen ein...',
+              'continue_btn': 'Starten',
+              'meds_tab': 'Medikamente',
+              'appointments_tab': 'Arzttermine',
+              'add_med': 'Medikament hinzufügen',
+              'add_appointment': 'Arzttermin / Test hinzufügen',
+              'med_name': 'Medikamentenname',
               'dosage': 'Dosis',
               'stock': 'Vorrat',
               'time': 'Uhrzeit',
-              'save': 'Speichern',
+              'date': 'Datum',
+              'doctor_name': 'Arzt oder Testart',
+              'clinic': 'Klinik / Ort',
+              'save': 'Bestätigen und Speichern',
               'cancel': 'Abbrechen',
-              'empty_state': 'Keine Medikamente vorhanden',
-              'stock_alert': 'Vorrat fast leer!',
+              'stock_alert': 'Vorrat fast aufgebraucht!',
+              'empty_meds': 'Keine Medikamente vorhanden',
+              'empty_apps': 'Keine anstehenden Termine',
               'settings': 'Einstellungen',
-              'help': 'Hilfe',
-              'voice_alerts': 'Sprachausgabe',
-              'high_contrast': 'Hoher Kontrast',
+              'language': 'Sprache',
+              'voice_alerts': 'Sprachansage',
+              'alert_sound': 'Signalton',
+              'sound_electric': 'Elektronisch Cyber',
+              'sound_soft': 'Sanft',
+              'sound_loud': 'Laut',
+              'high_contrast': 'Kontrastmodus für Sehbehinderte',
               'tts_phrase': 'Zeit für Ihr Medikament: {name}',
-              'help_content': 'Hilfe:\n1. Tippen Sie auf "Neues Medikament" und stellen Sie Dosis und Uhrzeit ein.\n2. Bestätigen Sie die Einnahme durch Antippen.\n3. Hoher Kontrast ist in den Einstellungen verfügbar.'
-            },
+              'alert_popup_title': 'Erinnerung Medikament',
+              'btn_taken': 'Jetzt eingenommen',
+              'btn_snooze': 'Schlummern',
+              'btn_skip': 'Einmalig überspringen',
+              'snooze_title': 'Erinnerung verschieben',
+              'minutes': 'Minuten',
+              'confirm_snooze': 'Bestätigen',
+            }
           };
 
           void main() async {
             WidgetsFlutterBinding.ensureInitialized();
             tz.initializeTimeZones();
-
-            const AndroidInitializationSettings initializationSettingsAndroid =
-                AndroidInitializationSettings('@mipmap/ic_launcher');
-
-            const InitializationSettings initializationSettings = InitializationSettings(
-              android: initializationSettingsAndroid,
-            );
-
-            await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-            runApp(const PillAppRoot());
+            const AndroidInitializationSettings initAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+            const InitializationSettings initSettings = InitializationSettings(android: initAndroid);
+            await flutterNotifications.initialize(initSettings);
+            runApp(const CyberPillMasterApp());
           }
 
-          class PillAppRoot extends StatefulWidget {
-            const PillAppRoot({super.key});
+          class CyberPillMasterApp extends StatefulWidget {
+            const CyberPillMasterApp({super.key});
 
-            static _PillAppRootState of(BuildContext context) =>
-                context.findAncestorStateOfType<_PillAppRootState>()!;
+            static _CyberPillMasterAppState of(BuildContext context) =>
+                context.findAncestorStateOfType<_CyberPillMasterAppState>()!;
 
             @override
-            State<PillAppRoot> createState() => _PillAppRootState();
+            State<CyberPillMasterApp> createState() => _CyberPillMasterAppState();
           }
 
-          class _PillAppRootState extends State<PillAppRoot> {
-            String lang = 'he';
-            bool voiceAlerts = true;
-            bool highContrast = false;
+          class _CyberPillMasterAppState extends State<CyberPillMasterApp> {
+            String _lang = 'he';
+            String _userName = '';
+            bool _voiceAlerts = true;
+            bool _highContrast = false;
+            String _soundType = 'electric';
+            bool _initialized = false;
+
+            String get currentLang => _lang;
+            String get userName => _userName;
+            bool get voiceAlerts => _voiceAlerts;
+            bool get highContrast => _highContrast;
+            String get soundType => _soundType;
 
             @override
             void initState() {
               super.initState();
-              _load();
+              _loadConfig();
             }
 
-            Future<void> _load() async {
+            Future<void> _loadConfig() async {
               final prefs = await SharedPreferences.getInstance();
               setState(() {
-                lang = prefs.getString('app_lang') ?? 'he';
-                voiceAlerts = prefs.getBool('app_voice_alerts') ?? true;
-                highContrast = prefs.getBool('app_high_contrast') ?? false;
+                _lang = prefs.getString('c_lang') ?? 'he';
+                _userName = prefs.getString('c_user_name') ?? '';
+                _voiceAlerts = prefs.getBool('c_voice') ?? true;
+                _highContrast = prefs.getBool('c_hc') ?? false;
+                _soundType = prefs.getString('c_sound') ?? 'electric';
+                _initialized = true;
               });
             }
 
-            void updateState({String? newLang, bool? newVoice, bool? newHc}) async {
+            void setLanguage(String lang) async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('c_lang', lang);
+              setState(() => _lang = lang);
+            }
+
+            void setUserName(String name) async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('c_user_name', name);
+              setState(() => _userName = name);
+            }
+
+            void updateSettings({bool? voice, bool? hc, String? sound}) async {
               final prefs = await SharedPreferences.getInstance();
               setState(() {
-                if (newLang != null) {
-                  lang = newLang;
-                  prefs.setString('app_lang', newLang);
+                if (voice != null) {
+                  _voiceAlerts = voice;
+                  prefs.setBool('c_voice', voice);
                 }
-                if (newVoice != null) {
-                  voiceAlerts = newVoice;
-                  prefs.setBool('app_voice_alerts', newVoice);
+                if (hc != null) {
+                  _highContrast = hc;
+                  prefs.setBool('c_hc', hc);
                 }
-                if (newHc != null) {
-                  highContrast = newHc;
-                  prefs.setBool('app_high_contrast', newHc);
+                if (sound != null) {
+                  _soundType = sound;
+                  prefs.setString('c_sound', sound);
                 }
               });
             }
 
             @override
             Widget build(BuildContext context) {
-              final bool isRtl = lang == 'he' || lang == 'ar';
+              if (!_initialized) return const SizedBox();
+
+              final bool isRtl = _lang == 'he' || _lang == 'ar';
+              final Color bg = _highContrast ? Colors.white : const Color(0xFF0F172A);
+              final Color primary = _highContrast ? Colors.black : const Color(0xFF06B6D4);
+
               return MaterialApp(
-                title: 'Pill Reminder',
+                title: 'Cyber Pharma',
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(
                   useMaterial3: true,
-                  scaffoldBackgroundColor: highContrast ? Colors.white : const Color(0xFFE9EEF4),
-                  colorSchemeSeed: highContrast ? Colors.black : const Color(0xFF1E4C74),
+                  scaffoldBackgroundColor: bg,
+                  colorSchemeSeed: primary,
+                  fontFamily: 'sans-serif',
                 ),
                 home: Directionality(
                   textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-                  child: SplashScreen(lang: lang, highContrast: highContrast),
+                  child: _userName.isEmpty ? const OnboardingNameScreen() : const CyberSplashScreen(),
                 ),
               );
             }
           }
 
-          BoxDecoration neumorphicDeco({double radius = 18, bool isPressed = false, bool hc = false}) {
-            if (hc) {
+          BoxDecoration cyber3D({
+            double radius = 26,
+            bool isPressed = false,
+            bool highContrast = false,
+            Color glowColor = const Color(0xFF06B6D4),
+          }) {
+            if (highContrast) {
               return BoxDecoration(
                 color: isPressed ? Colors.grey.shade300 : Colors.white,
                 borderRadius: BorderRadius.circular(radius),
-                border: Border.all(color: Colors.black, width: 2.2),
+                border: Border.all(color: Colors.black, width: 2.8),
               );
             }
             if (isPressed) {
               return BoxDecoration(
-                color: const Color(0xFFE9EEF4),
+                color: const Color(0xFF1E293B),
                 borderRadius: BorderRadius.circular(radius),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.12), offset: const Offset(2, 2), blurRadius: 4),
-                  BoxShadow(color: Colors.white.withOpacity(0.9), offset: const Offset(-2, -2), blurRadius: 4),
+                  BoxShadow(color: Colors.black.withOpacity(0.6), offset: const Offset(3, 3), blurRadius: 6),
+                  BoxShadow(color: glowColor.withOpacity(0.3), offset: const Offset(-2, -2), blurRadius: 6),
                 ],
               );
             }
             return BoxDecoration(
-              color: const Color(0xFFE9EEF4),
+              gradient: const LinearGradient(
+                colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               borderRadius: BorderRadius.circular(radius),
               boxShadow: [
-                BoxShadow(color: const Color(0xFFA5B4C7).withOpacity(0.7), offset: const Offset(5, 5), blurRadius: 10),
-                const BoxShadow(color: Colors.white, offset: Offset(-5, -5), blurRadius: 10),
+                BoxShadow(color: Colors.black.withOpacity(0.8), offset: const Offset(8, 8), blurRadius: 16),
+                BoxShadow(color: glowColor.withOpacity(0.25), offset: const Offset(-4, -4), blurRadius: 12),
               ],
+              border: Border.all(color: glowColor.withOpacity(0.4), width: 1.2),
             );
           }
 
-          class SplashScreen extends StatefulWidget {
-            final String lang;
-            final bool highContrast;
-            const SplashScreen({super.key, required this.lang, required this.highContrast});
+          class OnboardingNameScreen extends StatefulWidget {
+            const OnboardingNameScreen({super.key});
 
             @override
-            State<SplashScreen> createState() => _SplashScreenState();
+            State<OnboardingNameScreen> createState() => _OnboardingNameScreenState();
           }
 
-          class _SplashScreenState extends State<SplashScreen> {
+          class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
+            final TextEditingController _ctrl = TextEditingController();
+
+            @override
+            Widget build(BuildContext context) {
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
+              final hc = app.highContrast;
+
+              return Scaffold(
+                body: Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 28),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 110,
+                          height: 110,
+                          decoration: cyber3D(radius: 35, highContrast: hc),
+                          child: Icon(Icons.person_pin, size: 60, color: hc ? Colors.black : const Color(0xFF06B6D4)),
+                        ),
+                        const SizedBox(height: 30),
+                        Text(
+                          t['enter_name_title']!,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: hc ? 26 : 22,
+                            fontWeight: FontWeight.bold,
+                            color: hc ? Colors.black : Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 25),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
+                          decoration: cyber3D(radius: 20, isPressed: true, highContrast: hc),
+                          child: TextField(
+                            controller: _ctrl,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: hc ? Colors.black : Colors.cyanAccent,
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: t['name_hint']!,
+                              hintStyle: TextStyle(color: hc ? Colors.grey : Colors.white38),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        GestureDetector(
+                          onTap: () {
+                            if (_ctrl.text.trim().isNotEmpty) {
+                              app.setUserName(_ctrl.text.trim());
+                            }
+                          },
+                          child: Container(
+                            height: 56,
+                            decoration: cyber3D(radius: 22, highContrast: hc, glowColor: const Color(0xFF38BDF8)),
+                            child: Center(
+                              child: Text(
+                                t['continue_btn']!,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: hc ? Colors.black : const Color(0xFF38BDF8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+          }
+
+          class CyberSplashScreen extends StatefulWidget {
+            const CyberSplashScreen({super.key});
+
+            @override
+            State<CyberSplashScreen> createState() => _CyberSplashScreenState();
+          }
+
+          class _CyberSplashScreenState extends State<CyberSplashScreen> {
             @override
             void initState() {
               super.initState();
-              Future.delayed(const Duration(seconds: 3), () {
+              Future.delayed(const Duration(milliseconds: 2500), () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (ctx) => const MainPillScreen()),
+                  MaterialPageRoute(builder: (ctx) => const MainDashboard()),
                 );
               });
             }
 
             @override
             Widget build(BuildContext context) {
-              final t = translations[widget.lang] ?? translations['he']!;
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
+              final hc = app.highContrast;
+
               return Scaffold(
                 body: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 130,
-                        height: 130,
-                        decoration: neumorphicDeco(radius: 35, hc: widget.highContrast),
-                        child: const Icon(Icons.medication_liquid, size: 70, color: Color(0xFF1E4C74)),
+                        width: 140,
+                        height: 140,
+                        decoration: cyber3D(radius: 45, highContrast: hc, glowColor: const Color(0xFF06B6D4)),
+                        child: Icon(Icons.bolt, size: 85, color: hc ? Colors.black : const Color(0xFF06B6D4)),
                       ),
                       const SizedBox(height: 32),
                       Text(
-                        t['app_title']!,
-                        style: TextStyle(fontSize: widget.highContrast ? 32 : 26, fontWeight: FontWeight.bold),
+                        t['app_name']!,
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.5,
+                          color: hc ? Colors.black : Colors.white,
+                        ),
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: 10),
+                      Text(
+                        '${t['welcome']!}, ${app.userName}!',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: hc ? Colors.black : const Color(0xFF38BDF8),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-                        decoration: neumorphicDeco(radius: 14, hc: widget.highContrast),
+                        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                        decoration: cyber3D(radius: 18, highContrast: hc),
                         child: Text(
-                          t['created_by']!,
+                          t['creator']!,
                           style: TextStyle(
-                            fontSize: widget.highContrast ? 17 : 14,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: widget.highContrast ? Colors.black : const Color(0xFF4B6584),
+                            color: hc ? Colors.black : Colors.white70,
                           ),
                         ),
                       ),
@@ -406,7 +660,7 @@ jobs:
             }
           }
 
-          class Medicine {
+          class MedicineModel {
             String id;
             String name;
             int dosage;
@@ -415,7 +669,7 @@ jobs:
             int stock;
             bool isTaken;
 
-            Medicine({
+            MedicineModel({
               required this.id,
               required this.name,
               required this.dosage,
@@ -435,7 +689,7 @@ jobs:
                   'isTaken': isTaken,
                 };
 
-            factory Medicine.fromMap(Map<String, dynamic> map) => Medicine(
+            factory MedicineModel.fromMap(Map<String, dynamic> map) => MedicineModel(
                   id: map['id'],
                   name: map['name'],
                   dosage: map['dosage'] ?? 1,
@@ -446,150 +700,372 @@ jobs:
                 );
           }
 
-          class MainPillScreen extends StatefulWidget {
-            const MainPillScreen({super.key});
+          class AppointmentModel {
+            String id;
+            String doctor;
+            String clinic;
+            String date;
+            String time;
 
-            @override
-            State<MainPillScreen> createState() => _MainPillScreenState();
+            AppointmentModel({
+              required this.id,
+              required this.doctor,
+              required this.clinic,
+              required this.date,
+              required this.time,
+            });
+
+            Map<String, dynamic> toMap() => {
+                  'id': id,
+                  'doctor': doctor,
+                  'clinic': clinic,
+                  'date': date,
+                  'time': time,
+                };
+
+            factory AppointmentModel.fromMap(Map<String, dynamic> map) => AppointmentModel(
+                  id: map['id'],
+                  doctor: map['doctor'],
+                  clinic: map['clinic'],
+                  date: map['date'],
+                  time: map['time'],
+                );
           }
 
-          class _MainPillScreenState extends State<MainPillScreen> {
-            List<Medicine> _medicines = [];
+          class MainDashboard extends StatefulWidget {
+            const MainDashboard({super.key});
+
+            @override
+            State<MainDashboard> createState() => _MainDashboardState();
+          }
+
+          class _MainDashboardState extends State<MainDashboard> with SingleTickerProviderStateMixin {
+            late TabController _tabController;
+            List<MedicineModel> _meds = [];
+            List<AppointmentModel> _apps = [];
 
             @override
             void initState() {
               super.initState();
-              _loadMeds();
+              _tabController = TabController(length: 2, vsync: this);
+              _loadData();
+              _initTTS();
             }
 
-            Future<void> _loadMeds() async {
+            void _initTTS() async {
+              final app = CyberPillMasterApp.of(context);
+              Map<String, String> langMap = {
+                'he': 'he-IL',
+                'en': 'en-US',
+                'ru': 'ru-RU',
+                'ro': 'ro-RO',
+                'ar': 'ar-SA',
+                'de': 'de-DE',
+              };
+              await flutterTts.setLanguage(langMap[app.currentLang] ?? 'he-IL');
+              await flutterTts.setSpeechRate(0.45);
+            }
+
+            Future<void> _loadData() async {
               final prefs = await SharedPreferences.getInstance();
-              final String? data = prefs.getString('saved_meds_list');
-              if (data != null) {
-                final List decoded = jsonDecode(data);
-                setState(() {
-                  _medicines = decoded.map((e) => Medicine.fromMap(e)).toList();
-                });
+              final String? medsRaw = prefs.getString('c_meds_store');
+              if (medsRaw != null) {
+                final List decoded = jsonDecode(medsRaw);
+                setState(() => _meds = decoded.map((e) => MedicineModel.fromMap(e)).toList());
+              }
+              final String? appsRaw = prefs.getString('c_apps_store');
+              if (appsRaw != null) {
+                final List decodedA = jsonDecode(appsRaw);
+                setState(() => _apps = decodedA.map((e) => AppointmentModel.fromMap(e)).toList());
               }
             }
 
             Future<void> _saveMeds() async {
               final prefs = await SharedPreferences.getInstance();
-              await prefs.setString(
-                'saved_meds_list',
-                jsonEncode(_medicines.map((m) => m.toMap()).toList()),
+              await prefs.setString('c_meds_store', jsonEncode(_meds.map((m) => m.toMap()).toList()));
+            }
+
+            Future<void> _saveApps() async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('c_apps_store', jsonEncode(_apps.map((a) => a.toMap()).toList()));
+            }
+
+            void _speak(String text) async {
+              final app = CyberPillMasterApp.of(context);
+              if (app.voiceAlerts) {
+                await flutterTts.speak(text);
+              }
+            }
+
+            // Interactive Alarm Action Dialog: Take, Snooze, Skip
+            void _showAlarmActionDialog(MedicineModel med) {
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
+              final hc = app.highContrast;
+
+              _speak(t['tts_phrase']!.replaceAll('{name}', med.name));
+
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (ctx) => Directionality(
+                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                  child: AlertDialog(
+                    backgroundColor: hc ? Colors.white : const Color(0xFF0F172A),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30), side: BorderSide(color: const Color(0xFF06B6D4), width: 1.5)),
+                    title: Column(
+                      children: [
+                        const Icon(Icons.alarm_on, size: 55, color: Color(0xFF06B6D4)),
+                        const SizedBox(height: 10),
+                        Text(
+                          t['alert_popup_title']!,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: hc ? Colors.black : Colors.white),
+                        ),
+                      ],
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          med.name,
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: hc ? Colors.black : Colors.cyanAccent),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          '${t['dosage']!}: ${med.dosage} | ${t['stock']!}: ${med.stock}',
+                          style: TextStyle(color: hc ? Colors.black87 : Colors.white70),
+                        ),
+                        const SizedBox(height: 25),
+                        // 1. Button: Taken Now
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              med.isTaken = true;
+                              if (med.stock >= med.dosage) med.stock -= med.dosage;
+                            });
+                            _saveMeds();
+                            Navigator.pop(ctx);
+                          },
+                          child: Container(
+                            height: 48,
+                            margin: const EdgeInsets.only(bottom: 12),
+                            decoration: cyber3D(radius: 16, highContrast: hc, glowColor: const Color(0xFF10B981)),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.check_circle_outline, color: Color(0xFF10B981)),
+                                  const SizedBox(width: 8),
+                                  Text(t['btn_taken']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        // 2. Button: Snooze (Postpone)
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(ctx);
+                            _openSnoozePicker(med);
+                          },
+                          child: Container(
+                            height: 48,
+                            margin: const EdgeInsets.only(bottom: 12),
+                            decoration: cyber3D(radius: 16, highContrast: hc, glowColor: const Color(0xFFF59E0B)),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.snooze, color: Color(0xFFF59E0B)),
+                                  const SizedBox(width: 8),
+                                  Text(t['btn_snooze']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF59E0B))),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        // 3. Button: Skip this time
+                        GestureDetector(
+                          onTap: () => Navigator.pop(ctx),
+                          child: Container(
+                            height: 44,
+                            decoration: cyber3D(radius: 16, highContrast: hc, glowColor: Colors.redAccent),
+                            child: Center(
+                              child: Text(t['btn_skip']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               );
             }
 
-            void _speak(Medicine med) async {
-              final app = PillAppRoot.of(context);
-              if (!app.voiceAlerts) return;
-              final t = translations[app.lang] ?? translations['he']!;
-              String txt = t['tts_phrase']!.replaceAll('{name}', med.name);
-              await flutterTts.speak(txt);
+            void _openSnoozePicker(MedicineModel med) {
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
+              final hc = app.highContrast;
+              int snoozeMinutes = 10;
+              final List<int> options = [5, 10, 15, 20, 30, 45, 60];
+
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: hc ? Colors.white : const Color(0xFF0F172A),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+                builder: (ctx) => StatefulBuilder(
+                  builder: (ctx2, setSnooze) => Directionality(
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                    child: Padding(
+                      padding: const EdgeInsets.all(22),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(t['snooze_title']!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.white)),
+                          const SizedBox(height: 14),
+                          Container(
+                            height: 120,
+                            decoration: cyber3D(radius: 18, highContrast: hc),
+                            child: CupertinoPicker(
+                              itemExtent: 36,
+                              scrollController: FixedExtentScrollController(initialItem: 1),
+                              onSelectedItemChanged: (idx) => setSnooze(() => snoozeMinutes = options[idx]),
+                              children: options.map((m) => Center(
+                                child: Text('$m ${t['minutes']!}', style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.cyanAccent)),
+                              )).toList(),
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(ctx);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('${t['snooze_title']!}: +$snoozeMinutes ${t['minutes']!}')),
+                              );
+                            },
+                            child: Container(
+                              height: 50,
+                              decoration: cyber3D(radius: 18, highContrast: hc, glowColor: const Color(0xFF06B6D4)),
+                              child: Center(
+                                child: Text(t['confirm_snooze']!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF06B6D4))),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
             }
 
-            void _toggle(Medicine med) {
-              setState(() {
-                med.isTaken = !med.isTaken;
-                if (med.isTaken) {
-                  if (med.stock >= med.dosage) med.stock -= med.dosage;
-                  _speak(med);
-                } else {
-                  med.stock += med.dosage;
-                }
-              });
-              _saveMeds();
-            }
-
-            void _showAddDialog() {
-              final app = PillAppRoot.of(context);
-              final t = translations[app.lang] ?? translations['he']!;
+            void _openAddMedicineDialog() {
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
+              final hc = app.highContrast;
               final nameCtrl = TextEditingController();
               int dosage = 1;
               int stock = 30;
               int hour = 8;
               int minute = 0;
-              final hc = app.highContrast;
 
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: hc ? Colors.white : const Color(0xFFE9EEF4),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                ),
+                backgroundColor: hc ? Colors.white : const Color(0xFF0F172A),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(35))),
                 builder: (ctx) => StatefulBuilder(
-                  builder: (context, setDialog) => Directionality(
-                    textDirection: (app.lang == 'he' || app.lang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                  builder: (ctx2, setDlg) => Directionality(
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: 20,
+                        top: 24,
                         left: 20,
                         right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
                       ),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(t['add_med']!, style: TextStyle(fontSize: hc ? 24 : 20, fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 12),
+                            Text(
+                              t['add_med']!,
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: hc ? Colors.black : const Color(0xFF38BDF8),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: neumorphicDeco(radius: 12, hc: hc),
+                              padding: const EdgeInsets.symmetric(horizontal: 14),
+                              decoration: cyber3D(radius: 18, highContrast: hc),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
                                   isExpanded: true,
-                                  hint: Text(t['med_name']!),
-                                  items: commonMedicinesList.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
-                                  onChanged: (val) {
-                                    if (val != null) setDialog(() => nameCtrl.text = val);
+                                  dropdownColor: hc ? Colors.white : const Color(0xFF1E293B),
+                                  hint: Text(t['med_name']!, style: TextStyle(color: hc ? Colors.black : Colors.white70)),
+                                  items: popularMedicines.map((m) => DropdownMenuItem(
+                                    value: m,
+                                    child: Text(m, style: TextStyle(color: hc ? Colors.black : Colors.white)),
+                                  )).toList(),
+                                  onChanged: (v) {
+                                    if (v != null) setDlg(() => nameCtrl.text = v);
                                   },
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 12),
                             Container(
-                              decoration: neumorphicDeco(radius: 12, isPressed: true, hc: hc),
-                              padding: const EdgeInsets.symmetric(horizontal: 14),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: cyber3D(radius: 18, isPressed: true, highContrast: hc),
                               child: TextField(
                                 controller: nameCtrl,
-                                decoration: InputDecoration(border: InputBorder.none, hintText: t['med_name']),
+                                style: TextStyle(color: hc ? Colors.black : Colors.cyanAccent),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: t['med_name']!,
+                                  hintStyle: TextStyle(color: hc ? Colors.grey : Colors.white38),
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 14),
+                            const SizedBox(height: 16),
                             Row(
                               children: [
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      Text(t['dosage']!, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                      Text(t['dosage']!, style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.white)),
                                       Container(
                                         height: 90,
-                                        decoration: neumorphicDeco(radius: 12, hc: hc),
+                                        decoration: cyber3D(radius: 16, highContrast: hc),
                                         child: CupertinoPicker(
-                                          itemExtent: 30,
-                                          onSelectedItemChanged: (i) => setDialog(() => dosage = i + 1),
-                                          children: List.generate(10, (i) => Center(child: Text('${i + 1}'))),
+                                          itemExtent: 32,
+                                          onSelectedItemChanged: (i) => setDlg(() => dosage = i + 1),
+                                          children: List.generate(10, (i) => Center(
+                                            child: Text('${i + 1}', style: TextStyle(color: hc ? Colors.black : Colors.white)),
+                                          )),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      Text(t['stock']!, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                      Text(t['stock']!, style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.white)),
                                       Container(
                                         height: 90,
-                                        decoration: neumorphicDeco(radius: 12, hc: hc),
+                                        decoration: cyber3D(radius: 16, highContrast: hc),
                                         child: CupertinoPicker(
-                                          itemExtent: 30,
+                                          itemExtent: 32,
                                           scrollController: FixedExtentScrollController(initialItem: 29),
-                                          onSelectedItemChanged: (i) => setDialog(() => stock = i + 1),
-                                          children: List.generate(100, (i) => Center(child: Text('${i + 1}'))),
+                                          onSelectedItemChanged: (i) => setDlg(() => stock = i + 1),
+                                          children: List.generate(100, (i) => Center(
+                                            child: Text('${i + 1}', style: TextStyle(color: hc ? Colors.black : Colors.white)),
+                                          )),
                                         ),
                                       ),
                                     ],
@@ -597,38 +1073,42 @@ jobs:
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 10),
-                            Text(t['time']!, style: const TextStyle(fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 14),
+                            Text(t['time']!, style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.white)),
                             Container(
                               height: 90,
-                              decoration: neumorphicDeco(radius: 12, hc: hc),
+                              decoration: cyber3D(radius: 16, highContrast: hc),
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: CupertinoPicker(
-                                      itemExtent: 30,
+                                      itemExtent: 32,
                                       scrollController: FixedExtentScrollController(initialItem: 8),
-                                      onSelectedItemChanged: (i) => setDialog(() => hour = i),
-                                      children: List.generate(24, (i) => Center(child: Text(i.toString().padLeft(2, '0')))),
+                                      onSelectedItemChanged: (i) => setDlg(() => hour = i),
+                                      children: List.generate(24, (i) => Center(
+                                        child: Text(i.toString().padLeft(2, '0'), style: TextStyle(color: hc ? Colors.black : Colors.white)),
+                                      )),
                                     ),
                                   ),
-                                  const Text(':', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                  Text(':', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.white)),
                                   Expanded(
                                     child: CupertinoPicker(
-                                      itemExtent: 30,
-                                      onSelectedItemChanged: (i) => setDialog(() => minute = i * 5),
-                                      children: List.generate(12, (i) => Center(child: Text((i * 5).toString().padLeft(2, '0')))),
+                                      itemExtent: 32,
+                                      onSelectedItemChanged: (i) => setDlg(() => minute = i * 5),
+                                      children: List.generate(12, (i) => Center(
+                                        child: Text((i * 5).toString().padLeft(2, '0'), style: TextStyle(color: hc ? Colors.black : Colors.white)),
+                                      )),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 18),
+                            const SizedBox(height: 22),
                             GestureDetector(
                               onTap: () {
                                 if (nameCtrl.text.trim().isEmpty) return;
                                 setState(() {
-                                  _medicines.add(Medicine(
+                                  _meds.add(MedicineModel(
                                     id: DateTime.now().millisecondsSinceEpoch.toString(),
                                     name: nameCtrl.text.trim(),
                                     dosage: dosage,
@@ -641,10 +1121,17 @@ jobs:
                                 Navigator.pop(ctx);
                               },
                               child: Container(
-                                height: 48,
-                                decoration: neumorphicDeco(radius: 14, hc: hc),
+                                height: 52,
+                                decoration: cyber3D(radius: 20, highContrast: hc, glowColor: const Color(0xFF10B981)),
                                 child: Center(
-                                  child: Text(t['save']!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                  child: Text(
+                                    t['save']!,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: hc ? Colors.black : const Color(0xFF10B981),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -657,10 +1144,262 @@ jobs:
               );
             }
 
+            void _openAddAppointmentDialog() {
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
+              final hc = app.highContrast;
+              final docCtrl = TextEditingController();
+              final clinicCtrl = TextEditingController();
+              DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
+              TimeOfDay selectedTime = const TimeOfDay(hour: 10, minute: 0);
+
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: hc ? Colors.white : const Color(0xFF0F172A),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(35))),
+                builder: (ctx) => StatefulBuilder(
+                  builder: (ctx2, setDlg) => Directionality(
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 24,
+                        left: 20,
+                        right: 20,
+                        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              t['add_appointment']!,
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: hc ? Colors.black : const Color(0xFFA855F7),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: cyber3D(radius: 18, isPressed: true, highContrast: hc),
+                              child: TextField(
+                                controller: docCtrl,
+                                style: TextStyle(color: hc ? Colors.black : Colors.purpleAccent),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: t['doctor_name']!,
+                                  hintStyle: TextStyle(color: hc ? Colors.grey : Colors.white38),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: cyber3D(radius: 18, isPressed: true, highContrast: hc),
+                              child: TextField(
+                                controller: clinicCtrl,
+                                style: TextStyle(color: hc ? Colors.black : Colors.white),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: t['clinic']!,
+                                  hintStyle: TextStyle(color: hc ? Colors.grey : Colors.white38),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      final picked = await showDatePicker(
+                                        context: context,
+                                        initialDate: selectedDate,
+                                        firstDate: DateTime.now(),
+                                        lastDate: DateTime.now().add(const Duration(days: 365)),
+                                      );
+                                      if (picked != null) setDlg(() => selectedDate = picked);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 14),
+                                      decoration: cyber3D(radius: 16, highContrast: hc),
+                                      child: Center(
+                                        child: Text(
+                                          '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                                          style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      final tPicked = await showTimePicker(
+                                        context: context,
+                                        initialTime: selectedTime,
+                                      );
+                                      if (tPicked != null) setDlg(() => selectedTime = tPicked);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 14),
+                                      decoration: cyber3D(radius: 16, highContrast: hc),
+                                      child: Center(
+                                        child: Text(
+                                          selectedTime.format(context),
+                                          style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 22),
+                            GestureDetector(
+                              onTap: () {
+                                if (docCtrl.text.trim().isEmpty) return;
+                                setState(() {
+                                  _apps.add(AppointmentModel(
+                                    id: DateTime.now().millisecondsSinceEpoch.toString(),
+                                    doctor: docCtrl.text.trim(),
+                                    clinic: clinicCtrl.text.trim(),
+                                    date: '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                                    time: selectedTime.format(context),
+                                  ));
+                                });
+                                _saveApps();
+                                Navigator.pop(ctx);
+                              },
+                              child: Container(
+                                height: 52,
+                                decoration: cyber3D(radius: 20, highContrast: hc, glowColor: const Color(0xFFA855F7)),
+                                child: Center(
+                                  child: Text(
+                                    t['save']!,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: hc ? Colors.black : const Color(0xFFA855F7),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            void _openSettingsDialog() {
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
+              final hc = app.highContrast;
+
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: hc ? Colors.white : const Color(0xFF0F172A),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(35))),
+                builder: (ctx) => StatefulBuilder(
+                  builder: (ctx2, setDlg) => Directionality(
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            t['settings']!,
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: hc ? Colors.black : const Color(0xFF06B6D4)),
+                          ),
+                          const SizedBox(height: 18),
+                          SwitchListTile(
+                            title: Text(t['voice_alerts']!, style: TextStyle(color: hc ? Colors.black : Colors.white)),
+                            value: app.voiceAlerts,
+                            onChanged: (v) => setDlg(() => app.updateSettings(voice: v)),
+                          ),
+                          SwitchListTile(
+                            title: Text(t['high_contrast']!, style: TextStyle(color: hc ? Colors.black : Colors.white)),
+                            value: app.highContrast,
+                            onChanged: (v) => setDlg(() => app.updateSettings(hc: v)),
+                          ),
+                          const SizedBox(height: 10),
+                          ListTile(
+                            title: Text(t['alert_sound']!, style: TextStyle(color: hc ? Colors.black : Colors.white, fontWeight: FontWeight.bold)),
+                            subtitle: DropdownButton<String>(
+                              value: app.soundType,
+                              dropdownColor: hc ? Colors.white : const Color(0xFF1E293B),
+                              isExpanded: true,
+                              items: [
+                                DropdownMenuItem(value: 'electric', child: Text(t['sound_electric']!, style: TextStyle(color: hc ? Colors.black : Colors.cyanAccent))),
+                                DropdownMenuItem(value: 'soft', child: Text(t['sound_soft']!, style: TextStyle(color: hc ? Colors.black : Colors.white))),
+                                DropdownMenuItem(value: 'loud', child: Text(t['sound_loud']!, style: TextStyle(color: hc ? Colors.black : Colors.white))),
+                              ],
+                              onChanged: (val) {
+                                if (val != null) setDlg(() => app.updateSettings(sound: val));
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            void _openLanguagePicker() {
+              final app = CyberPillMasterApp.of(context);
+              final hc = app.highContrast;
+
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: hc ? Colors.white : const Color(0xFF0F172A),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+                builder: (ctx) => ListView(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  children: [
+                    _langTile('עברית (Hebrew)', 'he'),
+                    _langTile('English (English)', 'en'),
+                    _langTile('Русский (Russian)', 'ru'),
+                    _langTile('Română (Romanian)', 'ro'),
+                    _langTile('العربية (Arabic)', 'ar'),
+                    _langTile('Deutsch (German)', 'de'),
+                  ],
+                ),
+              );
+            }
+
+            Widget _langTile(String label, String code) {
+              final app = CyberPillMasterApp.of(context);
+              final hc = app.highContrast;
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                decoration: cyber3D(radius: 16, highContrast: hc),
+                child: ListTile(
+                  title: Text(label, style: TextStyle(color: hc ? Colors.black : Colors.white, fontWeight: FontWeight.bold)),
+                  trailing: app.currentLang == code ? const Icon(Icons.check, color: Color(0xFF06B6D4)) : null,
+                  onTap: () {
+                    Navigator.pop(context);
+                    app.setLanguage(code);
+                  },
+                ),
+              );
+            }
+
             @override
             Widget build(BuildContext context) {
-              final app = PillAppRoot.of(context);
-              final t = translations[app.lang] ?? translations['he']!;
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
               final hc = app.highContrast;
 
               return Scaffold(
@@ -668,122 +1407,161 @@ jobs:
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   centerTitle: true,
-                  title: Text(t['app_title']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 24 : 20)),
+                  title: Column(
+                    children: [
+                      Text(
+                        t['app_name']!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 22,
+                          color: hc ? Colors.black : const Color(0xFF06B6D4),
+                        ),
+                      ),
+                      Text(
+                        '${t['welcome']!}, ${app.userName}',
+                        style: TextStyle(fontSize: 13, color: hc ? Colors.black54 : Colors.white60),
+                      ),
+                    ],
+                  ),
                   actions: [
                     IconButton(
-                      icon: const Icon(Icons.help_outline),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (c) => Directionality(
-                            textDirection: (app.lang == 'he' || app.lang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
-                            child: AlertDialog(
-                              title: Text(t['help']!),
-                              content: Text(t['help_content']!),
-                              actions: [
-                                TextButton(onPressed: () => Navigator.pop(c), child: Text(t['cancel']!)),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
+                      icon: const Icon(Icons.language),
+                      onPressed: _openLanguagePicker,
                     ),
                     IconButton(
                       icon: const Icon(Icons.settings),
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          backgroundColor: hc ? Colors.white : const Color(0xFFE9EEF4),
-                          builder: (c) => StatefulBuilder(
-                            builder: (ctx, setS) => Directionality(
-                              textDirection: (app.lang == 'he' || app.lang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SwitchListTile(
-                                      title: Text(t['high_contrast']!),
-                                      value: app.highContrast,
-                                      onChanged: (v) {
-                                        setS(() => app.updateState(newHc: v));
-                                      },
-                                    ),
-                                    SwitchListTile(
-                                      title: Text(t['voice_alerts']!),
-                                      value: app.voiceAlerts,
-                                      onChanged: (v) {
-                                        setS(() => app.updateState(newVoice: v));
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.language),
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          backgroundColor: hc ? Colors.white : const Color(0xFFE9EEF4),
-                          builder: (c) => ListView(
-                            shrinkWrap: true,
-                            children: [
-                              ListTile(title: const Text('עברית'), onTap: () { app.updateState(newLang: 'he'); Navigator.pop(c); }),
-                              ListTile(title: const Text('English'), onTap: () { app.updateState(newLang: 'en'); Navigator.pop(c); }),
-                              ListTile(title: const Text('Русский'), onTap: () { app.updateState(newLang: 'ru'); Navigator.pop(c); }),
-                              ListTile(title: const Text('Română'), onTap: () { app.updateState(newLang: 'ro'); Navigator.pop(c); }),
-                              ListTile(title: const Text('العربية'), onTap: () { app.updateState(newLang: 'ar'); Navigator.pop(c); }),
-                              ListTile(title: const Text('Deutsch'), onTap: () { app.updateState(newLang: 'de'); Navigator.pop(c); }),
-                            ],
-                          ),
-                        );
-                      },
+                      onPressed: _openSettingsDialog,
                     ),
                   ],
+                  bottom: TabBar(
+                    controller: _tabController,
+                    indicatorColor: hc ? Colors.black : const Color(0xFF06B6D4),
+                    labelColor: hc ? Colors.black : const Color(0xFF06B6D4),
+                    unselectedLabelColor: hc ? Colors.grey : Colors.white38,
+                    tabs: [
+                      Tab(icon: const Icon(Icons.medication), text: t['meds_tab']!),
+                      Tab(icon: const Icon(Icons.event_note), text: t['appointments_tab']!),
+                    ],
+                  ),
                 ),
-                body: _medicines.isEmpty
-                    ? Center(child: Text(t['empty_state']!, style: TextStyle(fontSize: hc ? 20 : 16)))
-                    : ListView.builder(
-                        padding: const EdgeInsets.all(16),
-                        itemCount: _medicines.length,
-                        itemBuilder: (ctx, i) {
-                          final med = _medicines[i];
-                          final timeStr = '${med.hour.toString().padLeft(2, '0')}:${med.minute.toString().padLeft(2, '0')}';
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 14),
-                            decoration: neumorphicDeco(radius: 16, isPressed: med.isTaken, hc: hc),
-                            child: ListTile(
-                              leading: Icon(med.isTaken ? Icons.check_circle : Icons.alarm, color: med.isTaken ? Colors.green : Colors.blue),
-                              title: Text(med.name, style: TextStyle(fontSize: hc ? 20 : 16, fontWeight: FontWeight.bold)),
-                              subtitle: Text('$timeStr | ${t['dosage']}: ${med.dosage} | ${t['stock']}: ${med.stock}'),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.delete_outline, color: Colors.red),
-                                onPressed: () {
-                                  setState(() => _medicines.removeAt(i));
-                                  _saveMeds();
-                                },
-                              ),
-                              onTap: () => _toggle(med),
-                            ),
-                          );
-                        },
-                      ),
+                body: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    // Medicines Tab
+                    _meds.isEmpty
+                        ? Center(child: Text(t['empty_meds']!, style: TextStyle(color: hc ? Colors.black54 : Colors.white38, fontSize: 18)))
+                        : ListView.builder(
+                            padding: const EdgeInsets.all(18),
+                            itemCount: _meds.length,
+                            itemBuilder: (ctx, i) {
+                              final med = _meds[i];
+                              final timeStr = '${med.hour.toString().padLeft(2, '0')}:${med.minute.toString().padLeft(2, '0')}';
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 16),
+                                decoration: cyber3D(radius: 22, isPressed: med.isTaken, highContrast: hc),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                  leading: Container(
+                                    width: 46,
+                                    height: 46,
+                                    decoration: cyber3D(radius: 14, isPressed: med.isTaken, highContrast: hc),
+                                    child: Icon(
+                                      med.isTaken ? Icons.check_circle : Icons.alarm,
+                                      color: med.isTaken ? Colors.greenAccent : const Color(0xFF06B6D4),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    med.name,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: hc ? Colors.black : Colors.white,
+                                      decoration: med.isTaken ? TextDecoration.lineThrough : null,
+                                    ),
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('$timeStr | ${t['dosage']!}: ${med.dosage}', style: TextStyle(color: hc ? Colors.black87 : Colors.white70)),
+                                      Text('${t['stock']!}: ${med.stock}', style: TextStyle(color: hc ? Colors.black54 : Colors.cyanAccent)),
+                                      if (med.stock <= 5)
+                                        Text(t['stock_alert']!, style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                                    onPressed: () {
+                                      setState(() => _meds.removeAt(i));
+                                      _saveMeds();
+                                    },
+                                  ),
+                                  onTap: () => _showAlarmActionDialog(med),
+                                ),
+                              );
+                            },
+                          ),
+                    // Appointments Tab
+                    _apps.isEmpty
+                        ? Center(child: Text(t['empty_apps']!, style: TextStyle(color: hc ? Colors.black54 : Colors.white38, fontSize: 18)))
+                        : ListView.builder(
+                            padding: const EdgeInsets.all(18),
+                            itemCount: _apps.length,
+                            itemBuilder: (ctx, i) {
+                              final appItem = _apps[i];
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 16),
+                                decoration: cyber3D(radius: 22, highContrast: hc, glowColor: const Color(0xFFA855F7)),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(14),
+                                  leading: const Icon(Icons.medical_services_outlined, size: 36, color: Color(0xFFA855F7)),
+                                  title: Text(
+                                    appItem.doctor,
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: hc ? Colors.black : Colors.white),
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      if (appItem.clinic.isNotEmpty) Text(appItem.clinic, style: TextStyle(color: hc ? Colors.black87 : Colors.white70)),
+                                      Text('${appItem.date}  •  ${appItem.time}', style: const TextStyle(color: Color(0xFF38BDF8), fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                                    onPressed: () {
+                                      setState(() => _apps.removeAt(i));
+                                      _saveApps();
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                  ],
+                ),
                 floatingActionButton: GestureDetector(
-                  onTap: _showAddDialog,
+                  onTap: () {
+                    if (_tabController.index == 0) {
+                      _openAddMedicineDialog();
+                    } else {
+                      _openAddAppointmentDialog();
+                    }
+                  },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    decoration: neumorphicDeco(radius: 20, hc: hc),
+                    padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+                    decoration: cyber3D(radius: 25, highContrast: hc, glowColor: const Color(0xFF06B6D4)),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.add),
-                        const SizedBox(width: 6),
-                        Text(t['add_med']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 18 : 15)),
+                        const Icon(Icons.add, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          _tabController.index == 0 ? t['add_med']! : t['add_appointment']!,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: hc ? Colors.black : Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),
