@@ -1,0 +1,466 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Setup Project Files
+        run: |
+          flutter create --org com.example --project-name pill_reminder . --platforms=android --overwrite
+          
+          cat << 'EOF' > pubspec.yaml
+          name: pill_reminder
+          description: Pill reminder app
+          publish_to: 'none'
+          version: 1.0.0+1
+          environment:
+            sdk: '>=3.0.0 <4.0.0'
+          dependencies:
+            flutter:
+              sdk: flutter
+            flutter_local_notifications: ^17.2.1
+            timezone: ^0.9.4
+            shared_preferences: ^2.3.2
+          flutter:
+            uses-material-design: true
+          EOF
+
+          cat << 'EOF' > lib/main.dart
+          import 'dart:convert';
+          import 'package:flutter/material.dart';
+          import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+          import 'package:shared_preferences/shared_preferences.dart';
+          import 'package:timezone/data/latest_all.dart' as tz;
+          import 'package:timezone/timezone.dart' as tz;
+
+          final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+              FlutterLocalNotificationsPlugin();
+
+          void main() async {
+            WidgetsFlutterBinding.ensureInitialized();
+            tz.initializeTimeZones();
+
+            const AndroidInitializationSettings initializationSettingsAndroid =
+                AndroidInitializationSettings('@mipmap/ic_launcher');
+
+            const InitializationSettings initializationSettings = InitializationSettings(
+              android: initializationSettingsAndroid,
+            );
+
+            await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+            runApp(const PillReminderApp());
+          }
+
+          class PillReminderApp extends StatelessWidget {
+            const PillReminderApp({super.key});
+
+            @override
+            Widget build(BuildContext context) {
+              return MaterialApp(
+                title: 'תזכורת תרופות',
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  useMaterial3: true,
+                  colorSchemeSeed: Colors.teal,
+                  scaffoldBackgroundColor: const Color(0xFFF7F9FC),
+                ),
+                home: const Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: MedicineHomeScreen(),
+                ),
+              );
+            }
+          }
+
+          class Medicine {
+            String id;
+            String name;
+            String dosage;
+            int hour;
+            int minute;
+            int stock;
+            bool isTaken;
+
+            Medicine({
+              required this.id,
+              required this.name,
+              required this.dosage,
+              required this.hour,
+              required this.minute,
+              required this.stock,
+              this.isTaken = false,
+            });
+
+            Map<String, dynamic> toMap() => {
+                  'id': id,
+                  'name': name,
+                  'dosage': dosage,
+                  'hour': hour,
+                  'minute': minute,
+                  'stock': stock,
+                  'isTaken': isTaken,
+                };
+
+            factory Medicine.fromMap(Map<String, dynamic> map) => Medicine(
+                  id: map['id'],
+                  name: map['name'],
+                  dosage: map['dosage'],
+                  hour: map['hour'],
+                  minute: map['minute'],
+                  stock: map['stock'],
+                  isTaken: map['isTaken'] ?? false,
+                );
+          }
+
+          class MedicineHomeScreen extends StatefulWidget {
+            const MedicineHomeScreen({super.key});
+
+            @override
+            State<MedicineHomeScreen> createState() => _MedicineHomeScreenState();
+          }
+
+          class _MedicineHomeScreenState extends State<MedicineHomeScreen> {
+            List<Medicine> _medicines = [];
+
+            @override
+            void initState() {
+              super.initState();
+              _loadMedicines();
+              _requestNotificationPermissions();
+            }
+
+            void _requestNotificationPermissions() {
+              flutterLocalNotificationsPlugin
+                  .resolvePlatformSpecificImplementation<
+                      AndroidFlutterLocalNotificationsPlugin>()
+                  ?.requestNotificationsPermission();
+            }
+
+            Future<void> _loadMedicines() async {
+              final prefs = await SharedPreferences.getInstance();
+              final String? data = prefs.getString('saved_medicines');
+              if (data != null) {
+                final List decoded = jsonDecode(data);
+                setState(() {
+                  _medicines = decoded.map((e) => Medicine.fromMap(e)).toList();
+                });
+              }
+            }
+
+            Future<void> _saveMedicines() async {
+              final prefs = await SharedPreferences.getInstance();
+              final String encoded =
+                  jsonEncode(_medicines.map((m) => m.toMap()).toList());
+              await prefs.setString('saved_medicines', encoded);
+            }
+
+            Future<void> _scheduleNotification(Medicine med) async {
+              final int notifId = med.id.hashCode;
+
+              await flutterLocalNotificationsPlugin.zonedSchedule(
+                notifId,
+                'זמן ליטול תרופה',
+                '${med.name} - ${med.dosage}',
+                _nextInstanceOfTime(med.hour, med.minute),
+                const NotificationDetails(
+                  android: AndroidNotificationDetails(
+                    'med_channel_id',
+                    'תזכורות תרופות',
+                    channelDescription: 'התראות מתוזמנות לנטילת תרופות',
+                    importance: Importance.max,
+                    priority: Priority.high,
+                  ),
+                ),
+                androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+                uiLocalNotificationDateInterpretation:
+                    UILocalNotificationDateInterpretation.absoluteTime,
+                matchDateTimeComponents: DateTimeComponents.time,
+              );
+            }
+
+            tz.TZDateTime _nextInstanceOfTime(int hour, int minute) {
+              final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+              tz.TZDateTime scheduledDate = tz.TZDateTime(
+                tz.local,
+                now.year,
+                now.month,
+                now.day,
+                hour,
+                minute,
+              );
+              if (scheduledDate.isBefore(now)) {
+                scheduledDate = scheduledDate.add(const Duration(days: 1));
+              }
+              return scheduledDate;
+            }
+
+            void _addMedicine(String name, String dosage, TimeOfDay time, int stock) {
+              final newMed = Medicine(
+                id: DateTime.now().millisecondsSinceEpoch.toString(),
+                name: name,
+                dosage: dosage,
+                hour: time.hour,
+                minute: time.minute,
+                stock: stock,
+              );
+
+              setState(() {
+                _medicines.add(newMed);
+              });
+
+              _saveMedicines();
+              _scheduleNotification(newMed);
+            }
+
+            void _toggleTaken(Medicine med) {
+              setState(() {
+                med.isTaken = !med.isTaken;
+                if (med.isTaken && med.stock > 0) {
+                  med.stock -= 1;
+                } else if (!med.isTaken) {
+                  med.stock += 1;
+                }
+              });
+              _saveMedicines();
+            }
+
+            void _deleteMedicine(int index) {
+              final med = _medicines[index];
+              flutterLocalNotificationsPlugin.cancel(med.id.hashCode);
+              setState(() {
+                _medicines.removeAt(index);
+              });
+              _saveMedicines();
+            }
+
+            void _showAddDialog() {
+              final nameCtrl = TextEditingController();
+              final dosageCtrl = TextEditingController();
+              final stockCtrl = TextEditingController(text: '30');
+              TimeOfDay selectedTime = TimeOfDay.now();
+
+              showDialog(
+                context: context,
+                builder: (ctx) => StatefulBuilder(
+                  builder: (context, setDialogState) => Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: AlertDialog(
+                      title: const Text('הוספת תרופה חדשה'),
+                      content: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              controller: nameCtrl,
+                              decoration: const InputDecoration(
+                                labelText: 'שם התרופה',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            TextField(
+                              controller: dosageCtrl,
+                              decoration: const InputDecoration(
+                                labelText: 'מינון (למשל: כדור אחד, 10 מ"ג)',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            TextField(
+                              controller: stockCtrl,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                labelText: 'כמות במלאי (כדורים)',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            ListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              title: const Text('שעת תזכורת'),
+                              trailing: Text(
+                                selectedTime.format(context),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              onTap: () async {
+                                final t = await showTimePicker(
+                                  context: context,
+                                  initialTime: selectedTime,
+                                );
+                                if (t != null) {
+                                  setDialogState(() => selectedTime = t);
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(ctx),
+                          child: const Text('ביטול'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (nameCtrl.text.trim().isEmpty) return;
+                            final stock = int.tryParse(stockCtrl.text.trim()) ?? 0;
+                            _addMedicine(
+                              nameCtrl.text.trim(),
+                              dosageCtrl.text.trim(),
+                              selectedTime,
+                              stock,
+                            );
+                            Navigator.pop(ctx);
+                          },
+                          child: const Text('שמור'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            @override
+            Widget build(BuildContext context) {
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text(
+                    'תזכורת תרופות',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  centerTitle: true,
+                  elevation: 0,
+                ),
+                body: _medicines.isEmpty
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.medication_outlined,
+                                size: 80, color: Colors.grey.shade400),
+                            const SizedBox(height: 12),
+                            Text(
+                              'אין תרופות מוגדרות עדיין',
+                              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                            ),
+                          ],
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        itemCount: _medicines.length,
+                        itemBuilder: (ctx, i) {
+                          final med = _medicines[i];
+                          final timeFormatted =
+                              '${med.hour.toString().padLeft(2, '0')}:${med.minute.toString().padLeft(2, '0')}';
+
+                          return Card(
+                            elevation: 1,
+                            margin: const EdgeInsets.only(bottom: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.all(12),
+                              leading: CircleAvatar(
+                                radius: 24,
+                                backgroundColor: med.isTaken
+                                    ? Colors.green.shade100
+                                    : Colors.teal.shade50,
+                                child: Icon(
+                                  med.isTaken ? Icons.check : Icons.alarm,
+                                  color: med.isTaken ? Colors.green : Colors.teal,
+                                ),
+                              ),
+                              title: Text(
+                                med.name,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  decoration:
+                                      med.isTaken ? TextDecoration.lineThrough : null,
+                                ),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 4),
+                                  Text('מינון: ${med.dosage} | שעה: $timeFormatted'),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    'נותרו במלאי: ${med.stock}',
+                                    style: TextStyle(
+                                      color: med.stock <= 5 ? Colors.red : Colors.grey.shade700,
+                                      fontWeight: med.stock <= 5 ? FontWeight.bold : FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(
+                                      med.isTaken
+                                          ? Icons.check_box
+                                          : Icons.check_box_outline_blank,
+                                      color: med.isTaken ? Colors.green : Colors.grey,
+                                    ),
+                                    onPressed: () => _toggleTaken(med),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete_outline, color: Colors.red),
+                                    onPressed: () => _deleteMedicine(i),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                floatingActionButton: FloatingActionButton.extended(
+                  onPressed: _showAddDialog,
+                  icon: const Icon(Icons.add),
+                  label: const Text('תרופה חדשה'),
+                ),
+              );
+            }
+          }
+          EOF
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
