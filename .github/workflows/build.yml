@@ -26,119 +26,106 @@ jobs:
         run: |
           flutter create --org com.example --project-name pill_reminder . --platforms=android --overwrite
 
-      - name: Install Python Image Tools & Generate 3D App Icons
+      - name: Create Medical App Icon
         run: |
-          pip install pillow
-          python3 -c "
+          python3 -c '
+          import os, base64
+          # Transparent 1x1 fallback / simple PNG generator
+          # Clean SVG to high-res PNG replacement
+          os.makedirs("assets", exist_ok=True)
+          '
+          # Create a custom launcher icon directly using bash and base64
+          python3 -c '
           from PIL import Image, ImageDraw
           import os
 
-          def create_icon(size):
-              img = Image.new('RGBA', (size, size), (15, 23, 42, 255)) # Dark Cyber Blue
-              draw = ImageDraw.Draw(img)
-              
-              # Outer Glow Ring
-              margin = int(size * 0.1)
-              draw.ellipse([margin, margin, size - margin, size - margin], fill=(30, 41, 59, 255), outline=(6, 182, 212, 255), width=max(2, int(size * 0.05)))
-              
-              # Medical Cross in Neon Cyan
-              c_width = int(size * 0.16)
-              c_len = int(size * 0.52)
-              cx = size // 2
-              cy = size // 2
-              
-              # Vertical bar
-              draw.rounded_rectangle([cx - c_width // 2, cy - c_len // 2, cx + c_width // 2, cy + c_len // 2], radius=int(size * 0.04), fill=(6, 182, 212, 255))
-              # Horizontal bar
-              draw.rounded_rectangle([cx - c_len // 2, cy - c_width // 2, cx + c_len // 2, cy + c_width // 2], radius=int(size * 0.04), fill=(6, 182, 212, 255))
-              
-              # Accent Pill / Bolt Dot
-              dot_r = int(size * 0.07)
-              draw.ellipse([int(size * 0.65) - dot_r, int(size * 0.35) - dot_r, int(size * 0.65) + dot_r, int(size * 0.35) + dot_r], fill=(244, 63, 94, 255))
-              
-              return img
+          os.makedirs("android/app/src/main/res/mipmap-hdpi", exist_ok=True)
+          os.makedirs("android/app/src/main/res/mipmap-mdpi", exist_ok=True)
+          os.makedirs("android/app/src/main/res/mipmap-xhdpi", exist_ok=True)
+          os.makedirs("android/app/src/main/res/mipmap-xxhdpi", exist_ok=True)
+          os.makedirs("android/app/src/main/res/mipmap-xxxhdpi", exist_ok=True)
 
           sizes = {
-              'mipmap-mdpi': 48,
-              'mipmap-hdpi': 72,
-              'mipmap-xhdpi': 96,
-              'mipmap-xxhdpi': 144,
-              'mipmap-xxxhdpi': 192,
+              "mipmap-mdpi": 48,
+              "mipmap-hdpi": 72,
+              "mipmap-xhdpi": 96,
+              "mipmap-xxhdpi": 144,
+              "mipmap-xxxhdpi": 192,
           }
 
-          res_dir = 'android/app/src/main/res'
-          for folder, s in sizes.items():
-              target_dir = os.path.join(res_dir, folder)
-              os.makedirs(target_dir, exist_ok=True)
-              icon = create_icon(s)
-              icon.save(os.path.join(target_dir, 'ic_launcher.png'), 'PNG')
-              icon.save(os.path.join(target_dir, 'ic_launcher_foreground.png'), 'PNG')
-          
-          # Delete any adaptive-icon XML that points to default flutter vector
-          for root, dirs, files in os.walk(res_dir):
-              for file in files:
-                  if file.startswith('ic_launcher') and file.endswith('.xml'):
-                      os.remove(os.path.join(root, file))
-          "
+          for folder, sz in sizes.items():
+              img = Image.new("RGBA", (sz, sz), (15, 23, 42, 255))
+              d = ImageDraw.Draw(img)
+              m = int(sz * 0.08)
+              d.ellipse([m, m, sz - m, sz - m], fill=(30, 41, 59, 255), outline=(6, 182, 212, 255), width=max(2, int(sz * 0.06)))
+              bw = int(sz * 0.16)
+              bl = int(sz * 0.52)
+              cx, cy = sz // 2, sz // 2
+              d.rectangle([cx - bw // 2, cy - bl // 2, cx + bw // 2, cy + bl // 2], fill=(6, 182, 212, 255))
+              d.rectangle([cx - bl // 2, cy - bw // 2, cx + bl // 2, cy + bw // 2], fill=(6, 182, 212, 255))
+              r = int(sz * 0.07)
+              d.ellipse([int(sz * 0.68) - r, int(sz * 0.32) - r, int(sz * 0.68) + r, int(sz * 0.32) + r], fill=(244, 63, 94, 255))
+              
+              p = f"android/app/src/main/res/{folder}/ic_launcher.png"
+              img.save(p, "PNG")
+          '
 
       - name: Configure Android Permissions and Queries
         run: |
-          python3 -c "
-          manifest_path = 'android/app/src/main/AndroidManifest.xml'
-          with open(manifest_path, 'r') as f:
+          python3 -c '
+          manifest_path = "android/app/src/main/AndroidManifest.xml"
+          with open(manifest_path, "r") as f:
               txt = f.read()
           
-          perms = '''
-    <uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\"/>
-    <uses-permission android:name=\"android.permission.SCHEDULE_EXACT_ALARM\"/>
-    <uses-permission android:name=\"android.permission.USE_EXACT_ALARM\"/>
-    <uses-permission android:name=\"android.permission.VIBRATE\"/>
-    <uses-permission android:name=\"android.permission.USE_FULL_SCREEN_INTENT\"/>
-  '''
-          queries = '''
+          perms = """
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+  """
+          queries = """
     <queries>
         <intent>
-            <action android:name=\"android.intent.action.VIEW\" />
-            <data android:scheme=\"https\" />
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
         </intent>
         <intent>
-            <action android:name=\"android.intent.action.VIEW\" />
-            <data android:scheme=\"waze\" />
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="waze" />
         </intent>
         <intent>
-            <action android:name=\"android.intent.action.VIEW\" />
-            <data android:scheme=\"geo\" />
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="geo" />
         </intent>
     </queries>
-  '''
-          txt = txt.replace('<application', perms + queries + '  <application')
-          # Ensure launcher icon attribute points to png
-          txt = txt.replace('android:icon=\"@mipmap/ic_launcher\"', 'android:icon=\"@mipmap/ic_launcher\"')
-          with open(manifest_path, 'w') as f:
+  """
+          txt = txt.replace("<application", perms + queries + "  <application")
+          with open(manifest_path, "w") as f:
               f.write(txt)
-          "
+          '
 
-          python3 -c "
+          python3 -c '
           import os
-          fpath = 'android/app/build.gradle.kts'
+          fpath = "android/app/build.gradle.kts"
           if os.path.exists(fpath):
-              with open(fpath, 'r') as f:
+              with open(fpath, "r") as f:
                   txt = f.read()
-              if 'compileOptions {' in txt:
-                  txt = txt.replace('compileOptions {', 'compileOptions {\n        isCoreLibraryDesugaringEnabled = true')
-              txt += '\n\ndependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.0.4\")\n}\n'
-              with open(fpath, 'w') as f:
+              if "compileOptions {" in txt:
+                  txt = txt.replace("compileOptions {", "compileOptions {\n        isCoreLibraryDesugaringEnabled = true")
+              txt += "\n\ndependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.0.4\")\n}\n"
+              with open(fpath, "w") as f:
                   f.write(txt)
           else:
-              fpath_g = 'android/app/build.gradle'
-              with open(fpath_g, 'r') as f:
+              fpath_g = "android/app/build.gradle"
+              with open(fpath_g, "r") as f:
                   txt = f.read()
-              if 'compileOptions {' in txt:
-                  txt = txt.replace('compileOptions {', 'compileOptions {\n        coreLibraryDesugaringEnabled true')
-              txt += '\n\ndependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"\n}\n'
-              with open(fpath_g, 'w') as f:
+              if "compileOptions {" in txt:
+                  txt = txt.replace("compileOptions {", "compileOptions {\n        coreLibraryDesugaringEnabled true")
+              txt += "\n\ndependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"\n}\n"
+              with open(fpath_g, "w") as f:
                   f.write(txt)
-          "
+          '
 
       - name: Create pubspec.yaml
         run: |
@@ -945,6 +932,92 @@ jobs:
                 ),
               );
             }
+          }
+
+          class PillItem {
+            String name;
+            int dosage;
+            int stock;
+            PillItem({required this.name, required this.dosage, required this.stock});
+
+            Map<String, dynamic> toMap() => {'name': name, 'dosage': dosage, 'stock': stock};
+            factory PillItem.fromMap(Map<String, dynamic> map) => PillItem(
+                  name: map['name'],
+                  dosage: map['dosage'] ?? 1,
+                  stock: map['stock'] ?? 30,
+                );
+          }
+
+          class ScheduleGroup {
+            String id;
+            String title;
+            int hour;
+            int minute;
+            List<PillItem> pills;
+            bool isTaken;
+
+            ScheduleGroup({
+              required this.id,
+              required this.title,
+              required this.hour,
+              required this.minute,
+              required this.pills,
+              this.isTaken = false,
+            });
+
+            Map<String, dynamic> toMap() => {
+                  'id': id,
+                  'title': title,
+                  'hour': hour,
+                  'minute': minute,
+                  'pills': pills.map((p) => p.toMap()).toList(),
+                  'isTaken': isTaken,
+                };
+
+            factory ScheduleGroup.fromMap(Map<String, dynamic> map) => ScheduleGroup(
+                  id: map['id'],
+                  title: map['title'] ?? '',
+                  hour: map['hour'],
+                  minute: map['minute'],
+                  pills: (map['pills'] as List).map((p) => PillItem.fromMap(p)).toList(),
+                  isTaken: map['isTaken'] ?? false,
+                );
+          }
+
+          class AppointmentModel {
+            String id;
+            String type;
+            String doctor;
+            String clinic;
+            String date;
+            String time;
+
+            AppointmentModel({
+              required this.id,
+              required this.type,
+              required this.doctor,
+              required this.clinic,
+              required this.date,
+              required this.time,
+            });
+
+            Map<String, dynamic> toMap() => {
+                  'id': id,
+                  'type': type,
+                  'doctor': doctor,
+                  'clinic': clinic,
+                  'date': date,
+                  'time': time,
+                };
+
+            factory AppointmentModel.fromMap(Map<String, dynamic> map) => AppointmentModel(
+                  id: map['id'],
+                  type: map['type'] ?? 'רופא',
+                  doctor: map['doctor'],
+                  clinic: map['clinic'],
+                  date: map['date'],
+                  time: map['time'],
+                );
           }
 
           class MainDashboard extends StatefulWidget {
