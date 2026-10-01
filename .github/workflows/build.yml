@@ -26,6 +26,61 @@ jobs:
         run: |
           flutter create --org com.example --project-name pill_reminder . --platforms=android --overwrite
 
+      - name: Install Python Image Tools & Generate 3D App Icons
+        run: |
+          pip install pillow
+          python3 -c "
+          from PIL import Image, ImageDraw
+          import os
+
+          def create_icon(size):
+              img = Image.new('RGBA', (size, size), (15, 23, 42, 255)) # Dark Cyber Blue
+              draw = ImageDraw.Draw(img)
+              
+              # Outer Glow Ring
+              margin = int(size * 0.1)
+              draw.ellipse([margin, margin, size - margin, size - margin], fill=(30, 41, 59, 255), outline=(6, 182, 212, 255), width=max(2, int(size * 0.05)))
+              
+              # Medical Cross in Neon Cyan
+              c_width = int(size * 0.16)
+              c_len = int(size * 0.52)
+              cx = size // 2
+              cy = size // 2
+              
+              # Vertical bar
+              draw.rounded_rectangle([cx - c_width // 2, cy - c_len // 2, cx + c_width // 2, cy + c_len // 2], radius=int(size * 0.04), fill=(6, 182, 212, 255))
+              # Horizontal bar
+              draw.rounded_rectangle([cx - c_len // 2, cy - c_width // 2, cx + c_len // 2, cy + c_width // 2], radius=int(size * 0.04), fill=(6, 182, 212, 255))
+              
+              # Accent Pill / Bolt Dot
+              dot_r = int(size * 0.07)
+              draw.ellipse([int(size * 0.65) - dot_r, int(size * 0.35) - dot_r, int(size * 0.65) + dot_r, int(size * 0.35) + dot_r], fill=(244, 63, 94, 255))
+              
+              return img
+
+          sizes = {
+              'mipmap-mdpi': 48,
+              'mipmap-hdpi': 72,
+              'mipmap-xhdpi': 96,
+              'mipmap-xxhdpi': 144,
+              'mipmap-xxxhdpi': 192,
+          }
+
+          res_dir = 'android/app/src/main/res'
+          for folder, s in sizes.items():
+              target_dir = os.path.join(res_dir, folder)
+              os.makedirs(target_dir, exist_ok=True)
+              icon = create_icon(s)
+              icon.save(os.path.join(target_dir, 'ic_launcher.png'), 'PNG')
+              icon.save(os.path.join(target_dir, 'ic_launcher_foreground.png'), 'PNG')
+          
+          # Delete any adaptive-icon XML that points to default flutter vector
+          for root, dirs, files in os.walk(res_dir):
+              for file in files:
+                  if file.startswith('ic_launcher') and file.endswith('.xml'):
+                      os.remove(os.path.join(root, file))
+          "
+
       - name: Configure Android Permissions and Queries
         run: |
           python3 -c "
@@ -57,6 +112,8 @@ jobs:
     </queries>
   '''
           txt = txt.replace('<application', perms + queries + '  <application')
+          # Ensure launcher icon attribute points to png
+          txt = txt.replace('android:icon=\"@mipmap/ic_launcher\"', 'android:icon=\"@mipmap/ic_launcher\"')
           with open(manifest_path, 'w') as f:
               f.write(txt)
           "
@@ -890,92 +947,6 @@ jobs:
             }
           }
 
-          class PillItem {
-            String name;
-            int dosage;
-            int stock;
-            PillItem({required this.name, required this.dosage, required this.stock});
-
-            Map<String, dynamic> toMap() => {'name': name, 'dosage': dosage, 'stock': stock};
-            factory PillItem.fromMap(Map<String, dynamic> map) => PillItem(
-                  name: map['name'],
-                  dosage: map['dosage'] ?? 1,
-                  stock: map['stock'] ?? 30,
-                );
-          }
-
-          class ScheduleGroup {
-            String id;
-            String title;
-            int hour;
-            int minute;
-            List<PillItem> pills;
-            bool isTaken;
-
-            ScheduleGroup({
-              required this.id,
-              required this.title,
-              required this.hour,
-              required this.minute,
-              required this.pills,
-              this.isTaken = false,
-            });
-
-            Map<String, dynamic> toMap() => {
-                  'id': id,
-                  'title': title,
-                  'hour': hour,
-                  'minute': minute,
-                  'pills': pills.map((p) => p.toMap()).toList(),
-                  'isTaken': isTaken,
-                };
-
-            factory ScheduleGroup.fromMap(Map<String, dynamic> map) => ScheduleGroup(
-                  id: map['id'],
-                  title: map['title'] ?? '',
-                  hour: map['hour'],
-                  minute: map['minute'],
-                  pills: (map['pills'] as List).map((p) => PillItem.fromMap(p)).toList(),
-                  isTaken: map['isTaken'] ?? false,
-                );
-          }
-
-          class AppointmentModel {
-            String id;
-            String type;
-            String doctor;
-            String clinic;
-            String date;
-            String time;
-
-            AppointmentModel({
-              required this.id,
-              required this.type,
-              required this.doctor,
-              required this.clinic,
-              required this.date,
-              required this.time,
-            });
-
-            Map<String, dynamic> toMap() => {
-                  'id': id,
-                  'type': type,
-                  'doctor': doctor,
-                  'clinic': clinic,
-                  'date': date,
-                  'time': time,
-                };
-
-            factory AppointmentModel.fromMap(Map<String, dynamic> map) => AppointmentModel(
-                  id: map['id'],
-                  type: map['type'] ?? 'רופא',
-                  doctor: map['doctor'],
-                  clinic: map['clinic'],
-                  date: map['date'],
-                  time: map['time'],
-                );
-          }
-
           class MainDashboard extends StatefulWidget {
             const MainDashboard({super.key});
 
@@ -1178,7 +1149,6 @@ jobs:
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              // Quick Preset Buttons (No extra header line)
                               Wrap(
                                 spacing: 8,
                                 runSpacing: 8,
@@ -1439,7 +1409,6 @@ jobs:
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              // Live Navigation test buttons in form
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -1761,6 +1730,7 @@ jobs:
                   child: TabBarView(
                     controller: _tabController,
                     children: [
+                      // Medicines Tab
                       _schedules.isEmpty
                           ? Center(child: Text(t['empty_meds']!, style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white38, fontSize: 18)))
                           : ListView.builder(
@@ -1806,6 +1776,7 @@ jobs:
                                 );
                               },
                             ),
+                      // Appointments Tab
                       _apps.isEmpty
                           ? Center(child: Text(t['empty_apps']!, style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white38, fontSize: 18)))
                           : ListView.builder(
