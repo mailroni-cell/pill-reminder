@@ -26,17 +26,33 @@ jobs:
         run: |
           flutter create --org com.example --project-name pill_reminder . --platforms=android --overwrite
 
-      - name: Configure Android Permissions and Gradle
+      - name: Configure Android Permissions and Desugaring
         run: |
+          # Permissions
           sed -i 's/<application/<uses-permission android:name="android.permission.POST_NOTIFICATIONS"\/>\n    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.USE_EXACT_ALARM"\/>\n    <application/' android/app/src/main/AndroidManifest.xml
           
-          if [ -f "android/app/build.gradle.kts" ]; then
-            sed -i '/compileOptions {/a \        isCoreLibraryDesugaringEnabled = true' android/app/build.gradle.kts
-            sed -i '/dependencies {/a \    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")' android/app/build.gradle.kts
-          elif [ -f "android/app/build.gradle" ]; then
-            sed -i '/compileOptions {/a \        coreLibraryDesugaringEnabled true' android/app/build.gradle
-            sed -i '/dependencies {/a \    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"' android/app/build.gradle
-          fi
+          # Fix build.gradle.kts with proper Desugaring dependency
+          python3 -c "
+          import os
+          fpath = 'android/app/build.gradle.kts'
+          if os.path.exists(fpath):
+              with open(fpath, 'r') as f:
+                  txt = f.read()
+              if 'compileOptions {' in txt:
+                  txt = txt.replace('compileOptions {', 'compileOptions {\n        isCoreLibraryDesugaringEnabled = true')
+              txt += '\n\ndependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.0.4\")\n}\n'
+              with open(fpath, 'w') as f:
+                  f.write(txt)
+          else:
+              fpath_g = 'android/app/build.gradle'
+              with open(fpath_g, 'r') as f:
+                  txt = f.read()
+              if 'compileOptions {' in txt:
+                  txt = txt.replace('compileOptions {', 'compileOptions {\n        coreLibraryDesugaringEnabled true')
+              txt += '\n\ndependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"\n}\n'
+              with open(fpath_g, 'w') as f:
+                  f.write(txt)
+          "
 
       - name: Create pubspec.yaml
         run: |
