@@ -22,57 +22,24 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Setup Project Files
+      - name: Create Flutter Skeleton
         run: |
           flutter create --org com.example --project-name pill_reminder . --platforms=android --overwrite
-          
-          # Fix Desugaring & Permissions
-          python3 -c "
-          import os
-          manifest_path = 'android/app/src/main/AndroidManifest.xml'
-          if os.path.exists(manifest_path):
-              with open(manifest_path, 'r') as f:
-                  m_txt = f.read()
-              perms = '''
-    <uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>
-    <uses-permission android:name=\"android.permission.VIBRATE\"/>
-    <uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\"/>
-    <uses-permission android:name=\"android.permission.SCHEDULE_EXACT_ALARM\"/>
-    <uses-permission android:name=\"android.permission.USE_EXACT_ALARM\"/>
-    <uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>
-    <uses-permission android:name=\"android.permission.USE_FULL_SCREEN_INTENT\"/>
-  '''
-              m_txt = m_txt.replace('<application', perms + '  <application')
-              with open(manifest_path, 'w') as f:
-                  f.write(m_txt)
 
-          gradle_kts = 'android/app/build.gradle.kts'
-          gradle_groovy = 'android/app/build.gradle'
+      - name: Configure Android Permissions and Gradle
+        run: |
+          sed -i 's/<application/<uses-permission android:name="android.permission.POST_NOTIFICATIONS"\/>\n    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.USE_EXACT_ALARM"\/>\n    <application/' android/app/src/main/AndroidManifest.xml
           
-          if os.path.exists(gradle_kts):
-              with open(gradle_kts, 'r') as f:
-                  txt = f.read()
-              if 'compileOptions {' in txt:
-                  txt = txt.replace('compileOptions {', 'compileOptions {\n        isCoreLibraryDesugaringEnabled = true')
-              if 'dependencies {' in txt:
-                  txt = txt.replace('dependencies {', 'dependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.0.4\")')
-              else:
-                  txt += '\ndependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.0.4\")\n}\n'
-              with open(gradle_kts, 'w') as f:
-                  f.write(txt)
-          elif os.path.exists(gradle_groovy):
-              with open(gradle_groovy, 'r') as f:
-                  txt = f.read()
-              if 'compileOptions {' in txt:
-                  txt = txt.replace('compileOptions {', 'compileOptions {\n        coreLibraryDesugaringEnabled true')
-              if 'dependencies {' in txt:
-                  txt = txt.replace('dependencies {', 'dependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"')
-              else:
-                  txt += '\ndependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"\n}\n'
-              with open(gradle_groovy, 'w') as f:
-                  f.write(txt)
-          "
+          if [ -f "android/app/build.gradle.kts" ]; then
+            sed -i '/compileOptions {/a \        isCoreLibraryDesugaringEnabled = true' android/app/build.gradle.kts
+            sed -i '/dependencies {/a \    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")' android/app/build.gradle.kts
+          elif [ -f "android/app/build.gradle" ]; then
+            sed -i '/compileOptions {/a \        coreLibraryDesugaringEnabled true' android/app/build.gradle
+            sed -i '/dependencies {/a \    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"' android/app/build.gradle
+          fi
 
+      - name: Create pubspec.yaml
+        run: |
           cat << 'EOF' > pubspec.yaml
           name: pill_reminder
           description: Pill reminder app
@@ -91,6 +58,8 @@ jobs:
             uses-material-design: true
           EOF
 
+      - name: Create lib/main.dart
+        run: |
           cat << 'EOF' > lib/main.dart
           import 'dart:convert';
           import 'package:flutter/cupertino.dart';
@@ -105,61 +74,34 @@ jobs:
               FlutterLocalNotificationsPlugin();
           final FlutterTts flutterTts = FlutterTts();
 
-          // Predefined Database of Common Medicines
           const List<String> commonMedicinesList = [
-            'אקמול (Acamol / Paracetamol)',
-            'אופטלגין (Optalgin / Dipyrone)',
-            'נורופן (Nurofen / Ibuprofen)',
-            'אדוויל (Advil / Ibuprofen)',
+            'אקמול (Acamol)',
+            'אופטלגין (Optalgin)',
+            'נורופן (Nurofen)',
+            'אדוויל (Advil)',
             'אספירין (Aspirin)',
-            'ליפיטור (Lipitor / Atorvastatin)',
-            'קרסטור (Crestor / Rosuvastatin)',
-            'גלוקופאז (Glucophage / Metformin)',
+            'ליפיטור (Lipitor)',
+            'קרסטור (Crestor)',
+            'גלוקופאז (Glucophage)',
             'לוסרטן (Losartan)',
-            'אנלפריל (Enalapril)',
-            'נורווסק (Norvasc / Amlodipine)',
-            'קונקור (Concor / Bisoprolol)',
-            'נקסיום (Nexium / Esomeprazole)',
-            'לוסק (Losec / Omeprazole)',
-            'קונטרולוק (Controloc / Pantoprazole)',
-            'ציפרלקס (Cipralex / Escitalopram)',
-            'זולופט / לוסטרל (Zoloft / Sertraline)',
-            'קסנקס (Xanax / Alprazolam)',
-            'קלונקס (Clonex / Clonazepam)',
-            'ואבן (Vaben / Oxazepam)',
+            'נורווסק (Norvasc)',
+            'קונקור (Concor)',
+            'נקסיום (Nexium)',
+            'לוסק (Losec)',
+            'ציפרלקס (Cipralex)',
+            'זולופט (Zoloft)',
+            'קסנקס (Xanax)',
+            'קלונקס (Clonex)',
             'אוגמנטין (Augmentin)',
-            'מוקסיפן (Moxypen / Amoxicillin)',
-            'ציפרודקס (Ciprodex / Ciprofloxacin)',
-            'זינת (Zinnat / Cefuroxime)',
-            'אלטרוקסין (Eltroxin / Levothyroxine)',
-            'יוטירוקס (Euthyrox)',
-            'פליקסונאז (Flixonase)',
-            'אריוס (Aerius / Desloratadine)',
-            'לורטדין (Loratadine)',
-            'טלפסט (Telfast / Fexofenadine)',
-            'סטילנוקס / אמביאן (Stilnox / Zolpidem)',
-            'בונדורמין (Bondormin / Brotizolam)',
+            'מוקסיפן (Moxypen)',
+            'אלטרוקסין (Eltroxin)',
             'ויטמין D3 (Vitamin D3)',
             'ויטמין B12 (Vitamin B12)',
-            'ברזל (Iron / Folex)',
+            'ברזל (Iron)',
             'חומצה פולית (Folic Acid)',
-            'מגנזיום (Magnesium)',
-            'סידן (Calcium)',
-            'אומגה 3 (Omega 3)',
-            'פרדניזון (Prednisone)',
-            'אקמול פוקוס (Acamol Focus)',
-            'דקסמול קולד (Dexamol Cold)',
-            'פראמין (Pramin / Metoclopramide)',
-            'מוטיליום (Motilium / Domperidone)',
-            'אימודיום (Imodium / Loperamide)',
-            'אלטרול / אלטרולט (Elatrolet)',
-            'סימבלטה (Cymbalta / Duloxetine)',
-            'ליריקה (Lyrica / Pregabalin)',
-            'טרמדקס (Tramadex / Tramadol)',
-            'ארקוקסיה (Arcoxia / Etoricoxib)'
+            'מגנזיום (Magnesium)'
           ];
 
-          // Translations Dictionary
           const Map<String, Map<String, String>> translations = {
             'he': {
               'app_title': 'תזכורת תרופות',
@@ -167,149 +109,113 @@ jobs:
               'add_med': 'תרופה חדשה',
               'med_name': 'בחר תרופה או הקלד שם',
               'dosage': 'מינון (כדורים)',
-              'stock': 'כמות במלאי',
+              'stock': 'מלאי',
               'time': 'שעת נטילה',
               'save': 'שמור',
               'cancel': 'ביטול',
               'empty_state': 'אין תרופות מוגדרות עדיין',
               'stock_alert': 'מלאי נמוך - כדאי לחדש מרשם!',
-              'select_language': 'בחר שפה',
               'settings': 'הגדרות',
               'help': 'מדריך עזרה',
-              'voice_alerts': 'התראות קוליות (הקראה)',
-              'voice_rate': 'מהירות הקראה',
-              'color_theme': 'ערכת צבעים',
-              'high_contrast': 'מצב כבדי ראייה (ניגודיות וגופן מוגדל)',
-              'slow': 'איטית',
-              'normal': 'רגילה',
-              'fast': 'מהירה',
-              'tts_phrase': 'הגיע הזמן ליטול את התרופה: {name}, {dosage} כדורים.',
-              'help_content': 'ברוכים הבאים לאפליקציית תזכורת התרופות!\n\n1. הוספת תרופה: לחצו על כפתור "תרופה חדשה" בתחתית המסך. באפשרותכם לבחור תרופה מהרשימה הנפוצה או להקליד בעצמכם, ולכוון מינון, מלאי ושעה בגלגלות התלת-ממדיות.\n\n2. סימון נטילה: כאשר מגיע זמן הנטילה, לחצו על כפתור הסימון לצד התרופה. המלאי יתעדכן אוטומטית והאפליקציה תקריא לכם אישור קולי.\n\n3. הגדרות ונגישות: במסך ההגדרות תוכלו להתאים את מהירות הדיבור, ערכת הצבעים, ולהפעיל מצב מותאם לכבדי ראייה עם אותיות גדולות וברורות.'
+              'voice_alerts': 'התראות קוליות',
+              'high_contrast': 'מצב כבדי ראייה (גופן מוגדל וניגודיות)',
+              'tts_phrase': 'הגיע הזמן ליטול את התרופה: {name}',
+              'help_content': 'מדריך שימוש באפליקציה:\n\n1. הוספת תרופה: לחץ על "תרופה חדשה" בתחתית המסך ובחר תרופה או הקלד שם, ולאחר מכן כוון מינון, מלאי ושעה בגלגלות.\n\n2. אישור נטילה: לחץ על סמל השעון כדי לסמן נטילה. המלאי ירד והאפליקציה תשמיע הודעה קולית.\n\n3. הגדרות ונגישות: בתפריט למעלה ניתן להפעיל מצב כבדי ראייה ולהתאים התראות קוליות.'
             },
             'en': {
               'app_title': 'Pill Reminder',
               'created_by': 'Created & Developed by Roni Schneider',
               'add_med': 'New Medicine',
-              'med_name': 'Choose medicine or type name',
-              'dosage': 'Dosage (Pills)',
-              'stock': 'Stock Count',
-              'time': 'Intake Time',
+              'med_name': 'Select or type medicine',
+              'dosage': 'Dosage (pills)',
+              'stock': 'Stock',
+              'time': 'Time',
               'save': 'Save',
               'cancel': 'Cancel',
               'empty_state': 'No medicines added yet',
-              'stock_alert': 'Low stock - renew prescription!',
-              'select_language': 'Select Language',
+              'stock_alert': 'Low stock - refill soon!',
               'settings': 'Settings',
               'help': 'Help Guide',
-              'voice_alerts': 'Voice Announcements',
-              'voice_rate': 'Speech Rate',
-              'color_theme': 'Color Theme',
-              'high_contrast': 'High Contrast & Large Font Mode',
-              'slow': 'Slow',
-              'normal': 'Normal',
-              'fast': 'Fast',
-              'tts_phrase': 'It is time to take your medicine: {name}, {dosage} pills.',
-              'help_content': 'Welcome to Pill Reminder!\n\n1. Add Medicine: Tap "New Medicine" at the bottom. Pick from over 50 common medicines or enter a custom name. Select dose, stock, and time using the 3D scroll wheels.\n\n2. Mark as Taken: When it is time, tap the check button. The stock count will decrease automatically and speech confirmation will play.\n\n3. Settings & Accessibility: You can toggle voice alerts, change color themes, or enable High Contrast mode for large, bold text.'
+              'voice_alerts': 'Voice Alerts',
+              'high_contrast': 'High Contrast Mode',
+              'tts_phrase': 'Time to take medicine: {name}',
+              'help_content': 'User Guide:\n\n1. Add: Tap "New Medicine" below, select or enter name, and scroll wheels for dosage/time.\n\n2. Take: Tap the bell icon to mark taken. Stock decreases with voice confirmation.\n\n3. Accessibility: Use Settings at the top to toggle High Contrast.'
             },
             'ru': {
               'app_title': 'Напоминание о лекарствах',
               'created_by': 'Создано и разработано Рони Шнайдером',
               'add_med': 'Новое лекарство',
-              'med_name': 'Выберите лекарство или введите имя',
-              'dosage': 'Дозировка (таблетки)',
+              'med_name': 'Выберите или введите название',
+              'dosage': 'Дозировка',
               'stock': 'Запас',
-              'time': 'Время приема',
+              'time': 'Время',
               'save': 'Сохранить',
               'cancel': 'Отмена',
-              'empty_state': 'Лекарства не добавлены',
-              'stock_alert': 'Мало таблеток - обновите рецепт!',
-              'select_language': 'Выберите язык',
+              'empty_state': 'Список пуст',
+              'stock_alert': 'Мало таблеток!',
               'settings': 'Настройки',
-              'help': 'Инструкция',
+              'help': 'Помощь',
               'voice_alerts': 'Голосовые оповещения',
-              'voice_rate': 'Скорость речи',
-              'color_theme': 'Цветовая схема',
               'high_contrast': 'Режим для слабовидящих',
-              'slow': 'Медленно',
-              'normal': 'Обычно',
-              'fast': 'Быстро',
-              'tts_phrase': 'Пора принять лекарство: {name}, {dosage} таблеток.',
-              'help_content': 'Добро пожаловать в приложение!\n\n1. Добавление: Нажмите кнопку "Новое лекарство". Выберите препарат из списка или введите вручную, настроив время и дозу 3D-колесиками.\n\n2. Прием: Отметьте принятое лекарство. Запас обновится, и прозвучит голосовое подтверждение.\n\n3. Настройки: Выберите режим высокой контрастности с крупным шрифтом, скорость голоса и тему.'
+              'tts_phrase': 'Время принять лекарство: {name}',
+              'help_content': 'Инструкция:\n1. Нажмите "Новое лекарство", выберите препарат и задайте время колесиками.\n2. Отметьте прием нажатием на иконку.\n3. В настройках можно включить крупный шрифт.'
             },
             'ro': {
               'app_title': 'Memento Medicamente',
               'created_by': 'Creat și dezvoltat de Roni Schneider',
               'add_med': 'Medicament nou',
-              'med_name': 'Alegeți medicamentul sau tastați',
-              'dosage': 'Doză (pastile)',
-              'stock': 'Stoc rămas',
-              'time': 'Ora administrării',
+              'med_name': 'Alegeți sau tastați',
+              'dosage': 'Doză',
+              'stock': 'Stoc',
+              'time': 'Ora',
               'save': 'Salvează',
               'cancel': 'Anulează',
-              'empty_state': 'Niciun medicament adăugat',
-              'stock_alert': 'Stoc redus - reînnoiți rețeta!',
-              'select_language': 'Selectează limba',
+              'empty_state': 'Niciun medicament',
+              'stock_alert': 'Stoc redus!',
               'settings': 'Setări',
-              'help': 'Ghid de ajutor',
+              'help': 'Ajutor',
               'voice_alerts': 'Alerte vocale',
-              'voice_rate': 'Viteza vocii',
-              'color_theme': 'Temă de culori',
-              'high_contrast': 'Mod pentru vedere slabă (Contrast mare)',
-              'slow': 'Lent',
-              'normal': 'Normal',
-              'fast': 'Rapid',
-              'tts_phrase': 'Este timpul să luați medicamentul: {name}, {dosage} pastile.',
-              'help_content': 'Bine ați venit la Memento Medicamente!\n\n1. Adăugare: Apăsați pe "Medicament nou", alegeți din listă și setați ora și doza.\n\n2. Marcaj: Bifați medicamentul luat. Stocul scade automat și se aude mesajul vocal.\n\n3. Accesibilitate: Puteți activa modul cu litere mari și contrast ridicat din meniul de setări.'
+              'high_contrast': 'Contrast ridicat',
+              'tts_phrase': 'E timpul pentru: {name}',
+              'help_content': 'Ghid:\n1. Apăsați pe "Medicament nou" și alegeți ora prin rotire.\n2. Bifați la administrare.\n3. Activați modul cu scris mărit din Setări.'
             },
             'ar': {
               'app_title': 'تذكير بالدواء',
-              'created_by': 'تم الإنشاء والتطوير بواسطة روني شنايدر',
+              'created_by': 'تم الإنشاء والتطوير بواسطة روني شنايدר',
               'add_med': 'دواء جديد',
-              'med_name': 'اختر دواء أو اكتب الاسم',
-              'dosage': 'الجرعة (حبوب)',
-              'stock': 'الكمية المتبقية',
-              'time': 'وقت التناول',
+              'med_name': 'اختر أو اكتب الدواء',
+              'dosage': 'الجرعة',
+              'stock': 'المخزون',
+              'time': 'الوقت',
               'save': 'حفظ',
               'cancel': 'إلغاء',
-              'empty_state': 'لا توجد أدوية مضافة حتى الآن',
-              'stock_alert': 'المخزون قليل - يرجى تجديد الوصفة!',
-              'select_language': 'اختر اللغة',
+              'empty_state': 'لا توجد أدوية',
+              'stock_alert': 'المخزون منخفض!',
               'settings': 'الإعدادات',
-              'help': 'دليل المساعدة',
-              'voice_alerts': 'التنبيهات الصوتية',
-              'voice_rate': 'سرعة الصوت',
-              'color_theme': 'سمة الألوان',
-              'high_contrast': 'وضع ضعاف البصر (تباين عالي وخط كبير)',
-              'slow': 'بطيء',
-              'normal': 'عادي',
-              'fast': 'سريع',
-              'tts_phrase': 'حان وقت تناول الدواء: {name}، {dosage} حبوب.',
-              'help_content': 'مرحباً بك في تطبيق التذكير بالدواء!\n\n1. إضافة دواء: اضغط على "دواء جديد"، اختر من قائمة الأدوية وحدد الوقت والجرعة باستخدام عجلات التمرير.\n\n2. تأكيد التناول: اضغط على علامة الصح عند التناول، وسيتم إنقاص المخزون تلقائياً وتشغيل التنبيه الصوتي.\n\n3. إمكانية الوصول: يمكنك تفعيل وضع ضعاف البصر للحصول على خط كبير وواضح من قائمة الإعدادات.'
+              'help': 'مساعدة',
+              'voice_alerts': 'تنبيه صوتي',
+              'high_contrast': 'وضع ضعاف البصر',
+              'tts_phrase': 'حان وقت تناول الدواء: {name}',
+              'help_content': 'دليل الاستخدام:\n1. اضغط على دواء جديد وحدد الوقت والجرعة.\n2. اضغط على الرمز لتأكيد أخذ الدواء.\n3. يمكنك تفعيل الخط الكبير من الإعدادات.'
             },
             'de': {
               'app_title': 'Medikamenten-Erinnerung',
               'created_by': 'Erstellt und entwickelt von Roni Schneider',
               'add_med': 'Neues Medikament',
-              'med_name': 'Medikament wählen oder eingeben',
-              'dosage': 'Dosis (Tabletten)',
+              'med_name': 'Wählen oder eingeben',
+              'dosage': 'Dosis',
               'stock': 'Vorrat',
-              'time': 'Einnahmezeit',
+              'time': 'Uhrzeit',
               'save': 'Speichern',
               'cancel': 'Abbrechen',
-              'empty_state': 'Noch keine Medikamente hinzugefügt',
-              'stock_alert': 'Niedriger Vorrat - Rezept erneuern!',
-              'select_language': 'Sprache auswählen',
+              'empty_state': 'Keine Medikamente vorhanden',
+              'stock_alert': 'Vorrat fast leer!',
               'settings': 'Einstellungen',
               'help': 'Hilfe',
-              'voice_alerts': 'Sprachansagen',
-              'voice_rate': 'Sprechgeschwindigkeit',
-              'color_theme': 'Farbthema',
-              'high_contrast': 'Sehbehinderten-Modus (Hoher Kontrast)',
-              'slow': 'Langsam',
-              'normal': 'Normal',
-              'fast': 'Schnell',
-              'tts_phrase': 'Es ist Zeit für Ihr Medikament: {name}, {dosage} Tabletten.',
-              'help_content': 'Willkommen beim Medikamenten-Planer!\n\n1. Medikament hinzufügen: Tippen Sie auf "Neues Medikament". Wählen Sie aus über 50 Medikamenten oder tippen Sie einen Namen ein.\n\n2. Einnahme bestätigen: Haken Sie eingenommene Tabletten ab. Der Vorrat wird reduziert und die Sprachansage ertönt.\n\n3. Barrierefreiheit: In den Einstellungen können Sie einen Hochkontrast-Modus mit großer Schrift aktivieren.'
+              'voice_alerts': 'Sprachausgabe',
+              'high_contrast': 'Hoher Kontrast',
+              'tts_phrase': 'Zeit für Ihr Medikament: {name}',
+              'help_content': 'Hilfe:\n1. Tippen Sie auf "Neues Medikament" und stellen Sie Dosis und Uhrzeit ein.\n2. Bestätigen Sie die Einnahme durch Antippen.\n3. Hoher Kontrast ist in den Einstellungen verfügbar.'
             },
           };
 
@@ -329,14 +235,6 @@ jobs:
             runApp(const PillAppRoot());
           }
 
-          class AppSettingsState {
-            String lang = 'he';
-            bool voiceAlerts = true;
-            double voiceRate = 0.45;
-            String themeColor = 'blue';
-            bool highContrast = false;
-          }
-
           class PillAppRoot extends StatefulWidget {
             const PillAppRoot({super.key});
 
@@ -348,147 +246,94 @@ jobs:
           }
 
           class _PillAppRootState extends State<PillAppRoot> {
-            final AppSettingsState settings = AppSettingsState();
+            String lang = 'he';
+            bool voiceAlerts = true;
+            bool highContrast = false;
 
             @override
             void initState() {
               super.initState();
-              _loadPreferences();
+              _load();
             }
 
-            Future<void> _loadPreferences() async {
+            Future<void> _load() async {
               final prefs = await SharedPreferences.getInstance();
               setState(() {
-                settings.lang = prefs.getString('app_lang') ?? 'he';
-                settings.voiceAlerts = prefs.getBool('app_voice_alerts') ?? true;
-                settings.voiceRate = prefs.getDouble('app_voice_rate') ?? 0.45;
-                settings.themeColor = prefs.getString('app_theme_color') ?? 'blue';
-                settings.highContrast = prefs.getBool('app_high_contrast') ?? false;
+                lang = prefs.getString('app_lang') ?? 'he';
+                voiceAlerts = prefs.getBool('app_voice_alerts') ?? true;
+                highContrast = prefs.getBool('app_high_contrast') ?? false;
               });
             }
 
-            void updateSettings({
-              String? lang,
-              bool? voiceAlerts,
-              double? voiceRate,
-              String? themeColor,
-              bool? highContrast,
-            }) async {
+            void updateState({String? newLang, bool? newVoice, bool? newHc}) async {
               final prefs = await SharedPreferences.getInstance();
               setState(() {
-                if (lang != null) {
-                  settings.lang = lang;
-                  prefs.setString('app_lang', lang);
+                if (newLang != null) {
+                  lang = newLang;
+                  prefs.setString('app_lang', newLang);
                 }
-                if (voiceAlerts != null) {
-                  settings.voiceAlerts = voiceAlerts;
-                  prefs.setBool('app_voice_alerts', voiceAlerts);
+                if (newVoice != null) {
+                  voiceAlerts = newVoice;
+                  prefs.setBool('app_voice_alerts', newVoice);
                 }
-                if (voiceRate != null) {
-                  settings.voiceRate = voiceRate;
-                  prefs.setDouble('app_voice_rate', voiceRate);
-                }
-                if (themeColor != null) {
-                  settings.themeColor = themeColor;
-                  prefs.setString('app_theme_color', themeColor);
-                }
-                if (highContrast != null) {
-                  settings.highContrast = highContrast;
-                  prefs.setBool('app_high_contrast', highContrast);
+                if (newHc != null) {
+                  highContrast = newHc;
+                  prefs.setBool('app_high_contrast', newHc);
                 }
               });
-            }
-
-            Color getPrimaryColor() {
-              if (settings.highContrast) return Colors.black;
-              switch (settings.themeColor) {
-                case 'green':
-                  return const Color(0xFF1B6B48);
-                case 'purple':
-                  return const Color(0xFF5B2C86);
-                default:
-                  return const Color(0xFF1E4C74);
-              }
-            }
-
-            Color getBackgroundColor() {
-              if (settings.highContrast) return Colors.white;
-              return const Color(0xFFE9EFF5);
             }
 
             @override
             Widget build(BuildContext context) {
-              final bool isRtl = settings.lang == 'he' || settings.lang == 'ar';
+              final bool isRtl = lang == 'he' || lang == 'ar';
               return MaterialApp(
                 title: 'Pill Reminder',
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(
                   useMaterial3: true,
-                  scaffoldBackgroundColor: getBackgroundColor(),
-                  colorSchemeSeed: getPrimaryColor(),
+                  scaffoldBackgroundColor: highContrast ? Colors.white : const Color(0xFFE9EEF4),
+                  colorSchemeSeed: highContrast ? Colors.black : const Color(0xFF1E4C74),
                 ),
                 home: Directionality(
                   textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-                  child: SplashScreen(settings: settings),
+                  child: SplashScreen(lang: lang, highContrast: highContrast),
                 ),
               );
             }
           }
 
-          // 3D Neumorphic Box Decoration Helper
-          BoxDecoration neumorphicDecoration({
-            double borderRadius = 20,
-            bool isPressed = false,
-            bool highContrast = false,
-            Color baseColor = const Color(0xFFE9EFF5),
-          }) {
-            if (highContrast) {
+          BoxDecoration neumorphicDeco({double radius = 18, bool isPressed = false, bool hc = false}) {
+            if (hc) {
               return BoxDecoration(
                 color: isPressed ? Colors.grey.shade300 : Colors.white,
-                borderRadius: BorderRadius.circular(borderRadius),
-                border: Border.all(color: Colors.black, width: 2.5),
+                borderRadius: BorderRadius.circular(radius),
+                border: Border.all(color: Colors.black, width: 2.2),
               );
             }
             if (isPressed) {
               return BoxDecoration(
-                color: baseColor,
-                borderRadius: BorderRadius.circular(borderRadius),
+                color: const Color(0xFFE9EEF4),
+                borderRadius: BorderRadius.circular(radius),
                 boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.14),
-                    offset: const Offset(3, 3),
-                    blurRadius: 4,
-                  ),
-                  BoxShadow(
-                    color: Colors.white.withOpacity(0.9),
-                    offset: const Offset(-3, -3),
-                    blurRadius: 4,
-                  ),
+                  BoxShadow(color: Colors.black.withOpacity(0.12), offset: const Offset(2, 2), blurRadius: 4),
+                  BoxShadow(color: Colors.white.withOpacity(0.9), offset: const Offset(-2, -2), blurRadius: 4),
                 ],
               );
             }
             return BoxDecoration(
-              color: baseColor,
-              borderRadius: BorderRadius.circular(borderRadius),
+              color: const Color(0xFFE9EEF4),
+              borderRadius: BorderRadius.circular(radius),
               boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFA6B5C8).withOpacity(0.7),
-                  offset: const Offset(6, 6),
-                  blurRadius: 12,
-                ),
-                BoxShadow(
-                  color: Colors.white,
-                  offset: const Offset(-6, -6),
-                  blurRadius: 12,
-                ),
+                BoxShadow(color: const Color(0xFFA5B4C7).withOpacity(0.7), offset: const Offset(5, 5), blurRadius: 10),
+                const BoxShadow(color: Colors.white, offset: Offset(-5, -5), blurRadius: 10),
               ],
             );
           }
 
-          // Splash Screen
           class SplashScreen extends StatefulWidget {
-            final AppSettingsState settings;
-            const SplashScreen({super.key, required this.settings});
+            final String lang;
+            final bool highContrast;
+            const SplashScreen({super.key, required this.lang, required this.highContrast});
 
             @override
             State<SplashScreen> createState() => _SplashScreenState();
@@ -501,49 +346,40 @@ jobs:
               Future.delayed(const Duration(seconds: 3), () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (ctx) => MainPillScreen(settings: widget.settings)),
+                  MaterialPageRoute(builder: (ctx) => const MainPillScreen()),
                 );
               });
             }
 
             @override
             Widget build(BuildContext context) {
-              final t = translations[widget.settings.lang]!;
-              final bool hc = widget.settings.highContrast;
+              final t = translations[widget.lang] ?? translations['he']!;
               return Scaffold(
                 body: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 140,
-                        height: 140,
-                        decoration: neumorphicDecoration(borderRadius: 40, highContrast: hc),
-                        child: Icon(
-                          Icons.medication_liquid_sharp,
-                          size: 75,
-                          color: PillAppRoot.of(context).getPrimaryColor(),
-                        ),
+                        width: 130,
+                        height: 130,
+                        decoration: neumorphicDeco(radius: 35, hc: widget.highContrast),
+                        child: const Icon(Icons.medication_liquid, size: 70, color: Color(0xFF1E4C74)),
                       ),
-                      const SizedBox(height: 36),
+                      const SizedBox(height: 32),
                       Text(
                         t['app_title']!,
-                        style: TextStyle(
-                          fontSize: hc ? 34 : 28,
-                          fontWeight: FontWeight.w900,
-                          color: hc ? Colors.black : const Color(0xFF1E3A5F),
-                        ),
+                        style: TextStyle(fontSize: widget.highContrast ? 32 : 26, fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 14),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-                        decoration: neumorphicDecoration(borderRadius: 16, highContrast: hc),
+                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                        decoration: neumorphicDeco(radius: 14, hc: widget.highContrast),
                         child: Text(
                           t['created_by']!,
                           style: TextStyle(
-                            fontSize: hc ? 18 : 15,
+                            fontSize: widget.highContrast ? 17 : 14,
                             fontWeight: FontWeight.bold,
-                            color: hc ? Colors.black : const Color(0xFF4A6572),
+                            color: widget.highContrast ? Colors.black : const Color(0xFF4B6584),
                           ),
                         ),
                       ),
@@ -595,8 +431,7 @@ jobs:
           }
 
           class MainPillScreen extends StatefulWidget {
-            final AppSettingsState settings;
-            const MainPillScreen({super.key, required this.settings});
+            const MainPillScreen({super.key});
 
             @override
             State<MainPillScreen> createState() => _MainPillScreenState();
@@ -608,26 +443,12 @@ jobs:
             @override
             void initState() {
               super.initState();
-              _loadMedicines();
-              _setupTts();
+              _loadMeds();
             }
 
-            void _setupTts() async {
-              Map<String, String> langMap = {
-                'he': 'he-IL',
-                'en': 'en-US',
-                'ru': 'ru-RU',
-                'ro': 'ro-RO',
-                'ar': 'ar-SA',
-                'de': 'de-DE',
-              };
-              await flutterTts.setLanguage(langMap[widget.settings.lang] ?? 'en-US');
-              await flutterTts.setSpeechRate(widget.settings.voiceRate);
-            }
-
-            Future<void> _loadMedicines() async {
+            Future<void> _loadMeds() async {
               final prefs = await SharedPreferences.getInstance();
-              final String? data = prefs.getString('saved_medicines_v3');
+              final String? data = prefs.getString('saved_meds_list');
               if (data != null) {
                 final List decoded = jsonDecode(data);
                 setState(() {
@@ -636,167 +457,123 @@ jobs:
               }
             }
 
-            Future<void> _saveMedicines() async {
+            Future<void> _saveMeds() async {
               final prefs = await SharedPreferences.getInstance();
-              final String encoded =
-                  jsonEncode(_medicines.map((m) => m.toMap()).toList());
-              await prefs.setString('saved_medicines_v3', encoded);
+              await prefs.setString(
+                'saved_meds_list',
+                jsonEncode(_medicines.map((m) => m.toMap()).toList()),
+              );
             }
 
-            void _speakAlert(Medicine med) async {
-              if (!widget.settings.voiceAlerts) return;
-              final t = translations[widget.settings.lang]!;
-              String phrase = t['tts_phrase']!
-                  .replaceAll('{name}', med.name)
-                  .replaceAll('{dosage}', med.dosage.toString());
-              await flutterTts.speak(phrase);
+            void _speak(Medicine med) async {
+              final app = PillAppRoot.of(context);
+              if (!app.voiceAlerts) return;
+              final t = translations[app.lang] ?? translations['he']!;
+              String txt = t['tts_phrase']!.replaceAll('{name}', med.name);
+              await flutterTts.speak(txt);
             }
 
-            void _toggleTaken(Medicine med) {
+            void _toggle(Medicine med) {
               setState(() {
                 med.isTaken = !med.isTaken;
                 if (med.isTaken) {
-                  if (med.stock >= med.dosage) {
-                    med.stock -= med.dosage;
-                  }
-                  _speakAlert(med);
+                  if (med.stock >= med.dosage) med.stock -= med.dosage;
+                  _speak(med);
                 } else {
                   med.stock += med.dosage;
                 }
               });
-              _saveMedicines();
+              _saveMeds();
             }
 
-            void _deleteMedicine(String id) {
-              flutterLocalNotificationsPlugin.cancel(id.hashCode);
-              setState(() {
-                _medicines.removeWhere((m) => m.id == id);
-              });
-              _saveMedicines();
-            }
-
-            void _showAddMedicineDialog() {
-              final t = translations[widget.settings.lang]!;
+            void _showAddDialog() {
+              final app = PillAppRoot.of(context);
+              final t = translations[app.lang] ?? translations['he']!;
               final nameCtrl = TextEditingController();
-              int selectedDosage = 1;
-              int selectedStock = 30;
-              int selectedHour = 8;
-              int selectedMinute = 0;
-              final bool hc = widget.settings.highContrast;
+              int dosage = 1;
+              int stock = 30;
+              int hour = 8;
+              int minute = 0;
+              final hc = app.highContrast;
 
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: PillAppRoot.of(context).getBackgroundColor(),
+                backgroundColor: hc ? Colors.white : const Color(0xFFE9EEF4),
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
                 ),
                 builder: (ctx) => StatefulBuilder(
-                  builder: (context, setModalState) => Directionality(
-                    textDirection: (widget.settings.lang == 'he' || widget.settings.lang == 'ar')
-                        ? TextDirection.rtl
-                        : TextDirection.ltr,
+                  builder: (context, setDialog) => Directionality(
+                    textDirection: (app.lang == 'he' || app.lang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: 24,
+                        top: 20,
                         left: 20,
                         right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+                        bottom: MediaQuery.of(context).viewInsets.bottom + 20,
                       ),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Center(
-                              child: Text(
-                                t['add_med']!,
-                                style: TextStyle(
-                                  fontSize: hc ? 26 : 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: PillAppRoot.of(context).getPrimaryColor(),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            // Quick Selector for Common Medicines
+                            Text(t['add_med']!, style: TextStyle(fontSize: hc ? 24 : 20, fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 12),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              decoration: neumorphicDecoration(borderRadius: 16, highContrast: hc),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: neumorphicDeco(radius: 12, hc: hc),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
                                   isExpanded: true,
-                                  hint: Text(t['med_name']!, style: TextStyle(fontSize: hc ? 16 : 14)),
-                                  items: commonMedicinesList.map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value, style: TextStyle(fontSize: hc ? 16 : 14)),
-                                    );
-                                  }).toList(),
+                                  hint: Text(t['med_name']!),
+                                  items: commonMedicinesList.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
                                   onChanged: (val) {
-                                    if (val != null) {
-                                      setModalState(() {
-                                        nameCtrl.text = val;
-                                      });
-                                    }
+                                    if (val != null) setDialog(() => nameCtrl.text = val);
                                   },
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 12),
-                            // Manual Input TextField
+                            const SizedBox(height: 10),
                             Container(
-                              decoration: neumorphicDecoration(borderRadius: 16, isPressed: true, highContrast: hc),
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: neumorphicDeco(radius: 12, isPressed: true, hc: hc),
+                              padding: const EdgeInsets.symmetric(horizontal: 14),
                               child: TextField(
                                 controller: nameCtrl,
-                                style: TextStyle(fontSize: hc ? 18 : 15, fontWeight: hc ? FontWeight.bold : FontWeight.normal),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: t['med_name'],
-                                ),
+                                decoration: InputDecoration(border: InputBorder.none, hintText: t['med_name']),
                               ),
                             ),
-                            const SizedBox(height: 16),
-                            // Scroll Wheels for Dosage and Stock
+                            const SizedBox(height: 14),
                             Row(
                               children: [
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      Text(t['dosage']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 16 : 14)),
-                                      const SizedBox(height: 6),
+                                      Text(t['dosage']!, style: const TextStyle(fontWeight: FontWeight.bold)),
                                       Container(
-                                        height: 100,
-                                        decoration: neumorphicDecoration(borderRadius: 15, highContrast: hc),
+                                        height: 90,
+                                        decoration: neumorphicDeco(radius: 12, hc: hc),
                                         child: CupertinoPicker(
-                                          itemExtent: 32,
-                                          scrollController: FixedExtentScrollController(initialItem: 0),
-                                          onSelectedItemChanged: (idx) =>
-                                              setModalState(() => selectedDosage = idx + 1),
-                                          children: List.generate(
-                                              10, (i) => Center(child: Text('${i + 1}', style: TextStyle(fontSize: hc ? 18 : 15)))),
+                                          itemExtent: 30,
+                                          onSelectedItemChanged: (i) => setDialog(() => dosage = i + 1),
+                                          children: List.generate(10, (i) => Center(child: Text('${i + 1}'))),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(width: 12),
+                                const SizedBox(width: 10),
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      Text(t['stock']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 16 : 14)),
-                                      const SizedBox(height: 6),
+                                      Text(t['stock']!, style: const TextStyle(fontWeight: FontWeight.bold)),
                                       Container(
-                                        height: 100,
-                                        decoration: neumorphicDecoration(borderRadius: 15, highContrast: hc),
+                                        height: 90,
+                                        decoration: neumorphicDeco(radius: 12, hc: hc),
                                         child: CupertinoPicker(
-                                          itemExtent: 32,
+                                          itemExtent: 30,
                                           scrollController: FixedExtentScrollController(initialItem: 29),
-                                          onSelectedItemChanged: (idx) =>
-                                              setModalState(() => selectedStock = (idx + 1)),
-                                          children: List.generate(
-                                              100, (i) => Center(child: Text('${i + 1}', style: TextStyle(fontSize: hc ? 18 : 15)))),
+                                          onSelectedItemChanged: (i) => setDialog(() => stock = i + 1),
+                                          children: List.generate(100, (i) => Center(child: Text('${i + 1}'))),
                                         ),
                                       ),
                                     ],
@@ -804,459 +581,193 @@ jobs:
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 16),
-                            Text(t['time']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 16 : 14)),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 10),
+                            Text(t['time']!, style: const TextStyle(fontWeight: FontWeight.bold)),
                             Container(
-                              height: 100,
-                              decoration: neumorphicDecoration(borderRadius: 15, highContrast: hc),
+                              height: 90,
+                              decoration: neumorphicDeco(radius: 12, hc: hc),
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: CupertinoPicker(
-                                      itemExtent: 32,
+                                      itemExtent: 30,
                                       scrollController: FixedExtentScrollController(initialItem: 8),
-                                      onSelectedItemChanged: (idx) =>
-                                          setModalState(() => selectedHour = idx),
-                                      children: List.generate(24,
-                                          (i) => Center(child: Text(i.toString().padLeft(2, '0'), style: TextStyle(fontSize: hc ? 18 : 15)))),
+                                      onSelectedItemChanged: (i) => setDialog(() => hour = i),
+                                      children: List.generate(24, (i) => Center(child: Text(i.toString().padLeft(2, '0')))),
                                     ),
                                   ),
-                                  const Text(':', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                                  const Text(':', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                                   Expanded(
                                     child: CupertinoPicker(
-                                      itemExtent: 32,
-                                      scrollController: FixedExtentScrollController(initialItem: 0),
-                                      onSelectedItemChanged: (idx) =>
-                                          setModalState(() => selectedMinute = idx * 5),
-                                      children: List.generate(12,
-                                          (i) => Center(child: Text((i * 5).toString().padLeft(2, '0'), style: TextStyle(fontSize: hc ? 18 : 15)))),
+                                      itemExtent: 30,
+                                      onSelectedItemChanged: (i) => setDialog(() => minute = i * 5),
+                                      children: List.generate(12, (i) => Center(child: Text((i * 5).toString().padLeft(2, '0')))),
                                     ),
                                   ),
                                 ],
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            // Save Button
-                            GestureDetector(
-                              onTap: () {
-                                if (nameCtrl.text.trim().isEmpty) return;
-                                final newMed = Medicine(
-                                  id: DateTime.now().millisecondsSinceEpoch.toString(),
-                                  name: nameCtrl.text.trim(),
-                                  dosage: selectedDosage,
-                                  hour: selectedHour,
-                                  minute: selectedMinute,
-                                  stock: selectedStock,
-                                );
-                                setState(() {
-                                  _medicines.add(newMed);
-                                });
-                                _saveMedicines();
-                                Navigator.pop(ctx);
-                              },
-                              child: Container(
-                                height: 50,
-                                decoration: neumorphicDecoration(
-                                  borderRadius: 15,
-                                  highContrast: hc,
-                                  baseColor: PillAppRoot.of(context).getPrimaryColor(),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    t['save']!,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: hc ? 20 : 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }
-
-            void _showHelpDialog() {
-              final t = translations[widget.settings.lang]!;
-              final bool hc = widget.settings.highContrast;
-              showDialog(
-                context: context,
-                builder: (ctx) => Directionality(
-                  textDirection: (widget.settings.lang == 'he' || widget.settings.lang == 'ar')
-                      ? TextDirection.rtl
-                      : TextDirection.ltr,
-                  child: AlertDialog(
-                    backgroundColor: PillAppRoot.of(context).getBackgroundColor(),
-                    title: Text(t['help']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 24 : 20)),
-                    content: SingleChildScrollView(
-                      child: Text(
-                        t['help_content']!,
-                        style: TextStyle(fontSize: hc ? 18 : 15, height: 1.4),
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(ctx),
-                        child: Text(t['cancel']!, style: const TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }
-
-            void _showSettingsDialog() {
-              final t = translations[widget.settings.lang]!;
-              final root = PillAppRoot.of(context);
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: root.getBackgroundColor(),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-                ),
-                builder: (ctx) => StatefulBuilder(
-                  builder: (context, setSettingsState) {
-                    final bool hc = widget.settings.highContrast;
-                    return Directionality(
-                      textDirection: (widget.settings.lang == 'he' || widget.settings.lang == 'ar')
-                          ? TextDirection.rtl
-                          : TextDirection.ltr,
-                      child: Padding(
-                        padding: const EdgeInsets.all(22),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Center(
-                              child: Text(
-                                t['settings']!,
-                                style: TextStyle(
-                                  fontSize: hc ? 26 : 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: root.getPrimaryColor(),
-                                ),
                               ),
                             ),
                             const SizedBox(height: 18),
-                            // Accessibility Toggle
-                            SwitchListTile(
-                              title: Text(t['high_contrast']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 18 : 15)),
-                              value: widget.settings.highContrast,
-                              onChanged: (val) {
-                                setSettingsState(() {
-                                  root.updateSettings(highContrast: val);
+                            GestureDetector(
+                              onTap: () {
+                                if (nameCtrl.text.trim().isEmpty) return;
+                                setState(() {
+                                  _medicines.add(Medicine(
+                                    id: DateTime.now().millisecondsSinceEpoch.toString(),
+                                    name: nameCtrl.text.trim(),
+                                    dosage: dosage,
+                                    hour: hour,
+                                    minute: minute,
+                                    stock: stock,
+                                  ));
                                 });
+                                _saveMeds();
+                                Navigator.pop(ctx);
                               },
-                            ),
-                            // Voice Alerts Toggle
-                            SwitchListTile(
-                              title: Text(t['voice_alerts']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 18 : 15)),
-                              value: widget.settings.voiceAlerts,
-                              onChanged: (val) {
-                                setSettingsState(() {
-                                  root.updateSettings(voiceAlerts: val);
-                                });
-                              },
-                            ),
-                            // Voice Speed
-                            ListTile(
-                              title: Text(t['voice_rate']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 18 : 15)),
-                              subtitle: Row(
-                                children: [
-                                  ChoiceChip(
-                                    label: Text(t['slow']!),
-                                    selected: widget.settings.voiceRate < 0.4,
-                                    onSelected: (_) {
-                                      setSettingsState(() => root.updateSettings(voiceRate: 0.3));
-                                    },
-                                  ),
-                                  const SizedBox(width: 8),
-                                  ChoiceChip(
-                                    label: Text(t['normal']!),
-                                    selected: widget.settings.voiceRate >= 0.4 && widget.settings.voiceRate <= 0.5,
-                                    onSelected: (_) {
-                                      setSettingsState(() => root.updateSettings(voiceRate: 0.45));
-                                    },
-                                  ),
-                                  const SizedBox(width: 8),
-                                  ChoiceChip(
-                                    label: Text(t['fast']!),
-                                    selected: widget.settings.voiceRate > 0.5,
-                                    onSelected: (_) {
-                                      setSettingsState(() => root.updateSettings(voiceRate: 0.65));
-                                    },
-                                  ),
-                                ],
+                              child: Container(
+                                height: 48,
+                                decoration: neumorphicDeco(radius: 14, hc: hc),
+                                child: Center(
+                                  child: Text(t['save']!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                ),
                               ),
                             ),
-                            // Theme Color Palette
-                            if (!hc) ...[
-                              const SizedBox(height: 10),
-                              Text(t['color_theme']!, style: const TextStyle(fontWeight: FontWeight.bold)),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  _colorOption(const Color(0xFF1E4C74), 'blue', root),
-                                  const SizedBox(width: 12),
-                                  _colorOption(const Color(0xFF1B6B48), 'green', root),
-                                  const SizedBox(width: 12),
-                                  _colorOption(const Color(0xFF5B2C86), 'purple', root),
-                                ],
-                              ),
-                            ],
                           ],
                         ),
                       ),
-                    );
-                  },
-                ),
-              );
-            }
-
-            Widget _colorOption(Color col, String code, _PillAppRootState root) {
-              final bool isSelected = widget.settings.themeColor == code;
-              return GestureDetector(
-                onTap: () {
-                  root.updateSettings(themeColor: code);
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: col,
-                    shape: BoxShape.circle,
-                    border: isSelected ? Border.all(color: Colors.white, width: 3) : null,
-                    boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
+                    ),
                   ),
-                ),
-              );
-            }
-
-            void _showLanguageSelector() {
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: PillAppRoot.of(context).getBackgroundColor(),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                ),
-                builder: (ctx) {
-                  return ListView(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    children: [
-                      _langTile('עברית', 'he'),
-                      _langTile('English', 'en'),
-                      _langTile('Русский', 'ru'),
-                      _langTile('Română', 'ro'),
-                      _langTile('العربية', 'ar'),
-                      _langTile('Deutsch', 'de'),
-                    ],
-                  );
-                },
-              );
-            }
-
-            Widget _langTile(String label, String code) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                decoration: neumorphicDecoration(borderRadius: 12, highContrast: widget.settings.highContrast),
-                child: ListTile(
-                  title: Text(label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: widget.settings.highContrast ? 18 : 15)),
-                  trailing: widget.settings.lang == code
-                      ? Icon(Icons.check, color: PillAppRoot.of(context).getPrimaryColor())
-                      : null,
-                  onTap: () {
-                    Navigator.pop(context);
-                    PillAppRoot.of(context).updateSettings(lang: code);
-                  },
                 ),
               );
             }
 
             @override
             Widget build(BuildContext context) {
-              final t = translations[widget.settings.lang]!;
-              final bool hc = widget.settings.highContrast;
-              int total = _medicines.length;
-              int taken = _medicines.where((m) => m.isTaken).length;
-              double progress = total == 0 ? 0 : taken / total;
+              final app = PillAppRoot.of(context);
+              final t = translations[app.lang] ?? translations['he']!;
+              final hc = app.highContrast;
 
               return Scaffold(
                 appBar: AppBar(
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   centerTitle: true,
-                  title: Text(
-                    t['app_title']!,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: hc ? 24 : 20,
-                      color: hc ? Colors.black : PillAppRoot.of(context).getPrimaryColor(),
-                    ),
-                  ),
+                  title: Text(t['app_title']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 24 : 20)),
                   actions: [
                     IconButton(
                       icon: const Icon(Icons.help_outline),
-                      onPressed: _showHelpDialog,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (c) => Directionality(
+                            textDirection: (app.lang == 'he' || app.lang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                            child: AlertDialog(
+                              title: Text(t['help']!),
+                              content: Text(t['help_content']!),
+                              actions: [
+                                TextButton(onPressed: () => Navigator.pop(c), child: Text(t['cancel']!)),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     IconButton(
                       icon: const Icon(Icons.settings),
-                      onPressed: _showSettingsDialog,
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          backgroundColor: hc ? Colors.white : const Color(0xFFE9EEF4),
+                          builder: (c) => StatefulBuilder(
+                            builder: (ctx, setS) => Directionality(
+                              textDirection: (app.lang == 'he' || app.lang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SwitchListTile(
+                                      title: Text(t['high_contrast']!),
+                                      value: app.highContrast,
+                                      onChanged: (v) {
+                                        setS(() => app.updateState(newHc: v));
+                                      },
+                                    ),
+                                    SwitchListTile(
+                                      title: Text(t['voice_alerts']!),
+                                      value: app.voiceAlerts,
+                                      onChanged: (v) {
+                                        setS(() => app.updateState(newVoice: v));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     IconButton(
                       icon: const Icon(Icons.language),
-                      onPressed: _showLanguageSelector,
-                    ),
-                  ],
-                ),
-                body: Column(
-                  children: [
-                    // Daily 3D Progress Box
-                    Container(
-                      margin: const EdgeInsets.all(16),
-                      padding: const EdgeInsets.all(16),
-                      decoration: neumorphicDecoration(borderRadius: 20, highContrast: hc),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          backgroundColor: hc ? Colors.white : const Color(0xFFE9EEF4),
+                          builder: (c) => ListView(
+                            shrinkWrap: true,
                             children: [
-                              Text(
-                                '${(progress * 100).toInt()}%',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 22 : 17),
-                              ),
-                              Text('$taken / $total', style: TextStyle(fontSize: hc ? 18 : 14)),
+                              ListTile(title: const Text('עברית'), onTap: () { app.updateState(newLang: 'he'); Navigator.pop(c); }),
+                              ListTile(title: const Text('English'), onTap: () { app.updateState(newLang: 'en'); Navigator.pop(c); }),
+                              ListTile(title: const Text('Русский'), onTap: () { app.updateState(newLang: 'ru'); Navigator.pop(c); }),
+                              ListTile(title: const Text('Română'), onTap: () { app.updateState(newLang: 'ro'); Navigator.pop(c); }),
+                              ListTile(title: const Text('العربية'), onTap: () { app.updateState(newLang: 'ar'); Navigator.pop(c); }),
+                              ListTile(title: const Text('Deutsch'), onTap: () { app.updateState(newLang: 'de'); Navigator.pop(c); }),
                             ],
                           ),
-                          const SizedBox(height: 10),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: LinearProgressIndicator(
-                              value: progress,
-                              minHeight: hc ? 16 : 12,
-                              backgroundColor: Colors.black12,
-                              valueColor: AlwaysStoppedAnimation(PillAppRoot.of(context).getPrimaryColor()),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: _medicines.isEmpty
-                          ? Center(
-                              child: Text(
-                                t['empty_state']!,
-                                style: TextStyle(fontSize: hc ? 20 : 16, color: Colors.grey),
-                              ),
-                            )
-                          : ListView.builder(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              itemCount: _medicines.length,
-                              itemBuilder: (ctx, i) {
-                                final med = _medicines[i];
-                                final timeStr =
-                                    '${med.hour.toString().padLeft(2, '0')}:${med.minute.toString().padLeft(2, '0')}';
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 16),
-                                  decoration: neumorphicDecoration(
-                                    borderRadius: 18,
-                                    isPressed: med.isTaken,
-                                    highContrast: hc,
-                                  ),
-                                  child: ListTile(
-                                    contentPadding: const EdgeInsets.all(12),
-                                    leading: Container(
-                                      width: 48,
-                                      height: 48,
-                                      decoration: neumorphicDecoration(
-                                        borderRadius: 14,
-                                        isPressed: med.isTaken,
-                                        highContrast: hc,
-                                      ),
-                                      child: Icon(
-                                        med.isTaken ? Icons.check_circle : Icons.medication,
-                                        color: med.isTaken ? Colors.green : PillAppRoot.of(context).getPrimaryColor(),
-                                      ),
-                                    ),
-                                    title: Text(
-                                      med.name,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: hc ? 21 : 17,
-                                        decoration: med.isTaken ? TextDecoration.lineThrough : null,
-                                      ),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('$timeStr | ${med.dosage}', style: TextStyle(fontSize: hc ? 16 : 14)),
-                                        Text('מלאי: ${med.stock}', style: TextStyle(fontSize: hc ? 16 : 14)),
-                                        if (med.stock <= 5)
-                                          Text(
-                                            t['stock_alert']!,
-                                            style: TextStyle(
-                                              color: Colors.redAccent,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: hc ? 16 : 13,
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                    trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(
-                                            med.isTaken ? Icons.replay : Icons.alarm_on,
-                                            color: PillAppRoot.of(context).getPrimaryColor(),
-                                            size: hc ? 30 : 24,
-                                          ),
-                                          onPressed: () => _toggleTaken(med),
-                                        ),
-                                        IconButton(
-                                          icon: Icon(Icons.delete_outline, color: Colors.red, size: hc ? 30 : 24),
-                                          onPressed: () => _deleteMedicine(med.id),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
+                        );
+                      },
                     ),
                   ],
                 ),
+                body: _medicines.isEmpty
+                    ? Center(child: Text(t['empty_state']!, style: TextStyle(fontSize: hc ? 20 : 16)))
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: _medicines.length,
+                        itemBuilder: (ctx, i) {
+                          final med = _medicines[i];
+                          final timeStr = '${med.hour.toString().padLeft(2, '0')}:${med.minute.toString().padLeft(2, '0')}';
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 14),
+                            decoration: neumorphicDeco(radius: 16, isPressed: med.isTaken, hc: hc),
+                            child: ListTile(
+                              leading: Icon(med.isTaken ? Icons.check_circle : Icons.alarm, color: med.isTaken ? Colors.green : Colors.blue),
+                              title: Text(med.name, style: TextStyle(fontSize: hc ? 20 : 16, fontWeight: FontWeight.bold)),
+                              subtitle: Text('$timeStr | ${t['dosage']}: ${med.dosage} | ${t['stock']}: ${med.stock}'),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.delete_outline, color: Colors.red),
+                                onPressed: () {
+                                  setState(() => _medicines.removeAt(i));
+                                  _saveMeds();
+                                },
+                              ),
+                              onTap: () => _toggle(med),
+                            ),
+                          );
+                        },
+                      ),
                 floatingActionButton: GestureDetector(
-                  onTap: _showAddMedicineDialog,
+                  onTap: _showAddDialog,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                    decoration: neumorphicDecoration(
-                      borderRadius: 25,
-                      highContrast: hc,
-                      baseColor: PillAppRoot.of(context).getPrimaryColor(),
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    decoration: neumorphicDeco(radius: 20, hc: hc),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.add, color: Colors.white),
-                        const SizedBox(width: 8),
-                        Text(
-                          t['add_med']!,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: hc ? 19 : 16,
-                          ),
-                        ),
+                        const Icon(Icons.add),
+                        const SizedBox(width: 6),
+                        Text(t['add_med']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: hc ? 18 : 15)),
                       ],
                     ),
                   ),
