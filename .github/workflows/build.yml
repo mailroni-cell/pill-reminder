@@ -1,3 +1,12 @@
+lib/main.dart:1865:95: Error: Member not found: 'rtl'.
+lib/main.dart:1865:115: Error: Member not found: 'ltr'.
+```[span_1](start_span)[span_1](end_span)
+
+הסיבה לכך היא התנגשות שמות (Name Collision): גם החבילה של Flutter וגם החבילה של `pdf` מייצאות מחלקה בשם `TextDirection`[span_2](start_span)[span_2](end_span). ברגע שייבאנו `package:pdf/widgets.dart as pw` יחד עם `package:pdf/pdf.dart`, הקומפיילר מנסה לחפש את `TextDirection.rtl` מתוך החבילה של ה-PDF במקום מתוך Flutter של מערכת ההפעלה, ולכן הבנייה נכשלת[span_3](start_span)[span_3](end_span).
+
+הנה הקוד המתוקן במלואו עבור `.github/workflows/build.yml` — עם פתרון מוחלט של ההתנגשות (שימוש מפורש ב-`ui.TextDirection` שמונע את ההתנגשות), ללא קיצורים, מוכן להדבקה מלאה:
+
+```yaml
 name: Build APK
 
 on:
@@ -248,6 +257,7 @@ jobs:
           import 'dart:convert';
           import 'dart:io';
           import 'dart:math' as math;
+          import 'dart:ui' as ui;
           import 'package:flutter/cupertino.dart';
           import 'package:flutter/material.dart';
           import 'package:flutter/services.dart';
@@ -257,7 +267,7 @@ jobs:
           import 'package:timezone/data/latest_all.dart' as tz;
           import 'package:timezone/timezone.dart' as tz;
           import 'package:url_launcher/url_launcher.dart';
-          import 'package:pdf/pdf.dart';
+          import 'package:pdf/pdf.dart' as p_core;
           import 'package:pdf/widgets.dart' as pw;
           import 'package:printing/printing.dart';
           import 'package:path_provider/path_provider.dart';
@@ -850,7 +860,7 @@ jobs:
                     colorSchemeSeed: primary,
                   ),
                   home: Directionality(
-                    textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                    textDirection: isRtl ? ui.TextDirection.rtl : ui.TextDirection.ltr,
                     child: _firstRun ? const FirstTimeSetupScreen() : const MainDashboard(),
                   ),
                 ),
@@ -1030,7 +1040,7 @@ jobs:
               final bool isRtl = _selectedLang == 'he' || _selectedLang == 'ar';
 
               return Directionality(
-                textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                textDirection: isRtl ? ui.TextDirection.rtl : ui.TextDirection.ltr,
                 child: Scaffold(
                   body: SafeArea(
                     child: Center(
@@ -1384,7 +1394,7 @@ jobs:
                 context: context,
                 barrierDismissible: false,
                 builder: (ctx) => Directionality(
-                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
                   child: AlertDialog(
                     backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
                     shape: RoundedRectangleBorder(
@@ -1516,7 +1526,7 @@ jobs:
               showDialog(
                 context: context,
                 builder: (ctx) => Directionality(
-                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
                   child: AlertDialog(
                     backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
                     shape: RoundedRectangleBorder(
@@ -1591,7 +1601,7 @@ jobs:
 
               pdf.addPage(
                 pw.Page(
-                  pageFormat: PdfPageFormat.a4,
+                  pageFormat: p_core.PdfPageFormat.a4,
                   build: (pw.Context pContext) {
                     return pw.Directionality(
                       textDirection: pw.TextDirection.rtl,
@@ -1614,7 +1624,7 @@ jobs:
                           pw.Container(
                             padding: const pw.EdgeInsets.all(10),
                             decoration: pw.BoxDecoration(
-                              border: pw.Border.all(color: PdfColors.blueGrey, width: 1),
+                              border: pw.Border.all(color: p_core.PdfColors.blueGrey, width: 1),
                               borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
                             ),
                             child: pw.Column(
@@ -1636,8 +1646,8 @@ jobs:
                               final dtStr = DateFormat('dd/MM/yyyy HH:mm').format(l.timestamp);
                               return [dtStr, l.pillName, '${l.dosage} כדורים', l.taken ? 'נלקח' : 'דולג'];
                             }).toList(),
-                            headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, color: PdfColors.white),
-                            headerDecoration: const pw.BoxDecoration(color: PdfColors.blueGrey800),
+                            headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, color: p_core.PdfColors.white),
+                            headerDecoration: const pw.BoxDecoration(color: p_core.PdfColors.blueGrey800),
                             cellAlignment: pw.Alignment.centerRight,
                           ),
                         ],
@@ -1675,7 +1685,7 @@ jobs:
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
-                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 20,
@@ -1885,7 +1895,7 @@ jobs:
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
-                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 20,
@@ -2109,7 +2119,7 @@ jobs:
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
-                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
                     child: SafeArea(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
@@ -2196,7 +2206,6 @@ jobs:
                                 ],
                               ),
                               const SizedBox(height: 12),
-                              // Dedicated Med Tone Picker
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
                                 child: Text(t['alert_sound_med']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent, fontWeight: FontWeight.bold)),
@@ -2226,7 +2235,6 @@ jobs:
                                 ),
                               ),
                               const SizedBox(height: 12),
-                              // Dedicated Doctor Tone Picker
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
                                 child: Text(t['alert_sound_doc']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : const Color(0xFFA855F7), fontWeight: FontWeight.bold)),
