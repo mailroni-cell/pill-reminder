@@ -26,23 +26,34 @@ jobs:
         run: |
           flutter create --org com.example --project-name pill_reminder . --platforms=android --overwrite
           
-          # Enable desugaring for local notifications
+          # Fix Desugaring for Android (handles both Groovy .gradle and Kotlin .gradle.kts)
           python3 -c "
-          import glob
-          files = glob.glob('android/app/build.gradle*')
-          if files:
-              fpath = files[0]
-              with open(fpath, 'r') as f:
-                  content = f.read()
-              if 'compileOptions {' in content:
-                  content = content.replace('compileOptions {', 'compileOptions {\n        coreLibraryDesugaringEnabled true')
-              elif 'compileOptions' in content:
-                  content = content.replace('compileOptions', 'compileOptions {\n        isCoreLibraryDesugaringEnabled = true\n    }\n    //')
-              
-              if 'dependencies {' in content:
-                  content = content.replace('dependencies {', 'dependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"')
-              with open(fpath, 'w') as f:
-                  f.write(content)
+          import os
+          gradle_kts = 'android/app/build.gradle.kts'
+          gradle_groovy = 'android/app/build.gradle'
+          
+          if os.path.exists(gradle_kts):
+              with open(gradle_kts, 'r') as f:
+                  txt = f.read()
+              if 'compileOptions {' in txt:
+                  txt = txt.replace('compileOptions {', 'compileOptions {\n        isCoreLibraryDesugaringEnabled = true')
+              if 'dependencies {' in txt:
+                  txt = txt.replace('dependencies {', 'dependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.0.4\")')
+              else:
+                  txt += '\ndependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.0.4\")\n}\n'
+              with open(gradle_kts, 'w') as f:
+                  f.write(txt)
+          elif os.path.exists(gradle_groovy):
+              with open(gradle_groovy, 'r') as f:
+                  txt = f.read()
+              if 'compileOptions {' in txt:
+                  txt = txt.replace('compileOptions {', 'compileOptions {\n        coreLibraryDesugaringEnabled true')
+              if 'dependencies {' in txt:
+                  txt = txt.replace('dependencies {', 'dependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"')
+              else:
+                  txt += '\ndependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"\n}\n'
+              with open(gradle_groovy, 'w') as f:
+                  f.write(txt)
           "
 
           cat << 'EOF' > pubspec.yaml
