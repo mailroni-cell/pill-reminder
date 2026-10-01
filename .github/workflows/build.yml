@@ -26,21 +26,39 @@ jobs:
         run: |
           flutter create --org com.example --project-name pill_reminder . --platforms=android --overwrite
 
-      - name: Configure Android Permissions, Icon and Desugaring
+      - name: Configure Android Permissions and Queries
         run: |
-          sed -i 's/<application/<uses-permission android:name="android.permission.POST_NOTIFICATIONS"\/>\n    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.USE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.VIBRATE"\/>\n    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"\/>\n    <application/' android/app/src/main/AndroidManifest.xml
-          
-          # Custom Medical 3D Icon generator
           python3 -c "
-          import os
-          svg_data = '''<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"192\" height=\"192\" viewBox=\"0 0 192 192\">
-            <rect width=\"192\" height=\"192\" rx=\"45\" fill=\"#0F172A\"/>
-            <circle cx=\"96\" cy=\"96\" r=\"65\" fill=\"#1E293B\" stroke=\"#06B6D4\" stroke-width=\"6\"/>
-            <path d=\"M75 96 L117 96 M96 75 L96 117\" stroke=\"#06B6D4\" stroke-width=\"16\" stroke-linecap=\"round\"/>
-            <circle cx=\"130\" cy=\"62\" r=\"12\" fill=\"#38BDF8\"/>
-          </svg>'''
-          # Generate launcher resources
-          os.makedirs('android/app/src/main/res/mipmap-xxxhdpi', exist_ok=True)
+          manifest_path = 'android/app/src/main/AndroidManifest.xml'
+          with open(manifest_path, 'r') as f:
+              txt = f.read()
+          
+          perms = '''
+    <uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\"/>
+    <uses-permission android:name=\"android.permission.SCHEDULE_EXACT_ALARM\"/>
+    <uses-permission android:name=\"android.permission.USE_EXACT_ALARM\"/>
+    <uses-permission android:name=\"android.permission.VIBRATE\"/>
+    <uses-permission android:name=\"android.permission.USE_FULL_SCREEN_INTENT\"/>
+  '''
+          queries = '''
+    <queries>
+        <intent>
+            <action android:name=\"android.intent.action.VIEW\" />
+            <data android:scheme=\"https\" />
+        </intent>
+        <intent>
+            <action android:name=\"android.intent.action.VIEW\" />
+            <data android:scheme=\"waze\" />
+        </intent>
+        <intent>
+            <action android:name=\"android.intent.action.VIEW\" />
+            <data android:scheme=\"geo\" />
+        </intent>
+    </queries>
+  '''
+          txt = txt.replace('<application', perms + queries + '  <application')
+          with open(manifest_path, 'w') as f:
+              f.write(txt)
           "
 
           python3 -c "
@@ -135,18 +153,18 @@ jobs:
               'app_name': 'סייבר פארמה',
               'welcome': 'שלום',
               'creator': 'נוצר ופותח על ידי רוני שניידר',
+              'select_language': 'בחר שפת ממשק',
               'enter_name_title': 'ברוך הבא! איך קוראים לך?',
               'name_hint': 'הקלד את שמך...',
-              'continue_btn': 'בוא נתחיל',
+              'continue_btn': 'כניסה לאפליקציה',
               'meds_tab': 'תזמוני תרופות',
               'appointments_tab': 'תורים ובדיקות',
               'add_med': 'הוסף תזמון תרופות',
               'add_appointment': 'קבע תור לרופא / בדיקה',
-              'timing_title': 'כותרת תזמון (למשל: כדורי בוקר)',
               'add_pill_btn': '+ הוסף עוד תרופה לתזמון זה',
-              'pill_name': 'שם התרופה (הקלד להשלמה אוטומטית)',
-              'dosage': 'מינון כדורים',
-              'stock': 'כמות במלאי',
+              'pill_name': 'שם התרופה (הקלד להשלמה)',
+              'dosage': 'מינון',
+              'stock': 'מלאי',
               'time': 'שעה',
               'date': 'תאריך',
               'morning': 'בוקר (08:00)',
@@ -160,8 +178,8 @@ jobs:
               'doc_treatment': 'טיפול',
               'doctor_name': 'שם הרופא / המטפל',
               'clinic_address': 'כתובת מרפאה (לניווט)',
-              'nav_waze': 'פתח ב-Waze',
-              'nav_google': 'פתח במפות גוגל',
+              'nav_waze': 'Waze',
+              'nav_google': 'מפות גוגל',
               'save': 'אישור ושמירה',
               'cancel': 'ביטול',
               'stock_alert': 'מלאי כמעט נגמר!',
@@ -169,19 +187,17 @@ jobs:
               'empty_apps': 'אין תורים קרובים',
               'settings': 'הגדרות מערכת',
               'language': 'שפה (Language)',
-              'lang_change_alert': 'מעדכן שפה ומרענן...',
-              'voice_alerts': 'התראות קוליות מלאות',
+              'voice_alerts': 'התראות קוליות',
               'alert_sound': 'סגנון צליל התראה',
-              'sound_vol': 'עוצמת השמע',
-              'preview_sound': 'השמע דוגמה',
-              'confirm_sound': 'שמור הגדרות שמע',
-              'themes_title': 'ערכות צבע ועיצוב תלת-ממדי',
+              'sound_vol': 'עוצמת שמע',
+              'confirm_sound': 'שמור הגדרות',
+              'themes_title': 'ערכות צבע ועיצוב',
               'high_contrast': 'מצב כבדי ראייה (שחור-צהוב ניגודי)',
               'tts_phrase': 'הגיע הזמן ליטול: {name}',
               'alert_popup_title': 'תזכורת נטילת תרופות',
-              'btn_taken': 'נלקחו כולן כעת',
-              'btn_snooze': 'דחה לעוד זמן',
-              'btn_skip': 'דלג הפעם',
+              'btn_taken': 'נלקח כעת',
+              'btn_snooze': 'דחה',
+              'btn_skip': 'דלג',
               'snooze_title': 'דחיית תזכורת',
               'minutes': 'דקות',
               'confirm_snooze': 'קבע דחייה',
@@ -190,14 +206,14 @@ jobs:
               'app_name': 'Cyber Pharma',
               'welcome': 'Welcome',
               'creator': 'Created & Developed by Roni Schneider',
+              'select_language': 'Select Language',
               'enter_name_title': 'Welcome! What is your name?',
               'name_hint': 'Enter your name...',
-              'continue_btn': 'Get Started',
+              'continue_btn': 'Enter App',
               'meds_tab': 'Medicine Schedules',
               'appointments_tab': 'Appointments',
               'add_med': 'Add Medicine Schedule',
               'add_appointment': 'Add Appointment',
-              'timing_title': 'Schedule Title',
               'add_pill_btn': '+ Add another pill',
               'pill_name': 'Pill Name (autocomplete)',
               'dosage': 'Dosage',
@@ -214,9 +230,9 @@ jobs:
               'doc_test': 'Lab Test',
               'doc_treatment': 'Therapy',
               'doctor_name': 'Doctor / Practitioner Name',
-              'clinic_address': 'Address (for navigation)',
-              'nav_waze': 'Navigate in Waze',
-              'nav_google': 'Navigate in Google Maps',
+              'clinic_address': 'Clinic Address (for navigation)',
+              'nav_waze': 'Waze',
+              'nav_google': 'Google Maps',
               'save': 'Confirm & Save',
               'cancel': 'Cancel',
               'stock_alert': 'Low stock!',
@@ -224,19 +240,17 @@ jobs:
               'empty_apps': 'No upcoming appointments',
               'settings': 'Settings',
               'language': 'Language',
-              'lang_change_alert': 'Updating language...',
               'voice_alerts': 'Voice Announcements',
-              'alert_sound': 'Alert Sound Style',
+              'alert_sound': 'Alert Tone',
               'sound_vol': 'Alert Volume',
-              'preview_sound': 'Preview Sound',
-              'confirm_sound': 'Save Sound Settings',
-              'themes_title': '3D Color Themes & Textures',
+              'confirm_sound': 'Save Settings',
+              'themes_title': '3D Color Themes',
               'high_contrast': 'High Contrast Mode (Black & Yellow)',
               'tts_phrase': 'Time to take: {name}',
               'alert_popup_title': 'Medicine Alert',
-              'btn_taken': 'Taken All Now',
+              'btn_taken': 'Taken Now',
               'btn_snooze': 'Snooze',
-              'btn_skip': 'Skip Once',
+              'btn_skip': 'Skip',
               'snooze_title': 'Snooze Reminder',
               'minutes': 'minutes',
               'confirm_snooze': 'Set Snooze',
@@ -245,14 +259,14 @@ jobs:
               'app_name': 'Кибер Фарма',
               'welcome': 'Здравствуйте',
               'creator': 'Создано и разработано Рони Шнайдером',
+              'select_language': 'Выберите язык',
               'enter_name_title': 'Добро пожаловать! Как вас зовут?',
               'name_hint': 'Введите имя...',
-              'continue_btn': 'Начать',
+              'continue_btn': 'Войти',
               'meds_tab': 'Расписание',
               'appointments_tab': 'Визиты к врачу',
               'add_med': 'Добавить прием',
               'add_appointment': 'Запись к врачу',
-              'timing_title': 'Название приема',
               'add_pill_btn': '+ Добавить препарат',
               'pill_name': 'Препарат (автодополнение)',
               'dosage': 'Доза',
@@ -270,8 +284,8 @@ jobs:
               'doc_treatment': 'Процедура',
               'doctor_name': 'Имя специалиста',
               'clinic_address': 'Адрес клиники',
-              'nav_waze': 'Открыть в Waze',
-              'nav_google': 'Открыть в Google Maps',
+              'nav_waze': 'Waze',
+              'nav_google': 'Google Maps',
               'save': 'Сохранить',
               'cancel': 'Отмена',
               'stock_alert': 'Запас на исходе!',
@@ -279,17 +293,15 @@ jobs:
               'empty_apps': 'Нет записей',
               'settings': 'Настройки',
               'language': 'Язык',
-              'lang_change_alert': 'Обновление языка...',
               'voice_alerts': 'Голосовые оповещения',
               'alert_sound': 'Звук оповещения',
               'sound_vol': 'Громкость',
-              'preview_sound': 'Прослушать звук',
-              'confirm_sound': 'Сохранить звук',
-              'themes_title': '3D темы оформления',
+              'confirm_sound': 'Сохранить',
+              'themes_title': '3D темы',
               'high_contrast': 'Высокая контрастность',
               'tts_phrase': 'Время принять: {name}',
               'alert_popup_title': 'Напоминание',
-              'btn_taken': 'Принято всё',
+              'btn_taken': 'Принято',
               'btn_snooze': 'Отложить',
               'btn_skip': 'Пропустить',
               'snooze_title': 'Отложить',
@@ -300,14 +312,14 @@ jobs:
               'app_name': 'Cyber Pharma',
               'welcome': 'Bine ați venit',
               'creator': 'Creat și dezvoltat de Roni Schneider',
+              'select_language': 'Selectați limba',
               'enter_name_title': 'Cum vă numiți?',
               'name_hint': 'Introduceți numele...',
-              'continue_btn': 'Să începem',
+              'continue_btn': 'Intră în aplicație',
               'meds_tab': 'Orare pastile',
               'appointments_tab': 'Programări',
               'add_med': 'Adaugă orar',
               'add_appointment': 'Programare nouă',
-              'timing_title': 'Titlu orar',
               'add_pill_btn': '+ Adaugă alt medicament',
               'pill_name': 'Medicament',
               'dosage': 'Doză',
@@ -325,8 +337,8 @@ jobs:
               'doc_treatment': 'Tratament',
               'doctor_name': 'Nume specialist',
               'clinic_address': 'Adresă clinică',
-              'nav_waze': 'Deschide în Waze',
-              'nav_google': 'Deschide în Google Maps',
+              'nav_waze': 'Waze',
+              'nav_google': 'Google Maps',
               'save': 'Salvează',
               'cancel': 'Anulează',
               'stock_alert': 'Stoc redus!',
@@ -334,17 +346,15 @@ jobs:
               'empty_apps': 'Nicio programare',
               'settings': 'Setări',
               'language': 'Limbă',
-              'lang_change_alert': 'Actualizare...',
               'voice_alerts': 'Alerte vocale',
               'alert_sound': 'Stil sunet',
               'sound_vol': 'Volum',
-              'preview_sound': 'Test sunet',
-              'confirm_sound': 'Salvează sunetul',
-              'themes_title': 'Teme 3D și texturi',
+              'confirm_sound': 'Salvează',
+              'themes_title': 'Teme 3D',
               'high_contrast': 'Contrast ridicat',
               'tts_phrase': 'Timpul pentru: {name}',
               'alert_popup_title': 'Memento',
-              'btn_taken': 'Luate toate',
+              'btn_taken': 'Luat',
               'btn_snooze': 'Amână',
               'btn_skip': 'Omite',
               'snooze_title': 'Amânare',
@@ -355,14 +365,14 @@ jobs:
               'app_name': 'سايبر فارما',
               'welcome': 'أهلاً بك',
               'creator': 'تم الإنشاء والتطوير بواسطة روني شنايدר',
+              'select_language': 'اختر لغة التطبيق',
               'enter_name_title': 'ما هو اسمك؟',
               'name_hint': 'اكتب اسمك...',
-              'continue_btn': 'ابدأ الآن',
+              'continue_btn': 'دخول التطبيق',
               'meds_tab': 'مواعيد الأدوية',
               'appointments_tab': 'المواعيد والفحوصات',
               'add_med': 'إضافة موعد أدوية',
               'add_appointment': 'حجز موعد جديد',
-              'timing_title': 'عنوان الموعد',
               'add_pill_btn': '+ دواء إضافي',
               'pill_name': 'اسم الدواء',
               'dosage': 'الجرعة',
@@ -380,8 +390,8 @@ jobs:
               'doc_treatment': 'علاج',
               'doctor_name': 'اسم الطبيب / الفاحص',
               'clinic_address': 'عنوان العيادة',
-              'nav_waze': 'فتح عبر Waze',
-              'nav_google': 'فتح عبر خرائط Google',
+              'nav_waze': 'Waze',
+              'nav_google': 'خرائط Google',
               'save': 'حفظ',
               'cancel': 'إلغاء',
               'stock_alert': 'المخزون شارف على الانتهاء!',
@@ -389,17 +399,15 @@ jobs:
               'empty_apps': 'لا توجد مواعيد',
               'settings': 'الإعدادات',
               'language': 'اللغة',
-              'lang_change_alert': 'جاري التحديث...',
               'voice_alerts': 'التنبيهات الصوتية',
               'alert_sound': 'نغمة التنبيه',
               'sound_vol': 'مستوى الصوت',
-              'preview_sound': 'تشغيل تجريبي',
-              'confirm_sound': 'تأكيد وحفظ الصوت',
-              'themes_title': 'السمات والألوان ثلاثية الأبعاد',
+              'confirm_sound': 'تأكيد وحفظ',
+              'themes_title': 'السمات ثلاثية الأبعاد',
               'high_contrast': 'وضع عالي التباين',
               'tts_phrase': 'حان موعد: {name}',
               'alert_popup_title': 'تنبيه الدواء',
-              'btn_taken': 'تم أخذ الكل',
+              'btn_taken': 'تم الأخذ',
               'btn_snooze': 'تأجيل',
               'btn_skip': 'تخطي',
               'snooze_title': 'تأجيل التنبيه',
@@ -410,14 +418,14 @@ jobs:
               'app_name': 'Cyber Pharma',
               'welcome': 'Willkommen',
               'creator': 'Erstellt und entwickelt von Roni Schneider',
+              'select_language': 'Sprache auswählen',
               'enter_name_title': 'Wie heißen Sie?',
               'name_hint': 'Name eingeben...',
-              'continue_btn': 'Starten',
+              'continue_btn': 'App starten',
               'meds_tab': 'Medikamente',
               'appointments_tab': 'Arzttermine',
               'add_med': 'Plan hinzufügen',
               'add_appointment': 'Termin hinzufügen',
-              'timing_title': 'Plan-Titel',
               'add_pill_btn': '+ Weiteres Medikament',
               'pill_name': 'Medikament',
               'dosage': 'Dosis',
@@ -435,8 +443,8 @@ jobs:
               'doc_treatment': 'Behandlung',
               'doctor_name': 'Name des Spezialisten',
               'clinic_address': 'Adresse der Praxis',
-              'nav_waze': 'In Waze öffnen',
-              'nav_google': 'In Google Maps öffnen',
+              'nav_waze': 'Waze',
+              'nav_google': 'Google Maps',
               'save': 'Speichern',
               'cancel': 'Abbrechen',
               'stock_alert': 'Vorrat fast leer!',
@@ -444,17 +452,15 @@ jobs:
               'empty_apps': 'Keine Termine',
               'settings': 'Einstellungen',
               'language': 'Sprache',
-              'lang_change_alert': 'Aktualisiere Sprache...',
               'voice_alerts': 'Sprachausgabe',
               'alert_sound': 'Signalton',
               'sound_vol': 'Lautstärke',
-              'preview_sound': 'Ton abspielen',
-              'confirm_sound': 'Ton speichern',
+              'confirm_sound': 'Speichern',
               'themes_title': '3D Farbschemata',
               'high_contrast': 'Hoher Kontrast',
               'tts_phrase': 'Zeit für: {name}',
               'alert_popup_title': 'Erinnerung',
-              'btn_taken': 'Alles eingenommen',
+              'btn_taken': 'Eingenommen',
               'btn_snooze': 'Schlummern',
               'btn_skip': 'Überspringen',
               'snooze_title': 'Erinnerung verschieben',
@@ -469,35 +475,30 @@ jobs:
               'bg': Color(0xFF0F172A),
               'surface': Color(0xFF1E293B),
               'accent': Color(0xFF06B6D4),
-              'glow': Color(0xFF38BDF8),
             },
             'purple': {
               'name': 'Midnight Purple',
               'bg': Color(0xFF180B2B),
               'surface': Color(0xFF2C164D),
               'accent': Color(0xFFA855F7),
-              'glow': Color(0xFFD8B4FE),
             },
             'emerald': {
               'name': 'Emerald Matrix',
               'bg': Color(0xFF062016),
               'surface': Color(0xFF0F3826),
               'accent': Color(0xFF10B981),
-              'glow': Color(0xFF34D399),
             },
             'crimson': {
               'name': 'Crimson Sport',
               'bg': Color(0xFF20090D),
               'surface': Color(0xFF3D131B),
               'accent': Color(0xFFF43F5E),
-              'glow': Color(0xFFFDA4AF),
             },
             'gold': {
               'name': 'Obsidian Gold',
               'bg': Color(0xFF171510),
               'surface': Color(0xFF2B261D),
               'accent': Color(0xFFEAB308),
-              'glow': Color(0xFFFDE047),
             },
           };
 
@@ -623,7 +624,7 @@ jobs:
                   ),
                   home: Directionality(
                     textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-                    child: _userName.isEmpty ? const OnboardingNameScreen() : const CyberSplashScreen(),
+                    child: const CyberSplashScreen(),
                   ),
                 ),
               );
@@ -641,7 +642,7 @@ jobs:
               return BoxDecoration(
                 color: isPressed ? const Color(0xFF222200) : Colors.black,
                 borderRadius: BorderRadius.circular(radius),
-                border: Border.all(color: Colors.yellowAccent, width: 2.8),
+                border: Border.all(color: Colors.yellowAccent, width: 2.5),
                 boxShadow: const [
                   BoxShadow(color: Colors.yellowAccent, blurRadius: 4, offset: Offset(1, 1))
                 ],
@@ -678,6 +679,122 @@ jobs:
             );
           }
 
+          class CyberSplashScreen extends StatelessWidget {
+            const CyberSplashScreen({super.key});
+
+            @override
+            Widget build(BuildContext context) {
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang]!;
+              final hc = app.highContrast;
+
+              final languages = [
+                {'code': 'he', 'label': 'עברית'},
+                {'code': 'en', 'label': 'English'},
+                {'code': 'ru', 'label': 'Русский'},
+                {'code': 'ro', 'label': 'Română'},
+                {'code': 'ar', 'label': 'العربية'},
+                {'code': 'de', 'label': 'Deutsch'},
+              ];
+
+              return Scaffold(
+                body: SafeArea(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 130,
+                            height: 130,
+                            decoration: cyber3D(context: context, radius: 45, highContrast: hc),
+                            child: Icon(Icons.bolt, size: 80, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            t['app_name']!,
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 1.5,
+                              color: hc ? Colors.yellowAccent : Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            t['creator']!,
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: hc ? Colors.yellow.shade100 : Colors.white60),
+                          ),
+                          const SizedBox(height: 30),
+                          Text(
+                            t['select_language']!,
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.cyanAccent),
+                          ),
+                          const SizedBox(height: 14),
+                          Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            alignment: WrapAlignment.center,
+                            children: languages.map((lang) {
+                              final bool isSelected = app.currentLang == lang['code'];
+                              return GestureDetector(
+                                onTap: () => app.setLanguage(lang['code']!),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                  decoration: cyber3D(
+                                    context: context,
+                                    radius: 14,
+                                    isPressed: isSelected,
+                                    highContrast: hc,
+                                    customGlow: isSelected ? Colors.cyanAccent : null,
+                                  ),
+                                  child: Text(
+                                    lang['label']!,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: isSelected ? (hc ? Colors.yellowAccent : Colors.cyanAccent) : (hc ? Colors.white70 : Colors.white60),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                          const SizedBox(height: 35),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (ctx) => app.userName.isEmpty ? const OnboardingNameScreen() : const MainDashboard(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 54,
+                              width: double.infinity,
+                              decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFF10B981)),
+                              child: Center(
+                                child: Text(
+                                  t['continue_btn']!,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: hc ? Colors.yellowAccent : const Color(0xFF10B981),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+          }
+
           class OnboardingNameScreen extends StatefulWidget {
             const OnboardingNameScreen({super.key});
 
@@ -703,22 +820,22 @@ jobs:
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: 110,
-                            height: 110,
+                            width: 100,
+                            height: 100,
                             decoration: cyber3D(context: context, radius: 35, highContrast: hc),
-                            child: Icon(Icons.person_pin, size: 60, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
+                            child: Icon(Icons.person_pin, size: 55, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 24),
                           Text(
                             t['enter_name_title']!,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: hc ? 28 : 22,
+                              fontSize: hc ? 26 : 22,
                               fontWeight: FontWeight.bold,
                               color: hc ? Colors.yellowAccent : Colors.white,
                             ),
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(height: 20),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 18),
                             decoration: cyber3D(context: context, radius: 20, isPressed: true, highContrast: hc),
@@ -726,7 +843,7 @@ jobs:
                               controller: _ctrl,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: hc ? Colors.yellowAccent : Colors.cyanAccent,
                               ),
@@ -737,16 +854,21 @@ jobs:
                               ),
                             ),
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 25),
                           GestureDetector(
                             onTap: () {
                               if (_ctrl.text.trim().isNotEmpty) {
                                 app.setUserName(_ctrl.text.trim());
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (ctx) => const MainDashboard()),
+                                );
                               }
                             },
                             child: Container(
-                              height: 56,
-                              decoration: cyber3D(context: context, radius: 22, highContrast: hc),
+                              height: 52,
+                              width: double.infinity,
+                              decoration: cyber3D(context: context, radius: 20, highContrast: hc),
                               child: Center(
                                 child: Text(
                                   t['continue_btn']!,
@@ -761,83 +883,6 @@ jobs:
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ),
-              );
-            }
-          }
-
-          class CyberSplashScreen extends StatefulWidget {
-            const CyberSplashScreen({super.key});
-
-            @override
-            State<CyberSplashScreen> createState() => _CyberSplashScreenState();
-          }
-
-          class _CyberSplashScreenState extends State<CyberSplashScreen> {
-            @override
-            void initState() {
-              super.initState();
-              Future.delayed(const Duration(milliseconds: 2200), () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (ctx) => const MainDashboard()),
-                );
-              });
-            }
-
-            @override
-            Widget build(BuildContext context) {
-              final app = CyberPillMasterApp.of(context);
-              final t = dict[app.currentLang]!;
-              final hc = app.highContrast;
-
-              return Scaffold(
-                body: SafeArea(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 140,
-                          height: 140,
-                          decoration: cyber3D(context: context, radius: 45, highContrast: hc),
-                          child: Icon(Icons.bolt, size: 85, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
-                        ),
-                        const SizedBox(height: 32),
-                        Text(
-                          t['app_name']!,
-                          style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 1.5,
-                            color: hc ? Colors.yellowAccent : Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          '${t['welcome']!}, ${app.userName}!',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: hc ? Colors.white : const Color(0xFF38BDF8),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-                          decoration: cyber3D(context: context, radius: 18, highContrast: hc),
-                          child: Text(
-                            t['creator']!,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: hc ? Colors.yellowAccent : Colors.white70,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ),
@@ -968,12 +1013,12 @@ jobs:
 
             Future<void> _loadData() async {
               final prefs = await SharedPreferences.getInstance();
-              final String? schedsRaw = prefs.getString('c_multi_scheds_store_v3');
+              final String? schedsRaw = prefs.getString('c_multi_scheds_store_v4');
               if (schedsRaw != null) {
                 final List decoded = jsonDecode(schedsRaw);
                 setState(() => _schedules = decoded.map((e) => ScheduleGroup.fromMap(e)).toList());
               }
-              final String? appsRaw = prefs.getString('c_apps_store_v3');
+              final String? appsRaw = prefs.getString('c_apps_store_v4');
               if (appsRaw != null) {
                 final List decodedA = jsonDecode(appsRaw);
                 setState(() => _apps = decodedA.map((e) => AppointmentModel.fromMap(e)).toList());
@@ -982,12 +1027,12 @@ jobs:
 
             Future<void> _saveSchedules() async {
               final prefs = await SharedPreferences.getInstance();
-              await prefs.setString('c_multi_scheds_store_v3', jsonEncode(_schedules.map((m) => m.toMap()).toList()));
+              await prefs.setString('c_multi_scheds_store_v4', jsonEncode(_schedules.map((m) => m.toMap()).toList()));
             }
 
             Future<void> _saveApps() async {
               final prefs = await SharedPreferences.getInstance();
-              await prefs.setString('c_apps_store_v3', jsonEncode(_apps.map((a) => a.toMap()).toList()));
+              await prefs.setString('c_apps_store_v4', jsonEncode(_apps.map((a) => a.toMap()).toList()));
             }
 
             void _speak(String text) async {
@@ -999,18 +1044,13 @@ jobs:
             }
 
             void _launchMap(String address, bool isWaze) async {
-              if (address.isEmpty) return;
-              final encoded = Uri.encodeComponent(address);
+              if (address.trim().isEmpty) return;
+              final encoded = Uri.encodeComponent(address.trim());
               final Uri url = isWaze
-                  ? Uri.parse('waze://?q=$encoded')
+                  ? Uri.parse('https://waze.com/ul?q=$encoded')
                   : Uri.parse('https://www.google.com/maps/search/?api=1&query=$encoded');
               
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url, mode: LaunchMode.externalApplication);
-              } else {
-                final webUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=$encoded');
-                await launchUrl(webUrl, mode: LaunchMode.externalApplication);
-              }
+              await launchUrl(url, mode: LaunchMode.externalApplication);
             }
 
             void _showAlarmActionDialog(ScheduleGroup group) {
@@ -1029,17 +1069,17 @@ jobs:
                   child: AlertDialog(
                     backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(25),
                       side: BorderSide(color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4), width: 2),
                     ),
                     title: Column(
                       children: [
-                        Icon(Icons.alarm_on, size: 55, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
-                        const SizedBox(height: 10),
+                        Icon(Icons.alarm_on, size: 50, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
+                        const SizedBox(height: 8),
                         Text(
                           t['alert_popup_title']!,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: hc ? Colors.yellowAccent : Colors.white),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: hc ? Colors.yellowAccent : Colors.white),
                         ),
                       ],
                     ),
@@ -1050,17 +1090,17 @@ jobs:
                           Text(
                             group.title.isNotEmpty ? group.title : namesList,
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: hc ? Colors.white : Colors.cyanAccent),
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: hc ? Colors.white : Colors.cyanAccent),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 10),
                           ...group.pills.map((p) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2),
                             child: Text(
                               '• ${p.name} - ${t['dosage']!}: ${p.dosage} | ${t['stock']!}: ${p.stock}',
-                              style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white70, fontSize: 15),
+                              style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white70, fontSize: 14),
                             ),
                           )),
-                          const SizedBox(height: 25),
+                          const SizedBox(height: 20),
                           GestureDetector(
                             onTap: () {
                               setState(() {
@@ -1073,47 +1113,19 @@ jobs:
                               Navigator.pop(ctx);
                             },
                             child: Container(
-                              height: 48,
-                              margin: const EdgeInsets.only(bottom: 12),
-                              decoration: cyber3D(context: context, radius: 16, highContrast: hc, customGlow: const Color(0xFF10B981)),
+                              height: 46,
+                              margin: const EdgeInsets.only(bottom: 10),
+                              decoration: cyber3D(context: context, radius: 14, highContrast: hc, customGlow: const Color(0xFF10B981)),
                               child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.check_circle_outline, color: Color(0xFF10B981)),
-                                    const SizedBox(width: 8),
-                                    Text(t['btn_taken']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(ctx);
-                              _openSnoozePicker(group);
-                            },
-                            child: Container(
-                              height: 48,
-                              margin: const EdgeInsets.only(bottom: 12),
-                              decoration: cyber3D(context: context, radius: 16, highContrast: hc, customGlow: const Color(0xFFF59E0B)),
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.snooze, color: Color(0xFFF59E0B)),
-                                    const SizedBox(width: 8),
-                                    Text(t['btn_snooze']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFF59E0B))),
-                                  ],
-                                ),
+                                child: Text(t['btn_taken']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
                               ),
                             ),
                           ),
                           GestureDetector(
                             onTap: () => Navigator.pop(ctx),
                             child: Container(
-                              height: 44,
-                              decoration: cyber3D(context: context, radius: 16, highContrast: hc, customGlow: Colors.redAccent),
+                              height: 42,
+                              decoration: cyber3D(context: context, radius: 14, highContrast: hc, customGlow: Colors.redAccent),
                               child: Center(
                                 child: Text(t['btn_skip']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent)),
                               ),
@@ -1127,84 +1139,30 @@ jobs:
               );
             }
 
-            void _openSnoozePicker(ScheduleGroup group) {
-              final app = CyberPillMasterApp.of(context);
-              final t = dict[app.currentLang]!;
-              final hc = app.highContrast;
-              int snoozeMinutes = 10;
-              final List<int> options = [5, 10, 15, 20, 30, 45, 60];
-
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
-                builder: (ctx) => SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(22),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(t['snooze_title']!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white)),
-                        const SizedBox(height: 14),
-                        Container(
-                          height: 120,
-                          decoration: cyber3D(context: context, radius: 18, highContrast: hc),
-                          child: CupertinoPicker(
-                            itemExtent: 36,
-                            scrollController: FixedExtentScrollController(initialItem: 1),
-                            onSelectedItemChanged: (idx) => snoozeMinutes = options[idx],
-                            children: options.map((m) => Center(
-                              child: Text('$m ${t['minutes']!}', style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.cyanAccent)),
-                            )).toList(),
-                          ),
-                        ),
-                        const SizedBox(height: 18),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(ctx);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('${t['snooze_title']!}: +$snoozeMinutes ${t['minutes']!}')),
-                            );
-                          },
-                          child: Container(
-                            height: 50,
-                            decoration: cyber3D(context: context, radius: 18, highContrast: hc),
-                            child: Center(
-                              child: Text(t['confirm_snooze']!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4))),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }
-
             void _openAddScheduleDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang]!;
               final hc = app.highContrast;
 
-              final titleCtrl = TextEditingController();
               int hour = 8;
               int minute = 0;
+              String autoTitle = t['morning']!;
               List<PillItem> workingPills = [PillItem(name: 'אקמול (Acamol)', dosage: 1, stock: 30)];
 
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(35))),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
                     textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: 24,
+                        top: 20,
                         left: 20,
                         right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 30,
+                        bottom: MediaQuery.of(context).viewInsets.bottom + 25,
                       ),
                       child: SafeArea(
                         child: SingleChildScrollView(
@@ -1214,44 +1172,30 @@ jobs:
                               Text(
                                 t['add_med']!,
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: hc ? Colors.yellowAccent : const Color(0xFF38BDF8),
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              // Fast Preset Buttons: Morning, Noon, Evening, Night
+                              // Quick Preset Buttons (No extra header line)
                               Wrap(
                                 spacing: 8,
                                 runSpacing: 8,
                                 alignment: WrapAlignment.center,
                                 children: [
-                                  _presetBtn(t['morning']!, 8, 0, () => setDlg(() { hour = 8; minute = 0; titleCtrl.text = t['morning']!; })),
-                                  _presetBtn(t['noon']!, 13, 0, () => setDlg(() { hour = 13; minute = 0; titleCtrl.text = t['noon']!; })),
-                                  _presetBtn(t['evening']!, 19, 0, () => setDlg(() { hour = 19; minute = 0; titleCtrl.text = t['evening']!; })),
-                                  _presetBtn(t['night']!, 22, 0, () => setDlg(() { hour = 22; minute = 0; titleCtrl.text = t['night']!; })),
+                                  _presetBtn(t['morning']!, 8, 0, () => setDlg(() { hour = 8; minute = 0; autoTitle = t['morning']!; })),
+                                  _presetBtn(t['noon']!, 13, 0, () => setDlg(() { hour = 13; minute = 0; autoTitle = t['noon']!; })),
+                                  _presetBtn(t['evening']!, 19, 0, () => setDlg(() { hour = 19; minute = 0; autoTitle = t['evening']!; })),
+                                  _presetBtn(t['night']!, 22, 0, () => setDlg(() { hour = 22; minute = 0; autoTitle = t['night']!; })),
                                 ],
                               ),
                               const SizedBox(height: 16),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: cyber3D(context: context, radius: 18, isPressed: true, highContrast: hc),
-                                child: TextField(
-                                  controller: titleCtrl,
-                                  style: TextStyle(color: hc ? Colors.yellowAccent : Colors.cyanAccent),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: t['timing_title']!,
-                                    hintStyle: TextStyle(color: hc ? Colors.yellow.shade100.withOpacity(0.5) : Colors.white38),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 14),
                               Text('${t['time']!}: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
                                   style: TextStyle(fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.white)),
                               const SizedBox(height: 6),
                               Container(
-                                height: 85,
+                                height: 80,
                                 decoration: cyber3D(context: context, radius: 16, highContrast: hc),
                                 child: Row(
                                   children: [
@@ -1284,7 +1228,7 @@ jobs:
                                 int pIdx = entry.key;
                                 PillItem pill = entry.value;
                                 return Container(
-                                  margin: const EdgeInsets.only(bottom: 12),
+                                  margin: const EdgeInsets.only(bottom: 10),
                                   padding: const EdgeInsets.all(12),
                                   decoration: cyber3D(context: context, radius: 16, highContrast: hc),
                                   child: Column(
@@ -1301,6 +1245,7 @@ jobs:
                                           return TextField(
                                             controller: controller,
                                             focusNode: focusNode,
+                                            textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
                                             style: TextStyle(color: hc ? Colors.white : Colors.white),
                                             decoration: InputDecoration(
                                               labelText: t['pill_name'],
@@ -1347,14 +1292,14 @@ jobs:
                                 icon: const Icon(Icons.add, color: Color(0xFF06B6D4)),
                                 label: Text(t['add_pill_btn']!, style: TextStyle(color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4), fontWeight: FontWeight.bold)),
                               ),
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 16),
                               GestureDetector(
                                 onTap: () {
                                   if (workingPills.isEmpty) return;
                                   setState(() {
                                     _schedules.add(ScheduleGroup(
                                       id: DateTime.now().millisecondsSinceEpoch.toString(),
-                                      title: titleCtrl.text.trim().isEmpty ? t['timing_title']! : titleCtrl.text.trim(),
+                                      title: autoTitle,
                                       hour: hour,
                                       minute: minute,
                                       pills: workingPills,
@@ -1364,8 +1309,8 @@ jobs:
                                   Navigator.pop(ctx);
                                 },
                                 child: Container(
-                                  height: 52,
-                                  decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFF10B981)),
+                                  height: 50,
+                                  decoration: cyber3D(context: context, radius: 18, highContrast: hc, customGlow: const Color(0xFF10B981)),
                                   child: Center(
                                     child: Text(
                                       t['save']!,
@@ -1394,7 +1339,7 @@ jobs:
                 onTap: onTap,
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  decoration: cyber3D(context: context, radius: 14, highContrast: hc),
+                  decoration: cyber3D(context: context, radius: 12, highContrast: hc),
                   child: Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : Colors.cyanAccent)),
                 ),
               );
@@ -1416,16 +1361,16 @@ jobs:
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(35))),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
                     textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: 24,
+                        top: 20,
                         left: 20,
                         right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 30,
+                        bottom: MediaQuery.of(context).viewInsets.bottom + 25,
                       ),
                       child: SafeArea(
                         child: SingleChildScrollView(
@@ -1435,13 +1380,12 @@ jobs:
                               Text(
                                 t['add_appointment']!,
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: hc ? Colors.yellowAccent : const Color(0xFFA855F7),
                                 ),
                               ),
-                              const SizedBox(height: 16),
-                              // Appointment Types Table Selection
+                              const SizedBox(height: 14),
                               Text(t['doctor_type']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white70, fontWeight: FontWeight.bold)),
                               const SizedBox(height: 8),
                               Row(
@@ -1451,8 +1395,8 @@ jobs:
                                   return GestureDetector(
                                     onTap: () => setDlg(() => selectedType = type),
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                      decoration: cyber3D(context: context, radius: 12, isPressed: isSel, highContrast: hc, customGlow: const Color(0xFFA855F7)),
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                      decoration: cyber3D(context: context, radius: 10, isPressed: isSel, highContrast: hc, customGlow: const Color(0xFFA855F7)),
                                       child: Text(
                                         type,
                                         style: TextStyle(
@@ -1464,12 +1408,13 @@ jobs:
                                   );
                                 }).toList(),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 14),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: cyber3D(context: context, radius: 18, isPressed: true, highContrast: hc),
+                                decoration: cyber3D(context: context, radius: 16, isPressed: true, highContrast: hc),
                                 child: TextField(
                                   controller: docCtrl,
+                                  textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
                                   style: TextStyle(color: hc ? Colors.yellowAccent : Colors.purpleAccent),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -1478,12 +1423,13 @@ jobs:
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 10),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: cyber3D(context: context, radius: 18, isPressed: true, highContrast: hc),
+                                decoration: cyber3D(context: context, radius: 16, isPressed: true, highContrast: hc),
                                 child: TextField(
                                   controller: clinicCtrl,
+                                  textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
                                   style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -1492,7 +1438,43 @@ jobs:
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 10),
+                              // Live Navigation test buttons in form
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => _launchMap(clinicCtrl.text, true),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      decoration: BoxDecoration(color: const Color(0xFF00D1FF).withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.navigation, size: 16, color: Color(0xFF00D1FF)),
+                                          const SizedBox(width: 4),
+                                          Text(t['nav_waze']!, style: const TextStyle(color: Color(0xFF00D1FF), fontWeight: FontWeight.bold)),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 14),
+                                  GestureDetector(
+                                    onTap: () => _launchMap(clinicCtrl.text, false),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      decoration: BoxDecoration(color: const Color(0xFF34A853).withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.map, size: 16, color: Color(0xFF34A853)),
+                                          const SizedBox(width: 4),
+                                          Text(t['nav_google']!, style: const TextStyle(color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 14),
                               Row(
                                 children: [
                                   Expanded(
@@ -1507,8 +1489,8 @@ jobs:
                                         if (picked != null) setDlg(() => selectedDate = picked);
                                       },
                                       child: Container(
-                                        padding: const EdgeInsets.symmetric(vertical: 14),
-                                        decoration: cyber3D(context: context, radius: 16, highContrast: hc),
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
+                                        decoration: cyber3D(context: context, radius: 14, highContrast: hc),
                                         child: Center(
                                           child: Text(
                                             '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
@@ -1529,8 +1511,8 @@ jobs:
                                         if (tPicked != null) setDlg(() => selectedTime = tPicked);
                                       },
                                       child: Container(
-                                        padding: const EdgeInsets.symmetric(vertical: 14),
-                                        decoration: cyber3D(context: context, radius: 16, highContrast: hc),
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
+                                        decoration: cyber3D(context: context, radius: 14, highContrast: hc),
                                         child: Center(
                                           child: Text(
                                             selectedTime.format(context),
@@ -1542,7 +1524,7 @@ jobs:
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 22),
+                              const SizedBox(height: 20),
                               GestureDetector(
                                 onTap: () {
                                   if (docCtrl.text.trim().isEmpty) return;
@@ -1560,8 +1542,8 @@ jobs:
                                   Navigator.pop(ctx);
                                 },
                                 child: Container(
-                                  height: 52,
-                                  decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFFA855F7)),
+                                  height: 50,
+                                  decoration: cyber3D(context: context, radius: 18, highContrast: hc, customGlow: const Color(0xFFA855F7)),
                                   child: Center(
                                     child: Text(
                                       t['save']!,
@@ -1590,11 +1572,11 @@ jobs:
               final hc = app.highContrast;
 
               final soundOptions = [
-                {'key': 'electric', 'label': t['sound_electric']!},
-                {'key': 'gong', 'label': t['sound_gong']!},
-                {'key': 'alarm', 'label': t['sound_alarm']!},
-                {'key': 'bell', 'label': t['sound_bell']!},
-                {'key': 'voice_only', 'label': t['sound_voice_only']!},
+                {'key': 'electric', 'label': 'סייבר אלקטרוני'},
+                {'key': 'gong', 'label': 'גונג הרמוני'},
+                {'key': 'alarm', 'label': 'אזעקה מודגשת'},
+                {'key': 'bell', 'label': 'פעמון דיגיטלי'},
+                {'key': 'voice_only', 'label': 'הקראה קולית בלבד'},
               ];
 
               String selectedSound = app.soundType;
@@ -1604,26 +1586,25 @@ jobs:
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(35))),
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
                     textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: SafeArea(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 20),
+                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
                                 t['settings']!,
-                                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
+                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)),
                               ),
-                              const SizedBox(height: 18),
-                              // Themes and Textures Palette
+                              const SizedBox(height: 16),
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['themes_title']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                                child: Text(t['themes_title']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white, fontWeight: FontWeight.bold)),
                               ),
                               const SizedBox(height: 8),
                               SingleChildScrollView(
@@ -1637,12 +1618,12 @@ jobs:
                                         setDlg(() {});
                                       },
                                       child: Container(
-                                        margin: const EdgeInsets.only(left: 8, right: 8),
-                                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                         decoration: BoxDecoration(
                                           color: ent.value['surface'],
-                                          borderRadius: BorderRadius.circular(16),
-                                          border: Border.all(color: active ? Colors.white : ent.value['accent'], width: active ? 2.5 : 1),
+                                          borderRadius: BorderRadius.circular(12),
+                                          border: Border.all(color: active ? Colors.white : ent.value['accent'], width: active ? 2 : 1),
                                         ),
                                         child: Text(
                                           ent.value['name'],
@@ -1653,7 +1634,7 @@ jobs:
                                   }).toList(),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 14),
                               SwitchListTile(
                                 title: Text(t['high_contrast']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
                                 value: app.highContrast,
@@ -1664,12 +1645,11 @@ jobs:
                                 value: app.voiceAlerts,
                                 onChanged: (v) => setDlg(() => app.updateSettings(voice: v)),
                               ),
-                              const SizedBox(height: 10),
-                              // Sound Volume Slider
+                              const SizedBox(height: 8),
                               Row(
                                 children: [
                                   Icon(Icons.volume_up, color: hc ? Colors.yellowAccent : Colors.cyanAccent),
-                                  const SizedBox(width: 10),
+                                  const SizedBox(width: 8),
                                   Text('${t['sound_vol']!}: ${(currentVol * 100).toInt()}%', style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white)),
                                   Expanded(
                                     child: Slider(
@@ -1680,26 +1660,22 @@ jobs:
                                 ],
                               ),
                               const SizedBox(height: 8),
-                              Align(
-                                alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['alert_sound']!, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-                              ),
-                              const SizedBox(height: 8),
                               Container(
-                                height: 160,
-                                decoration: cyber3D(context: context, radius: 18, highContrast: hc),
+                                height: 140,
+                                decoration: cyber3D(context: context, radius: 16, highContrast: hc),
                                 child: ListView.builder(
                                   itemCount: soundOptions.length,
                                   itemBuilder: (ctx3, sIdx) {
                                     final opt = soundOptions[sIdx];
                                     final bool selected = selectedSound == opt['key'];
                                     return ListTile(
-                                      title: Text(opt['label']!, style: TextStyle(color: selected ? (hc ? Colors.yellowAccent : Colors.cyanAccent) : (hc ? Colors.white70 : Colors.white60), fontWeight: selected ? FontWeight.bold : FontWeight.normal)),
+                                      dense: true,
+                                      title: Text(opt['label']!, style: TextStyle(color: selected ? (hc ? Colors.yellowAccent : Colors.cyanAccent) : (hc ? Colors.white70 : Colors.white60))),
                                       trailing: IconButton(
                                         icon: const Icon(Icons.play_circle_fill, color: Colors.cyanAccent),
                                         onPressed: () async {
                                           await flutterTts.setVolume(currentVol);
-                                          await flutterTts.speak('בדיקת צליל: ' + opt['label']!);
+                                          await flutterTts.speak('בדיקה: ' + opt['label']!);
                                         },
                                       ),
                                       leading: Radio<String>(
@@ -1718,8 +1694,8 @@ jobs:
                                   Navigator.pop(ctx);
                                 },
                                 child: Container(
-                                  height: 48,
-                                  decoration: cyber3D(context: context, radius: 16, highContrast: hc, customGlow: const Color(0xFF10B981)),
+                                  height: 46,
+                                  decoration: cyber3D(context: context, radius: 14, highContrast: hc, customGlow: const Color(0xFF10B981)),
                                   child: Center(
                                     child: Text(t['confirm_sound']!, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF10B981))),
                                   ),
@@ -1731,53 +1707,6 @@ jobs:
                       ),
                     ),
                   ),
-                ),
-              );
-            }
-
-            void _openLanguagePicker() {
-              final app = CyberPillMasterApp.of(context);
-              final t = dict[app.currentLang]!;
-              final hc = app.highContrast;
-
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
-                builder: (ctx) => SafeArea(
-                  child: ListView(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    children: [
-                      _langTile('עברית (Hebrew)', 'he'),
-                      _langTile('English (English)', 'en'),
-                      _langTile('Русский (Russian)', 'ru'),
-                      _langTile('Română (Romanian)', 'ro'),
-                      _langTile('العربية (Arabic)', 'ar'),
-                      _langTile('Deutsch (German)', 'de'),
-                    ],
-                  ),
-                ),
-              );
-            }
-
-            Widget _langTile(String label, String code) {
-              final app = CyberPillMasterApp.of(context);
-              final t = dict[app.currentLang]!;
-              final hc = app.highContrast;
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                decoration: cyber3D(context: context, radius: 16, highContrast: hc),
-                child: ListTile(
-                  title: Text(label, style: TextStyle(color: hc ? Colors.yellowAccent : Colors.white, fontWeight: FontWeight.bold)),
-                  trailing: app.currentLang == code ? Icon(Icons.check, color: hc ? Colors.yellowAccent : const Color(0xFF06B6D4)) : null,
-                  onTap: () {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(t['lang_change_alert']!), duration: const Duration(seconds: 1)),
-                    );
-                    app.setLanguage(code);
-                  },
                 ),
               );
             }
@@ -1813,10 +1742,6 @@ jobs:
                   ),
                   actions: [
                     IconButton(
-                      icon: Icon(Icons.language, color: hc ? Colors.yellowAccent : null),
-                      onPressed: _openLanguagePicker,
-                    ),
-                    IconButton(
                       icon: Icon(Icons.settings, color: hc ? Colors.yellowAccent : null),
                       onPressed: _openSettingsDialog,
                     ),
@@ -1836,7 +1761,6 @@ jobs:
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      // Medicines Tab
                       _schedules.isEmpty
                           ? Center(child: Text(t['empty_meds']!, style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white38, fontSize: 18)))
                           : ListView.builder(
@@ -1846,18 +1770,13 @@ jobs:
                                 final sched = _schedules[i];
                                 final timeStr = '${sched.hour.toString().padLeft(2, '0')}:${sched.minute.toString().padLeft(2, '0')}';
                                 return Container(
-                                  margin: const EdgeInsets.only(bottom: 16),
-                                  decoration: cyber3D(context: context, radius: 22, isPressed: sched.isTaken, highContrast: hc),
+                                  margin: const EdgeInsets.only(bottom: 14),
+                                  decoration: cyber3D(context: context, radius: 20, isPressed: sched.isTaken, highContrast: hc),
                                   child: ListTile(
                                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                    leading: Container(
-                                      width: 46,
-                                      height: 46,
-                                      decoration: cyber3D(context: context, radius: 14, isPressed: sched.isTaken, highContrast: hc),
-                                      child: Icon(
-                                        sched.isTaken ? Icons.check_circle : Icons.alarm,
-                                        color: sched.isTaken ? Colors.greenAccent : accent,
-                                      ),
+                                    leading: Icon(
+                                      sched.isTaken ? Icons.check_circle : Icons.alarm,
+                                      color: sched.isTaken ? Colors.greenAccent : accent,
                                     ),
                                     title: Text(
                                       sched.title.isNotEmpty ? sched.title : timeStr,
@@ -1871,8 +1790,8 @@ jobs:
                                     subtitle: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('$timeStr • ${sched.pills.length} תרופות בתזמון', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
-                                        ...sched.pills.map((p) => Text('• ${p.name} (${p.dosage} כד\')', style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.cyanAccent))),
+                                        Text('$timeStr • ${sched.pills.length} תרופות', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
+                                        ...sched.pills.map((p) => Text('• ${p.name} (${p.dosage})', style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.cyanAccent))),
                                       ],
                                     ),
                                     trailing: IconButton(
@@ -1887,7 +1806,6 @@ jobs:
                                 );
                               },
                             ),
-                      // Appointments Tab
                       _apps.isEmpty
                           ? Center(child: Text(t['empty_apps']!, style: TextStyle(color: hc ? Colors.yellow.shade100 : Colors.white38, fontSize: 18)))
                           : ListView.builder(
@@ -1896,8 +1814,8 @@ jobs:
                               itemBuilder: (ctx, i) {
                                 final appItem = _apps[i];
                                 return Container(
-                                  margin: const EdgeInsets.only(bottom: 16),
-                                  decoration: cyber3D(context: context, radius: 22, highContrast: hc, customGlow: const Color(0xFFA855F7)),
+                                  margin: const EdgeInsets.only(bottom: 14),
+                                  decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFFA855F7)),
                                   child: ListTile(
                                     contentPadding: const EdgeInsets.all(14),
                                     leading: Icon(Icons.medical_services_outlined, size: 36, color: hc ? Colors.yellowAccent : const Color(0xFFA855F7)),
@@ -1967,7 +1885,7 @@ jobs:
                 ),
                 floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
                 floatingActionButton: Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: GestureDetector(
                     onTap: () {
                       if (_tabController.index == 0) {
@@ -1978,7 +1896,7 @@ jobs:
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                      decoration: cyber3D(context: context, radius: 28, highContrast: hc),
+                      decoration: cyber3D(context: context, radius: 26, highContrast: hc),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
