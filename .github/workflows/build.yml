@@ -205,11 +205,24 @@ jobs:
               return buffer.buffer.asUint8List();
             }
 
-            static Future<void> playAlertTone(String soundType, double volume) async {
+            static Future<void> playAlertTone(String soundType, double volume, {String? voiceText}) async {
               try {
+                if (soundType == 'voice') {
+                  final tempDir = await getTemporaryDirectory();
+                  final file = File('${tempDir.path}/cyber_chime_intro.wav');
+                  final bytes = createToneWav(920, 0.28, type: 'bell');
+                  await file.writeAsBytes(bytes, flush: true);
+                  await audioPlayer.stop();
+                  await audioPlayer.setVolume(volume);
+                  await audioPlayer.play(DeviceFileSource(file.path));
+                  await Future.delayed(const Duration(milliseconds: 320));
+                  await flutterTts.setVolume(volume);
+                  await flutterTts.speak(voiceText ?? 'התרעת חיווי קולי פעילה. הגיע הזמן לטיפול תרופתי.');
+                  return;
+                }
+
                 final tempDir = await getTemporaryDirectory();
                 final file = File('${tempDir.path}/cyber_alert_$soundType.wav');
-                
                 Uint8List bytes;
                 if (soundType == 'electric') {
                   bytes = createToneWav(600, 0.45, type: 'sweep');
@@ -265,7 +278,7 @@ jobs:
               'select_language': 'בחר שפת ממשק',
               'enter_name_title': 'הגדרת קונסולה ראשונית',
               'name_hint': 'הקלד את שמך...',
-              'continue_btn': 'כניסה',
+              'continue_btn': 'כניסה למערכת',
               'meds_tab': 'תזמוני תרופות',
               'appointments_tab': 'תורים ובדיקות',
               'add_med': 'הוסף תזמון תרופות',
@@ -295,20 +308,25 @@ jobs:
               'settings': 'הגדרות קונסולה 3D',
               'language': 'שפת ממשק',
               'voice_alerts': 'חיווי קולי מלא בהתראות (TTS)',
-              'alert_sound': 'סגנון צליל התראה',
-              'sound_vol': 'עוצמת שמע',
+              'alert_sound': 'סוג התרעה ושמע',
+              'sound_vol': 'עוצמת שמע והקראה',
               'themes_title': 'ערכות צבע וחומרה 3D',
-              'bg_style': 'טקסטורת מכונה תלת-ממדית',
+              'bg_style': 'גרפיקה מונפשת תלת-ממדית',
               'high_contrast': 'מצב כבדי ראייה (ניגודיות שיא)',
               'alert_popup_title': '⚠️ תזכורת נטילת תרופות ⚠️',
               'btn_taken': 'נלקח כעת',
               'btn_snooze': 'דחה ב-10 דק׳',
               'btn_skip': 'בטל הפעם',
-              'bg_carbon': 'סיבי פחמן תלת-ממדיים',
-              'bg_grid': 'רשת TRON אינסופית 3D',
-              'bg_hex': 'כוורת כור שקועה',
-              'bg_plasma': 'גלי פלזמה הולוגרפיים',
+              'bg_grid': 'מנהרת TRON תלת-ממדית אינסופית',
+              'bg_hex': 'ליבת כור שקועה 3D עם מנסרות',
+              'bg_plasma': 'מערבולת חלקיקים תלת-ממדית (Vortex)',
+              'bg_carbon': 'מארג סיבי פחמן 3D עם קרן אור',
               'tts_alert': 'תזכורת. הגיע הזמן ליטול את התרופה: {pills}',
+              'sound_opt_voice': '🗣️ התרעת חיווי קולי (דיבור והקראה)',
+              'sound_opt_electric': '⚡ סייבר אלקטרוני (Sweep)',
+              'sound_opt_gong': '🔔 גונג הרמוני עמוק',
+              'sound_opt_alarm': '🚨 אזעקת לייזר חדה',
+              'sound_opt_bell': '⏱️ פעמון דיגיטלי נקי',
             },
             'en': {
               'app_name': 'CYBER PHARMA 3D',
@@ -317,7 +335,7 @@ jobs:
               'select_language': 'Select Language',
               'enter_name_title': 'Console Initialization',
               'name_hint': 'Enter your name...',
-              'continue_btn': 'Enter',
+              'continue_btn': 'Enter System',
               'meds_tab': 'Medicine Schedules',
               'appointments_tab': 'Appointments',
               'add_med': 'Add Medicine Schedule',
@@ -347,20 +365,25 @@ jobs:
               'settings': '3D Console Settings',
               'language': 'Language',
               'voice_alerts': 'Voice Announcements (TTS)',
-              'alert_sound': 'Alert Tone Style',
+              'alert_sound': 'Alert Tone & Voice Mode',
               'sound_vol': 'Master Volume',
               'themes_title': '3D Hardware Theme Engine',
-              'bg_style': '3D Machine Surface',
+              'bg_style': '3D Animated Graphic Engine',
               'high_contrast': 'High Contrast Mode',
-              'alert_popup_title': '⚠️ Medicine Reminder Alert ⚠️️',
+              'alert_popup_title': '⚠️ Medicine Reminder Alert ⚠️',
               'btn_taken': 'Taken Now',
               'btn_snooze': 'Snooze 10m',
               'btn_skip': 'Dismiss',
-              'bg_carbon': '3D Carbon Fiber Weave',
-              'bg_grid': 'Infinite Tron 3D Grid',
-              'bg_hex': 'Deep Reactor Hex Core',
-              'bg_plasma': 'Holographic Plasma Waves',
+              'bg_grid': 'Infinite 3D Tron Grid Tunnel',
+              'bg_hex': '3D Hex Reactor Core with Pillars',
+              'bg_plasma': '3D Particle Hologram Vortex',
+              'bg_carbon': '3D Carbon Weave with Light Sweep',
               'tts_alert': 'Reminder. Time to take medicine: {pills}',
+              'sound_opt_voice': '🗣️ Voice Alert (Spoken Announcement)',
+              'sound_opt_electric': '⚡ Cyber Electronic Sweep',
+              'sound_opt_gong': '🔔 Deep Harmonic Gong',
+              'sound_opt_alarm': '🚨 Sharp Laser Siren',
+              'sound_opt_bell': '⏱️ Digital Crystal Bell',
             },
             'ru': {
               'app_name': 'КИБЕР ФАРМА 3D',
@@ -369,7 +392,7 @@ jobs:
               'select_language': 'Выберите язык',
               'enter_name_title': 'Первоначальная настройка',
               'name_hint': 'Введите имя...',
-              'continue_btn': 'Вход',
+              'continue_btn': 'Вход в систему',
               'meds_tab': 'Расписание',
               'appointments_tab': 'Визиты к врачу',
               'add_med': 'Добавить прием',
@@ -399,20 +422,25 @@ jobs:
               'settings': 'Настройки 3D консоли',
               'language': 'Язык',
               'voice_alerts': 'Голосовое оповещение (TTS)',
-              'alert_sound': 'Звуковой сигнал',
+              'alert_sound': 'Тип сигнала и оповещения',
               'sound_vol': 'Громкость',
               'themes_title': '3D темы консоли',
-              'bg_style': 'Текстура 3D поверхности',
+              'bg_style': '3D Живая графическая анимация',
               'high_contrast': 'Высокая контрастность',
               'alert_popup_title': '⚠️ Прием лекарств ⚠️',
               'btn_taken': 'Принято',
               'btn_snooze': 'Отложить на 10 мин',
               'btn_skip': 'Пропустить',
-              'bg_carbon': '3D Карбоновое волокно',
-              'bg_grid': 'Бесконечная сетка Tron',
-              'bg_hex': 'Глубокий реактор Hex',
-              'bg_plasma': 'Голографическая плазма',
+              'bg_grid': 'Бесконечный 3D тоннель Tron',
+              'bg_hex': 'Глубокий 3D Hex реактор',
+              'bg_plasma': '3D Вихрь голографических частиц',
+              'bg_carbon': '3D Карбон с лучом света',
               'tts_alert': 'Внимание. Пришло время принять: {pills}',
+              'sound_opt_voice': '🗣️ Голосовое оповещение (Речь)',
+              'sound_opt_electric': '⚡ Кибер-свип',
+              'sound_opt_gong': '🔔 Гармонический гонг',
+              'sound_opt_alarm': '🚨 Лазерная сирена',
+              'sound_opt_bell': '⏱️ Цифровой колокол',
             },
             'ro': {
               'app_name': 'CYBER PHARMA 3D',
@@ -421,7 +449,7 @@ jobs:
               'select_language': 'Selectați limba',
               'enter_name_title': 'Configurare consolă',
               'name_hint': 'Introduceți numele...',
-              'continue_btn': 'Intrare',
+              'continue_btn': 'Intrare în sistem',
               'meds_tab': 'Orare pastile',
               'appointments_tab': 'Programări',
               'add_med': 'Adaugă orar',
@@ -451,29 +479,34 @@ jobs:
               'settings': 'Setări Consolă 3D',
               'language': 'Limbă',
               'voice_alerts': 'Alerte Vocale (TTS)',
-              'alert_sound': 'Stil sunet',
+              'alert_sound': 'Tip alertă și sunet',
               'sound_vol': 'Volum',
               'themes_title': 'Teme Hardware 3D',
-              'bg_style': 'Textură suprafață 3D',
+              'bg_style': 'Animație grafică 3D',
               'high_contrast': 'Contrast ridicat',
               'alert_popup_title': '⚠️ Memento tratament ⚠️',
               'btn_taken': 'Luat acum',
               'btn_snooze': 'Amână 10m',
               'btn_skip': 'Omite',
-              'bg_carbon': 'Fibră de carbon 3D',
-              'bg_grid': 'Grilă Tron infinită',
-              'bg_hex': 'Reactor hexagonal adânc',
-              'bg_plasma': 'Valuri de plasmă',
+              'bg_grid': 'Tunel 3D Tron Infinit',
+              'bg_hex': 'Reactor hexagonal 3D profund',
+              'bg_plasma': 'Vortex de particule 3D',
+              'bg_carbon': 'Fibră de carbon 3D cu reflexie',
               'tts_alert': 'Atenție. Luați medicamentul: {pills}',
+              'sound_opt_voice': '🗣️ Alertă Vocală (Sinteză vocală)',
+              'sound_opt_electric': '⚡ Sweep Electronic',
+              'sound_opt_gong': '🔔 Gong Armonic',
+              'sound_opt_alarm': '🚨 Sirenă Laser',
+              'sound_opt_bell': '⏱️ Clopot Digital',
             },
             'ar': {
               'app_name': 'سايبر فارما 3D',
               'welcome': 'أهلاً بك',
-              'creator': 'تم الإنشاء والتطوير بواسطة רוני شنايدר',
+              'creator': 'تم الإنشاء والتطوير بواسطة רוני شنايدر',
               'select_language': 'اختر لغة التطبيق',
               'enter_name_title': 'إعداد لوحة التحكم',
               'name_hint': 'اكتب اسمك...',
-              'continue_btn': 'دخول',
+              'continue_btn': 'دخول النظام',
               'meds_tab': 'مواعيد الأدوية',
               'appointments_tab': 'المواعيد والفحوصات',
               'add_med': 'إضافة موعد أدوية',
@@ -487,7 +520,7 @@ jobs:
               'noon': 'الظهر (13:00)',
               'evening': 'المساء (19:00)',
               'night': 'الليل (22:00)',
-              'doctor_type': 'نوع الموعد',
+              'doctor_type': 'نوع המוعد',
               'doc_doctor': 'طبيب',
               'doc_nurse': 'تمريض',
               'doc_test': 'فحص مخبري',
@@ -503,20 +536,25 @@ jobs:
               'settings': 'إعدادات المنظومة 3D',
               'language': 'اللغة',
               'voice_alerts': 'التنبيهات الصوتية (TTS)',
-              'alert_sound': 'نغمة التنبيه',
+              'alert_sound': 'نوع التنبيه والصوت',
               'sound_vol': 'مستوى الصوت',
-              'themes_title': 'محرك المظهر 3D',
-              'bg_style': 'نسيج السطح المجسم',
+              'themes_title': 'محرك המظهر 3D',
+              'bg_style': 'رسومات متحركة ثلاثية الأبعاد',
               'high_contrast': 'تباين فائق',
               'alert_popup_title': '⚠️ تنبيه موعد الدواء ⚠️',
               'btn_taken': 'تم الأخذ',
               'btn_snooze': 'تأجيل 10 د',
               'btn_skip': 'تخطي',
-              'bg_carbon': 'ألياف الكربون 3D',
-              'bg_grid': 'شبكة ترون اللانهائية',
-              'bg_hex': 'مفاعل سداسي عميق',
-              'bg_plasma': 'أمواج بلازما',
+              'bg_grid': 'نفق شبكة ترون ثلاثي الأبعاد',
+              'bg_hex': 'مفاعل سداسي 3D عميق',
+              'bg_plasma': 'دوامة جسيمات 3D مجسمة',
+              'bg_carbon': 'ألياف كربون 3D مع شعاع ضوء',
               'tts_alert': 'تنبيه. حان وقت تناول: {pills}',
+              'sound_opt_voice': '🗣️ تنبيه صوتي بشري (نطق وقراءة)',
+              'sound_opt_electric': '⚡ موجة إلكترونية',
+              'sound_opt_gong': '🔔 جرس متناغم عميق',
+              'sound_opt_alarm': '🚨 إنذار ليزر حاد',
+              'sound_opt_bell': '⏱️ جرس رقمي نقي',
             },
             'de': {
               'app_name': 'CYBER PHARMA 3D',
@@ -525,7 +563,7 @@ jobs:
               'select_language': 'Sprache',
               'enter_name_title': 'Systemstart',
               'name_hint': 'Name eingeben...',
-              'continue_btn': 'Eingabe',
+              'continue_btn': 'System betreten',
               'meds_tab': 'Medikamente',
               'appointments_tab': 'Arzttermine',
               'add_med': 'Plan hinzufügen',
@@ -555,20 +593,25 @@ jobs:
               'settings': '3D Konsoleneinstellungen',
               'language': 'Sprache',
               'voice_alerts': 'Sprachausgabe (TTS)',
-              'alert_sound': 'Signalton',
+              'alert_sound': 'Alarmtyp & Sound',
               'sound_vol': 'Lautstärke',
               'themes_title': '3D Hardware-Designs',
-              'bg_style': '3D Oberflächenstruktur',
+              'bg_style': '3D Animierte Computergrafik',
               'high_contrast': 'Hoher Kontrast',
               'alert_popup_title': '⚠️ Medikamentenerinnerung ⚠️',
               'btn_taken': 'Eingenommen',
               'btn_snooze': '10 Min Pause',
               'btn_skip': 'Überspringen',
-              'bg_carbon': '3D Kohlefaser-Geflecht',
-              'bg_grid': 'Unendliches Tron-Gitter',
-              'bg_hex': 'Tiefer Waben-Reaktor',
-              'bg_plasma': 'Plasmawellen',
+              'bg_grid': 'Unendlicher 3D-Tron-Tunnel',
+              'bg_hex': 'Tiefer 3D-Wabenreaktor',
+              'bg_plasma': '3D-Partikel-Vortex-Hologramm',
+              'bg_carbon': '3D-Kohlefaser mit Lichtstrahl',
               'tts_alert': 'Achtung. Zeit für: {pills}',
+              'sound_opt_voice': '🗣️ Sprachansage (Intelligente TTS)',
+              'sound_opt_electric': '⚡ Cyber Elektronisch',
+              'sound_opt_gong': '🔔 Tiefer Gong',
+              'sound_opt_alarm': '🚨 Laser-Sirene',
+              'sound_opt_bell': '⏱️ Digitale Glocke',
             }
           };
 
@@ -590,6 +633,7 @@ jobs:
               'highlight': Color(0xFF70F8FF),
               'bevel': Color(0xFF1E3A6D),
               'chassis': Color(0xFF060B14),
+              'glow': Color(0xFF00E5FF),
             },
             'emerald': {
               'name': 'Matrix Green Core',
@@ -599,24 +643,27 @@ jobs:
               'highlight': Color(0xFF80FFC4),
               'bevel': Color(0xFF0E5C34),
               'chassis': Color(0xFF030D07),
+              'glow': Color(0xFF00FF7F),
             },
             'crimson': {
-              'name': 'Viper Heavy Red',
+              'name': 'Viper Neon Red',
               'bg': Color(0xFF160309),
               'surface': Color(0xFF330914),
               'accent': Color(0xFFFF0055),
               'highlight': Color(0xFFFF709B),
               'bevel': Color(0xFF6B122A),
               'chassis': Color(0xFF0D0206),
+              'glow': Color(0xFFFF1744),
             },
             'purple': {
-              'name': 'Cosmic Heavy Purple',
+              'name': 'Cosmic Channel Magenta',
               'bg': Color(0xFF0D031D),
               'surface': Color(0xFF260D4E),
-              'accent': Color(0xFFA855F7),
-              'highlight': Color(0xFFD8B4FE),
+              'accent': Color(0xFFE0218A),
+              'highlight': Color(0xFFFF77C6),
               'bevel': Color(0xFF501F9E),
               'chassis': Color(0xFF080214),
+              'glow': Color(0xFFFF007F),
             },
             'solar': {
               'name': 'Solar Mech Amber',
@@ -626,15 +673,17 @@ jobs:
               'highlight': Color(0xFFFFE082),
               'bevel': Color(0xFF73490D),
               'chassis': Color(0xFF0C0701),
+              'glow': Color(0xFFFF9100),
             },
             'stealth': {
-              'name': 'Titanium Alloy Mech',
+              'name': 'Titanium Alloy Steel',
               'bg': Color(0xFF0E1116),
               'surface': Color(0xFF202632),
-              'accent': Color(0xFF94A3B8),
+              'accent': Color(0xFF38BDF8),
               'highlight': Color(0xFFFFFFFF),
-              'bevel': Color(0xFF3D4759),
+              'bevel': Color(0xFF475569),
               'chassis': Color(0xFF090B0E),
+              'glow': Color(0xFF0EA5E9),
             },
           };
 
@@ -677,7 +726,7 @@ jobs:
             String _userName = '';
             bool _voiceAlerts = true;
             bool _highContrast = false;
-            String _soundType = 'electric';
+            String _soundType = 'voice';
             double _soundVolume = 1.0;
             String _themeKey = 'cyber';
             String _bgEffect = 'grid';
@@ -707,7 +756,7 @@ jobs:
                 _userName = prefs.getString('c_user_name') ?? '';
                 _voiceAlerts = prefs.getBool('c_voice') ?? true;
                 _highContrast = prefs.getBool('c_hc') ?? false;
-                _soundType = prefs.getString('c_sound') ?? 'electric';
+                _soundType = prefs.getString('c_sound') ?? 'voice';
                 _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
                 _themeKey = prefs.getString('c_theme') ?? 'cyber';
                 _bgEffect = prefs.getString('c_bgeffect') ?? 'grid';
@@ -744,14 +793,20 @@ jobs:
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('c_theme', key);
               HapticFeedback.lightImpact();
-              setState(() => _themeKey = key);
+              setState(() {
+                _themeKey = key;
+                _appKey = UniqueKey();
+              });
             }
 
             void setBgEffect(String effect) async {
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('c_bgeffect', effect);
               HapticFeedback.lightImpact();
-              setState(() => _bgEffect = effect);
+              setState(() {
+                _bgEffect = effect;
+                _appKey = UniqueKey();
+              });
             }
 
             void updateSettings({bool? voice, bool? hc, String? sound, double? volume}) async {
@@ -764,6 +819,7 @@ jobs:
                 if (hc != null) {
                   _highContrast = hc;
                   prefs.setBool('c_hc', hc);
+                  _appKey = UniqueKey();
                 }
                 if (sound != null) {
                   _soundType = sound;
@@ -810,7 +866,72 @@ jobs:
             }
           }
 
-          // True Multi-Layer Physical 3D Push Button
+          // 3D Illuminated Channel Letter Text (Matching the 3D illuminated letters from user image)
+          Widget textChannel3D(
+            String text, {
+            required double fontSize,
+            required Color color,
+            Color? glowColor,
+            double depth = 4.0,
+            TextAlign textAlign = TextAlign.start,
+            FontWeight fontWeight = FontWeight.w900,
+          }) {
+            final glow = glowColor ?? color;
+            return Text(
+              text,
+              textAlign: textAlign,
+              style: TextStyle(
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+                letterSpacing: 1.4,
+                color: color,
+                shadows: [
+                  Shadow(
+                    color: Colors.white.withOpacity(0.95),
+                    offset: const Offset(-0.8, -1.0),
+                    blurRadius: 1.0,
+                  ),
+                  Shadow(
+                    color: color.withOpacity(0.85),
+                    offset: const Offset(1.0, 1.2),
+                    blurRadius: 0.5,
+                  ),
+                  Shadow(
+                    color: const Color(0xFF1E293B),
+                    offset: const Offset(1.8, 2.2),
+                    blurRadius: 0.5,
+                  ),
+                  Shadow(
+                    color: const Color(0xFF0F172A),
+                    offset: const Offset(2.6, 3.2),
+                    blurRadius: 1.0,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.95),
+                    offset: const Offset(3.6, 4.5),
+                    blurRadius: 2.5,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.9),
+                    offset: const Offset(5.0, 7.0),
+                    blurRadius: 8.0,
+                  ),
+                  Shadow(
+                    color: glow.withOpacity(0.8),
+                    offset: const Offset(0.0, 1.0),
+                    blurRadius: 16.0,
+                  ),
+                  Shadow(
+                    color: glow.withOpacity(0.5),
+                    offset: const Offset(0.0, 2.0),
+                    blurRadius: 30.0,
+                  ),
+                ],
+              ),
+            );
+          }
+
+          // Realistic 3D Channel-Letter Physical Push Button with Ground Halo Light
           class Hardware3DButton extends StatefulWidget {
             final Widget child;
             final VoidCallback onTap;
@@ -848,7 +969,7 @@ jobs:
               final Color bevel = palette['bevel'] ?? const Color(0xFF1E3A6D);
               final bool pressed = _down || widget.isPushed;
 
-              const double extrusion = 6.0;
+              const double extrusion = 7.0;
 
               return GestureDetector(
                 onTapDown: (_) {
@@ -860,48 +981,69 @@ jobs:
                   widget.onTap();
                 },
                 onTapCancel: () => setState(() => _down = false),
-                child: Container(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 120),
+                  curve: Curves.easeOut,
                   height: widget.height,
                   width: widget.width,
-                  padding: const EdgeInsets.all(3.0),
+                  padding: const EdgeInsets.all(3.5),
                   decoration: BoxDecoration(
                     color: chassis,
                     borderRadius: BorderRadius.circular(widget.radius + 3),
-                    border: Border.all(color: Colors.black, width: 2.5),
+                    border: Border.all(color: Colors.black, width: 2.8),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.95),
-                        offset: const Offset(0, 10),
-                        blurRadius: 18,
+                        offset: const Offset(0, 14),
+                        blurRadius: 24,
                       ),
                       BoxShadow(
-                        color: accent.withOpacity(0.25),
-                        blurRadius: 12,
-                        spreadRadius: 1,
-                      )
+                        color: accent.withOpacity(pressed ? 0.85 : 0.60),
+                        offset: const Offset(0, 4),
+                        blurRadius: pressed ? 32 : 24,
+                        spreadRadius: pressed ? 4 : 2,
+                      ),
+                      BoxShadow(
+                        color: accent.withOpacity(0.35),
+                        offset: const Offset(0, 0),
+                        blurRadius: 45,
+                        spreadRadius: 6,
+                      ),
                     ],
                   ),
                   child: Stack(
                     children: [
-                      // Extrusion Under-Wall (Creates the physical side height)
+                      // Extrusion Under-Wall (Metallic Brushed Steel 3D returns)
                       Positioned(
-                        left: 0, right: 0, bottom: 0,
-                        height: widget.height - 6,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        height: widget.height - 7,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xFF030509),
                             borderRadius: BorderRadius.circular(widget.radius),
-                            border: Border.all(color: bevel, width: 1.5),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xFF64748B),
+                                Color(0xFF334155),
+                                Color(0xFF0F172A),
+                                Color(0xFF020617),
+                              ],
+                            ),
+                            border: Border.all(color: bevel.withOpacity(0.9), width: 1.8),
                           ),
                         ),
                       ),
-                      // Push Cap (Moves vertically on press)
+                      // Push Cap (Moving 3D Acrylic Face)
                       AnimatedPositioned(
-                        duration: const Duration(milliseconds: 60),
+                        duration: const Duration(milliseconds: 70),
                         curve: Curves.easeOutCubic,
                         top: pressed ? extrusion : 0.0,
-                        left: 0, right: 0,
-                        height: widget.height - 6 - (pressed ? 0 : extrusion),
+                        left: 0,
+                        right: 0,
+                        height: widget.height - 7 - (pressed ? 0 : extrusion),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(widget.radius),
@@ -909,35 +1051,58 @@ jobs:
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: pressed
-                                  ? [chassis, surface.withOpacity(0.8)]
+                                  ? [
+                                      chassis,
+                                      surface.withOpacity(0.9),
+                                      const Color(0xFF050B14),
+                                    ]
                                   : [
-                                      palette['highlight']!.withOpacity(0.35),
+                                      palette['highlight']!.withOpacity(0.45),
                                       surface,
-                                      chassis.withOpacity(0.95),
+                                      chassis.withOpacity(0.98),
                                     ],
                             ),
                             border: Border.all(
-                              color: pressed ? accent : accent.withOpacity(0.9),
-                              width: 2.2,
+                              color: pressed ? accent : accent.withOpacity(0.95),
+                              width: 2.4,
                             ),
                             boxShadow: pressed
                                 ? [
-                                    BoxShadow(color: Colors.black.withOpacity(0.9), offset: const Offset(0, 4), blurRadius: 4, spreadRadius: 1),
-                                    BoxShadow(color: accent.withOpacity(0.4), blurRadius: 10),
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.9),
+                                      offset: const Offset(0, 4),
+                                      blurRadius: 5,
+                                      spreadRadius: 1,
+                                    ),
+                                    BoxShadow(
+                                      color: accent.withOpacity(0.7),
+                                      blurRadius: 14,
+                                      spreadRadius: 1,
+                                    ),
                                   ]
                                 : [
-                                    BoxShadow(color: accent.withOpacity(0.55), offset: const Offset(0, -2), blurRadius: 6),
-                                    BoxShadow(color: Colors.black.withOpacity(0.7), offset: const Offset(0, 4), blurRadius: 4),
+                                    BoxShadow(
+                                      color: accent.withOpacity(0.65),
+                                      offset: const Offset(0, -2),
+                                      blurRadius: 8,
+                                    ),
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.75),
+                                      offset: const Offset(0, 5),
+                                      blurRadius: 6,
+                                    ),
                                   ],
                           ),
                           child: Stack(
                             children: [
-                              // Glass/Specular Top Glare Arc
                               Positioned(
-                                top: 0, left: 10, right: 10, height: 1.8,
+                                top: 0,
+                                left: 10,
+                                right: 10,
+                                height: 2.2,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.75),
+                                    color: Colors.white.withOpacity(0.85),
                                     borderRadius: BorderRadius.circular(2),
                                   ),
                                 ),
@@ -954,7 +1119,7 @@ jobs:
             }
           }
 
-          // 3D Metallic Mech Module Card
+          // 3D Metallic Channel Module Card with Screws and Halo Backlight
           class MechModuleCard extends StatelessWidget {
             final Widget child;
             final bool isPressed;
@@ -977,46 +1142,66 @@ jobs:
               final Color bevel = palette['bevel'] ?? const Color(0xFF1E3A6D);
 
               return Container(
-                margin: const EdgeInsets.only(bottom: 16),
+                margin: const EdgeInsets.only(bottom: 18),
                 decoration: BoxDecoration(
                   color: chassis,
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: Colors.black, width: 3.0),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: Colors.black, width: 3.2),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.95), offset: const Offset(0, 14), blurRadius: 28),
-                    BoxShadow(color: glow.withOpacity(0.25), blurRadius: 18, spreadRadius: 1),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.96),
+                      offset: const Offset(0, 16),
+                      blurRadius: 30,
+                    ),
+                    BoxShadow(
+                      color: glow.withOpacity(0.35),
+                      blurRadius: 24,
+                      spreadRadius: 2,
+                    ),
+                    BoxShadow(
+                      color: glow.withOpacity(0.18),
+                      blurRadius: 40,
+                      spreadRadius: 4,
+                    ),
                   ],
                 ),
                 child: Container(
-                  margin: const EdgeInsets.all(4.0),
+                  margin: const EdgeInsets.all(4.5),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
                         surface.withOpacity(0.95),
-                        bevel.withOpacity(0.7),
+                        bevel.withOpacity(0.75),
                         chassis.withOpacity(0.98),
                       ],
                     ),
                     border: Border.all(
-                      color: isPressed ? glow : glow.withOpacity(0.75),
-                      width: 2.2,
+                      color: isPressed ? glow : glow.withOpacity(0.85),
+                      width: 2.4,
                     ),
                     boxShadow: [
-                      BoxShadow(color: glow.withOpacity(0.35), offset: const Offset(-2, -2), blurRadius: 10),
-                      BoxShadow(color: Colors.black.withOpacity(0.85), offset: const Offset(4, 6), blurRadius: 12),
+                      BoxShadow(
+                        color: glow.withOpacity(0.4),
+                        offset: const Offset(-2, -2),
+                        blurRadius: 12,
+                      ),
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.9),
+                        offset: const Offset(5, 7),
+                        blurRadius: 14,
+                      ),
                     ],
                   ),
                   child: Stack(
                     children: [
-                      // Mechanical Corner Rivets / Screws
-                      Positioned(top: 0, left: 0, child: _screw()),
-                      Positioned(top: 0, right: 0, child: _screw()),
-                      Positioned(bottom: 0, left: 0, child: _screw()),
-                      Positioned(bottom: 0, right: 0, child: _screw()),
+                      Positioned(top: 0, left: 0, child: _rivet()),
+                      Positioned(top: 0, right: 0, child: _rivet()),
+                      Positioned(bottom: 0, left: 0, child: _rivet()),
+                      Positioned(bottom: 0, right: 0, child: _rivet()),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         child: child,
@@ -1027,38 +1212,22 @@ jobs:
               );
             }
 
-            Widget _screw() {
+            Widget _rivet() {
               return Container(
-                width: 7, height: 7,
+                width: 8,
+                height: 8,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color(0xFF4A5568),
+                  color: Color(0xFF94A3B8),
                   boxShadow: [
-                    BoxShadow(color: Colors.black, offset: Offset(1, 1), blurRadius: 1),
+                    BoxShadow(color: Colors.black, offset: Offset(1.5, 1.5), blurRadius: 2),
                   ],
                 ),
               );
             }
           }
 
-          // Embossed 3D Sculpted Text Effect
-          Widget textEmbossed(String text, {required double fontSize, required Color color, Color? glow}) {
-            return Text(
-              text,
-              style: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 1.2,
-                color: color,
-                shadows: [
-                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(2.2, 2.8), blurRadius: 4),
-                  Shadow(color: glow ?? color.withOpacity(0.65), offset: const Offset(-1.2, -1.2), blurRadius: 6),
-                ],
-              ),
-            );
-          }
-
-          // True 3D Multi-Layer Canvas Shader
+          // True 3D Multi-Layer Animated Graphics Engine (Smooth 60FPS 3D Mathematical Projection)
           class DynamicFuturisticBackground extends StatefulWidget {
             final Widget child;
             final Color accentColor;
@@ -1083,7 +1252,7 @@ jobs:
             @override
             void initState() {
               super.initState();
-              _anim = AnimationController(vsync: this, duration: const Duration(seconds: 10))..repeat();
+              _anim = AnimationController(vsync: this, duration: const Duration(seconds: 12))..repeat();
             }
 
             @override
@@ -1102,7 +1271,7 @@ jobs:
                 animation: _anim,
                 builder: (context, child) {
                   return CustomPaint(
-                    painter: MachineFXPainter(
+                    painter: True3DGraphicsPainter(
                       progress: _anim.value,
                       color: widget.accentColor,
                       effect: widget.effectType,
@@ -1114,116 +1283,298 @@ jobs:
             }
           }
 
-          class MachineFXPainter extends CustomPainter {
+          class True3DGraphicsPainter extends CustomPainter {
             final double progress;
             final Color color;
             final String effect;
 
-            MachineFXPainter({required this.progress, required this.color, required this.effect});
+            True3DGraphicsPainter({required this.progress, required this.color, required this.effect});
 
             @override
             void paint(Canvas canvas, Size size) {
-              // Dark Void Base
               final basePaint = Paint()..color = const Color(0xFF030712);
               canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), basePaint);
 
-              if (effect == 'carbon') {
-                // 3D Woven Carbon Fiber Mesh
-                final double cell = 18.0;
-                for (double y = 0; y < size.height; y += cell) {
-                  for (double x = 0; x < size.width; x += cell) {
-                    bool alt = ((x / cell).toInt() + (y / cell).toInt()) % 2 == 0;
-                    final p = Paint()
-                      ..shader = LinearGradient(
-                        colors: alt
-                            ? [const Color(0xFF1E2530), const Color(0xFF080C12)]
-                            : [const Color(0xFF0A0F17), const Color(0xFF18202C)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ).createShader(Rect.fromLTWH(x, y, cell, cell));
-                    canvas.drawRect(Rect.fromLTWH(x, y, cell, cell), p);
-                  }
-                }
-              } else if (effect == 'hex') {
-                // Sunken Reactor Core Hex Matrix with pulse glow
-                final double r = 36.0;
-                final double w = math.sqrt(3) * r;
-                final double h = 2 * r * 0.75;
-                final strokePaint = Paint()
-                  ..color = color.withOpacity(0.18)
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2.0;
-
-                int row = 0;
-                for (double y = -r; y < size.height + r; y += h, row++) {
-                  double xOffset = (row % 2 == 0) ? 0 : w / 2;
-                  for (double x = -w + xOffset; x < size.width + w; x += w) {
-                    Path path = Path();
-                    for (int i = 0; i < 6; i++) {
-                      double angle = (60.0 * i - 30.0) * math.pi / 180.0;
-                      double px = x + r * 0.5 * math.cos(angle);
-                      double py = y + r * 0.5 * math.sin(angle);
-                      if (i == 0) path.moveTo(px, py); else path.lineTo(px, py);
-                    }
-                    path.close();
-                    canvas.drawPath(path, strokePaint);
-                  }
-                }
+              if (effect == 'hex') {
+                _paint3DHexReactor(canvas, size);
               } else if (effect == 'plasma') {
-                // Holographic Multi-layer Plasma Glow
-                for (int layer = 1; layer <= 3; layer++) {
-                  final paint = Paint()
-                    ..color = color.withOpacity(0.08 * layer)
-                    ..style = PaintingStyle.fill;
-                  final path = Path()..moveTo(0, size.height * 0.6);
-                  for (double x = 0; x <= size.width; x += 14) {
-                    double y = math.sin((x / size.width * (layer + 1) * math.pi) + (progress * 2 * math.pi)) * (18.0 * layer) +
-                        math.cos((x / size.width * 2 * math.pi) + (progress * 2 * math.pi)) * 14 +
-                        size.height * (0.65 + layer * 0.08);
-                    path.lineTo(x, y);
-                  }
-                  path.lineTo(size.width, size.height);
-                  path.lineTo(0, size.height);
-                  path.close();
-                  canvas.drawPath(path, paint);
-                }
+                _paint3DParticleVortex(canvas, size);
+              } else if (effect == 'carbon') {
+                _paint3DCarbonSpecular(canvas, size);
               } else {
-                // Infinite Tron 3D Perspective Grid
-                final horizonY = size.height * 0.45;
-                final gridPaint = Paint()
-                  ..color = color.withOpacity(0.22)
-                  ..strokeWidth = 1.6;
-
-                // Perspective Z-lines to vanishing point
-                final centerX = size.width * 0.5;
-                for (double x = -size.width * 0.8; x <= size.width * 1.8; x += 40) {
-                  canvas.drawLine(Offset(centerX, horizonY), Offset(x, size.height), gridPaint);
-                }
-
-                // Horizontal receding depth lines
-                double speed = (progress * 30);
-                for (double y = horizonY; y <= size.height; y += 22) {
-                  double lineY = y + (speed % 22);
-                  if (lineY <= size.height) {
-                    double alpha = ((lineY - horizonY) / (size.height - horizonY)).clamp(0.0, 1.0);
-                    final p = Paint()
-                      ..color = color.withOpacity(0.28 * alpha)
-                      ..strokeWidth = 1.8 * alpha;
-                    canvas.drawLine(Offset(0, lineY), Offset(size.width, lineY), p);
-                  }
-                }
-
-                // Glowing Horizon Bar
-                final horizonPaint = Paint()
-                  ..shader = LinearGradient(
-                    colors: [Colors.transparent, color.withOpacity(0.85), Colors.transparent],
-                  ).createShader(Rect.fromLTWH(0, horizonY - 4, size.width, 8));
-                canvas.drawRect(Rect.fromLTWH(0, horizonY - 4, size.width, 8), horizonPaint);
+                _paint3DTronTunnel(canvas, size);
               }
             }
 
+            // 1. True 3D Mathematical Perspective Tron Highway Tunnel with Floating Obelisks
+            void _paint3DTronTunnel(Canvas canvas, Size size) {
+              final double horizonY = size.height * 0.46;
+              final double centerX = size.width * 0.5;
+              const double fov = 280.0;
+
+              // Glowing Horizon Backdrop
+              final horizonPaint = Paint()
+                ..shader = LinearGradient(
+                  colors: [
+                    Colors.transparent,
+                    color.withOpacity(0.9),
+                    Colors.white.withOpacity(0.95),
+                    color.withOpacity(0.9),
+                    Colors.transparent,
+                  ],
+                ).createShader(Rect.fromLTWH(0, horizonY - 4, size.width, 8));
+              canvas.drawRect(Rect.fromLTWH(0, horizonY - 4, size.width, 8), horizonPaint);
+
+              // Horizon Sun Halo
+              final sunGlow = Paint()
+                ..shader = RadialGradient(
+                  colors: [
+                    color.withOpacity(0.55),
+                    color.withOpacity(0.2),
+                    Colors.transparent,
+                  ],
+                ).createShader(Rect.fromCircle(center: Offset(centerX, horizonY), radius: size.width * 0.4));
+              canvas.drawCircle(Offset(centerX, horizonY), size.width * 0.4, sunGlow);
+
+              // 3D Floor Perspective Lines
+              for (double x = -size.width * 1.5; x <= size.width * 2.5; x += 55) {
+                final p = Paint()
+                  ..color = color.withOpacity(0.24)
+                  ..strokeWidth = 1.6;
+                canvas.drawLine(Offset(centerX, horizonY), Offset(x, size.height), p);
+              }
+
+              // 3D Ceiling Perspective Lines (Tunnel effect)
+              for (double x = -size.width * 1.2; x <= size.width * 2.2; x += 65) {
+                final p = Paint()
+                  ..color = color.withOpacity(0.14)
+                  ..strokeWidth = 1.2;
+                canvas.drawLine(Offset(centerX, horizonY), Offset(x, 0), p);
+              }
+
+              // Transverse 3D Receding Floor Grid Lines (Moving continuously with progress)
+              const int numLines = 26;
+              for (int i = 0; i < numLines; i++) {
+                double z = ((i - progress) / numLines);
+                if (z <= 0) z += 1.0;
+                double scale = 1.0 - z;
+                double y = horizonY + math.pow(scale, 2.8) * (size.height - horizonY);
+
+                double alpha = scale.clamp(0.0, 1.0);
+                final p = Paint()
+                  ..color = color.withOpacity(0.35 * alpha)
+                  ..strokeWidth = 1.2 + 2.0 * alpha;
+                canvas.drawLine(Offset(0, y), Offset(size.width, y), p);
+              }
+
+              // Transverse 3D Receding Ceiling Grid Lines
+              for (int i = 0; i < 18; i++) {
+                double z = ((i - progress) / 18);
+                if (z <= 0) z += 1.0;
+                double scale = 1.0 - z;
+                double y = horizonY - math.pow(scale, 2.5) * horizonY;
+
+                double alpha = scale.clamp(0.0, 1.0);
+                final p = Paint()
+                  ..color = color.withOpacity(0.20 * alpha)
+                  ..strokeWidth = 1.0 + 1.6 * alpha;
+                canvas.drawLine(Offset(0, y), Offset(size.width, y), p);
+              }
+
+              // Floating 3D Cyber Monoliths / Geometric Diamonds travelling forward
+              const int numMonoliths = 6;
+              for (int i = 0; i < numMonoliths; i++) {
+                double monoProg = (progress + (i / numMonoliths)) % 1.0;
+                double zDist = (1.0 - monoProg) * 800.0 + 40.0;
+                double side = (i % 2 == 0) ? -1.0 : 1.0;
+                double worldX = side * (120.0 + (i % 3) * 60.0);
+                double worldY = 30.0 + math.sin(monoProg * math.pi * 2 + i) * 20.0;
+
+                double projScale = fov / (fov + zDist);
+                double sx = centerX + worldX * projScale * 2.8;
+                double sy = horizonY + worldY * projScale * 2.4;
+                double rSize = 28.0 * projScale * 2.5;
+
+                if (sy > horizonY && sy < size.height && sx > 0 && sx < size.width) {
+                  final monoPaint = Paint()
+                    ..color = color.withOpacity((projScale * 0.9).clamp(0.1, 0.8))
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 2.0 * projScale;
+                  
+                  Path dPath = Path();
+                  dPath.moveTo(sx, sy - rSize);
+                  dPath.lineTo(sx + rSize * 0.7, sy);
+                  dPath.lineTo(sx, sy + rSize);
+                  dPath.lineTo(sx - rSize * 0.7, sy);
+                  dPath.close();
+                  canvas.drawPath(dPath, monoPaint);
+
+                  final glowCore = Paint()
+                    ..color = Colors.white.withOpacity((projScale * 0.75).clamp(0.0, 1.0));
+                  canvas.drawCircle(Offset(sx, sy), rSize * 0.25, glowCore);
+                }
+              }
+            }
+
+            // 2. 3D Isometric Undulating Hexagonal Reactor Core Matrix
+            void _paint3DHexReactor(Canvas canvas, Size size) {
+              const double radius = 32.0;
+              final double w = math.sqrt(3) * radius;
+              final double h = 2 * radius * 0.75;
+
+              int row = 0;
+              for (double y = -radius; y < size.height + radius * 2; y += h, row++) {
+                double xOffset = (row % 2 == 0) ? 0 : w / 2;
+                for (double x = -w + xOffset; x < size.width + w * 2; x += w) {
+                  double distFromCenter = math.sqrt(math.pow(x - size.width * 0.5, 2) + math.pow(y - size.height * 0.5, 2));
+                  double wave = math.sin((distFromCenter * 0.02) - (progress * 2 * math.pi));
+                  double elevation = (wave * 12.0) + 14.0;
+
+                  Path topCap = _createHexPath(x, y - elevation, radius * 0.88);
+                  final topPaint = Paint()
+                    ..shader = LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.lerp(const Color(0xFF1E293B), color, (wave + 1) * 0.25)!,
+                        const Color(0xFF090D16),
+                      ],
+                    ).createShader(Rect.fromCircle(center: Offset(x, y - elevation), radius: radius));
+                  canvas.drawPath(topCap, topPaint);
+
+                  final edgePaint = Paint()
+                    ..color = color.withOpacity(((wave + 1) * 0.35).clamp(0.12, 0.85))
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 1.8;
+                  canvas.drawPath(topCap, edgePaint);
+
+                  Path leftFacet = Path();
+                  leftFacet.moveTo(x - radius * 0.88 * 0.5, y - elevation + radius * 0.88 * 0.866);
+                  leftFacet.lineTo(x, y - elevation + radius * 0.88);
+                  leftFacet.lineTo(x, y + radius * 0.88);
+                  leftFacet.lineTo(x - radius * 0.88 * 0.5, y + radius * 0.88 * 0.866);
+                  leftFacet.close();
+                  final leftPaint = Paint()..color = const Color(0xFF080C14);
+                  canvas.drawPath(leftFacet, leftPaint);
+
+                  Path rightFacet = Path();
+                  rightFacet.moveTo(x, y - elevation + radius * 0.88);
+                  rightFacet.lineTo(x + radius * 0.88 * 0.5, y - elevation + radius * 0.88 * 0.866);
+                  rightFacet.lineTo(x + radius * 0.88 * 0.5, y + radius * 0.88 * 0.866);
+                  rightFacet.lineTo(x, y + radius * 0.88);
+                  rightFacet.close();
+                  final rightPaint = Paint()..color = const Color(0xFF101726);
+                  canvas.drawPath(rightFacet, rightPaint);
+                }
+              }
+            }
+
+            Path _createHexPath(double cx, double cy, double r) {
+              Path path = Path();
+              for (int i = 0; i < 6; i++) {
+                double angle = (60.0 * i - 30.0) * math.pi / 180.0;
+                double px = cx + r * math.cos(angle);
+                double py = cy + r * math.sin(angle);
+                if (i == 0) path.moveTo(px, py); else path.lineTo(px, py);
+              }
+              path.close();
+              return path;
+            }
+
+            // 3. True 3D Holographic Particle Double-Helix & Vortex with Depth-Sorting
+            void _paint3DParticleVortex(Canvas canvas, Size size) {
+              final double cx = size.width * 0.5;
+              final double cy = size.height * 0.52;
+              const int count = 120;
+              const double fov = 320.0;
+
+              List<Map<String, double>> particles = [];
+
+              for (int i = 0; i < count; i++) {
+                double t = (i / count);
+                double theta = t * 14 * math.pi + (progress * 2 * math.pi);
+                double radius3D = 40.0 + (t * size.width * 0.46);
+                double worldY = (t - 0.5) * (size.height * 0.85);
+
+                double worldX = radius3D * math.cos(theta);
+                double worldZ = radius3D * math.sin(theta);
+
+                particles.add({
+                  'x': worldX,
+                  'y': worldY,
+                  'z': worldZ,
+                  't': t,
+                });
+              }
+
+              particles.sort((a, b) => b['z']!.compareTo(a['z']!));
+
+              for (var p in particles) {
+                double z = p['z']!;
+                double scale = fov / (fov + z + 150.0);
+                double projX = cx + p['x']! * scale;
+                double projY = cy + p['y']! * scale;
+                double pSize = (3.5 * scale * 2.2).clamp(1.2, 9.0);
+                double alpha = ((z + 200) / 400.0).clamp(0.15, 0.95);
+
+                final pPaint = Paint()
+                  ..color = color.withOpacity(alpha)
+                  ..style = PaintingStyle.fill;
+                canvas.drawCircle(Offset(projX, projY), pSize, pPaint);
+
+                if (z > 20) {
+                  final coreP = Paint()..color = Colors.white.withOpacity(alpha * 0.9);
+                  canvas.drawCircle(Offset(projX, projY), pSize * 0.45, coreP);
+                }
+              }
+            }
+
+            // 4. 3D Carbon Specular Matrix with Dynamic Sweeping Light Beam
+            void _paint3DCarbonSpecular(Canvas canvas, Size size) {
+              const double cell = 20.0;
+              double beamX = progress * (size.width + size.height * 1.5) - size.height * 0.5;
+
+              for (double y = 0; y < size.height; y += cell) {
+                for (double x = 0; x < size.width; x += cell) {
+                  bool alt = ((x / cell).toInt() + (y / cell).toInt()) % 2 == 0;
+                  double distFromBeam = ((x + y * 0.6) - beamX).abs();
+                  double specular = (1.0 - (distFromBeam / 160.0)).clamp(0.0, 1.0);
+
+                  final p = Paint()
+                    ..shader = LinearGradient(
+                      colors: alt
+                          ? [
+                              Color.lerp(const Color(0xFF263238), color, specular * 0.7)!,
+                              const Color(0xFF080C12),
+                            ]
+                          : [
+                              const Color(0xFF0A0F17),
+                              Color.lerp(const Color(0xFF1E293B), color, specular * 0.5)!,
+                            ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ).createShader(Rect.fromLTWH(x, y, cell, cell));
+                  canvas.drawRect(Rect.fromLTWH(x, y, cell, cell), p);
+                }
+              }
+
+              final beamPaint = Paint()
+                ..shader = LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.transparent,
+                    color.withOpacity(0.25),
+                    Colors.white.withOpacity(0.4),
+                    color.withOpacity(0.25),
+                    Colors.transparent,
+                  ],
+                ).createShader(Rect.fromLTWH(beamX - 100, 0, 200, size.height));
+              canvas.drawRect(Rect.fromLTWH(beamX - 100, 0, 200, size.height), beamPaint);
+            }
+
             @override
-            bool shouldRepaint(covariant MachineFXPainter oldDelegate) => true;
+            bool shouldRepaint(covariant True3DGraphicsPainter oldDelegate) => true;
           }
 
           class FirstTimeSetupScreen extends StatefulWidget {
@@ -1261,27 +1612,32 @@ jobs:
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                width: 120, height: 120,
+                                width: 120,
+                                height: 120,
                                 decoration: BoxDecoration(
                                   color: palette['chassis'],
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: accent, width: 3.5),
+                                  border: Border.all(color: accent, width: 3.8),
                                   boxShadow: [
-                                    BoxShadow(color: accent.withOpacity(0.55), blurRadius: 28, spreadRadius: 2),
-                                    const BoxShadow(color: Colors.black, offset: Offset(0, 10), blurRadius: 20),
+                                    BoxShadow(
+                                      color: accent.withOpacity(0.65),
+                                      blurRadius: 36,
+                                      spreadRadius: 4,
+                                    ),
+                                    const BoxShadow(color: Colors.black, offset: Offset(0, 12), blurRadius: 24),
                                   ],
                                 ),
                                 child: Icon(Icons.shield_rounded, size: 70, color: accent),
                               ),
                               const SizedBox(height: 24),
-                              textEmbossed(t['app_name']!, fontSize: 28, color: Colors.white, glow: accent),
+                              textChannel3D(t['app_name']!, fontSize: 28, color: Colors.white, glowColor: accent),
                               const SizedBox(height: 8),
                               Text(
                                 t['creator']!,
                                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white70),
                               ),
                               const SizedBox(height: 28),
-                              textEmbossed(t['select_language']!, fontSize: 16, color: accent),
+                              textChannel3D(t['select_language']!, fontSize: 16, color: accent),
                               const SizedBox(height: 14),
                               Wrap(
                                 spacing: 10,
@@ -1331,7 +1687,7 @@ jobs:
                                   final name = _nameCtrl.text.trim().isEmpty ? 'משתמש' : _nameCtrl.text.trim();
                                   CyberPillMasterApp.of(context).completeOnboarding(name, _selectedLang);
                                 },
-                                child: textEmbossed(
+                                child: textChannel3D(
                                   t['continue_btn']!,
                                   fontSize: 22,
                                   color: const Color(0xFF00FF88),
@@ -1493,13 +1849,19 @@ jobs:
             void _triggerHeadsUpAlert(ScheduleGroup sched) async {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
-              SoundGenerator.playAlertTone(app.soundType, app.soundVolume);
 
-              if (app.voiceAlerts) {
-                String pillNames = sched.pills.map((p) => '${p.name} (${p.dosage})').join(', ');
-                String ttsTemplate = t['tts_alert'] ?? 'Time for: {pills}';
-                String speechText = ttsTemplate.replaceAll('{pills}', pillNames);
-                await flutterTts.speak(speechText);
+              String pillNames = sched.pills.map((p) => '${p.name} במינון ${p.dosage}').join(', ');
+              String ttsTemplate = t['tts_alert'] ?? 'תזכורת. הגיע הזמן ליטול את התרופה: {pills}';
+              String speechText = ttsTemplate.replaceAll('{pills}', pillNames);
+
+              if (app.soundType == 'voice') {
+                SoundGenerator.playAlertTone('voice', app.soundVolume, voiceText: speechText);
+              } else {
+                SoundGenerator.playAlertTone(app.soundType, app.soundVolume);
+                if (app.voiceAlerts) {
+                  await Future.delayed(const Duration(milliseconds: 600));
+                  await flutterTts.speak(speechText);
+                }
               }
 
               const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
@@ -1545,7 +1907,7 @@ jobs:
                       const Icon(Icons.warning_amber_rounded, color: Color(0xFFFF0055), size: 34),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: textEmbossed(
+                        child: textChannel3D(
                           t['alert_popup_title']!,
                           fontSize: hc ? 20 : 17,
                           color: hc ? const Color(0xFFFFE500) : Colors.white,
@@ -1557,7 +1919,7 @@ jobs:
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textEmbossed(sched.title, fontSize: 18, color: const Color(0xFF00F0FF)),
+                      textChannel3D(sched.title, fontSize: 18, color: const Color(0xFF00F0FF)),
                       const SizedBox(height: 12),
                       ...sched.pills.map((p) => Text('💊 ${p.name} (מינון: ${p.dosage})', style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold))),
                     ],
@@ -1575,7 +1937,7 @@ jobs:
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: textEmbossed(t['btn_taken']!, fontSize: 14, color: const Color(0xFF00FF88)),
+                        child: textChannel3D(t['btn_taken']!, fontSize: 14, color: const Color(0xFF00FF88)),
                       ),
                     ),
                     Hardware3DButton(
@@ -1592,7 +1954,7 @@ jobs:
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: textEmbossed(t['btn_snooze']!, fontSize: 14, color: const Color(0xFFFFB703)),
+                        child: textChannel3D(t['btn_snooze']!, fontSize: 14, color: const Color(0xFFFFB703)),
                       ),
                     ),
                     TextButton(
@@ -1650,7 +2012,7 @@ jobs:
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        textEmbossed(t['select_language']!, fontSize: 20, color: const Color(0xFF00F0FF)),
+                        textChannel3D(t['select_language']!, fontSize: 20, color: const Color(0xFF00F0FF)),
                         const SizedBox(height: 16),
                         Wrap(
                           spacing: 10,
@@ -1716,7 +2078,7 @@ jobs:
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              textEmbossed(t['add_med']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
+                              textChannel3D(t['add_med']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
                               const SizedBox(height: 16),
                               Wrap(
                                 spacing: 8,
@@ -1863,7 +2225,7 @@ jobs:
                                   _saveSchedules();
                                   Navigator.pop(ctx);
                                 },
-                                child: textEmbossed(
+                                child: textChannel3D(
                                   t['save']!,
                                   fontSize: hc ? 20 : 18,
                                   color: hc ? const Color(0xFFFFE500) : const Color(0xFF00FF88),
@@ -1927,7 +2289,7 @@ jobs:
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              textEmbossed(t['add_appointment']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7)),
+                              textChannel3D(t['add_appointment']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7)),
                               const SizedBox(height: 14),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -2039,7 +2401,7 @@ jobs:
                                   _saveApps();
                                   Navigator.pop(ctx);
                                 },
-                                child: textEmbossed(
+                                child: textChannel3D(
                                   t['save']!,
                                   fontSize: hc ? 20 : 18,
                                   color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7),
@@ -2061,17 +2423,18 @@ jobs:
               final hc = app.highContrast;
 
               final soundOptions = [
-                {'key': 'electric', 'label': 'סייבר אלקטרוני (Sweep)'},
-                {'key': 'gong', 'label': 'גונג הרמוני עמוק'},
-                {'key': 'alarm', 'label': 'אזעקת לייזר חדה'},
-                {'key': 'bell', 'label': 'פעמון דיגיטלי נקי'},
+                {'key': 'voice', 'label': t['sound_opt_voice']!},
+                {'key': 'electric', 'label': t['sound_opt_electric']!},
+                {'key': 'gong', 'label': t['sound_opt_gong']!},
+                {'key': 'alarm', 'label': t['sound_opt_alarm']!},
+                {'key': 'bell', 'label': t['sound_opt_bell']!},
               ];
 
               final bgOptions = [
                 {'key': 'grid', 'label': t['bg_grid']!},
-                {'key': 'carbon', 'label': t['bg_carbon']!},
                 {'key': 'hex', 'label': t['bg_hex']!},
                 {'key': 'plasma', 'label': t['bg_plasma']!},
+                {'key': 'carbon', 'label': t['bg_carbon']!},
               ];
 
               showModalBottomSheet(
@@ -2089,11 +2452,11 @@ jobs:
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              textEmbossed(t['settings']!, fontSize: hc ? 24 : 20, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
+                              textChannel3D(t['settings']!, fontSize: hc ? 24 : 20, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
                               const SizedBox(height: 16),
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['alert_sound']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
+                                child: Text(t['alert_sound']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                               ),
                               const SizedBox(height: 8),
                               MechModuleCard(
@@ -2102,14 +2465,25 @@ jobs:
                                     final bool active = app.soundType == s['key'];
                                     return ListTile(
                                       dense: true,
-                                      title: Text(s['label']!, style: TextStyle(color: active ? (hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)) : Colors.white70, fontWeight: FontWeight.bold)),
+                                      title: Text(
+                                        s['label']!,
+                                        style: TextStyle(
+                                          color: active ? (hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)) : Colors.white70,
+                                          fontWeight: active ? FontWeight.w900 : FontWeight.bold,
+                                          fontSize: active ? 15 : 14,
+                                        ),
+                                      ),
                                       trailing: IconButton(
-                                        icon: const Icon(Icons.volume_up, color: Color(0xFF00F0FF)),
+                                        icon: Icon(
+                                          s['key'] == 'voice' ? Icons.record_voice_over : Icons.volume_up,
+                                          color: const Color(0xFF00F0FF),
+                                        ),
                                         onPressed: () => SoundGenerator.playAlertTone(s['key']!, app.soundVolume),
                                       ),
                                       leading: Radio<String>(
                                         value: s['key']!,
                                         groupValue: app.soundType,
+                                        activeColor: const Color(0xFF00F0FF),
                                         onChanged: (val) {
                                           if (val != null) {
                                             app.updateSettings(sound: val);
@@ -2126,10 +2500,11 @@ jobs:
                                 children: [
                                   Icon(Icons.volume_up, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
                                   const SizedBox(width: 8),
-                                  Text('${t['sound_vol']!}: ${(app.soundVolume * 100).toInt()}%', style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white)),
+                                  Text('${t['sound_vol']!}: ${(app.soundVolume * 100).toInt()}%', style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
                                   Expanded(
                                     child: Slider(
                                       value: app.soundVolume,
+                                      activeColor: const Color(0xFF00F0FF),
                                       onChanged: (v) {
                                         app.updateSettings(volume: v);
                                         setDlg(() {});
@@ -2138,10 +2513,10 @@ jobs:
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 14),
+                              const SizedBox(height: 16),
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['bg_style']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
+                                child: Text(t['bg_style']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                               ),
                               const SizedBox(height: 8),
                               Wrap(
@@ -2150,24 +2525,32 @@ jobs:
                                 children: bgOptions.map((opt) {
                                   final bool active = app.bgEffect == opt['key'];
                                   return Hardware3DButton(
-                                    height: 44,
+                                    height: 46,
                                     radius: 12,
                                     isPushed: active,
+                                    glowColor: active ? const Color(0xFF00F0FF) : Colors.white24,
                                     onTap: () {
                                       app.setBgEffect(opt['key']!);
                                       setDlg(() {});
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                                      child: Text(opt['label']!, style: TextStyle(color: active ? (hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)) : Colors.white60, fontWeight: FontWeight.bold)),
+                                      child: Text(
+                                        opt['label']!,
+                                        style: TextStyle(
+                                          color: active ? (hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)) : Colors.white60,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                        ),
+                                      ),
                                     ),
                                   );
                                 }).toList(),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 18),
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['themes_title']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
+                                child: Text(t['themes_title']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                               ),
                               const SizedBox(height: 8),
                               SingleChildScrollView(
@@ -2199,6 +2582,7 @@ jobs:
                               SwitchListTile(
                                 title: Text(t['high_contrast']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900)),
                                 value: app.highContrast,
+                                activeColor: const Color(0xFFFFE500),
                                 onChanged: (v) {
                                   app.updateSettings(hc: v);
                                   setDlg(() {});
@@ -2207,6 +2591,7 @@ jobs:
                               SwitchListTile(
                                 title: Text(t['voice_alerts']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
                                 value: app.voiceAlerts,
+                                activeColor: const Color(0xFF00F0FF),
                                 onChanged: (v) {
                                   app.updateSettings(voice: v);
                                   setDlg(() {});
@@ -2247,7 +2632,7 @@ jobs:
                     ),
                     title: Column(
                       children: [
-                        textEmbossed(
+                        textChannel3D(
                           t['app_name']!,
                           fontSize: hc ? 22 : 20,
                           color: accent,
@@ -2278,7 +2663,7 @@ jobs:
                       controller: _tabController,
                       children: [
                         _schedules.isEmpty
-                            ? Center(child: textEmbossed(t['empty_meds']!, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white38))
+                            ? Center(child: textChannel3D(t['empty_meds']!, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white38))
                             : ListView.builder(
                                 padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 95),
                                 itemCount: _schedules.length,
@@ -2290,7 +2675,7 @@ jobs:
                                     child: ListTile(
                                       contentPadding: EdgeInsets.zero,
                                       leading: Icon(sched.isTaken ? Icons.check_circle : Icons.alarm_on, color: sched.isTaken ? const Color(0xFF00FF88) : accent, size: 36),
-                                      title: textEmbossed(
+                                      title: textChannel3D(
                                         sched.title.isNotEmpty ? sched.title : timeStr,
                                         fontSize: hc ? 22 : 18,
                                         color: hc ? const Color(0xFFFFE500) : Colors.white,
@@ -2317,7 +2702,7 @@ jobs:
                                 },
                               ),
                         _apps.isEmpty
-                            ? Center(child: textEmbossed(t['empty_apps']!, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white38))
+                            ? Center(child: textChannel3D(t['empty_apps']!, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white38))
                             : ListView.builder(
                                 padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 95),
                                 itemCount: _apps.length,
@@ -2328,7 +2713,7 @@ jobs:
                                     child: ListTile(
                                       contentPadding: EdgeInsets.zero,
                                       leading: Icon(Icons.local_hospital, size: 36, color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7)),
-                                      title: textEmbossed('${appItem.type}: ${appItem.doctor}', fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white),
+                                      title: textChannel3D('${appItem.type}: ${appItem.doctor}', fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white),
                                       subtitle: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -2347,7 +2732,13 @@ jobs:
                                                   onTap: () => _launchMap(appItem.clinic, true),
                                                   child: Padding(
                                                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                                                    child: Text(t['nav_waze']!, style: const TextStyle(fontSize: 12, color: Color(0xFF00D1FF), fontWeight: FontWeight.bold)),
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(Icons.navigation, size: 16, color: Color(0xFF00D1FF)),
+                                                        const SizedBox(width: 4),
+                                                        Text(t['nav_waze']!, style: const TextStyle(fontSize: 12, color: Color(0xFF00D1FF), fontWeight: FontWeight.bold)),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                                 const SizedBox(width: 8),
@@ -2358,7 +2749,13 @@ jobs:
                                                   onTap: () => _launchMap(appItem.clinic, false),
                                                   child: Padding(
                                                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                                                    child: Text(t['nav_google']!, style: const TextStyle(fontSize: 12, color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(Icons.map, size: 16, color: Color(0xFF34A853)),
+                                                        const SizedBox(width: 4),
+                                                        Text(t['nav_google']!, style: const TextStyle(fontSize: 12, color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -2400,7 +2797,7 @@ jobs:
                         children: [
                           Icon(Icons.add, color: hc ? const Color(0xFFFFE500) : Colors.white, size: 28),
                           const SizedBox(width: 8),
-                          textEmbossed(
+                          textChannel3D(
                             _tabController.index == 0 ? t['add_med']! : t['add_appointment']!,
                             fontSize: hc ? 18 : 16,
                             color: hc ? const Color(0xFFFFE500) : Colors.white,
