@@ -1,12 +1,3 @@
-lib/main.dart:1865:95: Error: Member not found: 'rtl'.
-lib/main.dart:1865:115: Error: Member not found: 'ltr'.
-```[span_1](start_span)[span_1](end_span)
-
-הסיבה לכך היא התנגשות שמות (Name Collision): גם החבילה של Flutter וגם החבילה של `pdf` מייצאות מחלקה בשם `TextDirection`[span_2](start_span)[span_2](end_span). ברגע שייבאנו `package:pdf/widgets.dart as pw` יחד עם `package:pdf/pdf.dart`, הקומפיילר מנסה לחפש את `TextDirection.rtl` מתוך החבילה של ה-PDF במקום מתוך Flutter של מערכת ההפעלה, ולכן הבנייה נכשלת[span_3](start_span)[span_3](end_span).
-
-הנה הקוד המתוקן במלואו עבור `.github/workflows/build.yml` — עם פתרון מוחלט של ההתנגשות (שימוש מפורש ב-`ui.TextDirection` שמונע את ההתנגשות), ללא קיצורים, מוכן להדבקה מלאה:
-
-```yaml
 name: Build APK
 
 on:
@@ -563,7 +554,7 @@ jobs:
               'enter_name_title': 'إعداد الملف الشخصي',
               'name_hint': 'اكتب اسمك...',
               'continue_btn': 'دخول التطبيق',
-              'meds_tab': 'مواعيد الأدوية',
+              'meds_tab': 'מواعيد الأدوية',
               'appointments_tab': 'المواعيد',
               'stats_tab': 'الإحصائيات والتقارير',
               'add_med': 'إضافة موعد أدوية',
