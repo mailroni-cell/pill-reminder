@@ -45,11 +45,9 @@ jobs:
 
       - name: Configure Android Manifest, Desugaring and Kotlin Flags
         run: |
-          # 1. Bypass Kotlin Gradle Plugin version check warning/failure
           mkdir -p android
           echo "android.suppressKotlinVersionCompatibilityCheck=true" >> android/gradle.properties
 
-          # 2. Overwrite AndroidManifest.xml cleanly with valid XML structure
           cat << 'EOF' > android/app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
@@ -88,7 +86,6 @@ jobs:
           </manifest>
           EOF
 
-          # 3. Configure Desugaring in build.gradle
           python3 -c "
           import os
           fpath = 'android/app/build.gradle.kts'
@@ -388,7 +385,7 @@ jobs:
               'night': 'Ночь (22:00)',
               'doctor_type': 'Тип визита',
               'doc_doctor': 'Врач',
-              'doc_nurse': 'Медсестра',
+              'doc_nurse': 'Меדсестра',
               'doc_test': 'Анализ',
               'doc_treatment': 'Процедура',
               'doctor_name': 'Имя специалиста',
@@ -472,7 +469,7 @@ jobs:
             'ar': {
               'app_name': 'سايبر فارما 3D',
               'welcome': 'أهلاً بك',
-              'creator': 'تم الإنشاء والتطوير بواسطة رוני شنايدר',
+              'creator': 'تم الإنشاء والتطوير بواسطة רוני شنايدר',
               'select_language': 'اختر لغة التطبيق',
               'enter_name_title': 'إعداد لوحة التحكم',
               'name_hint': 'اكتب اسمك...',
@@ -508,8 +505,8 @@ jobs:
               'voice_alerts': 'التنبيهات الصوتية (TTS)',
               'alert_sound': 'نغمة التنبيه',
               'sound_vol': 'مستوى الصوت',
-              'themes_title': 'محرك المظهر 3D',
-              'bg_style': 'نسيج السطح المجسم',
+              'themes_title': 'מחרק המראה 3D',
+              'bg_style': 'نسيج السطח المجسم',
               'high_contrast': 'تباين فائق',
               'alert_popup_title': '⚠️ تنبيه موعد الدواء ⚠️',
               'btn_taken': 'تم الأخذ',
@@ -517,7 +514,7 @@ jobs:
               'btn_skip': 'تخطي',
               'bg_carbon': 'ألياف الكربون',
               'bg_grid': 'شبكة سايبر 3D عميقة',
-              'bg_hex': 'دروع سداسية عسكرية',
+              'bg_hex': 'דרוע سداسية عسكرية',
               'bg_plasma': 'أمواج بلازما',
               'tts_alert': 'تنبيه. حان وقت تناول: {pills}',
             },
@@ -808,7 +805,6 @@ jobs:
             }
           }
 
-          // Master SMR Heavy 3D Tactile Depress Button
           class CyberTactileButton extends StatefulWidget {
             final Widget child;
             final VoidCallback onTap;
@@ -896,7 +892,6 @@ jobs:
             }
           }
 
-          // Embossed 3D Sculpted Text Effect
           Widget textEmbossed(String text, {required double fontSize, required Color color, Color? glow}) {
             return Text(
               text,
@@ -913,7 +908,6 @@ jobs:
             );
           }
 
-          // Heavy Sculpted Chamfered 3D Metallic Card & Box
           BoxDecoration cyber3D({
             required BuildContext context,
             double radius = 22,
@@ -970,7 +964,6 @@ jobs:
             );
           }
 
-          // Live High-Tech Canvas Surface
           class DynamicFuturisticBackground extends StatefulWidget {
             final Widget child;
             final Color accentColor;
@@ -1799,7 +1792,7 @@ jobs:
                               textEmbossed(t['add_appointment']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7)),
                               const SizedBox(height: 14),
                               Row(
-                                mainAxisAlignment: spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: typesList.map((type) {
                                   final bool isSel = selectedType == type;
                                   return GestureDetector(
