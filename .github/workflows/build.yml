@@ -1378,7 +1378,7 @@ jobs:
                 context: context,
                 barrierDismissible: false,
                 builder: (ctx) => Directionality(
-                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : TextDirection.ltr,
                   child: AlertDialog(
                     backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
                     shape: RoundedRectangleBorder(
