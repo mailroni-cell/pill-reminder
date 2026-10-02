@@ -42,14 +42,53 @@ jobs:
               <path android:fillColor="#FFFFFF" android:pathData="M16,60h76v4h-76z"/>
           </vector>
           EOF
-          sed -i 's/android:icon="@mipmap\/ic_launcher"/android:icon="@drawable\/ic_launcher_cyber"/g' android/app/src/main/AndroidManifest.xml
 
-      - name: Configure Android Permissions, SingleTask and Desugaring
+      - name: Configure Android Manifest, Desugaring and Kotlin Flags
         run: |
-          sed -i 's/<activity/<activity android:launchMode="singleTask"/' android/app/src/main/AndroidManifest.xml
-          
-          sed -i 's/<application/<uses-permission android:name="android.permission.POST_NOTIFICATIONS"\/>\n    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.USE_EXACT_ALARM"\/>\n    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"\/>\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"\/>\n    <uses-permission android:name="android.permission.VIBRATE"\/>\n    <uses-permission android:name="android.permission.WAKE_LOCK"\/>\n    <application/' android/app/src/main/AndroidManifest.xml
-          
+          # 1. Bypass Kotlin Gradle Plugin version check warning/failure
+          mkdir -p android
+          echo "android.suppressKotlinVersionCompatibilityCheck=true" >> android/gradle.properties
+
+          # 2. Overwrite AndroidManifest.xml cleanly with valid XML structure
+          cat << 'EOF' > android/app/src/main/AndroidManifest.xml
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+              <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+              <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+              <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+              <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+              <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+              <uses-permission android:name="android.permission.VIBRATE"/>
+              <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+              <application
+                  android:label="CYBER PHARMA 3D"
+                  android:name="${applicationName}"
+                  android:icon="@drawable/ic_launcher_cyber">
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true"
+                      android:launchMode="singleTask"
+                      android:theme="@style/LaunchTheme"
+                      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+                      android:hardwareAccelerated="true"
+                      android:windowSoftInputMode="adjustResize">
+                      <meta-data
+                        android:name="io.flutter.embedding.android.NormalTheme"
+                        android:resource="@style/NormalTheme"
+                        />
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN"/>
+                          <category android:name="android.intent.category.LAUNCHER"/>
+                      </intent-filter>
+                  </activity>
+                  <meta-data
+                      android:name="flutterEmbedding"
+                      android:value="2" />
+              </application>
+          </manifest>
+          EOF
+
+          # 3. Configure Desugaring in build.gradle
           python3 -c "
           import os
           fpath = 'android/app/build.gradle.kts'
@@ -433,7 +472,7 @@ jobs:
             'ar': {
               'app_name': 'سايبر فارما 3D',
               'welcome': 'أهلاً بك',
-              'creator': 'تم الإنشاء والتطوير بواسطة روني شنايدר',
+              'creator': 'تم الإنشاء والتطوير بواسطة رוני شنايدר',
               'select_language': 'اختر لغة التطبيق',
               'enter_name_title': 'إعداد لوحة التحكم',
               'name_hint': 'اكتب اسمك...',
@@ -1760,7 +1799,7 @@ jobs:
                               textEmbossed(t['add_appointment']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7)),
                               const SizedBox(height: 14),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: spaceEvenly,
                                 children: typesList.map((type) {
                                   final bool isSel = selectedType == type;
                                   return GestureDetector(
