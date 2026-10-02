@@ -448,12 +448,20 @@ jobs:
               'sound_opt_gong': '🔔 גונג הרמוני עמוק',
               'sound_opt_alarm': '🚨 אזעקת לייזר חדה',
               'sound_opt_bell': '⏱️ פעמון דיגיטלי נקי',
-              'bg_mesh': 'רשת פרספקטיבה עמוקה',
-              'bg_particles': 'ערפילית חלקיקים מרחפים',
-              'bg_reactor': 'ליבת כור משושים פועמת',
-              'bg_wave': 'גלי סינוס קוונטיים מונפשים',
-              'bg_tunnel': 'מנהרת טרון תלת-מימדית',
-              'bg_plasma': 'פלזמה אורגנית זוהרת',
+              'bg_butterflies': 'פרפרים זרחניים תלת-מימדיים 3D',
+              'bg_planets': 'מערכת כוכבי לכת וטבעות שבתאי 3D',
+              'bg_flowers': 'פרחי לוטוס זוהרים פועמים 3D',
+              'bg_space': 'חלל עמוק ושדה כוכבים 3D',
+              'bg_aurora': 'זוהר קטבים וגלי פלזמה 3D',
+              'bg_fireflies': 'גחליליות זוהרות ונבגים 3D',
+              'bg_tunnel': 'מנהרת טרון תלת-מימדית 3D',
+              'bg_blackhole': 'חור שחור קוסמי ודיסקת ספיחה 3D',
+              'bg_reactor': 'כור תעשייתי גלגלי שיניים ובוכנות',
+              'bg_crystal': 'מארג גבישים קוונטי תלת-מימדי',
+              'bg_dna': 'סליל DNA כפול זוהר בנפח 3D',
+              'bg_supernova': 'פיצוץ סופרנובה וגלי הלם 3D',
+              'bg_matrix': 'גשם קוד מטריקס סייבר 3D',
+              'bg_nebula': 'ערפילית סערה קוסמית בין-כוכבית',
               'help_title': 'מדריך הפעלה לקונסולה',
               'help_text': 'ברוכים הבאים למערכת CYBER PHARMA 3D!\n\n1. תזמון תרופות: בלשונית הראשונה הקישו על + להוספת תזמון. ניתן לבחור קיצורי דרך (בוקר, צהריים, ערב) ולהוסיף תרופות מרובות לאותו התזמון.\n\n2. תורים ורופאים: בלשונית התורים ניתן להזין כתובת מרפאה וללחוץ ישירות על כפתורי הניווט של Waze או Google Maps.\n\n3. בדיקת שמע: לצד כל תזמון תרופה ישנו כפתור Play המאפשר השמעת צליל והקראה קולית מיידית.\n\n4. התאמה אישית: לחצו על גלגל השיניים להחלפת שפה, עוצמת קול, ו-5 רקעים תלת-מימדיים מונפשים.',
               'close': 'סגור',
@@ -581,7 +589,7 @@ jobs:
               'bg_tunnel': 'Бесконечный тоннель Трон',
               'bg_plasma': 'Светящаяся 3D плазма',
               'help_title': 'Руководство пользователя',
-              'help_text': 'Добро пожаловать в CYBER PHARMA 3D!\n\n1. Прием лекарств: Нажмите + для создания расписания с несколькими препаратами.\n2. Навигация: Быстрый запуск Waze и Google Maps для адресов клиник.\n3. Звук: Кнопка Play позволяет проверить голосовое оповещение.',
+              'help_text': 'Добро пожаловать в CYBER PHARMA 3D!\n\n1. Прием лекарств: Нажмите + для создания расписания с несколькими препаратами.\n2. Навигация: Быстрый запуск Waze и Google Maps для адресов клиник.\n3. Звуק: Кнопка Play позволяет проверить голосовое оповещение.',
               'close': 'Закрыть',
             },
             'ro': {
@@ -650,7 +658,7 @@ jobs:
             'ar': {
               'app_name': 'سايبر فارما 3D',
               'welcome': 'أهلاً بك',
-              'creator': 'تم الإنشاء والتطوير بواسطة רוني شنايدر',
+              'creator': 'تم الإنشاء والتطوير بواسطة רוני شنايدر',
               'select_language': 'اختر لغة التطبيق',
               'enter_name_title': 'إعداد لوحة التحكم',
               'name_hint': 'اكتب اسمك...',
@@ -826,7 +834,7 @@ jobs:
             String _soundType = 'voice';
             double _soundVolume = 1.0;
             String _themeKey = 'cyberpunk';
-            String _bgStyle = 'mesh';
+            String _bgStyle = 'butterflies';
             bool _firstRun = true;
             bool _initialized = false;
             Key _appKey = UniqueKey();
@@ -930,11 +938,7 @@ jobs:
                 }
               });
 
-              if (sound != null || volume != null) {
-                SoundGenerator.playAlertTone(_soundType, _soundVolume, lang: _lang);
-              } else {
-                HapticFeedback.mediumImpact();
-              }
+              HapticFeedback.selectionClick();
             }
 
             @override
@@ -1430,7 +1434,7 @@ jobs:
             bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
           }
 
-          // Multi 3D Interactive Live Background Painter
+          // Multi 3D Interactive Live Background Painter - 14 Pure 3D Dynamic Environments
           class Multi3DGraphicsPainter extends CustomPainter {
             final double progress;
             final ThemePalette palette;
@@ -1444,180 +1448,596 @@ jobs:
 
             @override
             void paint(Canvas canvas, Size size) {
-              if (style == 'particles') {
-                _paintParticles(canvas, size);
-              } else if (style == 'reactor') {
-                _paintHexReactor(canvas, size);
-              } else if (style == 'wave') {
-                _paintQuantumWaves(canvas, size);
-              } else if (style == 'tunnel') {
-                _paintTronTunnel(canvas, size);
-              } else if (style == 'plasma') {
-                _paintBioPlasma(canvas, size);
-              } else {
-                _paintDepthMesh(canvas, size);
+              switch (style) {
+                case 'butterflies':
+                  _paint3DButterflies(canvas, size);
+                  break;
+                case 'planets':
+                  _paint3DPlanetarySystem(canvas, size);
+                  break;
+                case 'flowers':
+                  _paint3DLotusFlowers(canvas, size);
+                  break;
+                case 'space':
+                  _paint3DSpaceWarp(canvas, size);
+                  break;
+                case 'aurora':
+                  _paint3DAuroraWaves(canvas, size);
+                  break;
+                case 'fireflies':
+                  _paint3DFireflyForest(canvas, size);
+                  break;
+                case 'tunnel':
+                  _paintTronTunnel(canvas, size);
+                  break;
+                case 'blackhole':
+                  _paint3DBlackHole(canvas, size);
+                  break;
+                case 'reactor':
+                  _paint3DIndustrialReactor(canvas, size);
+                  break;
+                case 'crystal':
+                  _paint3DCrystalLattice(canvas, size);
+                  break;
+                case 'dna':
+                  _paint3DDNAHelix(canvas, size);
+                  break;
+                case 'supernova':
+                  _paint3DSupernova(canvas, size);
+                  break;
+                case 'matrix':
+                  _paint3DMatrixRain(canvas, size);
+                  break;
+                case 'nebula':
+                  _paint3DNebulaStorm(canvas, size);
+                  break;
+                default:
+                  _paint3DButterflies(canvas, size);
+                  break;
               }
             }
 
-            void _paintDepthMesh(Canvas canvas, Size size) {
-              final double horizon = size.height * 0.45;
-              const double fov = 260.0;
-              const int cols = 14;
-              const int rows = 18;
+            // 1. פרפרים זרחניים תלת-מימדיים עם עומק Z ונפנוף כנפיים ריאליסטי
+            void _paint3DButterflies(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.5;
+              const int bCount = 7;
+              final hues = [
+                const Color(0xFF00FFFF),
+                const Color(0xFFFF007F),
+                const Color(0xFF76FF03),
+                const Color(0xFFFFD600),
+                const Color(0xFFB388FF),
+              ];
 
-              final linePaint = Paint()
-                ..color = palette.primary.withOpacity(0.35)
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = 1.3;
+              for (int i = 0; i < bCount; i++) {
+                double t = (i / bCount) + (progress * 1.25);
+                double theta = t * 2 * math.pi;
+                double bx = cx + math.sin(theta) * (size.width * 0.40);
+                double by = cy + math.cos(theta * 1.35) * (size.height * 0.30) + math.sin(t * 8 * math.pi) * 22;
 
-              List<List<Offset>> points = [];
-              for (int r = 0; r <= rows; r++) {
-                List<Offset> rowPoints = [];
-                double z = ((r - progress) / rows);
-                if (z <= 0) z += 1.0;
-                double depth = (1.0 - z) * 600.0 + 30.0;
-                double scale = fov / (fov + depth);
-                double y = horizon + (size.height - horizon) * (scale * 1.7);
+                double flap = math.cos(progress * 28 * math.pi + i * 2.4);
+                Color color = hues[i % hues.length];
 
-                for (int c = 0; c <= cols; c++) {
-                  double worldX = (c - cols / 2) * (size.width / (cols * 0.45));
-                  double x = size.width / 2 + (worldX * scale);
-                  double wave = math.sin(c * 0.6 + progress * 2 * math.pi) * 9.0 * scale;
-                  rowPoints.add(Offset(x, y + wave));
+                for (int tr = 1; tr <= 5; tr++) {
+                  double trT = t - (tr * 0.015);
+                  double tx = cx + math.sin(trT * 2 * math.pi) * (size.width * 0.40);
+                  double ty = cy + math.cos(trT * 2.7 * math.pi) * (size.height * 0.30) + math.sin(trT * 8 * math.pi) * 22;
+                  canvas.drawCircle(
+                    Offset(tx, ty),
+                    (6.0 - tr),
+                    Paint()
+                      ..color = color.withOpacity(0.30 / tr)
+                      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3),
+                  );
                 }
-                points.add(rowPoints);
-              }
 
-              for (int r = 0; r < points.length; r++) {
-                for (int c = 0; c < points[r].length; c++) {
-                  if (c < points[r].length - 1) canvas.drawLine(points[r][c], points[r][c + 1], linePaint);
-                  if (r < points.length - 1) canvas.drawLine(points[r][c], points[r + 1][c], linePaint);
-                }
+                canvas.save();
+                canvas.translate(bx, by);
+                canvas.rotate(math.sin(theta) * 0.5);
+
+                canvas.drawOval(
+                  Rect.fromCenter(center: Offset.zero, width: 4.0, height: 24),
+                  Paint()..color = Colors.white,
+                );
+
+                final wingPaint = Paint()
+                  ..color = color.withOpacity(0.88)
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4.5);
+
+                canvas.save();
+                canvas.scale(flap.abs(), 1.0);
+                Path rightWing = Path()
+                  ..moveTo(2, -2)
+                  ..cubicTo(32, -30, 46, 10, 2, 16);
+                canvas.drawPath(rightWing, wingPaint);
+                canvas.restore();
+
+                canvas.save();
+                canvas.scale(-flap.abs(), 1.0);
+                Path leftWing = Path()
+                  ..moveTo(2, -2)
+                  ..cubicTo(32, -30, 46, 10, 2, 16);
+                canvas.drawPath(leftWing, wingPaint);
+                canvas.restore();
+
+                canvas.restore();
               }
             }
 
-            void _paintParticles(Canvas canvas, Size size) {
-              const int count = 55;
+            // 2. מערכת שמש קוסמית תלת-מימדית (כוכבי לכת עם טבעות ומסלולים אליפטיים)
+            void _paint3DPlanetarySystem(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
 
-              for (int i = 0; i < count; i++) {
-                double t = (i / count);
-                double angle = t * 12 * math.pi + (progress * 2 * math.pi);
-                double rad = (size.width * 0.45) * math.sin(t * math.pi + progress * math.pi);
-                double x = cx + rad * math.cos(angle);
-                double y = cy + (t - 0.5) * size.height * 0.85 + math.sin(angle) * 35;
-                double pSize = (math.sin(t * math.pi) * 5.0 + 2.0).clamp(1.5, 7.0);
+              canvas.drawCircle(
+                Offset(cx, cy),
+                26,
+                Paint()
+                  ..shader = RadialGradient(
+                    colors: [Colors.white, const Color(0xFFFF9100), const Color(0xFFFF3D00).withOpacity(0.0)],
+                  ).createShader(Rect.fromCircle(center: Offset(cx, cy), radius: 55)),
+              );
+
+              final planetSpecs = [
+                {'dist': 60.0, 'r': 6.5, 'speed': 2.2, 'color': const Color(0xFF00E5FF), 'rings': false},
+                {'dist': 105.0, 'r': 12.0, 'speed': 1.5, 'color': const Color(0xFFFF007F), 'rings': true},
+                {'dist': 155.0, 'r': 8.5, 'speed': 0.9, 'color': const Color(0xFF76FF03), 'rings': false},
+                {'dist': 200.0, 'r': 14.0, 'speed': 0.6, 'color': const Color(0xFFFFD600), 'rings': true},
+              ];
+
+              for (var p in planetSpecs) {
+                double dist = p['dist'] as double;
+                double r = p['r'] as double;
+                double speed = p['speed'] as double;
+                Color color = p['color'] as Color;
+                bool rings = p['rings'] as bool;
+
+                canvas.drawOval(
+                  Rect.fromCenter(center: Offset(cx, cy), width: dist * 2.3, height: dist * 0.88),
+                  Paint()
+                    ..color = Colors.white.withOpacity(0.07)
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 1.2,
+                );
+
+                double angle = (progress * speed * 2 * math.pi);
+                double px = cx + math.cos(angle) * (dist * 1.15);
+                double py = cy + math.sin(angle) * (dist * 0.44);
 
                 canvas.drawCircle(
-                  Offset(x, y),
-                  pSize,
-                  Paint()..color = palette.primary.withOpacity((math.sin(t * math.pi) * 0.7).clamp(0.15, 0.85)),
+                  Offset(px, py),
+                  r,
+                  Paint()..color = color,
                 );
-                canvas.drawCircle(
-                  Offset(x, y),
-                  pSize * 0.4,
-                  Paint()..color = Colors.white.withOpacity(0.9),
-                );
-              }
-            }
 
-            void _paintHexReactor(Canvas canvas, Size size) {
-              const double r = 36.0;
-              final double w = math.sqrt(3) * r;
-              final double h = 2 * r * 0.75;
-              int row = 0;
-
-              for (double y = -r; y < size.height + r * 2; y += h, row++) {
-                double xOffset = (row % 2 == 0) ? 0 : w / 2;
-                for (double x = -w + xOffset; x < size.width + w * 2; x += w) {
-                  double dist = math.sqrt(math.pow(x - size.width * 0.5, 2) + math.pow(y - size.height * 0.5, 2));
-                  double wave = math.sin((dist * 0.02) - (progress * 2 * math.pi));
-                  double alpha = ((wave + 1) * 0.35).clamp(0.08, 0.7);
-
-                  Path hex = Path();
-                  for (int i = 0; i < 6; i++) {
-                    double a = (60.0 * i - 30.0) * math.pi / 180.0;
-                    double px = x + (r * 0.85) * math.cos(a);
-                    double py = y + (r * 0.85) * math.sin(a);
-                    if (i == 0) hex.moveTo(px, py); else hex.lineTo(px, py);
-                  }
-                  hex.close();
-
-                  canvas.drawPath(
-                    hex,
+                if (rings) {
+                  canvas.drawOval(
+                    Rect.fromCenter(center: Offset(px, py), width: r * 3.4, height: r * 0.95),
                     Paint()
-                      ..color = palette.primary.withOpacity(alpha)
+                      ..color = color.withOpacity(0.65)
                       ..style = PaintingStyle.stroke
-                      ..strokeWidth = 1.4,
+                      ..strokeWidth = 2.2,
                   );
                 }
               }
             }
 
-            void _paintQuantumWaves(Canvas canvas, Size size) {
+            // 3. פרחי לוטוס זוהרים ב-3D עם עלי כותרת פועמים בשכבות
+            void _paint3DLotusFlowers(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.54;
+
+              for (int f = 0; f < 3; f++) {
+                double fx = cx + (f - 1) * (size.width * 0.34);
+                double fy = cy + math.sin(progress * 2 * math.pi + f) * 14;
+                double pulse = 1.0 + 0.14 * math.sin(progress * 4 * math.pi + f);
+
+                for (int layer = 1; layer <= 3; layer++) {
+                  int petals = 6 + layer * 2;
+                  double rad = (26.0 * layer) * pulse;
+                  for (int i = 0; i < petals; i++) {
+                    double angle = (2 * math.pi / petals) * i + (progress * 0.35 * math.pi);
+                    double px = fx + math.cos(angle) * rad;
+                    double py = fy + math.sin(angle) * (rad * 0.65);
+
+                    canvas.drawCircle(
+                      Offset(px, py),
+                      9.0 / layer,
+                      Paint()
+                        ..color = (f % 2 == 0 ? const Color(0xFFFF4081) : const Color(0xFF00E5FF)).withOpacity(0.70)
+                        ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 7),
+                    );
+                  }
+                }
+
+                canvas.drawCircle(
+                  Offset(fx, fy),
+                  10,
+                  Paint()..color = Colors.white,
+                );
+              }
+            }
+
+            // 4. שדה כוכבים עמוק (Space Warp 3D) עם היטלים פרספקטיביים
+            void _paint3DSpaceWarp(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.5;
+              const int count = 110;
+
+              for (int i = 0; i < count; i++) {
+                double t = ((i / count) + progress) % 1.0;
+                double depth = math.pow(t, 2.4).toDouble();
+                double angle = (i * 137.5) * math.pi / 180.0;
+                double dist = depth * (size.width * 0.72);
+
+                double x = cx + math.cos(angle) * dist;
+                double y = cy + math.sin(angle) * dist;
+                double starSize = (depth * 5.0).clamp(1.2, 5.5);
+
+                canvas.drawCircle(
+                  Offset(x, y),
+                  starSize,
+                  Paint()..color = Colors.white.withOpacity(depth.clamp(0.2, 1.0)),
+                );
+              }
+            }
+
+            // 5. זוהר קטבים וגלי אנרגיה מרובדים (3D Cosmic Aurora)
+            void _paint3DAuroraWaves(Canvas canvas, Size size) {
               for (int w = 0; w < 4; w++) {
                 final path = Path();
-                double phase = progress * 2 * math.pi + (w * 1.2);
-                double baseH = size.height * (0.35 + w * 0.12);
+                double phase = progress * 2 * math.pi + (w * 1.35);
+                double baseH = size.height * (0.34 + w * 0.13);
 
                 path.moveTo(0, baseH);
                 for (double x = 0; x <= size.width; x += 15) {
-                  double y = baseH + math.sin((x * 0.015) + phase) * (30.0 + w * 12);
+                  double y = baseH + math.sin((x * 0.014) + phase) * (38.0 + w * 15);
                   path.lineTo(x, y);
                 }
 
                 canvas.drawPath(
                   path,
                   Paint()
-                    ..color = (w % 2 == 0 ? palette.primary : palette.highlight).withOpacity(0.35)
+                    ..color = (w % 2 == 0 ? palette.primary : palette.highlight).withOpacity(0.42)
                     ..style = PaintingStyle.stroke
-                    ..strokeWidth = 2.4,
+                    ..strokeWidth = 3.2
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 9),
                 );
               }
             }
 
+            // 6. גחליליות זוהרות ונבגים מרחפים בנפח תלת-מימדי
+            void _paint3DFireflyForest(Canvas canvas, Size size) {
+              const int count = 50;
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.5;
+
+              for (int i = 0; i < count; i++) {
+                double t = (i / count);
+                double angle = t * 12 * math.pi + (progress * 2 * math.pi);
+                double rad = (size.width * 0.46) * math.sin(t * math.pi + progress * math.pi);
+                double x = cx + rad * math.cos(angle);
+                double y = cy + (t - 0.5) * size.height * 0.88 + math.sin(angle) * 38;
+                double pSize = (math.sin(t * math.pi) * 5.5 + 2.0).clamp(1.5, 7.5);
+
+                canvas.drawCircle(
+                  Offset(x, y),
+                  pSize,
+                  Paint()
+                    ..color = const Color(0xFF69F0AE).withOpacity((math.sin(t * math.pi) * 0.85).clamp(0.2, 0.95))
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
+                );
+                canvas.drawCircle(
+                  Offset(x, y),
+                  pSize * 0.35,
+                  Paint()..color = Colors.white,
+                );
+              }
+            }
+
+            // 7. מנהרת טרון תלת-מימדית (Infinite Tron Tunnel & Matrix Grid)
             void _paintTronTunnel(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.48;
 
-              for (int i = 0; i < 12; i++) {
-                double t = (i + progress) / 12.0;
-                double s = math.pow(t, 2.5) * (size.width * 0.95);
-                double alpha = (1.0 - t).clamp(0.1, 0.8);
+              for (int i = 0; i < 14; i++) {
+                double t = (i + progress) / 14.0;
+                double s = math.pow(t, 2.5) * (size.width * 0.98);
+                double alpha = (1.0 - t).clamp(0.1, 0.85);
 
                 canvas.drawRect(
-                  Rect.fromCenter(center: Offset(cx, cy), width: s * 1.2, height: s),
+                  Rect.fromCenter(center: Offset(cx, cy), width: s * 1.25, height: s),
                   Paint()
-                    ..color = palette.primary.withOpacity(alpha * 0.5)
+                    ..color = palette.primary.withOpacity(alpha * 0.55)
                     ..style = PaintingStyle.stroke
-                    ..strokeWidth = 1.6,
+                    ..strokeWidth = 1.8,
                 );
               }
               for (double a = 0; a < math.pi * 2; a += math.pi / 4) {
                 canvas.drawLine(
                   Offset(cx, cy),
                   Offset(cx + math.cos(a) * size.width, cy + math.sin(a) * size.height),
-                  Paint()..color = palette.highlight.withOpacity(0.25)..strokeWidth = 1.2,
+                  Paint()..color = palette.highlight.withOpacity(0.28)..strokeWidth = 1.3,
                 );
               }
             }
 
-            void _paintBioPlasma(Canvas canvas, Size size) {
+            // 8. חור שחור קוסמי ודיסקת ספיחה (3D Gravitational Singularity)
+            void _paint3DBlackHole(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
-              for (int i = 0; i < 3; i++) {
-                double rad = (size.width * (0.35 + i * 0.15));
-                double offsetA = progress * 2 * math.pi + i;
+              const int rings = 12;
+
+              for (int i = 0; i < rings; i++) {
+                double r = 40.0 + i * 16.0;
+                canvas.save();
+                canvas.translate(cx, cy);
+                canvas.rotate(0.35);
+
                 canvas.drawOval(
-                  Rect.fromCenter(
-                    center: Offset(cx + math.cos(offsetA) * 30, cy + math.sin(offsetA) * 35),
-                    width: rad * 1.3,
-                    height: rad * 0.9,
-                  ),
+                  Rect.fromCenter(center: Offset.zero, width: r * 2.4, height: r * 0.65),
                   Paint()
-                    ..color = (i == 0 ? palette.primary : palette.glow).withOpacity(0.18)
-                    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 28),
+                    ..color = (i % 2 == 0 ? const Color(0xFFFF5252) : const Color(0xFFFFD700))
+                        .withOpacity(((rings - i) / rings * 0.45).clamp(0.05, 0.6))
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 2.4
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+                );
+                canvas.restore();
+              }
+
+              canvas.drawCircle(
+                Offset(cx, cy),
+                32,
+                Paint()..color = Colors.black,
+              );
+              canvas.drawCircle(
+                Offset(cx, cy),
+                35,
+                Paint()
+                  ..color = const Color(0xFF00E5FF).withOpacity(0.8)
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2.5
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6),
+              );
+            }
+
+            // 9. ליבת כור תעשייתית עם גלגלי שיניים ומערכת בוכנות (3D Industrial Reactor)
+            void _paint3DIndustrialReactor(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.5;
+              const double r = 70.0;
+              final double rot = progress * 2 * math.pi;
+
+              canvas.save();
+              canvas.translate(cx, cy);
+
+              for (int g = 0; g < 16; g++) {
+                double a = rot + (g * math.pi / 8);
+                double tx = math.cos(a) * (r + 14);
+                double ty = math.sin(a) * (r + 14);
+                canvas.drawCircle(
+                  Offset(tx, ty),
+                  5,
+                  Paint()..color = palette.primary.withOpacity(0.7),
+                );
+              }
+
+              canvas.drawCircle(
+                Offset.zero,
+                r,
+                Paint()
+                  ..color = palette.chassis
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 8,
+              );
+
+              for (int g = 0; g < 12; g++) {
+                double a = -rot * 1.5 + (g * math.pi / 6);
+                double tx = math.cos(a) * (r * 0.55);
+                double ty = math.sin(a) * (r * 0.55);
+                canvas.drawRect(
+                  Rect.fromCenter(center: Offset(tx, ty), width: 8, height: 8),
+                  Paint()..color = palette.highlight.withOpacity(0.85),
+                );
+              }
+
+              for (int p = 0; p < 4; p++) {
+                double a = (p * math.pi / 2);
+                double stroke = 25.0 + math.sin(rot * 2 + p) * 15;
+                canvas.drawLine(
+                  Offset(math.cos(a) * r, math.sin(a) * r),
+                  Offset(math.cos(a) * (r + stroke), math.sin(a) * (r + stroke)),
+                  Paint()
+                    ..color = palette.primary
+                    ..strokeWidth = 6
+                    ..strokeCap = StrokeCap.round,
+                );
+              }
+
+              canvas.restore();
+            }
+
+            // 10. מארג גבישים קוונטי תלת-מימדי (3D Sacred Crystal Lattice)
+            void _paint3DCrystalLattice(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.5;
+              const int nodes = 8;
+              const double rad = 110.0;
+              final double rotY = progress * 2 * math.pi;
+
+              List<Offset> projected = [];
+              for (int i = 0; i < nodes; i++) {
+                double u = (i * math.pi * 2 / nodes) + rotY;
+                double v = ((i % 2 == 0 ? 1 : -1) * 0.6) + math.sin(rotY * 2) * 0.2;
+                double x = math.cos(u) * rad;
+                double y = v * rad;
+                double z = math.sin(u) * rad;
+                double scale = 300.0 / (300.0 + z);
+                projected.add(Offset(cx + x * scale, cy + y * scale));
+              }
+
+              final lineP = Paint()
+                ..color = const Color(0xFFB388FF).withOpacity(0.4)
+                ..strokeWidth = 1.4;
+
+              for (int i = 0; i < projected.length; i++) {
+                for (int j = i + 1; j < projected.length; j++) {
+                  canvas.drawLine(projected[i], projected[j], lineP);
+                }
+                canvas.drawCircle(
+                  projected[i],
+                  5,
+                  Paint()
+                    ..color = const Color(0xFFE040FB)
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4),
+                );
+              }
+            }
+
+            // 11. סליל DNA כפול זוהר בתלת-מימד (3D Bioluminescent DNA Helix)
+            void _paint3DDNAHelix(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              const int steps = 28;
+              final double startY = size.height * 0.12;
+              final double stepH = size.height * 0.76 / steps;
+
+              for (int i = 0; i < steps; i++) {
+                double t = (i / steps) * 4 * math.pi + (progress * 2 * math.pi);
+                double y = startY + i * stepH;
+                double span = (size.width * 0.35) * math.sin(t);
+                double z = math.cos(t);
+                double pSize = (z > 0 ? 5.5 : 3.0);
+                double alpha = (z > 0 ? 0.9 : 0.35);
+
+                Offset p1 = Offset(cx + span, y);
+                Offset p2 = Offset(cx - span, y);
+
+                canvas.drawLine(
+                  p1,
+                  p2,
+                  Paint()
+                    ..color = Colors.white.withOpacity(alpha * 0.35)
+                    ..strokeWidth = 1.6,
+                );
+
+                canvas.drawCircle(
+                  p1,
+                  pSize,
+                  Paint()
+                    ..color = const Color(0xFF00E5FF).withOpacity(alpha)
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 3),
+                );
+
+                canvas.drawCircle(
+                  p2,
+                  pSize,
+                  Paint()
+                    ..color = const Color(0xFFFF007F).withOpacity(alpha)
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 3),
+                );
+              }
+            }
+
+            // 12. פיצוץ סופרנובה תלת-מימדי עם גלי הלם (3D Volumetric Supernova)
+            void _paint3DSupernova(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.5;
+              const int rays = 24;
+
+              for (int r = 0; r < 4; r++) {
+                double shock = ((progress * 1.5 + (r * 0.25)) % 1.0);
+                double rad = shock * (size.width * 0.65);
+                canvas.drawCircle(
+                  Offset(cx, cy),
+                  rad,
+                  Paint()
+                    ..color = const Color(0xFFFF3D00).withOpacity((1.0 - shock) * 0.55)
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 3.5 * (1.0 - shock)
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8),
+                );
+              }
+
+              for (int i = 0; i < rays; i++) {
+                double a = (i * math.pi * 2 / rays) + (progress * math.pi);
+                double len = (size.width * 0.42) * (0.6 + 0.4 * math.sin(i * 3 + progress * 8));
+                canvas.drawLine(
+                  Offset(cx, cy),
+                  Offset(cx + math.cos(a) * len, cy + math.sin(a) * len),
+                  Paint()
+                    ..color = const Color(0xFFFFD600).withOpacity(0.35)
+                    ..strokeWidth = 2.0,
+                );
+              }
+
+              canvas.drawCircle(
+                Offset(cx, cy),
+                28,
+                Paint()
+                  ..color = Colors.white
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 14),
+              );
+            }
+
+            // 13. גשם קוד סייבר מטריקס תלת-מימדי (3D Perspective Matrix Rain)
+            void _paint3DMatrixRain(Canvas canvas, Size size) {
+              const int streams = 24;
+              for (int s = 0; s < streams; s++) {
+                double sx = (s / streams) * size.width;
+                double speed = 1.0 + (s % 4) * 0.4;
+                double yProgress = ((progress * speed * 2.5) + (s * 0.17)) % 1.0;
+                double headY = yProgress * (size.height + 150) - 80;
+                double depth = 0.5 + (s % 3) * 0.25;
+
+                canvas.drawCircle(
+                  Offset(sx, headY),
+                  3.5 * depth,
+                  Paint()
+                    ..color = Colors.white
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4),
+                );
+
+                canvas.drawLine(
+                  Offset(sx, headY),
+                  Offset(sx, headY - 120 * depth),
+                  Paint()
+                    ..shader = LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [const Color(0xFF00FF66), Colors.transparent],
+                    ).createShader(Rect.fromLTWH(sx - 2, headY - 120 * depth, 4, 120 * depth))
+                    ..strokeWidth = 2.2 * depth,
+                );
+              }
+            }
+
+            // 14. סערת ערפילית בין-כוכבית עם הבזקי אנרגיה (3D Interstellar Nebula)
+            void _paint3DNebulaStorm(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.5;
+
+              for (int i = 0; i < 4; i++) {
+                double phase = progress * 2 * math.pi + (i * 1.5);
+                double rad = (size.width * (0.32 + i * 0.12));
+                Offset c = Offset(cx + math.sin(phase) * 35, cy + math.cos(phase * 1.2) * 45);
+
+                canvas.drawOval(
+                  Rect.fromCenter(center: c, width: rad * 1.4, height: rad * 0.9),
+                  Paint()
+                    ..color = (i % 2 == 0 ? const Color(0xFF7C4DFF) : const Color(0xFF00B0FF)).withOpacity(0.18)
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 36),
+                );
+              }
+
+              if ((progress * 100).toInt() % 14 == 0) {
+                canvas.drawCircle(
+                  Offset(cx + math.sin(progress * 12) * 120, cy + math.cos(progress * 8) * 100),
+                  18,
+                  Paint()
+                    ..color = Colors.white.withOpacity(0.85)
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 16),
                 );
               }
             }
@@ -1625,7 +2045,6 @@ jobs:
             @override
             bool shouldRepaint(covariant Multi3DGraphicsPainter oldDelegate) => true;
           }
-
           class Interactive3DGlassBackground extends StatefulWidget {
             final Widget child;
             final ThemePalette palette;
@@ -1765,7 +2184,7 @@ jobs:
                 body: Interactive3DGlassBackground(
                   palette: palette,
                   isHighContrast: false,
-                  style: 'mesh',
+                  style: 'butterflies',
                   child: Center(
                     child: AnimatedBuilder(
                       animation: _animCtrl,
@@ -2694,42 +3113,64 @@ jobs:
               );
             }
 
-            // Help Guide Modal Dialog
+            // Help Guide Modal Dialog (Full RTL Support & Anti-Overflow Protection)
             void _openHelpGuideDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final palette = app.currentPalette;
+              final bool isRtl = app.currentLang == 'he' || app.currentLang == 'ar';
 
               showDialog(
                 context: context,
-                builder: (ctx) => AlertDialog(
-                  backgroundColor: palette.surface,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                    side: BorderSide(color: palette.primary, width: 2.8),
-                  ),
-                  title: Row(
-                    children: [
-                      Icon(Icons.help_center_rounded, color: palette.highlight, size: 28),
-                      const SizedBox(width: 8),
-                      textChannel3D(t['help_title']!, fontSize: 18, color: palette.highlight),
+                builder: (ctx) => Directionality(
+                  textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                  child: AlertDialog(
+                    backgroundColor: palette.surface,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      side: BorderSide(color: palette.primary, width: 2.8),
+                    ),
+                    title: Row(
+                      children: [
+                        Icon(Icons.help_center_rounded, color: palette.highlight, size: 28),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: isRtl ? Alignment.centerRight : Alignment.centerLeft,
+                            child: textChannel3D(
+                              t['help_title']!,
+                              fontSize: 18,
+                              color: palette.highlight,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    content: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Text(
+                        t['help_text']!,
+                        textAlign: isRtl ? TextAlign.right : TextAlign.left,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          height: 1.6,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    actionsAlignment: isRtl ? MainAxisAlignment.start : MainAxisAlignment.end,
+                    actions: [
+                      Pneumatic3DButton(
+                        height: 42,
+                        width: 110,
+                        palette: palette,
+                        onTap: () => Navigator.pop(ctx),
+                        child: Text(t['close']!, style: TextStyle(color: palette.highlight, fontWeight: FontWeight.w900)),
+                      )
                     ],
                   ),
-                  content: SingleChildScrollView(
-                    child: Text(
-                      t['help_text']!,
-                      style: const TextStyle(color: Colors.white, fontSize: 14, height: 1.5, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  actions: [
-                    Pneumatic3DButton(
-                      height: 42,
-                      width: 100,
-                      palette: palette,
-                      onTap: () => Navigator.pop(ctx),
-                      child: Text(t['close']!, style: TextStyle(color: palette.highlight, fontWeight: FontWeight.w900)),
-                    )
-                  ],
                 ),
               );
             }
@@ -2750,12 +3191,20 @@ jobs:
               ];
 
               final bgStyles = [
-                {'key': 'mesh', 'label': t['bg_mesh']!},
-                {'key': 'particles', 'label': t['bg_particles']!},
-                {'key': 'reactor', 'label': t['bg_reactor']!},
-                {'key': 'wave', 'label': t['bg_wave']!},
-                {'key': 'tunnel', 'label': t['bg_tunnel']!},
-                {'key': 'plasma', 'label': t['bg_plasma']!},
+                {'key': 'butterflies', 'label': t['bg_butterflies'] ?? 'פרפרים זרחניים 3D'},
+                {'key': 'planets', 'label': t['bg_planets'] ?? 'כוכבי לכת ומסלולים 3D'},
+                {'key': 'flowers', 'label': t['bg_flowers'] ?? 'פרחי לוטוס זוהרים 3D'},
+                {'key': 'space', 'label': t['bg_space'] ?? 'חלל ושדה כוכבים 3D'},
+                {'key': 'aurora', 'label': t['bg_aurora'] ?? 'זוהר קטבים ופלזמה 3D'},
+                {'key': 'fireflies', 'label': t['bg_fireflies'] ?? 'גחליליות זוהרות 3D'},
+                {'key': 'tunnel', 'label': t['bg_tunnel'] ?? 'מנהרת טרון תלת-מימדית'},
+                {'key': 'blackhole', 'label': t['bg_blackhole'] ?? 'חור שחור קוסמי 3D'},
+                {'key': 'reactor', 'label': t['bg_reactor'] ?? 'כור תעשייתי ובוכנות'},
+                {'key': 'crystal', 'label': t['bg_crystal'] ?? 'מארג גבישים קוונטי'},
+                {'key': 'dna', 'label': t['bg_dna'] ?? 'סליל DNA זוהר 3D'},
+                {'key': 'supernova', 'label': t['bg_supernova'] ?? 'סופרנובה וגלי הלם'},
+                {'key': 'matrix', 'label': t['bg_matrix'] ?? 'מטריקס סייבר 3D'},
+                {'key': 'nebula', 'label': t['bg_nebula'] ?? 'ערפילית סערה קוסמית'},
               ];
 
               showModalBottomSheet(
@@ -3147,7 +3596,7 @@ jobs:
                                                       children: [
                                                         const Icon(Icons.map, size: 16, color: Color(0xFF34A853)),
                                                         const SizedBox(width: 4),
-                                                        Text(t['nav_google']!, style: const TextStyle(fontSize: 12, color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
+                                                        Text(t['nav_google']!, style: const TextStyle(color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
                                                       ],
                                                     ),
                                                   ),
@@ -3216,3 +3665,4 @@ jobs:
         with:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
+
