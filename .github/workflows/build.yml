@@ -112,7 +112,7 @@ jobs:
         run: |
           cat << 'EOF' > pubspec.yaml
           name: pill_reminder
-          description: Heavy SMR 3D Futuristic Medical Mech Console
+          description: Heavy Sci-Fi Skieu Hardware Medical Terminal
           publish_to: 'none'
           version: 1.0.0+1
           environment:
@@ -304,9 +304,9 @@ jobs:
               'btn_taken': 'נלקח כעת',
               'btn_snooze': 'דחה ב-10 דק׳',
               'btn_skip': 'בטל הפעם',
-              'bg_carbon': 'סיבי פחמן (Carbon Fiber)',
-              'bg_grid': 'רשת סייבר 3D עמוקה',
-              'bg_hex': 'מטריצת משושים צבאית',
+              'bg_carbon': 'סיבי פחמן תלת-ממדיים',
+              'bg_grid': 'רשת TRON אינסופית 3D',
+              'bg_hex': 'כוורת כור שקועה',
               'bg_plasma': 'גלי פלזמה הולוגרפיים',
               'tts_alert': 'תזכורת. הגיע הזמן ליטול את התרופה: {pills}',
             },
@@ -352,13 +352,13 @@ jobs:
               'themes_title': '3D Hardware Theme Engine',
               'bg_style': '3D Machine Surface',
               'high_contrast': 'High Contrast Mode',
-              'alert_popup_title': '⚠️ Medicine Reminder Alert ⚠️',
+              'alert_popup_title': '⚠️ Medicine Reminder Alert ⚠️️',
               'btn_taken': 'Taken Now',
               'btn_snooze': 'Snooze 10m',
               'btn_skip': 'Dismiss',
-              'bg_carbon': 'Carbon Fiber Weave',
-              'bg_grid': 'Deep Perspective 3D Grid',
-              'bg_hex': 'Tactical Hex Armor',
+              'bg_carbon': '3D Carbon Fiber Weave',
+              'bg_grid': 'Infinite Tron 3D Grid',
+              'bg_hex': 'Deep Reactor Hex Core',
               'bg_plasma': 'Holographic Plasma Waves',
               'tts_alert': 'Reminder. Time to take medicine: {pills}',
             },
@@ -385,7 +385,7 @@ jobs:
               'night': 'Ночь (22:00)',
               'doctor_type': 'Тип визита',
               'doc_doctor': 'Врач',
-              'doc_nurse': 'Меדсестра',
+              'doc_nurse': 'Медсестра',
               'doc_test': 'Анализ',
               'doc_treatment': 'Процедура',
               'doctor_name': 'Имя специалиста',
@@ -408,9 +408,9 @@ jobs:
               'btn_taken': 'Принято',
               'btn_snooze': 'Отложить на 10 мин',
               'btn_skip': 'Пропустить',
-              'bg_carbon': 'Карбоновое волокно',
-              'bg_grid': '3D Сетка глубины',
-              'bg_hex': 'Тактическая броня Hex',
+              'bg_carbon': '3D Карбоновое волокно',
+              'bg_grid': 'Бесконечная сетка Tron',
+              'bg_hex': 'Глубокий реактор Hex',
               'bg_plasma': 'Голографическая плазма',
               'tts_alert': 'Внимание. Пришло время принять: {pills}',
             },
@@ -460,9 +460,9 @@ jobs:
               'btn_taken': 'Luat acum',
               'btn_snooze': 'Amână 10m',
               'btn_skip': 'Omite',
-              'bg_carbon': 'Fibră de carbon',
-              'bg_grid': 'Grilă 3D de adâncime',
-              'bg_hex': 'Blindaj hexagonal',
+              'bg_carbon': 'Fibră de carbon 3D',
+              'bg_grid': 'Grilă Tron infinită',
+              'bg_hex': 'Reactor hexagonal adânc',
               'bg_plasma': 'Valuri de plasmă',
               'tts_alert': 'Atenție. Luați medicamentul: {pills}',
             },
@@ -505,16 +505,16 @@ jobs:
               'voice_alerts': 'التنبيهات الصوتية (TTS)',
               'alert_sound': 'نغمة التنبيه',
               'sound_vol': 'مستوى الصوت',
-              'themes_title': 'מחרק המראה 3D',
-              'bg_style': 'نسيج السطח المجسم',
+              'themes_title': 'محرك المظهر 3D',
+              'bg_style': 'نسيج السطح المجسم',
               'high_contrast': 'تباين فائق',
               'alert_popup_title': '⚠️ تنبيه موعد الدواء ⚠️',
               'btn_taken': 'تم الأخذ',
               'btn_snooze': 'تأجيل 10 د',
               'btn_skip': 'تخطي',
-              'bg_carbon': 'ألياف الكربون',
-              'bg_grid': 'شبكة سايبر 3D عميقة',
-              'bg_hex': 'דרוע سداسية عسكرية',
+              'bg_carbon': 'ألياف الكربون 3D',
+              'bg_grid': 'شبكة ترون اللانهائية',
+              'bg_hex': 'مفاعل سداسي عميق',
               'bg_plasma': 'أمواج بلازما',
               'tts_alert': 'تنبيه. حان وقت تناول: {pills}',
             },
@@ -564,9 +564,9 @@ jobs:
               'btn_taken': 'Eingenommen',
               'btn_snooze': '10 Min Pause',
               'btn_skip': 'Überspringen',
-              'bg_carbon': 'Kohlefaser-Geflecht',
-              'bg_grid': 'Tiefes 3D Cyber-Raster',
-              'bg_hex': 'Taktische Wabenpanzerung',
+              'bg_carbon': '3D Kohlefaser-Geflecht',
+              'bg_grid': 'Unendliches Tron-Gitter',
+              'bg_hex': 'Tiefer Waben-Reaktor',
               'bg_plasma': 'Plasmawellen',
               'tts_alert': 'Achtung. Zeit für: {pills}',
             }
@@ -589,6 +589,7 @@ jobs:
               'accent': Color(0xFF00F0FF),
               'highlight': Color(0xFF70F8FF),
               'bevel': Color(0xFF1E3A6D),
+              'chassis': Color(0xFF060B14),
             },
             'emerald': {
               'name': 'Matrix Green Core',
@@ -597,6 +598,7 @@ jobs:
               'accent': Color(0xFF00FF88),
               'highlight': Color(0xFF80FFC4),
               'bevel': Color(0xFF0E5C34),
+              'chassis': Color(0xFF030D07),
             },
             'crimson': {
               'name': 'Viper Heavy Red',
@@ -605,6 +607,7 @@ jobs:
               'accent': Color(0xFFFF0055),
               'highlight': Color(0xFFFF709B),
               'bevel': Color(0xFF6B122A),
+              'chassis': Color(0xFF0D0206),
             },
             'purple': {
               'name': 'Cosmic Heavy Purple',
@@ -613,6 +616,7 @@ jobs:
               'accent': Color(0xFFA855F7),
               'highlight': Color(0xFFD8B4FE),
               'bevel': Color(0xFF501F9E),
+              'chassis': Color(0xFF080214),
             },
             'solar': {
               'name': 'Solar Mech Amber',
@@ -621,14 +625,16 @@ jobs:
               'accent': Color(0xFFFFB703),
               'highlight': Color(0xFFFFE082),
               'bevel': Color(0xFF73490D),
+              'chassis': Color(0xFF0C0701),
             },
             'stealth': {
-              'name': 'Titanium Brushed Alloy',
+              'name': 'Titanium Alloy Mech',
               'bg': Color(0xFF0E1116),
               'surface': Color(0xFF202632),
               'accent': Color(0xFF94A3B8),
               'highlight': Color(0xFFFFFFFF),
               'bevel': Color(0xFF3D4759),
+              'chassis': Color(0xFF090B0E),
             },
           };
 
@@ -674,7 +680,7 @@ jobs:
             String _soundType = 'electric';
             double _soundVolume = 1.0;
             String _themeKey = 'cyber';
-            String _bgEffect = 'carbon';
+            String _bgEffect = 'grid';
             bool _firstRun = true;
             bool _initialized = false;
             Key _appKey = UniqueKey();
@@ -704,7 +710,7 @@ jobs:
                 _soundType = prefs.getString('c_sound') ?? 'electric';
                 _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
                 _themeKey = prefs.getString('c_theme') ?? 'cyber';
-                _bgEffect = prefs.getString('c_bgeffect') ?? 'carbon';
+                _bgEffect = prefs.getString('c_bgeffect') ?? 'grid';
                 _firstRun = prefs.getBool('c_first_run') ?? true;
                 _initialized = true;
               });
@@ -782,7 +788,6 @@ jobs:
 
               final bool isRtl = _lang == 'he' || _lang == 'ar';
               final palette = themePalettes[_themeKey] ?? themePalettes['cyber']!;
-              final Color bg = _highContrast ? Colors.black : palette['bg']!;
               final Color primary = _highContrast ? const Color(0xFFFFE500) : palette['accent']!;
 
               return KeyedSubtree(
@@ -792,7 +797,7 @@ jobs:
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
                     useMaterial3: true,
-                    scaffoldBackgroundColor: bg,
+                    scaffoldBackgroundColor: Colors.transparent,
                     colorSchemeSeed: primary,
                     fontFamily: 'sans-serif-medium',
                   ),
@@ -805,7 +810,8 @@ jobs:
             }
           }
 
-          class CyberTactileButton extends StatefulWidget {
+          // True Multi-Layer Physical 3D Push Button
+          class Hardware3DButton extends StatefulWidget {
             final Widget child;
             final VoidCallback onTap;
             final double height;
@@ -814,22 +820,22 @@ jobs:
             final double radius;
             final bool isPushed;
 
-            const CyberTactileButton({
+            const Hardware3DButton({
               super.key,
               required this.child,
               required this.onTap,
-              this.height = 56,
+              this.height = 58,
               this.width,
               this.glowColor,
-              this.radius = 20,
+              this.radius = 16,
               this.isPushed = false,
             });
 
             @override
-            State<CyberTactileButton> createState() => _CyberTactileButtonState();
+            State<Hardware3DButton> createState() => _Hardware3DButtonState();
           }
 
-          class _CyberTactileButtonState extends State<CyberTactileButton> {
+          class _Hardware3DButtonState extends State<Hardware3DButton> {
             bool _down = false;
 
             @override
@@ -837,12 +843,16 @@ jobs:
               final app = CyberPillMasterApp.of(context);
               final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
               final Color accent = widget.glowColor ?? (app.highContrast ? const Color(0xFFFFE500) : palette['accent']!);
+              final Color chassis = palette['chassis'] ?? const Color(0xFF060B14);
+              final Color surface = palette['surface']!;
               final Color bevel = palette['bevel'] ?? const Color(0xFF1E3A6D);
               final bool pressed = _down || widget.isPushed;
 
+              const double extrusion = 6.0;
+
               return GestureDetector(
                 onTapDown: (_) {
-                  HapticFeedback.mediumImpact();
+                  HapticFeedback.heavyImpact();
                   setState(() => _down = true);
                 },
                 onTapUp: (_) {
@@ -850,48 +860,188 @@ jobs:
                   widget.onTap();
                 },
                 onTapCancel: () => setState(() => _down = false),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 70),
+                child: Container(
                   height: widget.height,
                   width: widget.width,
-                  transform: pressed ? Matrix4.translationValues(0, 5.0, 0) : Matrix4.identity(),
+                  padding: const EdgeInsets.all(3.0),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(widget.radius),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: pressed
-                          ? [
-                              palette['surface']!.withOpacity(0.98),
-                              const Color(0xFF020408),
-                            ]
-                          : [
-                              palette['surface']!.withOpacity(0.95),
-                              bevel.withOpacity(0.75),
-                              palette['bg']!.withOpacity(0.92),
-                            ],
-                    ),
-                    border: Border.all(
-                      color: pressed ? accent : accent.withOpacity(0.85),
-                      width: pressed ? 3.2 : 2.4,
-                    ),
-                    boxShadow: pressed
-                        ? [
-                            BoxShadow(color: accent.withOpacity(0.55), blurRadius: 10, spreadRadius: 1),
-                            const BoxShadow(color: Colors.black, offset: Offset(2, 2), blurRadius: 4),
-                          ]
-                        : [
-                            BoxShadow(color: Colors.black.withOpacity(0.95), offset: const Offset(0, 12), blurRadius: 18),
-                            BoxShadow(color: accent.withOpacity(0.5), offset: const Offset(0, -2), blurRadius: 8),
-                            BoxShadow(color: accent.withOpacity(0.28), blurRadius: 16, spreadRadius: 1.5),
-                          ],
+                    color: chassis,
+                    borderRadius: BorderRadius.circular(widget.radius + 3),
+                    border: Border.all(color: Colors.black, width: 2.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.95),
+                        offset: const Offset(0, 10),
+                        blurRadius: 18,
+                      ),
+                      BoxShadow(
+                        color: accent.withOpacity(0.25),
+                        blurRadius: 12,
+                        spreadRadius: 1,
+                      )
+                    ],
                   ),
-                  child: Center(child: widget.child),
+                  child: Stack(
+                    children: [
+                      // Extrusion Under-Wall (Creates the physical side height)
+                      Positioned(
+                        left: 0, right: 0, bottom: 0,
+                        height: widget.height - 6,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF030509),
+                            borderRadius: BorderRadius.circular(widget.radius),
+                            border: Border.all(color: bevel, width: 1.5),
+                          ),
+                        ),
+                      ),
+                      // Push Cap (Moves vertically on press)
+                      AnimatedPositioned(
+                        duration: const Duration(milliseconds: 60),
+                        curve: Curves.easeOutCubic,
+                        top: pressed ? extrusion : 0.0,
+                        left: 0, right: 0,
+                        height: widget.height - 6 - (pressed ? 0 : extrusion),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(widget.radius),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: pressed
+                                  ? [chassis, surface.withOpacity(0.8)]
+                                  : [
+                                      palette['highlight']!.withOpacity(0.35),
+                                      surface,
+                                      chassis.withOpacity(0.95),
+                                    ],
+                            ),
+                            border: Border.all(
+                              color: pressed ? accent : accent.withOpacity(0.9),
+                              width: 2.2,
+                            ),
+                            boxShadow: pressed
+                                ? [
+                                    BoxShadow(color: Colors.black.withOpacity(0.9), offset: const Offset(0, 4), blurRadius: 4, spreadRadius: 1),
+                                    BoxShadow(color: accent.withOpacity(0.4), blurRadius: 10),
+                                  ]
+                                : [
+                                    BoxShadow(color: accent.withOpacity(0.55), offset: const Offset(0, -2), blurRadius: 6),
+                                    BoxShadow(color: Colors.black.withOpacity(0.7), offset: const Offset(0, 4), blurRadius: 4),
+                                  ],
+                          ),
+                          child: Stack(
+                            children: [
+                              // Glass/Specular Top Glare Arc
+                              Positioned(
+                                top: 0, left: 10, right: 10, height: 1.8,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.75),
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                ),
+                              ),
+                              Center(child: widget.child),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }
           }
 
+          // 3D Metallic Mech Module Card
+          class MechModuleCard extends StatelessWidget {
+            final Widget child;
+            final bool isPressed;
+            final Color? accentColor;
+
+            const MechModuleCard({
+              super.key,
+              required this.child,
+              this.isPressed = false,
+              this.accentColor,
+            });
+
+            @override
+            Widget build(BuildContext context) {
+              final app = CyberPillMasterApp.of(context);
+              final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
+              final Color glow = accentColor ?? (app.highContrast ? const Color(0xFFFFE500) : palette['accent']!);
+              final Color surface = palette['surface']!;
+              final Color chassis = palette['chassis'] ?? const Color(0xFF060B14);
+              final Color bevel = palette['bevel'] ?? const Color(0xFF1E3A6D);
+
+              return Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: chassis,
+                  borderRadius: BorderRadius.circular(22),
+                  border: Border.all(color: Colors.black, width: 3.0),
+                  boxShadow: [
+                    BoxShadow(color: Colors.black.withOpacity(0.95), offset: const Offset(0, 14), blurRadius: 28),
+                    BoxShadow(color: glow.withOpacity(0.25), blurRadius: 18, spreadRadius: 1),
+                  ],
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        surface.withOpacity(0.95),
+                        bevel.withOpacity(0.7),
+                        chassis.withOpacity(0.98),
+                      ],
+                    ),
+                    border: Border.all(
+                      color: isPressed ? glow : glow.withOpacity(0.75),
+                      width: 2.2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(color: glow.withOpacity(0.35), offset: const Offset(-2, -2), blurRadius: 10),
+                      BoxShadow(color: Colors.black.withOpacity(0.85), offset: const Offset(4, 6), blurRadius: 12),
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      // Mechanical Corner Rivets / Screws
+                      Positioned(top: 0, left: 0, child: _screw()),
+                      Positioned(top: 0, right: 0, child: _screw()),
+                      Positioned(bottom: 0, left: 0, child: _screw()),
+                      Positioned(bottom: 0, right: 0, child: _screw()),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: child,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            Widget _screw() {
+              return Container(
+                width: 7, height: 7,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFF4A5568),
+                  boxShadow: [
+                    BoxShadow(color: Colors.black, offset: Offset(1, 1), blurRadius: 1),
+                  ],
+                ),
+              );
+            }
+          }
+
+          // Embossed 3D Sculpted Text Effect
           Widget textEmbossed(String text, {required double fontSize, required Color color, Color? glow}) {
             return Text(
               text,
@@ -901,69 +1051,14 @@ jobs:
                 letterSpacing: 1.2,
                 color: color,
                 shadows: [
-                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(2.2, 2.8), blurRadius: 3),
-                  Shadow(color: glow ?? color.withOpacity(0.65), offset: const Offset(-1.0, -1.0), blurRadius: 4),
+                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(2.2, 2.8), blurRadius: 4),
+                  Shadow(color: glow ?? color.withOpacity(0.65), offset: const Offset(-1.2, -1.2), blurRadius: 6),
                 ],
               ),
             );
           }
 
-          BoxDecoration cyber3D({
-            required BuildContext context,
-            double radius = 22,
-            bool isPressed = false,
-            bool highContrast = false,
-            Color? customGlow,
-            bool isMetallic = false,
-          }) {
-            if (highContrast) {
-              return BoxDecoration(
-                color: isPressed ? const Color(0xFF242200) : Colors.black,
-                borderRadius: BorderRadius.circular(radius),
-                border: Border.all(color: const Color(0xFFFFE500), width: 3.5),
-                boxShadow: const [
-                  BoxShadow(color: Color(0xFFFFE500), blurRadius: 14, spreadRadius: 2)
-                ],
-              );
-            }
-
-            final app = CyberPillMasterApp.of(context);
-            final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
-            final Color surface = palette['surface']!;
-            final Color bg = palette['bg']!;
-            final Color glow = customGlow ?? palette['accent']!;
-            final Color bevel = palette['bevel'] ?? const Color(0xFF1E3A6D);
-
-            if (isPressed) {
-              return BoxDecoration(
-                color: surface.withOpacity(0.95),
-                borderRadius: BorderRadius.circular(radius),
-                border: Border.all(color: glow.withOpacity(0.9), width: 2.4),
-                boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.95), offset: const Offset(5, 5), blurRadius: 12, spreadRadius: -2),
-                  BoxShadow(color: glow.withOpacity(0.4), offset: const Offset(-2, -2), blurRadius: 8),
-                ],
-              );
-            }
-
-            return BoxDecoration(
-              gradient: LinearGradient(
-                colors: isMetallic
-                    ? [surface.withOpacity(0.98), bevel.withOpacity(0.8), bg.withOpacity(0.95)]
-                    : [surface.withOpacity(0.94), bevel.withOpacity(0.5), bg.withOpacity(0.9)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(radius),
-              border: Border.all(color: glow.withOpacity(0.75), width: 2.0),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.95), offset: const Offset(0, 12), blurRadius: 24),
-                BoxShadow(color: glow.withOpacity(0.4), offset: const Offset(-3, -3), blurRadius: 14),
-                BoxShadow(color: glow.withOpacity(0.18), blurRadius: 18, spreadRadius: 2),
-              ],
-            );
-          }
-
+          // True 3D Multi-Layer Canvas Shader
           class DynamicFuturisticBackground extends StatefulWidget {
             final Widget child;
             final Color accentColor;
@@ -999,7 +1094,9 @@ jobs:
 
             @override
             Widget build(BuildContext context) {
-              if (widget.isHighContrast) return widget.child;
+              if (widget.isHighContrast) {
+                return Container(color: Colors.black, child: widget.child);
+              }
 
               return AnimatedBuilder(
                 animation: _anim,
@@ -1026,25 +1123,36 @@ jobs:
 
             @override
             void paint(Canvas canvas, Size size) {
-              if (effect == 'carbon') {
-                final paintLight = Paint()..color = Colors.white.withOpacity(0.025)..style = PaintingStyle.fill;
-                final paintDark = Paint()..color = Colors.black.withOpacity(0.45)..style = PaintingStyle.fill;
-                final double cell = 14.0;
+              // Dark Void Base
+              final basePaint = Paint()..color = const Color(0xFF030712);
+              canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), basePaint);
 
+              if (effect == 'carbon') {
+                // 3D Woven Carbon Fiber Mesh
+                final double cell = 18.0;
                 for (double y = 0; y < size.height; y += cell) {
                   for (double x = 0; x < size.width; x += cell) {
-                    bool isEven = ((x / cell).toInt() + (y / cell).toInt()) % 2 == 0;
-                    canvas.drawRect(Rect.fromLTWH(x, y, cell, cell), isEven ? paintLight : paintDark);
+                    bool alt = ((x / cell).toInt() + (y / cell).toInt()) % 2 == 0;
+                    final p = Paint()
+                      ..shader = LinearGradient(
+                        colors: alt
+                            ? [const Color(0xFF1E2530), const Color(0xFF080C12)]
+                            : [const Color(0xFF0A0F17), const Color(0xFF18202C)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(Rect.fromLTWH(x, y, cell, cell));
+                    canvas.drawRect(Rect.fromLTWH(x, y, cell, cell), p);
                   }
                 }
               } else if (effect == 'hex') {
-                final double r = 32.0;
+                // Sunken Reactor Core Hex Matrix with pulse glow
+                final double r = 36.0;
                 final double w = math.sqrt(3) * r;
                 final double h = 2 * r * 0.75;
-                final paint = Paint()
-                  ..color = color.withOpacity(0.06)
+                final strokePaint = Paint()
+                  ..color = color.withOpacity(0.18)
                   ..style = PaintingStyle.stroke
-                  ..strokeWidth = 1.2;
+                  ..strokeWidth = 2.0;
 
                 int row = 0;
                 for (double y = -r; y < size.height + r; y += h, row++) {
@@ -1058,19 +1166,20 @@ jobs:
                       if (i == 0) path.moveTo(px, py); else path.lineTo(px, py);
                     }
                     path.close();
-                    canvas.drawPath(path, paint);
+                    canvas.drawPath(path, strokePaint);
                   }
                 }
               } else if (effect == 'plasma') {
+                // Holographic Multi-layer Plasma Glow
                 for (int layer = 1; layer <= 3; layer++) {
                   final paint = Paint()
-                    ..color = color.withOpacity(0.05 * layer)
+                    ..color = color.withOpacity(0.08 * layer)
                     ..style = PaintingStyle.fill;
-                  final path = Path()..moveTo(0, size.height * 0.65);
-                  for (double x = 0; x <= size.width; x += 12) {
-                    double y = math.sin((x / size.width * (layer + 1) * math.pi) + (progress * 2 * math.pi)) * (16.0 * layer) +
-                        math.cos((x / size.width * 2 * math.pi) + (progress * 2 * math.pi)) * 12 +
-                        size.height * (0.7 + layer * 0.07);
+                  final path = Path()..moveTo(0, size.height * 0.6);
+                  for (double x = 0; x <= size.width; x += 14) {
+                    double y = math.sin((x / size.width * (layer + 1) * math.pi) + (progress * 2 * math.pi)) * (18.0 * layer) +
+                        math.cos((x / size.width * 2 * math.pi) + (progress * 2 * math.pi)) * 14 +
+                        size.height * (0.65 + layer * 0.08);
                     path.lineTo(x, y);
                   }
                   path.lineTo(size.width, size.height);
@@ -1079,19 +1188,37 @@ jobs:
                   canvas.drawPath(path, paint);
                 }
               } else {
-                final paint = Paint()
-                  ..color = color.withOpacity(0.12)
-                  ..strokeWidth = 1.4;
+                // Infinite Tron 3D Perspective Grid
+                final horizonY = size.height * 0.45;
+                final gridPaint = Paint()
+                  ..color = color.withOpacity(0.22)
+                  ..strokeWidth = 1.6;
 
-                double horizonY = size.height * 0.48;
-                double speedOffset = (progress * 40);
+                // Perspective Z-lines to vanishing point
+                final centerX = size.width * 0.5;
+                for (double x = -size.width * 0.8; x <= size.width * 1.8; x += 40) {
+                  canvas.drawLine(Offset(centerX, horizonY), Offset(x, size.height), gridPaint);
+                }
 
-                for (double y = horizonY; y <= size.height; y += 26) {
-                  canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
+                // Horizontal receding depth lines
+                double speed = (progress * 30);
+                for (double y = horizonY; y <= size.height; y += 22) {
+                  double lineY = y + (speed % 22);
+                  if (lineY <= size.height) {
+                    double alpha = ((lineY - horizonY) / (size.height - horizonY)).clamp(0.0, 1.0);
+                    final p = Paint()
+                      ..color = color.withOpacity(0.28 * alpha)
+                      ..strokeWidth = 1.8 * alpha;
+                    canvas.drawLine(Offset(0, lineY), Offset(size.width, lineY), p);
+                  }
                 }
-                for (double x = -size.width * 0.5; x <= size.width * 1.5; x += 38) {
-                  canvas.drawLine(Offset(size.width * 0.5, horizonY), Offset(x + (speedOffset % 38), size.height), paint);
-                }
+
+                // Glowing Horizon Bar
+                final horizonPaint = Paint()
+                  ..shader = LinearGradient(
+                    colors: [Colors.transparent, color.withOpacity(0.85), Colors.transparent],
+                  ).createShader(Rect.fromLTWH(0, horizonY - 4, size.width, 8));
+                canvas.drawRect(Rect.fromLTWH(0, horizonY - 4, size.width, 8), horizonPaint);
               }
             }
 
@@ -1114,97 +1241,104 @@ jobs:
             Widget build(BuildContext context) {
               final t = dict[_selectedLang] ?? dict['he']!;
               final bool isRtl = _selectedLang == 'he' || _selectedLang == 'ar';
+              final app = CyberPillMasterApp.of(context);
+              final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
+              final Color accent = palette['accent']!;
 
-              return Directionality(
-                textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-                child: Scaffold(
-                  body: SafeArea(
-                    child: Center(
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 120,
-                              height: 120,
-                              decoration: cyber3D(context: context, radius: 40, isMetallic: true),
-                              child: const Icon(Icons.shield_rounded, size: 70, color: Color(0xFF00F0FF)),
-                            ),
-                            const SizedBox(height: 20),
-                            textEmbossed(t['app_name']!, fontSize: 28, color: Colors.white, glow: const Color(0xFF00F0FF)),
-                            const SizedBox(height: 8),
-                            Text(
-                              t['creator']!,
-                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white70),
-                            ),
-                            const SizedBox(height: 26),
-                            Text(
-                              t['select_language']!,
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF00F0FF)),
-                            ),
-                            const SizedBox(height: 12),
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              alignment: WrapAlignment.center,
-                              children: appLanguages.map((lang) {
-                                final bool isSelected = _selectedLang == lang['code'];
-                                return GestureDetector(
-                                  onTap: () {
-                                    HapticFeedback.lightImpact();
-                                    setState(() => _selectedLang = lang['code']!);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-                                    decoration: cyber3D(
-                                      context: context,
-                                      radius: 14,
-                                      isPressed: isSelected,
-                                      customGlow: isSelected ? const Color(0xFF00F0FF) : null,
-                                    ),
-                                    child: Text(
-                                      lang['label']!,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                        color: isSelected ? const Color(0xFF00F0FF) : Colors.white60,
+              return DynamicFuturisticBackground(
+                accentColor: accent,
+                isHighContrast: app.highContrast,
+                effectType: app.bgEffect,
+                child: Directionality(
+                  textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: SafeArea(
+                      child: Center(
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 120, height: 120,
+                                decoration: BoxDecoration(
+                                  color: palette['chassis'],
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: accent, width: 3.5),
+                                  boxShadow: [
+                                    BoxShadow(color: accent.withOpacity(0.55), blurRadius: 28, spreadRadius: 2),
+                                    const BoxShadow(color: Colors.black, offset: Offset(0, 10), blurRadius: 20),
+                                  ],
+                                ),
+                                child: Icon(Icons.shield_rounded, size: 70, color: accent),
+                              ),
+                              const SizedBox(height: 24),
+                              textEmbossed(t['app_name']!, fontSize: 28, color: Colors.white, glow: accent),
+                              const SizedBox(height: 8),
+                              Text(
+                                t['creator']!,
+                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white70),
+                              ),
+                              const SizedBox(height: 28),
+                              textEmbossed(t['select_language']!, fontSize: 16, color: accent),
+                              const SizedBox(height: 14),
+                              Wrap(
+                                spacing: 10,
+                                runSpacing: 10,
+                                alignment: WrapAlignment.center,
+                                children: appLanguages.map((lang) {
+                                  final bool isSelected = _selectedLang == lang['code'];
+                                  return Hardware3DButton(
+                                    height: 48,
+                                    radius: 12,
+                                    glowColor: isSelected ? accent : Colors.white24,
+                                    isPushed: isSelected,
+                                    onTap: () => setState(() => _selectedLang = lang['code']!),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                                      child: Text(
+                                        lang['label']!,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: isSelected ? accent : Colors.white70,
+                                        ),
                                       ),
                                     ),
+                                  );
+                                }).toList(),
+                              ),
+                              const SizedBox(height: 30),
+                              MechModuleCard(
+                                child: TextField(
+                                  controller: _nameCtrl,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: accent),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: t['name_hint']!,
+                                    hintStyle: const TextStyle(color: Colors.white38),
                                   ),
-                                );
-                              }).toList(),
-                            ),
-                            const SizedBox(height: 28),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 18),
-                              decoration: cyber3D(context: context, radius: 18, isPressed: true),
-                              child: TextField(
-                                controller: _nameCtrl,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Color(0xFF00F0FF)),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: t['name_hint']!,
-                                  hintStyle: const TextStyle(color: Colors.white38),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 30),
-                            CyberTactileButton(
-                              glowColor: const Color(0xFF00FF88),
-                              height: 58,
-                              onTap: () {
-                                final name = _nameCtrl.text.trim().isEmpty ? 'משתמש' : _nameCtrl.text.trim();
-                                CyberPillMasterApp.of(context).completeOnboarding(name, _selectedLang);
-                              },
-                              child: textEmbossed(
-                                t['continue_btn']!,
-                                fontSize: 20,
-                                color: const Color(0xFF00FF88),
+                              const SizedBox(height: 24),
+                              Hardware3DButton(
+                                glowColor: const Color(0xFF00FF88),
+                                height: 64,
+                                radius: 20,
+                                onTap: () {
+                                  final name = _nameCtrl.text.trim().isEmpty ? 'משתמש' : _nameCtrl.text.trim();
+                                  CyberPillMasterApp.of(context).completeOnboarding(name, _selectedLang);
+                                },
+                                child: textEmbossed(
+                                  t['continue_btn']!,
+                                  fontSize: 22,
+                                  color: const Color(0xFF00FF88),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -1430,8 +1564,9 @@ jobs:
                   ),
                   actionsAlignment: MainAxisAlignment.spaceEvenly,
                   actions: [
-                    CyberTactileButton(
-                      height: 46,
+                    Hardware3DButton(
+                      height: 48,
+                      radius: 12,
                       glowColor: const Color(0xFF00FF88),
                       onTap: () {
                         setState(() => sched.isTaken = true);
@@ -1443,8 +1578,9 @@ jobs:
                         child: textEmbossed(t['btn_taken']!, fontSize: 14, color: const Color(0xFF00FF88)),
                       ),
                     ),
-                    CyberTactileButton(
-                      height: 46,
+                    Hardware3DButton(
+                      height: 48,
+                      radius: 12,
                       glowColor: const Color(0xFFFFB703),
                       onTap: () {
                         setState(() {
@@ -1521,19 +1657,21 @@ jobs:
                           runSpacing: 10,
                           children: appLanguages.map((l) {
                             final bool active = app.currentLang == l['code'];
-                            return GestureDetector(
+                            return Hardware3DButton(
+                              height: 48,
+                              radius: 12,
+                              isPushed: active,
                               onTap: () {
                                 app.setLanguage(l['code']!);
                                 Navigator.pop(ctx);
                               },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                                decoration: cyber3D(context: context, radius: 14, isPressed: active),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 14),
                                 child: Text(
                                   l['label']!,
                                   style: TextStyle(
                                     color: active ? const Color(0xFF00F0FF) : Colors.white70,
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w900,
                                   ),
                                 ),
@@ -1592,43 +1730,41 @@ jobs:
                                 ],
                               ),
                               const SizedBox(height: 16),
-                              Container(
-                                height: 85,
-                                decoration: cyber3D(context: context, radius: 18, highContrast: hc, isPressed: true),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: CupertinoPicker(
-                                        itemExtent: 34,
-                                        scrollController: FixedExtentScrollController(initialItem: hour),
-                                        onSelectedItemChanged: (i) => setDlg(() => hour = i),
-                                        children: List.generate(24, (i) => Center(
-                                          child: Text(i.toString().padLeft(2, '0'), style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900, fontSize: hc ? 22 : 18)),
-                                        )),
+                              MechModuleCard(
+                                child: SizedBox(
+                                  height: 85,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: CupertinoPicker(
+                                          itemExtent: 34,
+                                          scrollController: FixedExtentScrollController(initialItem: hour),
+                                          onSelectedItemChanged: (i) => setDlg(() => hour = i),
+                                          children: List.generate(24, (i) => Center(
+                                            child: Text(i.toString().padLeft(2, '0'), style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900, fontSize: hc ? 22 : 18)),
+                                          )),
+                                        ),
                                       ),
-                                    ),
-                                    Text(':', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF))),
-                                    Expanded(
-                                      child: CupertinoPicker(
-                                        itemExtent: 34,
-                                        scrollController: FixedExtentScrollController(initialItem: minute ~/ 5),
-                                        onSelectedItemChanged: (i) => setDlg(() => minute = i * 5),
-                                        children: List.generate(12, (i) => Center(
-                                          child: Text((i * 5).toString().padLeft(2, '0'), style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900, fontSize: hc ? 22 : 18)),
-                                        )),
+                                      Text(':', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF))),
+                                      Expanded(
+                                        child: CupertinoPicker(
+                                          itemExtent: 34,
+                                          scrollController: FixedExtentScrollController(initialItem: minute ~/ 5),
+                                          onSelectedItemChanged: (i) => setDlg(() => minute = i * 5),
+                                          children: List.generate(12, (i) => Center(
+                                            child: Text((i * 5).toString().padLeft(2, '0'), style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900, fontSize: hc ? 22 : 18)),
+                                          )),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 16),
                               ...workingPills.asMap().entries.map((entry) {
                                 int pIdx = entry.key;
                                 PillItem pill = entry.value;
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 12),
-                                  padding: const EdgeInsets.all(14),
-                                  decoration: cyber3D(context: context, radius: 18, highContrast: hc),
+                                return MechModuleCard(
                                   child: Column(
                                     children: [
                                       Autocomplete<String>(
@@ -1708,9 +1844,10 @@ jobs:
                                 label: Text(t['add_pill_btn']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF), fontWeight: FontWeight.w900, fontSize: hc ? 18 : 15)),
                               ),
                               const SizedBox(height: 16),
-                              CyberTactileButton(
+                              Hardware3DButton(
                                 glowColor: const Color(0xFF00FF88),
-                                height: 56,
+                                height: 58,
+                                radius: 18,
                                 onTap: () {
                                   final validPills = workingPills.where((p) => p.name.trim().isNotEmpty).toList();
                                   if (validPills.isEmpty) return;
@@ -1744,15 +1881,16 @@ jobs:
 
             Widget _presetBtn(String label, int h, int m, VoidCallback onTap) {
               final hc = CyberPillMasterApp.of(context).highContrast;
-              return GestureDetector(
+              return Hardware3DButton(
+                height: 44,
+                radius: 12,
                 onTap: () {
                   HapticFeedback.lightImpact();
                   onTap();
                 },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  decoration: cyber3D(context: context, radius: 12, highContrast: hc),
-                  child: Text(label, style: TextStyle(fontSize: hc ? 16 : 13, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF))),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(label, style: TextStyle(fontSize: hc ? 15 : 13, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF))),
                 ),
               );
             }
@@ -1795,19 +1933,22 @@ jobs:
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: typesList.map((type) {
                                   final bool isSel = selectedType == type;
-                                  return GestureDetector(
+                                  return Hardware3DButton(
+                                    height: 42,
+                                    radius: 10,
+                                    glowColor: const Color(0xFFA855F7),
+                                    isPushed: isSel,
                                     onTap: () {
                                       HapticFeedback.lightImpact();
                                       setDlg(() => selectedType = type);
                                     },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                                      decoration: cyber3D(context: context, radius: 10, isPressed: isSel, highContrast: hc, customGlow: const Color(0xFFA855F7)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         type,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: hc ? 16 : 14,
+                                          fontSize: hc ? 16 : 13,
                                           color: isSel ? (hc ? const Color(0xFFFFE500) : Colors.purpleAccent) : Colors.white70,
                                         ),
                                       ),
@@ -1816,9 +1957,7 @@ jobs:
                                 }).toList(),
                               ),
                               const SizedBox(height: 14),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: cyber3D(context: context, radius: 16, isPressed: true, highContrast: hc),
+                              MechModuleCard(
                                 child: TextField(
                                   controller: docCtrl,
                                   textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
@@ -1830,10 +1969,7 @@ jobs:
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 12),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: cyber3D(context: context, radius: 16, isPressed: true, highContrast: hc),
+                              MechModuleCard(
                                 child: TextField(
                                   controller: clinicCtrl,
                                   textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
@@ -1845,15 +1981,16 @@ jobs:
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 12),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
+                                  Hardware3DButton(
+                                    height: 44,
+                                    radius: 12,
+                                    glowColor: const Color(0xFF00D1FF),
                                     onTap: () => _launchMap(clinicCtrl.text, true),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                      decoration: BoxDecoration(color: const Color(0xFF00D1FF).withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14),
                                       child: Row(
                                         children: [
                                           const Icon(Icons.navigation, size: 16, color: Color(0xFF00D1FF)),
@@ -1864,11 +2001,13 @@ jobs:
                                     ),
                                   ),
                                   const SizedBox(width: 14),
-                                  GestureDetector(
+                                  Hardware3DButton(
+                                    height: 44,
+                                    radius: 12,
+                                    glowColor: const Color(0xFF34A853),
                                     onTap: () => _launchMap(clinicCtrl.text, false),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                      decoration: BoxDecoration(color: const Color(0xFF34A853).withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14),
                                       child: Row(
                                         children: [
                                           const Icon(Icons.map, size: 16, color: Color(0xFF34A853)),
@@ -1881,9 +2020,10 @@ jobs:
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              CyberTactileButton(
+                              Hardware3DButton(
                                 glowColor: const Color(0xFFA855F7),
-                                height: 56,
+                                height: 58,
+                                radius: 18,
                                 onTap: () {
                                   if (docCtrl.text.trim().isEmpty) return;
                                   setState(() {
@@ -1928,8 +2068,8 @@ jobs:
               ];
 
               final bgOptions = [
-                {'key': 'carbon', 'label': t['bg_carbon']!},
                 {'key': 'grid', 'label': t['bg_grid']!},
+                {'key': 'carbon', 'label': t['bg_carbon']!},
                 {'key': 'hex', 'label': t['bg_hex']!},
                 {'key': 'plasma', 'label': t['bg_plasma']!},
               ];
@@ -1956,8 +2096,7 @@ jobs:
                                 child: Text(t['alert_sound']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
                               ),
                               const SizedBox(height: 8),
-                              Container(
-                                decoration: cyber3D(context: context, radius: 14, highContrast: hc, isPressed: true),
+                              MechModuleCard(
                                 child: Column(
                                   children: soundOptions.map((s) {
                                     final bool active = app.soundType == s['key'];
@@ -2010,20 +2149,22 @@ jobs:
                                 runSpacing: 8,
                                 children: bgOptions.map((opt) {
                                   final bool active = app.bgEffect == opt['key'];
-                                  return GestureDetector(
+                                  return Hardware3DButton(
+                                    height: 44,
+                                    radius: 12,
+                                    isPushed: active,
                                     onTap: () {
                                       app.setBgEffect(opt['key']!);
                                       setDlg(() {});
                                     },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                      decoration: cyber3D(context: context, radius: 12, isPressed: active, highContrast: hc),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
                                       child: Text(opt['label']!, style: TextStyle(color: active ? (hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)) : Colors.white60, fontWeight: FontWeight.bold)),
                                     ),
                                   );
                                 }).toList(),
                               ),
-                              const SizedBox(height: 14),
+                              const SizedBox(height: 16),
                               Align(
                                 alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
                                 child: Text(t['themes_title']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
@@ -2034,29 +2175,27 @@ jobs:
                                 child: Row(
                                   children: themePalettes.entries.map((ent) {
                                     final bool active = app.themeKey == ent.key;
-                                    return GestureDetector(
-                                      onTap: () {
-                                        app.setThemeKey(ent.key);
-                                        setDlg(() {});
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                        decoration: BoxDecoration(
-                                          color: ent.value['surface'],
-                                          borderRadius: BorderRadius.circular(12),
-                                          border: Border.all(color: active ? Colors.white : ent.value['accent'], width: active ? 2.5 : 1),
-                                          boxShadow: active
-                                              ? [BoxShadow(color: ent.value['accent'], blurRadius: 10, spreadRadius: 1)]
-                                              : [],
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                                      child: Hardware3DButton(
+                                        height: 44,
+                                        radius: 12,
+                                        isPushed: active,
+                                        glowColor: ent.value['accent'],
+                                        onTap: () {
+                                          app.setThemeKey(ent.key);
+                                          setDlg(() {});
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                                          child: Text(ent.value['name'], style: TextStyle(color: ent.value['accent'], fontWeight: FontWeight.bold)),
                                         ),
-                                        child: Text(ent.value['name'], style: TextStyle(color: ent.value['accent'], fontWeight: FontWeight.bold)),
                                       ),
                                     );
                                   }).toList(),
                                 ),
                               ),
-                              const SizedBox(height: 14),
+                              const SizedBox(height: 16),
                               SwitchListTile(
                                 title: Text(t['high_contrast']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900)),
                                 value: app.highContrast,
@@ -2146,11 +2285,10 @@ jobs:
                                 itemBuilder: (ctx, i) {
                                   final sched = _schedules[i];
                                   final timeStr = '${sched.hour.toString().padLeft(2, '0')}:${sched.minute.toString().padLeft(2, '0')}';
-                                  return Container(
-                                    margin: const EdgeInsets.only(bottom: 14),
-                                    decoration: cyber3D(context: context, radius: 20, isPressed: sched.isTaken, highContrast: hc),
+                                  return MechModuleCard(
+                                    isPressed: sched.isTaken,
                                     child: ListTile(
-                                      contentPadding: const EdgeInsets.all(14),
+                                      contentPadding: EdgeInsets.zero,
                                       leading: Icon(sched.isTaken ? Icons.check_circle : Icons.alarm_on, color: sched.isTaken ? const Color(0xFF00FF88) : accent, size: 36),
                                       title: textEmbossed(
                                         sched.title.isNotEmpty ? sched.title : timeStr,
@@ -2185,11 +2323,10 @@ jobs:
                                 itemCount: _apps.length,
                                 itemBuilder: (ctx, i) {
                                   final appItem = _apps[i];
-                                  return Container(
-                                    margin: const EdgeInsets.only(bottom: 14),
-                                    decoration: cyber3D(context: context, radius: 20, highContrast: hc, customGlow: const Color(0xFFA855F7)),
+                                  return MechModuleCard(
+                                    accentColor: const Color(0xFFA855F7),
                                     child: ListTile(
-                                      contentPadding: const EdgeInsets.all(14),
+                                      contentPadding: EdgeInsets.zero,
                                       leading: Icon(Icons.local_hospital, size: 36, color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7)),
                                       title: textEmbossed('${appItem.type}: ${appItem.doctor}', fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white),
                                       subtitle: Column(
@@ -2203,20 +2340,24 @@ jobs:
                                             const SizedBox(height: 8),
                                             Row(
                                               children: [
-                                                GestureDetector(
+                                                Hardware3DButton(
+                                                  height: 38,
+                                                  radius: 10,
+                                                  glowColor: const Color(0xFF00D1FF),
                                                   onTap: () => _launchMap(appItem.clinic, true),
-                                                  child: Container(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                    decoration: BoxDecoration(color: const Color(0xFF00D1FF).withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 10),
                                                     child: Text(t['nav_waze']!, style: const TextStyle(fontSize: 12, color: Color(0xFF00D1FF), fontWeight: FontWeight.bold)),
                                                   ),
                                                 ),
                                                 const SizedBox(width: 8),
-                                                GestureDetector(
+                                                Hardware3DButton(
+                                                  height: 38,
+                                                  radius: 10,
+                                                  glowColor: const Color(0xFF34A853),
                                                   onTap: () => _launchMap(appItem.clinic, false),
-                                                  child: Container(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                    decoration: BoxDecoration(color: const Color(0xFF34A853).withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 10),
                                                     child: Text(t['nav_google']!, style: const TextStyle(fontSize: 12, color: Color(0xFF34A853), fontWeight: FontWeight.bold)),
                                                   ),
                                                 ),
@@ -2241,9 +2382,10 @@ jobs:
                     ),
                   ),
                   floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-                  floatingActionButton: CyberTactileButton(
-                    radius: 28,
-                    height: 60,
+                  floatingActionButton: Hardware3DButton(
+                    radius: 22,
+                    height: 64,
+                    glowColor: accent,
                     onTap: () {
                       if (_tabController.index == 0) {
                         _openAddScheduleDialog();
@@ -2252,11 +2394,11 @@ jobs:
                       }
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 26),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.add, color: hc ? const Color(0xFFFFE500) : Colors.white, size: 26),
+                          Icon(Icons.add, color: hc ? const Color(0xFFFFE500) : Colors.white, size: 28),
                           const SizedBox(width: 8),
                           textEmbossed(
                             _tabController.index == 0 ? t['add_med']! : t['add_appointment']!,
