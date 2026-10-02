@@ -233,8 +233,6 @@ jobs:
             shared_preferences: ^2.3.2
             flutter_tts: ^4.2.0
             url_launcher: ^6.3.0
-            pdf: ^3.10.8
-            printing: ^5.13.1
             share_plus: ^10.0.2
             path_provider: ^2.1.3
             intl: ^0.19.0
@@ -248,7 +246,6 @@ jobs:
           import 'dart:convert';
           import 'dart:io';
           import 'dart:math' as math;
-          import 'dart:ui' as ui;
           import 'package:flutter/cupertino.dart';
           import 'package:flutter/material.dart';
           import 'package:flutter/services.dart';
@@ -258,9 +255,6 @@ jobs:
           import 'package:timezone/data/latest_all.dart' as tz;
           import 'package:timezone/timezone.dart' as tz;
           import 'package:url_launcher/url_launcher.dart';
-          import 'package:pdf/pdf.dart' as p_core;
-          import 'package:pdf/widgets.dart' as pw;
-          import 'package:printing/printing.dart';
           import 'package:path_provider/path_provider.dart';
           import 'package:share_plus/share_plus.dart';
           import 'package:intl/intl.dart';
@@ -357,7 +351,7 @@ jobs:
               'compliance_daily': 'היענות יומית',
               'compliance_weekly': 'היענות שבועית',
               'compliance_monthly': 'היענות חודשית',
-              'share_pdf': 'הפק ושתף דוח PDF (וואטסאפ / מייל)',
+              'share_pdf': 'הפק ושתף דוח מעקב (וואטסאפ / מייל)',
               'summary_title': 'סיכום שבועי מרוכז',
             },
             'en': {
@@ -419,7 +413,7 @@ jobs:
               'compliance_daily': 'Daily Adherence',
               'compliance_weekly': 'Weekly Adherence',
               'compliance_monthly': 'Monthly Adherence',
-              'share_pdf': 'Export & Share PDF (WhatsApp / Email)',
+              'share_pdf': 'Share Adherence Report (WhatsApp / Email)',
               'summary_title': 'Weekly Performance Summary',
             },
             'ru': {
@@ -481,7 +475,7 @@ jobs:
               'compliance_daily': 'За день',
               'compliance_weekly': 'За неделю',
               'compliance_monthly': 'За месяц',
-              'share_pdf': 'Экспорт PDF (WhatsApp / Email)',
+              'share_pdf': 'Экспорт отчета (WhatsApp / Email)',
               'summary_title': 'Еженедельный отчет',
             },
             'ro': {
@@ -543,7 +537,7 @@ jobs:
               'compliance_daily': 'Zilnic',
               'compliance_weekly': 'Săptămânal',
               'compliance_monthly': 'Lunar',
-              'share_pdf': 'Exportă PDF (WhatsApp / Email)',
+              'share_pdf': 'Partajează raport (WhatsApp / Email)',
               'summary_title': 'Sumar săptămânal',
             },
             'ar': {
@@ -554,7 +548,7 @@ jobs:
               'enter_name_title': 'إعداد الملف الشخصي',
               'name_hint': 'اكتب اسمك...',
               'continue_btn': 'دخول التطبيق',
-              'meds_tab': 'מواعيد الأدوية',
+              'meds_tab': 'مواعيد الأدوية',
               'appointments_tab': 'المواعيد',
               'stats_tab': 'الإحصائيات والتقارير',
               'add_med': 'إضافة موعد أدوية',
@@ -605,7 +599,7 @@ jobs:
               'compliance_daily': 'الالتزام اليومي',
               'compliance_weekly': 'الالتزام الأسبوعي',
               'compliance_monthly': 'الالتزام الشهري',
-              'share_pdf': 'تصدير ومشاركة PDF (واتساب / بريد)',
+              'share_pdf': 'مشاركة التقرير (واتساب / بريد)',
               'summary_title': 'ملخص الأداء الأسبوعي',
             },
             'de': {
@@ -667,7 +661,7 @@ jobs:
               'compliance_daily': 'Täglich',
               'compliance_weekly': 'Wöchentlich',
               'compliance_monthly': 'Monatlich',
-              'share_pdf': 'PDF teilen (WhatsApp / E-Mail)',
+              'share_pdf': 'Bericht teilen (WhatsApp / E-Mail)',
               'summary_title': 'Wöchentliche Zusammenfassung',
             }
           };
@@ -851,7 +845,7 @@ jobs:
                     colorSchemeSeed: primary,
                   ),
                   home: Directionality(
-                    textDirection: isRtl ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+                    textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
                     child: _firstRun ? const FirstTimeSetupScreen() : const MainDashboard(),
                   ),
                 ),
@@ -859,7 +853,6 @@ jobs:
             }
           }
 
-          // 3D Perspective Cyber Grid & Floating Neon Dust
           class Dynamic3DCyberBackground extends StatefulWidget {
             final Widget child;
             final Color accentColor;
@@ -1031,7 +1024,7 @@ jobs:
               final bool isRtl = _selectedLang == 'he' || _selectedLang == 'ar';
 
               return Directionality(
-                textDirection: isRtl ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+                textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
                 child: Scaffold(
                   body: SafeArea(
                     child: Center(
@@ -1116,7 +1109,7 @@ jobs:
                             const SizedBox(height: 25),
                             GestureDetector(
                               onTap: () {
-                                final name = _ctrl.text.trim().isEmpty ? 'אורח' : _ctrl.text.trim();
+                                final name = _ctrl.text.trim().isEmpty ? 'רוני' : _ctrl.text.trim();
                                 CyberPillMasterApp.of(context).completeOnboarding(name, _selectedLang);
                               },
                               child: Container(
@@ -1366,8 +1359,8 @@ jobs:
               if (address.trim().isEmpty) return;
               final encoded = Uri.encodeComponent(address.trim());
               final Uri url = isWaze
-                  ? Uri.parse('https://waze.com/ul?q=$encoded')
-                  : Uri.parse('https://www.google.com/maps/search/?api=1&query=$encoded');
+                  ? Uri.parse('https://waze.com/ul?q=' + encoded)
+                  : Uri.parse('https://www.google.com/maps/search/?api=1&query=' + encoded);
               
               await launchUrl(url, mode: LaunchMode.externalApplication);
             }
@@ -1378,14 +1371,14 @@ jobs:
               final hc = app.highContrast;
 
               app.playAudioTone(app.soundMed, app.soundVolume);
-              final String namesList = group.pills.map((p) => '${p.name} (${p.dosage})').join(', ');
+              final String namesList = group.pills.map((p) => p.name + ' (' + p.dosage.toString() + ')').join(', ');
               _speak(t['tts_phrase']!.replaceAll('{name}', namesList));
 
               showDialog(
                 context: context,
                 barrierDismissible: false,
                 builder: (ctx) => Directionality(
-                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                   child: AlertDialog(
                     backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
                     shape: RoundedRectangleBorder(
@@ -1416,7 +1409,7 @@ jobs:
                           ...group.pills.map((p) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2),
                             child: Text(
-                              '• ${p.name} - ${t['dosage']!}: ${p.dosage} | ${t['stock']!}: ${p.stock}',
+                              '• ' + p.name + ' - ' + t['dosage']! + ': ' + p.dosage.toString() + ' | ' + t['stock']! + ': ' + p.stock.toString(),
                               style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white70, fontSize: 15, fontWeight: hc ? FontWeight.bold : FontWeight.normal),
                             ),
                           )),
@@ -1427,7 +1420,7 @@ jobs:
                                 group.isTaken = true;
                                 for (var p in group.pills) {
                                   if (p.stock >= p.dosage) p.stock -= p.dosage;
-                                  _recordLog(p.name, p.dosage, '${group.hour.toString().padLeft(2, '0')}:${group.minute.toString().padLeft(2, '0')}', true);
+                                  _recordLog(p.name, p.dosage, group.hour.toString().padLeft(2, '0') + ':' + group.minute.toString().padLeft(2, '0'), true);
                                 }
                               });
                               _saveSchedules();
@@ -1445,7 +1438,7 @@ jobs:
                           GestureDetector(
                             onTap: () {
                               for (var p in group.pills) {
-                                _recordLog(p.name, p.dosage, '${group.hour.toString().padLeft(2, '0')}:${group.minute.toString().padLeft(2, '0')}', false);
+                                _recordLog(p.name, p.dosage, group.hour.toString().padLeft(2, '0') + ':' + group.minute.toString().padLeft(2, '0'), false);
                               }
                               Navigator.pop(ctx);
                             },
@@ -1517,7 +1510,7 @@ jobs:
               showDialog(
                 context: context,
                 builder: (ctx) => Directionality(
-                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                   child: AlertDialog(
                     backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
                     shape: RoundedRectangleBorder(
@@ -1536,12 +1529,12 @@ jobs:
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('שם מטופל: ${app.userName}', style: TextStyle(color: hc ? Colors.white : Colors.cyanAccent, fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text('שם מטופל: ' + app.userName, style: TextStyle(color: hc ? Colors.white : Colors.cyanAccent, fontWeight: FontWeight.bold, fontSize: 16)),
                           const Divider(color: Colors.white24),
                           const SizedBox(height: 6),
                           Text('רשימת תרופות פעילות:', style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white70, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 6),
-                          ..._schedules.expand((s) => s.pills).map((p) => Text('• ${p.name} - ${p.dosage} כדורים', style: const TextStyle(color: Colors.white))),
+                          ..._schedules.expand((s) => s.pills).map((p) => Text('• ' + p.name + ' - ' + p.dosage.toString() + ' כדורים', style: const TextStyle(color: Colors.white))),
                           if (_schedules.isEmpty) const Text('אין תרופות מוגדרות כרגע', style: TextStyle(color: Colors.white60)),
                         ],
                       ),
@@ -1585,77 +1578,39 @@ jobs:
               };
             }
 
-            Future<void> _exportAndSharePdf() async {
-              final pdf = pw.Document();
+            Future<void> _exportAndShareReport() async {
               final comp = _calculateCompliance();
               final app = CyberPillMasterApp.of(context);
+              final dateNow = DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now());
 
-              pdf.addPage(
-                pw.Page(
-                  pageFormat: p_core.PdfPageFormat.a4,
-                  build: (pw.Context pContext) {
-                    return pw.Directionality(
-                      textDirection: pw.TextDirection.rtl,
-                      child: pw.Column(
-                        crossContent: pw.CrossAxisAlignment.start,
-                        children: [
-                          pw.Header(
-                            level: 0,
-                            child: pw.Row(
-                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text('Cyber Pharma - דוח היענות וסטטיסטיקת טיפול', style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
-                                pw.Text(DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()), style: const pw.TextStyle(fontSize: 10)),
-                              ],
-                            ),
-                          ),
-                          pw.SizedBox(height: 12),
-                          pw.Text('מטופל: ${app.userName}', style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
-                          pw.SizedBox(height: 10),
-                          pw.Container(
-                            padding: const pw.EdgeInsets.all(10),
-                            decoration: pw.BoxDecoration(
-                              border: pw.Border.all(color: p_core.PdfColors.blueGrey, width: 1),
-                              borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
-                            ),
-                            child: pw.Column(
-                              crossContent: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text('סיכום ביצועים שבועי:', style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
-                                pw.SizedBox(height: 6),
-                                pw.Text('היענות שבועית: ${comp['weekly']}% (${comp['weeklyTaken']}/${comp['weeklyTotal']} מנות שנלקחו)'),
-                                pw.Text('היענות חודשית: ${comp['monthly']}% | היענות יומית: ${comp['daily']}%'),
-                              ],
-                            ),
-                          ),
-                          pw.SizedBox(height: 16),
-                          pw.Text('טבלת תיעוד נטילת תרופות:', style: pw.TextStyle(fontSize: 13, fontWeight: pw.FontWeight.bold)),
-                          pw.SizedBox(height: 8),
-                          pw.TableHelper.fromTextArray(
-                            headers: ['תאריך ושעה', 'שם תרופה', 'מינון', 'סטטוס נטילה'],
-                            data: _logs.take(35).map((l) {
-                              final dtStr = DateFormat('dd/MM/yyyy HH:mm').format(l.timestamp);
-                              return [dtStr, l.pillName, '${l.dosage} כדורים', l.taken ? 'נלקח' : 'דולג'];
-                            }).toList(),
-                            headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, color: p_core.PdfColors.white),
-                            headerDecoration: const pw.BoxDecoration(color: p_core.PdfColors.blueGrey800),
-                            cellAlignment: pw.Alignment.centerRight,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              );
+              final StringBuffer sb = StringBuffer();
+              sb.writeln("========================================");
+              sb.writeln("CYBER PHARMA - דוח מעקב והיענות רפואית");
+              sb.writeln("========================================");
+              sb.writeln("מטופל: " + app.userName);
+              sb.writeln("מועד הפקה: " + dateNow);
+              sb.writeln("");
+              sb.writeln("--- מדדי היענות שבועיים וחודשיים ---");
+              sb.writeln("היענות שבועית: " + comp['weekly'].toString() + "% (" + comp['weeklyTaken'].toString() + "/" + comp['weeklyTotal'].toString() + " מנות נלקחו)");
+              sb.writeln("היענות חודשית: " + comp['monthly'].toString() + "%");
+              sb.writeln("היענות יומית: " + comp['daily'].toString() + "%");
+              sb.writeln("");
+              sb.writeln("--- יומן נטילת תרופות מפורט ---");
+              for (var l in _logs.take(35)) {
+                final dStr = DateFormat('dd/MM HH:mm').format(l.timestamp);
+                final stStr = l.taken ? "[נלקח בהצלחה]" : "[דולג]";
+                sb.writeln(dStr + " | " + l.pillName + " (" + l.dosage.toString() + " כדורים) | " + stStr);
+              }
+              sb.writeln("========================================");
 
               final dir = await getTemporaryDirectory();
-              final file = File("${dir.path}/CyberPharma_Report_${DateFormat('yyyyMMdd_HHmm').format(DateTime.now())}.pdf");
-              await file.writeAsBytes(await pdf.save());
+              final file = File(dir.path + "/CyberPharma_Report.txt");
+              await file.writeAsString(sb.toString(), encoding: utf8);
 
               await Share.shareXFiles(
                 [XFile(file.path)],
-                text: 'דוח מעקב תרופות וסיכום שבועי מאפליקציית Cyber Pharma עבור ${app.userName}',
-                subject: 'דוח רפואי אישי - Cyber Pharma',
+                text: sb.toString(),
+                subject: 'דוח מעקב רפואי - ' + app.userName,
               );
             }
 
@@ -1676,7 +1631,7 @@ jobs:
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
-                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 20,
@@ -1710,7 +1665,7 @@ jobs:
                                 ],
                               ),
                               const SizedBox(height: 16),
-                              Text('${t['time']!}: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
+                              Text(t['time']! + ': ' + hour.toString().padLeft(2, '0') + ':' + minute.toString().padLeft(2, '0'),
                                   style: TextStyle(fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white)),
                               const SizedBox(height: 6),
                               Container(
@@ -1767,7 +1722,7 @@ jobs:
                                             controller: controller,
                                             focusNode: focusNode,
                                             textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
-                                            style: TextStyle(color: hc ? Colors.white : Colors.white),
+                                            style: const TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               labelText: t['pill_name'],
                                               labelStyle: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent),
@@ -1781,7 +1736,7 @@ jobs:
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text('${t['dosage']!}: ${pill.dosage}', style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
+                                          Text(t['dosage']! + ': ' + pill.dosage.toString(), style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                           Row(
                                             children: [
                                               IconButton(
@@ -1790,7 +1745,7 @@ jobs:
                                                   if (pill.dosage > 1) setDlg(() => pill.dosage--);
                                                 },
                                               ),
-                                              Text('${pill.dosage}', style: TextStyle(fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white)),
+                                              Text(pill.dosage.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                               IconButton(
                                                 icon: const Icon(Icons.add_circle_outline, color: Colors.cyanAccent),
                                                 onPressed: () => setDlg(() => pill.dosage++),
@@ -1886,7 +1841,7 @@ jobs:
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
-                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 20,
@@ -2014,7 +1969,7 @@ jobs:
                                         decoration: cyber3D(context: context, radius: 14, highContrast: hc),
                                         child: Center(
                                           child: Text(
-                                            '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                                            selectedDate.day.toString() + '/' + selectedDate.month.toString() + '/' + selectedDate.year.toString(),
                                             style: TextStyle(fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white),
                                           ),
                                         ),
@@ -2055,7 +2010,7 @@ jobs:
                                       type: selectedType,
                                       doctor: docCtrl.text.trim(),
                                       clinic: clinicCtrl.text.trim(),
-                                      date: '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                                      date: selectedDate.day.toString() + '/' + selectedDate.month.toString() + '/' + selectedDate.year.toString(),
                                       time: selectedTime.format(context),
                                     ));
                                   });
@@ -2110,10 +2065,10 @@ jobs:
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
-                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+                    textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: SafeArea(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+                        padding: const EdgeInsets.all(20),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -2184,7 +2139,7 @@ jobs:
                                 children: [
                                   Icon(Icons.volume_up, color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent),
                                   const SizedBox(width: 8),
-                                  Text('${t['sound_vol']!}: ${(currentVol * 100).toInt()}%', style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
+                                  Text(t['sound_vol']! + ': ' + (currentVol * 100).toInt().toString() + '%', style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white)),
                                   Expanded(
                                     child: Slider(
                                       value: currentVol,
@@ -2307,7 +2262,7 @@ jobs:
                           ),
                         ),
                         Text(
-                          '${t['welcome']!}, ${app.userName}',
+                          t['welcome']! + ', ' + app.userName,
                           style: TextStyle(fontSize: 13, color: hc ? const Color(0xFFFFD700) : Colors.white60),
                         ),
                       ],
@@ -2342,7 +2297,7 @@ jobs:
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        // TAB 1: Medicines
+                        // TAB 1: Meds
                         _schedules.isEmpty
                             ? Center(child: Text(t['empty_meds']!, style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.white38, fontSize: 18)))
                             : ListView.builder(
@@ -2350,7 +2305,7 @@ jobs:
                                 itemCount: _schedules.length,
                                 itemBuilder: (ctx, i) {
                                   final sched = _schedules[i];
-                                  final timeStr = '${sched.hour.toString().padLeft(2, '0')}:${sched.minute.toString().padLeft(2, '0')}';
+                                  final timeStr = sched.hour.toString().padLeft(2, '0') + ':' + sched.minute.toString().padLeft(2, '0');
                                   return Container(
                                     margin: const EdgeInsets.only(bottom: 14),
                                     decoration: cyber3D(context: context, radius: 20, isPressed: sched.isTaken, highContrast: hc),
@@ -2372,10 +2327,10 @@ jobs:
                                       subtitle: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text('$timeStr • ${sched.pills.length} תרופות', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
+                                          Text(timeStr + ' • ' + sched.pills.length.toString() + ' תרופות', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
                                           ...sched.pills.map((p) {
                                             int daysLeft = p.dosage > 0 ? (p.stock ~/ p.dosage) : 0;
-                                            return Text('• ${p.name} (${p.dosage}) | ${t['days_left']!} $daysLeft',
+                                            return Text('• ' + p.name + ' (' + p.dosage.toString() + ') | ' + t['days_left']! + ' ' + daysLeft.toString(),
                                                 style: TextStyle(color: hc ? const Color(0xFFFFD700) : Colors.cyanAccent, fontWeight: hc ? FontWeight.bold : FontWeight.normal));
                                           }),
                                         ],
@@ -2407,16 +2362,16 @@ jobs:
                                     contentPadding: const EdgeInsets.all(14),
                                     leading: Icon(Icons.medical_services_outlined, size: 36, color: hc ? const Color(0xFFFFD700) : const Color(0xFFA855F7)),
                                     title: Text(
-                                      '${appItem.type}: ${appItem.doctor}',
+                                      appItem.type + ': ' + appItem.doctor,
                                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFD700) : Colors.white),
                                     ),
                                     subtitle: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('${appItem.date}  •  ${appItem.time}', style: TextStyle(color: hc ? Colors.cyanAccent : const Color(0xFF38BDF8), fontWeight: FontWeight.bold)),
+                                        Text(appItem.date + ' • ' + appItem.time, style: TextStyle(color: hc ? Colors.cyanAccent : const Color(0xFF38BDF8), fontWeight: FontWeight.bold)),
                                         if (appItem.clinic.isNotEmpty) ...[
                                           const SizedBox(height: 4),
-                                          Text('📍 ${appItem.clinic}', style: TextStyle(color: hc ? Colors.white : Colors.white70)),
+                                          Text('📍 ' + appItem.clinic, style: TextStyle(color: hc ? Colors.white : Colors.white70)),
                                           const SizedBox(height: 8),
                                           Row(
                                             children: [
@@ -2465,7 +2420,7 @@ jobs:
                                 );
                               },
                             ),
-                        // TAB 3: Statistics & PDF Reports
+                        // TAB 3: Stats & Reports
                         ListView(
                           padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 90),
                           children: [
@@ -2481,19 +2436,19 @@ jobs:
                                     children: [
                                       Column(
                                         children: [
-                                          Text('${comp['daily']}%', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.cyanAccent)),
+                                          Text(comp['daily'].toString() + '%', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.cyanAccent)),
                                           Text(t['compliance_daily']!, style: const TextStyle(fontSize: 11, color: Colors.white60)),
                                         ],
                                       ),
                                       Column(
                                         children: [
-                                          Text('${comp['weekly']}%', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Color(0xFF10B981))),
+                                          Text(comp['weekly'].toString() + '%', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Color(0xFF10B981))),
                                           Text(t['compliance_weekly']!, style: const TextStyle(fontSize: 11, color: Colors.white60)),
                                         ],
                                       ),
                                       Column(
                                         children: [
-                                          Text('${comp['monthly']}%', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.amberAccent)),
+                                          Text(comp['monthly'].toString() + '%', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.amberAccent)),
                                           Text(t['compliance_monthly']!, style: const TextStyle(fontSize: 11, color: Colors.white60)),
                                         ],
                                       ),
@@ -2501,7 +2456,7 @@ jobs:
                                   ),
                                   const Divider(color: Colors.white24, height: 24),
                                   Text(
-                                    'סה"כ נלקחו ${comp['weeklyTaken']} מתוך ${comp['weeklyTotal']} מנות מתוזמנות בשבעת הימים האחרונים.',
+                                    'סה"כ נלקחו ' + comp['weeklyTaken'].toString() + ' מתוך ' + comp['weeklyTotal'].toString() + ' מנות מתוזמנות בשבעת הימים האחרונים.',
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(color: Colors.white70, fontSize: 12),
                                   ),
@@ -2510,7 +2465,7 @@ jobs:
                             ),
                             const SizedBox(height: 16),
                             GestureDetector(
-                              onTap: _exportAndSharePdf,
+                              onTap: _exportAndShareReport,
                               child: Container(
                                 height: 50,
                                 decoration: cyber3D(context: context, radius: 18, highContrast: hc, customGlow: const Color(0xFF10B981)),
