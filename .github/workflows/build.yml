@@ -112,7 +112,7 @@ jobs:
         run: |
           cat << 'EOF' > pubspec.yaml
           name: pill_reminder
-          description: Heavy Sci-Fi Skieu Hardware Medical Terminal
+          description: Heavy Sci-Fi Hardware Medical Terminal
           publish_to: 'none'
           version: 1.0.0+1
           environment:
@@ -139,6 +139,7 @@ jobs:
           import 'dart:io';
           import 'dart:math' as math;
           import 'dart:typed_data';
+          import 'dart:ui';
           import 'package:audioplayers/audioplayers.dart';
           import 'package:flutter/cupertino.dart' hide TextDirection;
           import 'package:flutter/material.dart';
@@ -242,6 +243,83 @@ jobs:
             }
           }
 
+          class ThemePalette {
+            final String id;
+            final String name;
+            final Color background;
+            final Color chassis;
+            final Color surface;
+            final Color primary;
+            final Color highlight;
+            final Color bevelLight;
+            final Color bevelDark;
+            final Color glow;
+
+            const ThemePalette({
+              required this.id,
+              required this.name,
+              required this.background,
+              required this.chassis,
+              required this.surface,
+              required this.primary,
+              required this.highlight,
+              required this.bevelLight,
+              required this.bevelDark,
+              required this.glow,
+            });
+          }
+
+          final Map<String, ThemePalette> themePalettes = {
+            'cyberpunk': const ThemePalette(
+              id: 'cyberpunk',
+              name: 'Cyberpunk Neon',
+              background: Color(0xFF07040D),
+              chassis: Color(0xFF13091F),
+              surface: Color(0xFF220E38),
+              primary: Color(0xFFFF007F),
+              highlight: Color(0xFF00F0FF),
+              bevelLight: Color(0xFFFF40A1),
+              bevelDark: Color(0xFF10031B),
+              glow: Color(0xFFFF007F),
+            ),
+            'ocean': const ThemePalette(
+              id: 'ocean',
+              name: 'Deep Ocean 3D',
+              background: Color(0xFF020B14),
+              chassis: Color(0xFF061A2B),
+              surface: Color(0xFF0E2C44),
+              primary: Color(0xFF00D2FF),
+              highlight: Color(0xFF80EAFF),
+              bevelLight: Color(0xFF1E5274),
+              bevelDark: Color(0xFF020E1A),
+              glow: Color(0xFF00B4D8),
+            ),
+            'clean_medical': const ThemePalette(
+              id: 'clean_medical',
+              name: 'Clean Medical Glass',
+              background: Color(0xFF0A121A),
+              chassis: Color(0xFF112233),
+              surface: Color(0xFF1A334D),
+              primary: Color(0xFF00E5A3),
+              highlight: Color(0xFFA7F3D0),
+              bevelLight: Color(0xFF2E5E88),
+              bevelDark: Color(0xFF050E14),
+              glow: Color(0xFF10B981),
+            ),
+            'minimalist_dark': const ThemePalette(
+              id: 'minimalist_dark',
+              name: 'Minimalist Stealth Titanium',
+              background: Color(0xFF090A0F),
+              chassis: Color(0xFF13151D),
+              surface: Color(0xFF1E222E),
+              primary: Color(0xFFE2E8F0),
+              highlight: Color(0xFFFFFFFF),
+              bevelLight: Color(0xFF475569),
+              bevelDark: Color(0xFF05070A),
+              glow: Color(0xFF94A3B8),
+            ),
+          };
+
           const List<String> popularMedicines = [
             'אקמול (Acamol)',
             'אופטלגין (Optalgin)',
@@ -310,23 +388,19 @@ jobs:
               'voice_alerts': 'חיווי קולי מלא בהתראות (TTS)',
               'alert_sound': 'סוג התרעה ושמע',
               'sound_vol': 'עוצמת שמע והקראה',
-              'themes_title': 'ערכות צבע וחומרה 3D',
-              'bg_style': 'גרפיקה מונפשת תלת-ממדית',
+              'themes_title': 'ערכות צבע וחומרה 3D (קרוסלה)',
               'high_contrast': 'מצב כבדי ראייה (ניגודיות שיא)',
-              'alert_popup_title': '⚠️ תזכורת נטילת תרופות ⚠️',
+              'alert_popup_title': '⚠️ תזכורת נטילת תרופות ⚠️️',
               'btn_taken': 'נלקח כעת',
               'btn_snooze': 'דחה ב-10 דק׳',
               'btn_skip': 'בטל הפעם',
-              'bg_grid': 'מנהרת TRON תלת-ממדית אינסופית',
-              'bg_hex': 'ליבת כור שקועה 3D עם מנסרות',
-              'bg_plasma': 'מערבולת חלקיקים תלת-ממדית (Vortex)',
-              'bg_carbon': 'מארג סיבי פחמן 3D עם קרן אור',
               'tts_alert': 'תזכורת. הגיע הזמן ליטול את התרופה: {pills}',
               'sound_opt_voice': '🗣️ התרעת חיווי קולי (דיבור והקראה)',
               'sound_opt_electric': '⚡ סייבר אלקטרוני (Sweep)',
               'sound_opt_gong': '🔔 גונג הרמוני עמוק',
               'sound_opt_alarm': '🚨 אזעקת לייזר חדה',
               'sound_opt_bell': '⏱️ פעמון דיגיטלי נקי',
+              'test_audio_btn': 'שמע בדיקה',
             },
             'en': {
               'app_name': 'CYBER PHARMA 3D',
@@ -367,23 +441,19 @@ jobs:
               'voice_alerts': 'Voice Announcements (TTS)',
               'alert_sound': 'Alert Tone & Voice Mode',
               'sound_vol': 'Master Volume',
-              'themes_title': '3D Hardware Theme Engine',
-              'bg_style': '3D Animated Graphic Engine',
+              'themes_title': '3D Hardware Theme Engine (Carousel)',
               'high_contrast': 'High Contrast Mode',
               'alert_popup_title': '⚠️ Medicine Reminder Alert ⚠️',
               'btn_taken': 'Taken Now',
               'btn_snooze': 'Snooze 10m',
               'btn_skip': 'Dismiss',
-              'bg_grid': 'Infinite 3D Tron Grid Tunnel',
-              'bg_hex': '3D Hex Reactor Core with Pillars',
-              'bg_plasma': '3D Particle Hologram Vortex',
-              'bg_carbon': '3D Carbon Weave with Light Sweep',
               'tts_alert': 'Reminder. Time to take medicine: {pills}',
               'sound_opt_voice': '🗣️ Voice Alert (Spoken Announcement)',
               'sound_opt_electric': '⚡ Cyber Electronic Sweep',
               'sound_opt_gong': '🔔 Deep Harmonic Gong',
               'sound_opt_alarm': '🚨 Sharp Laser Siren',
               'sound_opt_bell': '⏱️ Digital Crystal Bell',
+              'test_audio_btn': 'Preview Audio',
             },
             'ru': {
               'app_name': 'КИБЕР ФАРМА 3D',
@@ -424,23 +494,19 @@ jobs:
               'voice_alerts': 'Голосовое оповещение (TTS)',
               'alert_sound': 'Тип сигнала и оповещения',
               'sound_vol': 'Громкость',
-              'themes_title': '3D темы консоли',
-              'bg_style': '3D Живая графическая анимация',
+              'themes_title': '3D темы консоли (Карусель)',
               'high_contrast': 'Высокая контрастность',
               'alert_popup_title': '⚠️ Прием лекарств ⚠️',
               'btn_taken': 'Принято',
               'btn_snooze': 'Отложить на 10 мин',
               'btn_skip': 'Пропустить',
-              'bg_grid': 'Бесконечный 3D тоннель Tron',
-              'bg_hex': 'Глубокий 3D Hex реактор',
-              'bg_plasma': '3D Вихрь голографических частиц',
-              'bg_carbon': '3D Карбон с лучом света',
               'tts_alert': 'Внимание. Пришло время принять: {pills}',
               'sound_opt_voice': '🗣️ Голосовое оповещение (Речь)',
               'sound_opt_electric': '⚡ Кибер-свип',
               'sound_opt_gong': '🔔 Гармонический гонг',
               'sound_opt_alarm': '🚨 Лазерная сирена',
               'sound_opt_bell': '⏱️ Цифровой колокол',
+              'test_audio_btn': 'Тест аудио',
             },
             'ro': {
               'app_name': 'CYBER PHARMA 3D',
@@ -481,23 +547,19 @@ jobs:
               'voice_alerts': 'Alerte Vocale (TTS)',
               'alert_sound': 'Tip alertă și sunet',
               'sound_vol': 'Volum',
-              'themes_title': 'Teme Hardware 3D',
-              'bg_style': 'Animație grafică 3D',
+              'themes_title': 'Teme Hardware 3D (Carusel)',
               'high_contrast': 'Contrast ridicat',
-              'alert_popup_title': '⚠️ Memento tratament ⚠️',
+              'alert_popup_title': '⚠️️ Memento tratament ⚠️',
               'btn_taken': 'Luat acum',
               'btn_snooze': 'Amână 10m',
               'btn_skip': 'Omite',
-              'bg_grid': 'Tunel 3D Tron Infinit',
-              'bg_hex': 'Reactor hexagonal 3D profund',
-              'bg_plasma': 'Vortex de particule 3D',
-              'bg_carbon': 'Fibră de carbon 3D cu reflexie',
               'tts_alert': 'Atenție. Luați medicamentul: {pills}',
               'sound_opt_voice': '🗣️ Alertă Vocală (Sinteză vocală)',
               'sound_opt_electric': '⚡ Sweep Electronic',
               'sound_opt_gong': '🔔 Gong Armonic',
               'sound_opt_alarm': '🚨 Sirenă Laser',
               'sound_opt_bell': '⏱️ Clopot Digital',
+              'test_audio_btn': 'Test audio',
             },
             'ar': {
               'app_name': 'سايبر فارما 3D',
@@ -538,23 +600,19 @@ jobs:
               'voice_alerts': 'التنبيهات الصوتية (TTS)',
               'alert_sound': 'نوع التنبيه والصوت',
               'sound_vol': 'مستوى الصوت',
-              'themes_title': 'محرك המظهر 3D',
-              'bg_style': 'رسومات متحركة ثلاثية الأبعاد',
+              'themes_title': 'محرك المظهر 3D (دائري)',
               'high_contrast': 'تباين فائق',
               'alert_popup_title': '⚠️ تنبيه موعد الدواء ⚠️',
               'btn_taken': 'تم الأخذ',
               'btn_snooze': 'تأجيل 10 د',
               'btn_skip': 'تخطي',
-              'bg_grid': 'نفق شبكة ترون ثلاثي الأبعاد',
-              'bg_hex': 'مفاعل سداسي 3D عميق',
-              'bg_plasma': 'دوامة جسيمات 3D مجسمة',
-              'bg_carbon': 'ألياف كربون 3D مع شعاع ضوء',
               'tts_alert': 'تنبيه. حان وقت تناول: {pills}',
               'sound_opt_voice': '🗣️ تنبيه صوتي بشري (نطق وقراءة)',
               'sound_opt_electric': '⚡ موجة إلكترونية',
               'sound_opt_gong': '🔔 جرس متناغم عميق',
               'sound_opt_alarm': '🚨 إنذار ليزر حاد',
               'sound_opt_bell': '⏱️ جرس رقمي نقي',
+              'test_audio_btn': 'تجربة الصوت',
             },
             'de': {
               'app_name': 'CYBER PHARMA 3D',
@@ -595,23 +653,19 @@ jobs:
               'voice_alerts': 'Sprachausgabe (TTS)',
               'alert_sound': 'Alarmtyp & Sound',
               'sound_vol': 'Lautstärke',
-              'themes_title': '3D Hardware-Designs',
-              'bg_style': '3D Animierte Computergrafik',
+              'themes_title': '3D Hardware-Designs (Karussell)',
               'high_contrast': 'Hoher Kontrast',
               'alert_popup_title': '⚠️ Medikamentenerinnerung ⚠️',
               'btn_taken': 'Eingenommen',
               'btn_snooze': '10 Min Pause',
               'btn_skip': 'Überspringen',
-              'bg_grid': 'Unendlicher 3D-Tron-Tunnel',
-              'bg_hex': 'Tiefer 3D-Wabenreaktor',
-              'bg_plasma': '3D-Partikel-Vortex-Hologramm',
-              'bg_carbon': '3D-Kohlefaser mit Lichtstrahl',
               'tts_alert': 'Achtung. Zeit für: {pills}',
               'sound_opt_voice': '🗣️ Sprachansage (Intelligente TTS)',
               'sound_opt_electric': '⚡ Cyber Elektronisch',
               'sound_opt_gong': '🔔 Tiefer Gong',
               'sound_opt_alarm': '🚨 Laser-Sirene',
               'sound_opt_bell': '⏱️ Digitale Glocke',
+              'test_audio_btn': 'Audio Vorschau',
             }
           };
 
@@ -623,69 +677,6 @@ jobs:
             {'code': 'ar', 'label': 'العربية'},
             {'code': 'de', 'label': 'Deutsch'},
           ];
-
-          const Map<String, Map<String, dynamic>> themePalettes = {
-            'cyber': {
-              'name': 'Electric Cyan Mech',
-              'bg': Color(0xFF030814),
-              'surface': Color(0xFF0D1B36),
-              'accent': Color(0xFF00F0FF),
-              'highlight': Color(0xFF70F8FF),
-              'bevel': Color(0xFF1E3A6D),
-              'chassis': Color(0xFF060B14),
-              'glow': Color(0xFF00E5FF),
-            },
-            'emerald': {
-              'name': 'Matrix Green Core',
-              'bg': Color(0xFF02140A),
-              'surface': Color(0xFF06301A),
-              'accent': Color(0xFF00FF88),
-              'highlight': Color(0xFF80FFC4),
-              'bevel': Color(0xFF0E5C34),
-              'chassis': Color(0xFF030D07),
-              'glow': Color(0xFF00FF7F),
-            },
-            'crimson': {
-              'name': 'Viper Neon Red',
-              'bg': Color(0xFF160309),
-              'surface': Color(0xFF330914),
-              'accent': Color(0xFFFF0055),
-              'highlight': Color(0xFFFF709B),
-              'bevel': Color(0xFF6B122A),
-              'chassis': Color(0xFF0D0206),
-              'glow': Color(0xFFFF1744),
-            },
-            'purple': {
-              'name': 'Cosmic Channel Magenta',
-              'bg': Color(0xFF0D031D),
-              'surface': Color(0xFF260D4E),
-              'accent': Color(0xFFE0218A),
-              'highlight': Color(0xFFFF77C6),
-              'bevel': Color(0xFF501F9E),
-              'chassis': Color(0xFF080214),
-              'glow': Color(0xFFFF007F),
-            },
-            'solar': {
-              'name': 'Solar Mech Amber',
-              'bg': Color(0xFF140C02),
-              'surface': Color(0xFF382306),
-              'accent': Color(0xFFFFB703),
-              'highlight': Color(0xFFFFE082),
-              'bevel': Color(0xFF73490D),
-              'chassis': Color(0xFF0C0701),
-              'glow': Color(0xFFFF9100),
-            },
-            'stealth': {
-              'name': 'Titanium Alloy Steel',
-              'bg': Color(0xFF0E1116),
-              'surface': Color(0xFF202632),
-              'accent': Color(0xFF38BDF8),
-              'highlight': Color(0xFFFFFFFF),
-              'bevel': Color(0xFF475569),
-              'chassis': Color(0xFF090B0E),
-              'glow': Color(0xFF0EA5E9),
-            },
-          };
 
           void main() async {
             WidgetsFlutterBinding.ensureInitialized();
@@ -728,8 +719,7 @@ jobs:
             bool _highContrast = false;
             String _soundType = 'voice';
             double _soundVolume = 1.0;
-            String _themeKey = 'cyber';
-            String _bgEffect = 'grid';
+            String _themeKey = 'cyberpunk';
             bool _firstRun = true;
             bool _initialized = false;
             Key _appKey = UniqueKey();
@@ -741,7 +731,7 @@ jobs:
             String get soundType => _soundType;
             double get soundVolume => _soundVolume;
             String get themeKey => _themeKey;
-            String get bgEffect => _bgEffect;
+            ThemePalette get currentPalette => themePalettes[_themeKey] ?? themePalettes['cyberpunk']!;
 
             @override
             void initState() {
@@ -758,8 +748,7 @@ jobs:
                 _highContrast = prefs.getBool('c_hc') ?? false;
                 _soundType = prefs.getString('c_sound') ?? 'voice';
                 _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
-                _themeKey = prefs.getString('c_theme') ?? 'cyber';
-                _bgEffect = prefs.getString('c_bgeffect') ?? 'grid';
+                _themeKey = prefs.getString('c_theme') ?? 'cyberpunk';
                 _firstRun = prefs.getBool('c_first_run') ?? true;
                 _initialized = true;
               });
@@ -799,16 +788,6 @@ jobs:
               });
             }
 
-            void setBgEffect(String effect) async {
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.setString('c_bgeffect', effect);
-              HapticFeedback.lightImpact();
-              setState(() {
-                _bgEffect = effect;
-                _appKey = UniqueKey();
-              });
-            }
-
             void updateSettings({bool? voice, bool? hc, String? sound, double? volume}) async {
               final prefs = await SharedPreferences.getInstance();
               setState(() {
@@ -843,8 +822,8 @@ jobs:
               if (!_initialized) return const SizedBox();
 
               final bool isRtl = _lang == 'he' || _lang == 'ar';
-              final palette = themePalettes[_themeKey] ?? themePalettes['cyber']!;
-              final Color primary = _highContrast ? const Color(0xFFFFE500) : palette['accent']!;
+              final palette = currentPalette;
+              final Color primary = _highContrast ? const Color(0xFFFFE500) : palette.primary;
 
               return KeyedSubtree(
                 key: _appKey,
@@ -859,20 +838,305 @@ jobs:
                   ),
                   home: Directionality(
                     textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-                    child: _firstRun ? const FirstTimeSetupScreen() : const MainDashboard(),
+                    child: AppSplashScreen(
+                      onFinish: () => _firstRun ? const FirstTimeSetupScreen() : const MainDashboard(),
+                    ),
                   ),
                 ),
               );
             }
           }
 
-          // 3D Illuminated Channel Letter Text (Matching the 3D illuminated letters from user image)
+          // 3D Specular Realistic Capsule Component with depth reflections
+          class Futuristic3DPillIcon extends StatelessWidget {
+            final double size;
+            final Color primaryColor;
+            final Color secondaryColor;
+            final Color glowColor;
+
+            const Futuristic3DPillIcon({
+              super.key,
+              this.size = 110,
+              required this.primaryColor,
+              required this.secondaryColor,
+              required this.glowColor,
+            });
+
+            @override
+            Widget build(BuildContext context) {
+              return Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: glowColor.withOpacity(0.55),
+                      blurRadius: size * 0.45,
+                      spreadRadius: size * 0.08,
+                    ),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.9),
+                      offset: Offset(0, size * 0.15),
+                      blurRadius: size * 0.3,
+                    ),
+                  ],
+                ),
+                child: CustomPaint(
+                  painter: Pill3DPainter(
+                    topColor: primaryColor,
+                    bottomColor: secondaryColor,
+                    glowColor: glowColor,
+                  ),
+                ),
+              );
+            }
+          }
+
+          class Pill3DPainter extends CustomPainter {
+            final Color topColor;
+            final Color bottomColor;
+            final Color glowColor;
+
+            Pill3DPainter({
+              required this.topColor,
+              required this.bottomColor,
+              required this.glowColor,
+            });
+
+            @override
+            void paint(Canvas canvas, Size size) {
+              final double w = size.width * 0.46;
+              final double h = size.height * 0.78;
+              final double left = (size.width - w) / 2;
+              final double top = (size.height - h) / 2;
+              final RRect pillRRect = RRect.fromRectAndRadius(
+                Rect.fromLTWH(left, top, w, h),
+                Radius.circular(w / 2),
+              );
+
+              // 1. Shadow Underneath (Deep extrusion ground shade)
+              canvas.drawRRect(
+                pillRRect.shift(const Offset(4, 10)),
+                Paint()
+                  ..color = Colors.black.withOpacity(0.8)
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12),
+              );
+
+              // 2. Beveled Metallic Body Base
+              final baseGradient = LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.white.withOpacity(0.9),
+                  topColor,
+                  bottomColor,
+                  Colors.black.withOpacity(0.95),
+                ],
+                stops: const [0.0, 0.35, 0.75, 1.0],
+              );
+              canvas.drawRRect(
+                pillRRect,
+                Paint()..shader = baseGradient.createShader(pillRRect.outerRect),
+              );
+
+              // 3. Center Cyber-Divide Ring (Precision metallic seam)
+              final seamY = top + (h / 2);
+              final seamPaint = Paint()
+                ..color = Colors.white
+                ..strokeWidth = 3.5
+                ..style = PaintingStyle.stroke;
+              canvas.drawLine(
+                Offset(left + 2, seamY),
+                Offset(left + w - 2, seamY),
+                seamPaint,
+              );
+
+              final seamGlow = Paint()
+                ..color = glowColor
+                ..strokeWidth = 6.0
+                ..style = PaintingStyle.stroke
+                ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+              canvas.drawLine(
+                Offset(left + 4, seamY),
+                Offset(left + w - 4, seamY),
+                seamGlow,
+              );
+
+              // 4. Specular Curved Light Reflection on Left Rim
+              final highlightPath = Path();
+              highlightPath.addRRect(
+                RRect.fromRectAndRadius(
+                  Rect.fromLTWH(left + 5, top + 6, w * 0.28, h * 0.88),
+                  Radius.circular(w * 0.15),
+                ),
+              );
+              canvas.drawPath(
+                highlightPath,
+                Paint()
+                  ..shader = LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.white.withOpacity(0.95),
+                      Colors.white.withOpacity(0.1),
+                    ],
+                  ).createShader(Rect.fromLTWH(left + 5, top + 6, w * 0.28, h * 0.88)),
+              );
+
+              // 5. High-gloss specular dots
+              canvas.drawCircle(
+                Offset(left + (w * 0.35), top + (h * 0.2)),
+                w * 0.12,
+                Paint()..color = Colors.white.withOpacity(0.85),
+              );
+            }
+
+            @override
+            bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+          }
+
+          // Splash Screen Component with Elastic Micro-Animation & Developer Credits
+          class AppSplashScreen extends StatefulWidget {
+            final Widget Function() onFinish;
+
+            const AppSplashScreen({super.key, required this.onFinish});
+
+            @override
+            State<AppSplashScreen> createState() => _AppSplashScreenState();
+          }
+
+          class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProviderStateMixin {
+            late AnimationController _animCtrl;
+            late Animation<double> _scaleAnim;
+            late Animation<double> _fadeAnim;
+            bool _navigated = false;
+
+            @override
+            void initState() {
+              super.initState();
+              _animCtrl = AnimationController(
+                vsync: this,
+                duration: const Duration(milliseconds: 2400),
+              );
+
+              _scaleAnim = Tween<double>(begin: 0.3, end: 1.0).animate(
+                CurvedAnimation(
+                  parent: _animCtrl,
+                  curve: const Interval(0.0, 0.7, curve: Curves.elasticOut),
+                ),
+              );
+
+              _fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(
+                  parent: _animCtrl,
+                  curve: const Interval(0.1, 0.6, curve: Curves.easeIn),
+                ),
+              );
+
+              _animCtrl.forward();
+
+              Timer(const Duration(milliseconds: 2900), () {
+                if (mounted && !_navigated) {
+                  _navigated = true;
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      transitionDuration: const Duration(milliseconds: 700),
+                      pageBuilder: (context, anim, secAnim) => widget.onFinish(),
+                      transitionsBuilder: (context, anim, secAnim, child) {
+                        return FadeTransition(opacity: anim, child: child);
+                      },
+                    ),
+                  );
+                }
+              });
+            }
+
+            @override
+            void dispose() {
+              _animCtrl.dispose();
+              super.dispose();
+            }
+
+            @override
+            Widget build(BuildContext context) {
+              final palette = themePalettes['cyberpunk']!;
+
+              return Scaffold(
+                backgroundColor: palette.background,
+                body: Interactive3DGlassBackground(
+                  palette: palette,
+                  isHighContrast: false,
+                  child: Center(
+                    child: AnimatedBuilder(
+                      animation: _animCtrl,
+                      builder: (context, child) {
+                        return FadeTransition(
+                          opacity: _fadeAnim,
+                          child: ScaleTransition(
+                            scale: _scaleAnim,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Futuristic3DPillIcon(
+                                  size: 140,
+                                  primaryColor: palette.primary,
+                                  secondaryColor: palette.highlight,
+                                  glowColor: palette.glow,
+                                ),
+                                const SizedBox(height: 36),
+                                textChannel3D(
+                                  'CYBER PHARMA 3D',
+                                  fontSize: 32,
+                                  color: Colors.white,
+                                  glowColor: palette.primary,
+                                ),
+                                const SizedBox(height: 12),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: palette.chassis.withOpacity(0.8),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(color: palette.highlight.withOpacity(0.6), width: 1.6),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: palette.glow.withOpacity(0.3),
+                                        blurRadius: 18,
+                                      ),
+                                    ],
+                                  ),
+                                  child: textChannel3D(
+                                    'נוצר ופותח על ידי רוני שניידר',
+                                    fontSize: 15,
+                                    color: palette.highlight,
+                                  ),
+                                ),
+                                const SizedBox(height: 32),
+                                SizedBox(
+                                  width: 44,
+                                  height: 44,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3.2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(palette.primary),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              );
+            }
+          }
+
           Widget textChannel3D(
             String text, {
             required double fontSize,
             required Color color,
             Color? glowColor,
-            double depth = 4.0,
             TextAlign textAlign = TextAlign.start,
             FontWeight fontWeight = FontWeight.w900,
           }) {
@@ -896,14 +1160,14 @@ jobs:
                     offset: const Offset(1.0, 1.2),
                     blurRadius: 0.5,
                   ),
-                  Shadow(
-                    color: const Color(0xFF1E293B),
-                    offset: const Offset(1.8, 2.2),
+                  const Shadow(
+                    color: Color(0xFF1E293B),
+                    offset: Offset(1.8, 2.2),
                     blurRadius: 0.5,
                   ),
-                  Shadow(
-                    color: const Color(0xFF0F172A),
-                    offset: const Offset(2.6, 3.2),
+                  const Shadow(
+                    color: Color(0xFF0F172A),
+                    offset: Offset(2.6, 3.2),
                     blurRadius: 1.0,
                   ),
                   Shadow(
@@ -931,45 +1195,40 @@ jobs:
             );
           }
 
-          // Realistic 3D Channel-Letter Physical Push Button with Ground Halo Light
-          class Hardware3DButton extends StatefulWidget {
+          class Pneumatic3DButton extends StatefulWidget {
             final Widget child;
             final VoidCallback onTap;
             final double height;
             final double? width;
-            final Color? glowColor;
-            final double radius;
+            final double depth;
+            final ThemePalette palette;
+            final Color? customGlow;
             final bool isPushed;
 
-            const Hardware3DButton({
+            const Pneumatic3DButton({
               super.key,
               required this.child,
               required this.onTap,
+              required this.palette,
               this.height = 58,
               this.width,
-              this.glowColor,
-              this.radius = 16,
+              this.depth = 6.0,
+              this.customGlow,
               this.isPushed = false,
             });
 
             @override
-            State<Hardware3DButton> createState() => _Hardware3DButtonState();
+            State<Pneumatic3DButton> createState() => _Pneumatic3DButtonState();
           }
 
-          class _Hardware3DButtonState extends State<Hardware3DButton> {
+          class _Pneumatic3DButtonState extends State<Pneumatic3DButton> {
             bool _down = false;
 
             @override
             Widget build(BuildContext context) {
-              final app = CyberPillMasterApp.of(context);
-              final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
-              final Color accent = widget.glowColor ?? (app.highContrast ? const Color(0xFFFFE500) : palette['accent']!);
-              final Color chassis = palette['chassis'] ?? const Color(0xFF060B14);
-              final Color surface = palette['surface']!;
-              final Color bevel = palette['bevel'] ?? const Color(0xFF1E3A6D);
+              final glowColor = widget.customGlow ?? widget.palette.glow;
               final bool pressed = _down || widget.isPushed;
-
-              const double extrusion = 7.0;
+              final double currentOffset = pressed ? widget.depth : 0.0;
 
               return GestureDetector(
                 onTapDown: (_) {
@@ -982,128 +1241,105 @@ jobs:
                 },
                 onTapCancel: () => setState(() => _down = false),
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 120),
-                  curve: Curves.easeOut,
-                  height: widget.height,
+                  duration: const Duration(milliseconds: 140),
+                  curve: Curves.elasticOut,
                   width: widget.width,
-                  padding: const EdgeInsets.all(3.5),
+                  height: widget.height,
                   decoration: BoxDecoration(
-                    color: chassis,
-                    borderRadius: BorderRadius.circular(widget.radius + 3),
-                    border: Border.all(color: Colors.black, width: 2.8),
+                    borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.95),
-                        offset: const Offset(0, 14),
-                        blurRadius: 24,
+                        color: glowColor.withOpacity(pressed ? 0.75 : 0.45),
+                        offset: Offset(0, pressed ? 3 : 8),
+                        blurRadius: pressed ? 28 : 22,
+                        spreadRadius: pressed ? 3 : 1,
                       ),
-                      BoxShadow(
-                        color: accent.withOpacity(pressed ? 0.85 : 0.60),
-                        offset: const Offset(0, 4),
-                        blurRadius: pressed ? 32 : 24,
-                        spreadRadius: pressed ? 4 : 2,
-                      ),
-                      BoxShadow(
-                        color: accent.withOpacity(0.35),
-                        offset: const Offset(0, 0),
-                        blurRadius: 45,
-                        spreadRadius: 6,
+                      const BoxShadow(
+                        color: Colors.black87,
+                        offset: Offset(0, 14),
+                        blurRadius: 20,
                       ),
                     ],
                   ),
                   child: Stack(
                     children: [
-                      // Extrusion Under-Wall (Metallic Brushed Steel 3D returns)
                       Positioned(
+                        top: widget.depth,
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        height: widget.height - 7,
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(widget.radius),
-                            gradient: const LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Color(0xFF64748B),
-                                Color(0xFF334155),
-                                Color(0xFF0F172A),
-                                Color(0xFF020617),
-                              ],
-                            ),
-                            border: Border.all(color: bevel.withOpacity(0.9), width: 1.8),
-                          ),
-                        ),
-                      ),
-                      // Push Cap (Moving 3D Acrylic Face)
-                      AnimatedPositioned(
-                        duration: const Duration(milliseconds: 70),
-                        curve: Curves.easeOutCubic,
-                        top: pressed ? extrusion : 0.0,
-                        left: 0,
-                        right: 0,
-                        height: widget.height - 7 - (pressed ? 0 : extrusion),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(widget.radius),
+                            borderRadius: BorderRadius.circular(18),
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
+                              colors: [
+                                widget.palette.bevelLight,
+                                widget.palette.bevelDark,
+                              ],
+                            ),
+                            border: Border.all(
+                              color: widget.palette.chassis,
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      AnimatedPositioned(
+                        duration: const Duration(milliseconds: 100),
+                        curve: Curves.easeOutCubic,
+                        top: currentOffset,
+                        left: 0,
+                        right: 0,
+                        bottom: widget.depth - currentOffset,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                               colors: pressed
                                   ? [
-                                      chassis,
-                                      surface.withOpacity(0.9),
-                                      const Color(0xFF050B14),
+                                      widget.palette.surface,
+                                      widget.palette.chassis,
                                     ]
                                   : [
-                                      palette['highlight']!.withOpacity(0.45),
-                                      surface,
-                                      chassis.withOpacity(0.98),
+                                      widget.palette.surface.withOpacity(0.95),
+                                      widget.palette.chassis.withOpacity(0.98),
                                     ],
                             ),
                             border: Border.all(
-                              color: pressed ? accent : accent.withOpacity(0.95),
-                              width: 2.4,
+                              color: pressed
+                                  ? widget.palette.primary
+                                  : widget.palette.primary.withOpacity(0.85),
+                              width: 2.2,
                             ),
-                            boxShadow: pressed
-                                ? [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.9),
-                                      offset: const Offset(0, 4),
-                                      blurRadius: 5,
-                                      spreadRadius: 1,
-                                    ),
-                                    BoxShadow(
-                                      color: accent.withOpacity(0.7),
-                                      blurRadius: 14,
-                                      spreadRadius: 1,
-                                    ),
-                                  ]
-                                : [
-                                    BoxShadow(
-                                      color: accent.withOpacity(0.65),
-                                      offset: const Offset(0, -2),
-                                      blurRadius: 8,
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.75),
-                                      offset: const Offset(0, 5),
-                                      blurRadius: 6,
-                                    ),
-                                  ],
+                            boxShadow: [
+                              if (!pressed)
+                                BoxShadow(
+                                  color: widget.palette.highlight.withOpacity(0.35),
+                                  offset: const Offset(0, 2),
+                                  blurRadius: 4,
+                                ),
+                            ],
                           ),
                           child: Stack(
                             children: [
                               Positioned(
                                 top: 0,
-                                left: 10,
-                                right: 10,
-                                height: 2.2,
+                                left: 12,
+                                right: 12,
+                                height: 2,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.85),
-                                    borderRadius: BorderRadius.circular(2),
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.transparent,
+                                        widget.palette.highlight.withOpacity(0.9),
+                                        Colors.transparent,
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1119,7 +1355,6 @@ jobs:
             }
           }
 
-          // 3D Metallic Channel Module Card with Screws and Halo Backlight
           class MechModuleCard extends StatelessWidget {
             final Widget child;
             final bool isPressed;
@@ -1135,16 +1370,13 @@ jobs:
             @override
             Widget build(BuildContext context) {
               final app = CyberPillMasterApp.of(context);
-              final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
-              final Color glow = accentColor ?? (app.highContrast ? const Color(0xFFFFE500) : palette['accent']!);
-              final Color surface = palette['surface']!;
-              final Color chassis = palette['chassis'] ?? const Color(0xFF060B14);
-              final Color bevel = palette['bevel'] ?? const Color(0xFF1E3A6D);
+              final palette = app.currentPalette;
+              final Color glow = accentColor ?? (app.highContrast ? const Color(0xFFFFE500) : palette.primary);
 
               return Container(
                 margin: const EdgeInsets.only(bottom: 18),
                 decoration: BoxDecoration(
-                  color: chassis,
+                  color: palette.chassis,
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(color: Colors.black, width: 3.2),
                   boxShadow: [
@@ -1174,9 +1406,9 @@ jobs:
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        surface.withOpacity(0.95),
-                        bevel.withOpacity(0.75),
-                        chassis.withOpacity(0.98),
+                        palette.surface.withOpacity(0.95),
+                        palette.bevelLight.withOpacity(0.4),
+                        palette.chassis.withOpacity(0.98),
                       ],
                     ),
                     border: Border.all(
@@ -1227,32 +1459,30 @@ jobs:
             }
           }
 
-          // True 3D Multi-Layer Animated Graphics Engine (Smooth 60FPS 3D Mathematical Projection)
-          class DynamicFuturisticBackground extends StatefulWidget {
+          class Interactive3DGlassBackground extends StatefulWidget {
             final Widget child;
-            final Color accentColor;
+            final ThemePalette palette;
             final bool isHighContrast;
-            final String effectType;
 
-            const DynamicFuturisticBackground({
+            const Interactive3DGlassBackground({
               super.key,
               required this.child,
-              required this.accentColor,
+              required this.palette,
               required this.isHighContrast,
-              required this.effectType,
             });
 
             @override
-            State<DynamicFuturisticBackground> createState() => _DynamicFuturisticBackgroundState();
+            State<Interactive3DGlassBackground> createState() => _Interactive3DGlassBackgroundState();
           }
 
-          class _DynamicFuturisticBackgroundState extends State<DynamicFuturisticBackground> with SingleTickerProviderStateMixin {
+          class _Interactive3DGlassBackgroundState extends State<Interactive3DGlassBackground>
+              with SingleTickerProviderStateMixin {
             late AnimationController _anim;
 
             @override
             void initState() {
               super.initState();
-              _anim = AnimationController(vsync: this, duration: const Duration(seconds: 12))..repeat();
+              _anim = AnimationController(vsync: this, duration: const Duration(seconds: 10))..repeat();
             }
 
             @override
@@ -1267,314 +1497,130 @@ jobs:
                 return Container(color: Colors.black, child: widget.child);
               }
 
-              return AnimatedBuilder(
-                animation: _anim,
-                builder: (context, child) {
-                  return CustomPaint(
-                    painter: True3DGraphicsPainter(
-                      progress: _anim.value,
-                      color: widget.accentColor,
-                      effect: widget.effectType,
+              return Stack(
+                children: [
+                  Container(color: widget.palette.background),
+                  AnimatedBuilder(
+                    animation: _anim,
+                    builder: (context, _) {
+                      return CustomPaint(
+                        size: Size.infinite,
+                        painter: Responsive3DMeshPainter(
+                          progress: _anim.value,
+                          palette: widget.palette,
+                        ),
+                      );
+                    },
+                  ),
+                  AnimatedBuilder(
+                    animation: _anim,
+                    builder: (context, _) {
+                      final t = _anim.value * 2 * math.pi;
+                      return Stack(
+                        children: [
+                          Positioned(
+                            top: 80 + 30 * math.sin(t),
+                            left: 40 + 50 * math.cos(t * 0.7),
+                            child: Container(
+                              width: 220,
+                              height: 220,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: RadialGradient(
+                                  colors: [
+                                    widget.palette.highlight.withOpacity(0.35),
+                                    widget.palette.primary.withOpacity(0.12),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 120 + 40 * math.cos(t * 0.8),
+                            right: 30 + 40 * math.sin(t),
+                            child: Container(
+                              width: 260,
+                              height: 260,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: RadialGradient(
+                                  colors: [
+                                    widget.palette.glow.withOpacity(0.3),
+                                    Colors.transparent,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                    child: Container(
+                      color: widget.palette.background.withOpacity(0.4),
                     ),
-                    child: widget.child,
-                  );
-                },
+                  ),
+                  widget.child,
+                ],
               );
             }
           }
 
-          class True3DGraphicsPainter extends CustomPainter {
+          class Responsive3DMeshPainter extends CustomPainter {
             final double progress;
-            final Color color;
-            final String effect;
+            final ThemePalette palette;
 
-            True3DGraphicsPainter({required this.progress, required this.color, required this.effect});
+            Responsive3DMeshPainter({required this.progress, required this.palette});
 
             @override
             void paint(Canvas canvas, Size size) {
-              final basePaint = Paint()..color = const Color(0xFF030712);
-              canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), basePaint);
+              final double horizon = size.height * 0.52;
+              const double fov = 300.0;
+              const int cols = 16;
+              const int rows = 20;
 
-              if (effect == 'hex') {
-                _paint3DHexReactor(canvas, size);
-              } else if (effect == 'plasma') {
-                _paint3DParticleVortex(canvas, size);
-              } else if (effect == 'carbon') {
-                _paint3DCarbonSpecular(canvas, size);
-              } else {
-                _paint3DTronTunnel(canvas, size);
-              }
-            }
+              final linePaint = Paint()
+                ..color = palette.primary.withOpacity(0.25)
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 1.2;
 
-            // 1. True 3D Mathematical Perspective Tron Highway Tunnel with Floating Obelisks
-            void _paint3DTronTunnel(Canvas canvas, Size size) {
-              final double horizonY = size.height * 0.46;
-              final double centerX = size.width * 0.5;
-              const double fov = 280.0;
+              List<List<Offset>> gridPoints = [];
 
-              // Glowing Horizon Backdrop
-              final horizonPaint = Paint()
-                ..shader = LinearGradient(
-                  colors: [
-                    Colors.transparent,
-                    color.withOpacity(0.9),
-                    Colors.white.withOpacity(0.95),
-                    color.withOpacity(0.9),
-                    Colors.transparent,
-                  ],
-                ).createShader(Rect.fromLTWH(0, horizonY - 4, size.width, 8));
-              canvas.drawRect(Rect.fromLTWH(0, horizonY - 4, size.width, 8), horizonPaint);
-
-              // Horizon Sun Halo
-              final sunGlow = Paint()
-                ..shader = RadialGradient(
-                  colors: [
-                    color.withOpacity(0.55),
-                    color.withOpacity(0.2),
-                    Colors.transparent,
-                  ],
-                ).createShader(Rect.fromCircle(center: Offset(centerX, horizonY), radius: size.width * 0.4));
-              canvas.drawCircle(Offset(centerX, horizonY), size.width * 0.4, sunGlow);
-
-              // 3D Floor Perspective Lines
-              for (double x = -size.width * 1.5; x <= size.width * 2.5; x += 55) {
-                final p = Paint()
-                  ..color = color.withOpacity(0.24)
-                  ..strokeWidth = 1.6;
-                canvas.drawLine(Offset(centerX, horizonY), Offset(x, size.height), p);
-              }
-
-              // 3D Ceiling Perspective Lines (Tunnel effect)
-              for (double x = -size.width * 1.2; x <= size.width * 2.2; x += 65) {
-                final p = Paint()
-                  ..color = color.withOpacity(0.14)
-                  ..strokeWidth = 1.2;
-                canvas.drawLine(Offset(centerX, horizonY), Offset(x, 0), p);
-              }
-
-              // Transverse 3D Receding Floor Grid Lines (Moving continuously with progress)
-              const int numLines = 26;
-              for (int i = 0; i < numLines; i++) {
-                double z = ((i - progress) / numLines);
+              for (int r = 0; r <= rows; r++) {
+                List<Offset> rowPoints = [];
+                double z = ((r - progress) / rows);
                 if (z <= 0) z += 1.0;
-                double scale = 1.0 - z;
-                double y = horizonY + math.pow(scale, 2.8) * (size.height - horizonY);
 
-                double alpha = scale.clamp(0.0, 1.0);
-                final p = Paint()
-                  ..color = color.withOpacity(0.35 * alpha)
-                  ..strokeWidth = 1.2 + 2.0 * alpha;
-                canvas.drawLine(Offset(0, y), Offset(size.width, y), p);
+                double depth = (1.0 - z) * 600.0 + 30.0;
+                double scale = fov / (fov + depth);
+                double y = horizon + (size.height - horizon) * (scale * 1.6);
+
+                for (int c = 0; c <= cols; c++) {
+                  double worldX = (c - cols / 2) * (size.width / (cols * 0.45));
+                  double x = size.width / 2 + (worldX * scale);
+                  double wave = math.sin(c * 0.5 + progress * 2 * math.pi) * 8.0 * scale;
+                  rowPoints.add(Offset(x, y + wave));
+                }
+                gridPoints.add(rowPoints);
               }
 
-              // Transverse 3D Receding Ceiling Grid Lines
-              for (int i = 0; i < 18; i++) {
-                double z = ((i - progress) / 18);
-                if (z <= 0) z += 1.0;
-                double scale = 1.0 - z;
-                double y = horizonY - math.pow(scale, 2.5) * horizonY;
-
-                double alpha = scale.clamp(0.0, 1.0);
-                final p = Paint()
-                  ..color = color.withOpacity(0.20 * alpha)
-                  ..strokeWidth = 1.0 + 1.6 * alpha;
-                canvas.drawLine(Offset(0, y), Offset(size.width, y), p);
-              }
-
-              // Floating 3D Cyber Monoliths / Geometric Diamonds travelling forward
-              const int numMonoliths = 6;
-              for (int i = 0; i < numMonoliths; i++) {
-                double monoProg = (progress + (i / numMonoliths)) % 1.0;
-                double zDist = (1.0 - monoProg) * 800.0 + 40.0;
-                double side = (i % 2 == 0) ? -1.0 : 1.0;
-                double worldX = side * (120.0 + (i % 3) * 60.0);
-                double worldY = 30.0 + math.sin(monoProg * math.pi * 2 + i) * 20.0;
-
-                double projScale = fov / (fov + zDist);
-                double sx = centerX + worldX * projScale * 2.8;
-                double sy = horizonY + worldY * projScale * 2.4;
-                double rSize = 28.0 * projScale * 2.5;
-
-                if (sy > horizonY && sy < size.height && sx > 0 && sx < size.width) {
-                  final monoPaint = Paint()
-                    ..color = color.withOpacity((projScale * 0.9).clamp(0.1, 0.8))
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 2.0 * projScale;
-                  
-                  Path dPath = Path();
-                  dPath.moveTo(sx, sy - rSize);
-                  dPath.lineTo(sx + rSize * 0.7, sy);
-                  dPath.lineTo(sx, sy + rSize);
-                  dPath.lineTo(sx - rSize * 0.7, sy);
-                  dPath.close();
-                  canvas.drawPath(dPath, monoPaint);
-
-                  final glowCore = Paint()
-                    ..color = Colors.white.withOpacity((projScale * 0.75).clamp(0.0, 1.0));
-                  canvas.drawCircle(Offset(sx, sy), rSize * 0.25, glowCore);
+              for (int r = 0; r < gridPoints.length; r++) {
+                for (int c = 0; c < gridPoints[r].length; c++) {
+                  if (c < gridPoints[r].length - 1) {
+                    canvas.drawLine(gridPoints[r][c], gridPoints[r][c + 1], linePaint);
+                  }
+                  if (r < gridPoints.length - 1) {
+                    canvas.drawLine(gridPoints[r][c], gridPoints[r + 1][c], linePaint);
+                  }
                 }
               }
-            }
-
-            // 2. 3D Isometric Undulating Hexagonal Reactor Core Matrix
-            void _paint3DHexReactor(Canvas canvas, Size size) {
-              const double radius = 32.0;
-              final double w = math.sqrt(3) * radius;
-              final double h = 2 * radius * 0.75;
-
-              int row = 0;
-              for (double y = -radius; y < size.height + radius * 2; y += h, row++) {
-                double xOffset = (row % 2 == 0) ? 0 : w / 2;
-                for (double x = -w + xOffset; x < size.width + w * 2; x += w) {
-                  double distFromCenter = math.sqrt(math.pow(x - size.width * 0.5, 2) + math.pow(y - size.height * 0.5, 2));
-                  double wave = math.sin((distFromCenter * 0.02) - (progress * 2 * math.pi));
-                  double elevation = (wave * 12.0) + 14.0;
-
-                  Path topCap = _createHexPath(x, y - elevation, radius * 0.88);
-                  final topPaint = Paint()
-                    ..shader = LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color.lerp(const Color(0xFF1E293B), color, (wave + 1) * 0.25)!,
-                        const Color(0xFF090D16),
-                      ],
-                    ).createShader(Rect.fromCircle(center: Offset(x, y - elevation), radius: radius));
-                  canvas.drawPath(topCap, topPaint);
-
-                  final edgePaint = Paint()
-                    ..color = color.withOpacity(((wave + 1) * 0.35).clamp(0.12, 0.85))
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 1.8;
-                  canvas.drawPath(topCap, edgePaint);
-
-                  Path leftFacet = Path();
-                  leftFacet.moveTo(x - radius * 0.88 * 0.5, y - elevation + radius * 0.88 * 0.866);
-                  leftFacet.lineTo(x, y - elevation + radius * 0.88);
-                  leftFacet.lineTo(x, y + radius * 0.88);
-                  leftFacet.lineTo(x - radius * 0.88 * 0.5, y + radius * 0.88 * 0.866);
-                  leftFacet.close();
-                  final leftPaint = Paint()..color = const Color(0xFF080C14);
-                  canvas.drawPath(leftFacet, leftPaint);
-
-                  Path rightFacet = Path();
-                  rightFacet.moveTo(x, y - elevation + radius * 0.88);
-                  rightFacet.lineTo(x + radius * 0.88 * 0.5, y - elevation + radius * 0.88 * 0.866);
-                  rightFacet.lineTo(x + radius * 0.88 * 0.5, y + radius * 0.88 * 0.866);
-                  rightFacet.lineTo(x, y + radius * 0.88);
-                  rightFacet.close();
-                  final rightPaint = Paint()..color = const Color(0xFF101726);
-                  canvas.drawPath(rightFacet, rightPaint);
-                }
-              }
-            }
-
-            Path _createHexPath(double cx, double cy, double r) {
-              Path path = Path();
-              for (int i = 0; i < 6; i++) {
-                double angle = (60.0 * i - 30.0) * math.pi / 180.0;
-                double px = cx + r * math.cos(angle);
-                double py = cy + r * math.sin(angle);
-                if (i == 0) path.moveTo(px, py); else path.lineTo(px, py);
-              }
-              path.close();
-              return path;
-            }
-
-            // 3. True 3D Holographic Particle Double-Helix & Vortex with Depth-Sorting
-            void _paint3DParticleVortex(Canvas canvas, Size size) {
-              final double cx = size.width * 0.5;
-              final double cy = size.height * 0.52;
-              const int count = 120;
-              const double fov = 320.0;
-
-              List<Map<String, double>> particles = [];
-
-              for (int i = 0; i < count; i++) {
-                double t = (i / count);
-                double theta = t * 14 * math.pi + (progress * 2 * math.pi);
-                double radius3D = 40.0 + (t * size.width * 0.46);
-                double worldY = (t - 0.5) * (size.height * 0.85);
-
-                double worldX = radius3D * math.cos(theta);
-                double worldZ = radius3D * math.sin(theta);
-
-                particles.add({
-                  'x': worldX,
-                  'y': worldY,
-                  'z': worldZ,
-                  't': t,
-                });
-              }
-
-              particles.sort((a, b) => b['z']!.compareTo(a['z']!));
-
-              for (var p in particles) {
-                double z = p['z']!;
-                double scale = fov / (fov + z + 150.0);
-                double projX = cx + p['x']! * scale;
-                double projY = cy + p['y']! * scale;
-                double pSize = (3.5 * scale * 2.2).clamp(1.2, 9.0);
-                double alpha = ((z + 200) / 400.0).clamp(0.15, 0.95);
-
-                final pPaint = Paint()
-                  ..color = color.withOpacity(alpha)
-                  ..style = PaintingStyle.fill;
-                canvas.drawCircle(Offset(projX, projY), pSize, pPaint);
-
-                if (z > 20) {
-                  final coreP = Paint()..color = Colors.white.withOpacity(alpha * 0.9);
-                  canvas.drawCircle(Offset(projX, projY), pSize * 0.45, coreP);
-                }
-              }
-            }
-
-            // 4. 3D Carbon Specular Matrix with Dynamic Sweeping Light Beam
-            void _paint3DCarbonSpecular(Canvas canvas, Size size) {
-              const double cell = 20.0;
-              double beamX = progress * (size.width + size.height * 1.5) - size.height * 0.5;
-
-              for (double y = 0; y < size.height; y += cell) {
-                for (double x = 0; x < size.width; x += cell) {
-                  bool alt = ((x / cell).toInt() + (y / cell).toInt()) % 2 == 0;
-                  double distFromBeam = ((x + y * 0.6) - beamX).abs();
-                  double specular = (1.0 - (distFromBeam / 160.0)).clamp(0.0, 1.0);
-
-                  final p = Paint()
-                    ..shader = LinearGradient(
-                      colors: alt
-                          ? [
-                              Color.lerp(const Color(0xFF263238), color, specular * 0.7)!,
-                              const Color(0xFF080C12),
-                            ]
-                          : [
-                              const Color(0xFF0A0F17),
-                              Color.lerp(const Color(0xFF1E293B), color, specular * 0.5)!,
-                            ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ).createShader(Rect.fromLTWH(x, y, cell, cell));
-                  canvas.drawRect(Rect.fromLTWH(x, y, cell, cell), p);
-                }
-              }
-
-              final beamPaint = Paint()
-                ..shader = LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.transparent,
-                    color.withOpacity(0.25),
-                    Colors.white.withOpacity(0.4),
-                    color.withOpacity(0.25),
-                    Colors.transparent,
-                  ],
-                ).createShader(Rect.fromLTWH(beamX - 100, 0, 200, size.height));
-              canvas.drawRect(Rect.fromLTWH(beamX - 100, 0, 200, size.height), beamPaint);
             }
 
             @override
-            bool shouldRepaint(covariant True3DGraphicsPainter oldDelegate) => true;
+            bool shouldRepaint(covariant Responsive3DMeshPainter oldDelegate) => true;
           }
 
           class FirstTimeSetupScreen extends StatefulWidget {
@@ -1593,13 +1639,11 @@ jobs:
               final t = dict[_selectedLang] ?? dict['he']!;
               final bool isRtl = _selectedLang == 'he' || _selectedLang == 'ar';
               final app = CyberPillMasterApp.of(context);
-              final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
-              final Color accent = palette['accent']!;
+              final palette = app.currentPalette;
 
-              return DynamicFuturisticBackground(
-                accentColor: accent,
+              return Interactive3DGlassBackground(
+                palette: palette,
                 isHighContrast: app.highContrast,
-                effectType: app.bgEffect,
                 child: Directionality(
                   textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
                   child: Scaffold(
@@ -1611,33 +1655,21 @@ jobs:
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                width: 120,
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  color: palette['chassis'],
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: accent, width: 3.8),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: accent.withOpacity(0.65),
-                                      blurRadius: 36,
-                                      spreadRadius: 4,
-                                    ),
-                                    const BoxShadow(color: Colors.black, offset: Offset(0, 12), blurRadius: 24),
-                                  ],
-                                ),
-                                child: Icon(Icons.shield_rounded, size: 70, color: accent),
+                              Futuristic3DPillIcon(
+                                size: 120,
+                                primaryColor: palette.primary,
+                                secondaryColor: palette.highlight,
+                                glowColor: palette.glow,
                               ),
                               const SizedBox(height: 24),
-                              textChannel3D(t['app_name']!, fontSize: 28, color: Colors.white, glowColor: accent),
+                              textChannel3D(t['app_name']!, fontSize: 28, color: Colors.white, glowColor: palette.primary),
                               const SizedBox(height: 8),
                               Text(
                                 t['creator']!,
                                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white70),
                               ),
                               const SizedBox(height: 28),
-                              textChannel3D(t['select_language']!, fontSize: 16, color: accent),
+                              textChannel3D(t['select_language']!, fontSize: 16, color: palette.primary),
                               const SizedBox(height: 14),
                               Wrap(
                                 spacing: 10,
@@ -1645,10 +1677,10 @@ jobs:
                                 alignment: WrapAlignment.center,
                                 children: appLanguages.map((lang) {
                                   final bool isSelected = _selectedLang == lang['code'];
-                                  return Hardware3DButton(
+                                  return Pneumatic3DButton(
                                     height: 48,
-                                    radius: 12,
-                                    glowColor: isSelected ? accent : Colors.white24,
+                                    palette: palette,
+                                    customGlow: isSelected ? palette.glow : Colors.transparent,
                                     isPushed: isSelected,
                                     onTap: () => setState(() => _selectedLang = lang['code']!),
                                     child: Padding(
@@ -1658,7 +1690,7 @@ jobs:
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
-                                          color: isSelected ? accent : Colors.white70,
+                                          color: isSelected ? palette.highlight : Colors.white70,
                                         ),
                                       ),
                                     ),
@@ -1670,7 +1702,7 @@ jobs:
                                 child: TextField(
                                   controller: _nameCtrl,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: accent),
+                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: palette.primary),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: t['name_hint']!,
@@ -1679,10 +1711,9 @@ jobs:
                                 ),
                               ),
                               const SizedBox(height: 24),
-                              Hardware3DButton(
-                                glowColor: const Color(0xFF00FF88),
+                              Pneumatic3DButton(
+                                palette: palette,
                                 height: 64,
-                                radius: 20,
                                 onTap: () {
                                   final name = _nameCtrl.text.trim().isEmpty ? 'משתמש' : _nameCtrl.text.trim();
                                   CyberPillMasterApp.of(context).completeOnboarding(name, _selectedLang);
@@ -1690,7 +1721,7 @@ jobs:
                                 child: textChannel3D(
                                   t['continue_btn']!,
                                   fontSize: 22,
-                                  color: const Color(0xFF00FF88),
+                                  color: palette.highlight,
                                 ),
                               ),
                             ],
@@ -1846,6 +1877,26 @@ jobs:
               });
             }
 
+            void _previewScheduleAudio(ScheduleGroup sched) {
+              final app = CyberPillMasterApp.of(context);
+              final t = dict[app.currentLang] ?? dict['he']!;
+              String pillNames = sched.pills.map((p) => '${p.name} במינון ${p.dosage}').join(', ');
+              String ttsTemplate = t['tts_alert'] ?? 'תזכורת. הגיע הזמן ליטול את התרופה: {pills}';
+              String speechText = ttsTemplate.replaceAll('{pills}', pillNames);
+
+              HapticFeedback.mediumImpact();
+              if (app.soundType == 'voice') {
+                SoundGenerator.playAlertTone('voice', app.soundVolume, voiceText: speechText);
+              } else {
+                SoundGenerator.playAlertTone(app.soundType, app.soundVolume);
+                if (app.voiceAlerts) {
+                  Future.delayed(const Duration(milliseconds: 600), () {
+                    flutterTts.speak(speechText);
+                  });
+                }
+              }
+            }
+
             void _triggerHeadsUpAlert(ScheduleGroup sched) async {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
@@ -1892,19 +1943,20 @@ jobs:
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
+              final palette = app.currentPalette;
 
               showDialog(
                 context: context,
                 barrierDismissible: false,
                 builder: (ctx) => AlertDialog(
-                  backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
+                  backgroundColor: hc ? Colors.black : palette.surface,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(26),
-                    side: BorderSide(color: hc ? const Color(0xFFFFE500) : const Color(0xFFFF0055), width: 3.5),
+                    side: BorderSide(color: hc ? const Color(0xFFFFE500) : palette.primary, width: 3.5),
                   ),
                   title: Row(
                     children: [
-                      const Icon(Icons.warning_amber_rounded, color: Color(0xFFFF0055), size: 34),
+                      Icon(Icons.warning_amber_rounded, color: palette.primary, size: 34),
                       const SizedBox(width: 8),
                       Expanded(
                         child: textChannel3D(
@@ -1919,17 +1971,16 @@ jobs:
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textChannel3D(sched.title, fontSize: 18, color: const Color(0xFF00F0FF)),
+                      textChannel3D(sched.title, fontSize: 18, color: palette.highlight),
                       const SizedBox(height: 12),
                       ...sched.pills.map((p) => Text('💊 ${p.name} (מינון: ${p.dosage})', style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold))),
                     ],
                   ),
                   actionsAlignment: MainAxisAlignment.spaceEvenly,
                   actions: [
-                    Hardware3DButton(
+                    Pneumatic3DButton(
                       height: 48,
-                      radius: 12,
-                      glowColor: const Color(0xFF00FF88),
+                      palette: palette,
                       onTap: () {
                         setState(() => sched.isTaken = true);
                         _saveSchedules();
@@ -1937,13 +1988,13 @@ jobs:
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: textChannel3D(t['btn_taken']!, fontSize: 14, color: const Color(0xFF00FF88)),
+                        child: textChannel3D(t['btn_taken']!, fontSize: 14, color: palette.highlight),
                       ),
                     ),
-                    Hardware3DButton(
+                    Pneumatic3DButton(
                       height: 48,
-                      radius: 12,
-                      glowColor: const Color(0xFFFFB703),
+                      palette: palette,
+                      customGlow: const Color(0xFFFFB703),
                       onTap: () {
                         setState(() {
                           sched.minute = (sched.minute + 10) % 60;
@@ -2002,9 +2053,11 @@ jobs:
             void _openLanguagePicker() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
+              final palette = app.currentPalette;
+
               showModalBottomSheet(
                 context: context,
-                backgroundColor: const Color(0xFF0F172A),
+                backgroundColor: palette.surface,
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
                 builder: (ctx) => SafeArea(
                   child: Padding(
@@ -2012,16 +2065,16 @@ jobs:
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        textChannel3D(t['select_language']!, fontSize: 20, color: const Color(0xFF00F0FF)),
+                        textChannel3D(t['select_language']!, fontSize: 20, color: palette.primary),
                         const SizedBox(height: 16),
                         Wrap(
                           spacing: 10,
                           runSpacing: 10,
                           children: appLanguages.map((l) {
                             final bool active = app.currentLang == l['code'];
-                            return Hardware3DButton(
+                            return Pneumatic3DButton(
                               height: 48,
-                              radius: 12,
+                              palette: palette,
                               isPushed: active,
                               onTap: () {
                                 app.setLanguage(l['code']!);
@@ -2032,7 +2085,7 @@ jobs:
                                 child: Text(
                                   l['label']!,
                                   style: TextStyle(
-                                    color: active ? const Color(0xFF00F0FF) : Colors.white70,
+                                    color: active ? palette.highlight : Colors.white70,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -2052,6 +2105,7 @@ jobs:
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
+              final palette = app.currentPalette;
 
               int hour = 8;
               int minute = 0;
@@ -2061,7 +2115,7 @@ jobs:
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
+                backgroundColor: hc ? Colors.black : palette.surface,
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
@@ -2078,7 +2132,7 @@ jobs:
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              textChannel3D(t['add_med']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
+                              textChannel3D(t['add_med']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : palette.primary),
                               const SizedBox(height: 16),
                               Wrap(
                                 spacing: 8,
@@ -2107,7 +2161,7 @@ jobs:
                                           )),
                                         ),
                                       ),
-                                      Text(':', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF))),
+                                      Text(':', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFE500) : palette.primary)),
                                       Expanded(
                                         child: CupertinoPicker(
                                           itemExtent: 34,
@@ -2151,9 +2205,9 @@ jobs:
                                             ),
                                             decoration: InputDecoration(
                                               labelText: t['pill_name'],
-                                              labelStyle: TextStyle(color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF), fontWeight: FontWeight.bold),
+                                              labelStyle: TextStyle(color: hc ? const Color(0xFFFFE500) : palette.primary, fontWeight: FontWeight.bold),
                                               border: InputBorder.none,
-                                              prefixIcon: Icon(Icons.medication_rounded, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
+                                              prefixIcon: Icon(Icons.medication_rounded, color: hc ? const Color(0xFFFFE500) : palette.primary),
                                             ),
                                             onChanged: (val) => pill.name = val,
                                           );
@@ -2167,7 +2221,7 @@ jobs:
                                           Row(
                                             children: [
                                               IconButton(
-                                                icon: const Icon(Icons.remove_circle, color: Color(0xFF00F0FF)),
+                                                icon: Icon(Icons.remove_circle, color: palette.primary),
                                                 onPressed: () {
                                                   HapticFeedback.lightImpact();
                                                   if (pill.dosage > 1) setDlg(() => pill.dosage--);
@@ -2175,7 +2229,7 @@ jobs:
                                               ),
                                               Text('${pill.dosage}', style: TextStyle(fontWeight: FontWeight.w900, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white)),
                                               IconButton(
-                                                icon: const Icon(Icons.add_circle, color: Color(0xFF00F0FF)),
+                                                icon: Icon(Icons.add_circle, color: palette.primary),
                                                 onPressed: () {
                                                   HapticFeedback.lightImpact();
                                                   setDlg(() => pill.dosage++);
@@ -2202,14 +2256,13 @@ jobs:
                                   HapticFeedback.lightImpact();
                                   setDlg(() => workingPills.add(PillItem(name: '', dosage: 1, stock: 30)));
                                 },
-                                icon: const Icon(Icons.add, color: Color(0xFF00F0FF)),
-                                label: Text(t['add_pill_btn']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF), fontWeight: FontWeight.w900, fontSize: hc ? 18 : 15)),
+                                icon: Icon(Icons.add, color: palette.primary),
+                                label: Text(t['add_pill_btn']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : palette.primary, fontWeight: FontWeight.w900, fontSize: hc ? 18 : 15)),
                               ),
                               const SizedBox(height: 16),
-                              Hardware3DButton(
-                                glowColor: const Color(0xFF00FF88),
+                              Pneumatic3DButton(
+                                palette: palette,
                                 height: 58,
-                                radius: 18,
                                 onTap: () {
                                   final validPills = workingPills.where((p) => p.name.trim().isNotEmpty).toList();
                                   if (validPills.isEmpty) return;
@@ -2228,7 +2281,7 @@ jobs:
                                 child: textChannel3D(
                                   t['save']!,
                                   fontSize: hc ? 20 : 18,
-                                  color: hc ? const Color(0xFFFFE500) : const Color(0xFF00FF88),
+                                  color: hc ? const Color(0xFFFFE500) : palette.highlight,
                                 ),
                               ),
                             ],
@@ -2242,17 +2295,18 @@ jobs:
             }
 
             Widget _presetBtn(String label, int h, int m, VoidCallback onTap) {
-              final hc = CyberPillMasterApp.of(context).highContrast;
-              return Hardware3DButton(
+              final app = CyberPillMasterApp.of(context);
+              final hc = app.highContrast;
+              return Pneumatic3DButton(
                 height: 44,
-                radius: 12,
+                palette: app.currentPalette,
                 onTap: () {
                   HapticFeedback.lightImpact();
                   onTap();
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(label, style: TextStyle(fontSize: hc ? 15 : 13, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF))),
+                  child: Text(label, style: TextStyle(fontSize: hc ? 15 : 13, fontWeight: FontWeight.bold, color: hc ? const Color(0xFFFFE500) : app.currentPalette.primary)),
                 ),
               );
             }
@@ -2261,6 +2315,7 @@ jobs:
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
+              final palette = app.currentPalette;
               final docCtrl = TextEditingController();
               final clinicCtrl = TextEditingController();
               String selectedType = t['doc_doctor']!;
@@ -2272,7 +2327,7 @@ jobs:
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
+                backgroundColor: hc ? Colors.black : palette.surface,
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
@@ -2289,16 +2344,15 @@ jobs:
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              textChannel3D(t['add_appointment']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7)),
+                              textChannel3D(t['add_appointment']!, fontSize: hc ? 26 : 22, color: hc ? const Color(0xFFFFE500) : palette.primary),
                               const SizedBox(height: 14),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: typesList.map((type) {
                                   final bool isSel = selectedType == type;
-                                  return Hardware3DButton(
+                                  return Pneumatic3DButton(
                                     height: 42,
-                                    radius: 10,
-                                    glowColor: const Color(0xFFA855F7),
+                                    palette: palette,
                                     isPushed: isSel,
                                     onTap: () {
                                       HapticFeedback.lightImpact();
@@ -2311,7 +2365,7 @@ jobs:
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: hc ? 16 : 13,
-                                          color: isSel ? (hc ? const Color(0xFFFFE500) : Colors.purpleAccent) : Colors.white70,
+                                          color: isSel ? (hc ? const Color(0xFFFFE500) : palette.highlight) : Colors.white70,
                                         ),
                                       ),
                                     ),
@@ -2323,7 +2377,7 @@ jobs:
                                 child: TextField(
                                   controller: docCtrl,
                                   textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
-                                  style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.purpleAccent, fontWeight: FontWeight.bold, fontSize: hc ? 18 : 16),
+                                  style: TextStyle(color: hc ? const Color(0xFFFFE500) : palette.highlight, fontWeight: FontWeight.bold, fontSize: hc ? 18 : 16),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: t['doctor_name']!,
@@ -2346,10 +2400,10 @@ jobs:
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Hardware3DButton(
+                                  Pneumatic3DButton(
                                     height: 44,
-                                    radius: 12,
-                                    glowColor: const Color(0xFF00D1FF),
+                                    palette: palette,
+                                    customGlow: const Color(0xFF00D1FF),
                                     onTap: () => _launchMap(clinicCtrl.text, true),
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -2363,10 +2417,10 @@ jobs:
                                     ),
                                   ),
                                   const SizedBox(width: 14),
-                                  Hardware3DButton(
+                                  Pneumatic3DButton(
                                     height: 44,
-                                    radius: 12,
-                                    glowColor: const Color(0xFF34A853),
+                                    palette: palette,
+                                    customGlow: const Color(0xFF34A853),
                                     onTap: () => _launchMap(clinicCtrl.text, false),
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -2382,10 +2436,9 @@ jobs:
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              Hardware3DButton(
-                                glowColor: const Color(0xFFA855F7),
+                              Pneumatic3DButton(
+                                palette: palette,
                                 height: 58,
-                                radius: 18,
                                 onTap: () {
                                   if (docCtrl.text.trim().isEmpty) return;
                                   setState(() {
@@ -2404,7 +2457,7 @@ jobs:
                                 child: textChannel3D(
                                   t['save']!,
                                   fontSize: hc ? 20 : 18,
-                                  color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7),
+                                  color: hc ? const Color(0xFFFFE500) : palette.highlight,
                                 ),
                               ),
                             ],
@@ -2417,10 +2470,12 @@ jobs:
               );
             }
 
+            // Visible Architecture Settings View without nested menus + Carousel
             void _openSettingsDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
+              final palette = app.currentPalette;
 
               final soundOptions = [
                 {'key': 'voice', 'label': t['sound_opt_voice']!},
@@ -2430,115 +2485,138 @@ jobs:
                 {'key': 'bell', 'label': t['sound_opt_bell']!},
               ];
 
-              final bgOptions = [
-                {'key': 'grid', 'label': t['bg_grid']!},
-                {'key': 'hex', 'label': t['bg_hex']!},
-                {'key': 'plasma', 'label': t['bg_plasma']!},
-                {'key': 'carbon', 'label': t['bg_carbon']!},
-              ];
-
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: hc ? Colors.black : const Color(0xFF0F172A),
+                backgroundColor: hc ? Colors.black : palette.surface,
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
                   builder: (ctx2, setDlg) => Directionality(
                     textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
+                      child: Container(
+                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.88),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                         child: SingleChildScrollView(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              textChannel3D(t['settings']!, fontSize: hc ? 24 : 20, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
-                              const SizedBox(height: 16),
-                              Align(
-                                alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['alert_sound']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-                              ),
-                              const SizedBox(height: 8),
-                              MechModuleCard(
-                                child: Column(
-                                  children: soundOptions.map((s) {
-                                    final bool active = app.soundType == s['key'];
-                                    return ListTile(
-                                      dense: true,
-                                      title: Text(
-                                        s['label']!,
-                                        style: TextStyle(
-                                          color: active ? (hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)) : Colors.white70,
-                                          fontWeight: active ? FontWeight.w900 : FontWeight.bold,
-                                          fontSize: active ? 15 : 14,
-                                        ),
-                                      ),
-                                      trailing: IconButton(
-                                        icon: Icon(
-                                          s['key'] == 'voice' ? Icons.record_voice_over : Icons.volume_up,
-                                          color: const Color(0xFF00F0FF),
-                                        ),
-                                        onPressed: () => SoundGenerator.playAlertTone(s['key']!, app.soundVolume),
-                                      ),
-                                      leading: Radio<String>(
-                                        value: s['key']!,
-                                        groupValue: app.soundType,
-                                        activeColor: const Color(0xFF00F0FF),
-                                        onChanged: (val) {
-                                          if (val != null) {
-                                            app.updateSettings(sound: val);
-                                            setDlg(() {});
-                                          }
-                                        },
-                                      ),
-                                    );
-                                  }).toList(),
+                              Center(
+                                child: Container(
+                                  width: 48,
+                                  height: 5,
+                                  margin: const EdgeInsets.only(bottom: 12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white24,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
                               ),
-                              const SizedBox(height: 12),
-                              Row(
-                                children: [
-                                  Icon(Icons.volume_up, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)),
-                                  const SizedBox(width: 8),
-                                  Text('${t['sound_vol']!}: ${(app.soundVolume * 100).toInt()}%', style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
-                                  Expanded(
-                                    child: Slider(
-                                      value: app.soundVolume,
-                                      activeColor: const Color(0xFF00F0FF),
-                                      onChanged: (v) {
-                                        app.updateSettings(volume: v);
-                                        setDlg(() {});
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              Center(
+                                child: textChannel3D(t['settings']!, fontSize: hc ? 24 : 20, color: hc ? const Color(0xFFFFE500) : palette.primary),
                               ),
-                              const SizedBox(height: 16),
-                              Align(
-                                alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['bg_style']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                              const SizedBox(height: 18),
+
+                              // 1. Horizontal Scroll Carousel for Themes
+                              Text(t['themes_title']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                height: 90,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: themePalettes.values.length,
+                                  itemBuilder: (context, idx) {
+                                    final p = themePalettes.values.elementAt(idx);
+                                    final bool active = app.themeKey == p.id;
+                                    return Container(
+                                      width: 175,
+                                      margin: const EdgeInsets.only(right: 12, bottom: 4),
+                                      child: Pneumatic3DButton(
+                                        height: 80,
+                                        palette: p,
+                                        isPushed: active,
+                                        customGlow: active ? p.glow : Colors.transparent,
+                                        onTap: () {
+                                          app.setThemeKey(p.id);
+                                          setDlg(() {});
+                                        },
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 14,
+                                                  height: 14,
+                                                  decoration: BoxDecoration(
+                                                    color: p.primary,
+                                                    shape: BoxShape.circle,
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: p.glow,
+                                                        blurRadius: 8,
+                                                        spreadRadius: 2,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Container(
+                                                  width: 14,
+                                                  height: 14,
+                                                  decoration: BoxDecoration(
+                                                    color: p.highlight,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              p.name,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: active ? p.highlight : Colors.white70,
+                                                fontWeight: FontWeight.w900,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
+
+                              const SizedBox(height: 18),
+
+                              // 2. Visible Language Selection Buttons
+                              Text(t['language']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                               const SizedBox(height: 8),
                               Wrap(
                                 spacing: 8,
                                 runSpacing: 8,
-                                children: bgOptions.map((opt) {
-                                  final bool active = app.bgEffect == opt['key'];
-                                  return Hardware3DButton(
-                                    height: 46,
-                                    radius: 12,
+                                children: appLanguages.map((l) {
+                                  final bool active = app.currentLang == l['code'];
+                                  return Pneumatic3DButton(
+                                    height: 42,
+                                    palette: palette,
                                     isPushed: active,
-                                    glowColor: active ? const Color(0xFF00F0FF) : Colors.white24,
+                                    customGlow: active ? palette.glow : Colors.transparent,
                                     onTap: () {
-                                      app.setBgEffect(opt['key']!);
+                                      app.setLanguage(l['code']!);
                                       setDlg(() {});
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 12),
                                       child: Text(
-                                        opt['label']!,
+                                        l['label']!,
                                         style: TextStyle(
-                                          color: active ? (hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF)) : Colors.white60,
+                                          color: active ? palette.highlight : Colors.white70,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13,
                                         ),
@@ -2547,39 +2625,80 @@ jobs:
                                   );
                                 }).toList(),
                               ),
+
                               const SizedBox(height: 18),
-                              Align(
-                                alignment: (app.currentLang == 'he' || app.currentLang == 'ar') ? Alignment.centerRight : Alignment.centerLeft,
-                                child: Text(t['themes_title']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-                              ),
+
+                              // 3. Visible Sound Options with Play Previews
+                              Text(t['alert_sound']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                               const SizedBox(height: 8),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: themePalettes.entries.map((ent) {
-                                    final bool active = app.themeKey == ent.key;
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                                      child: Hardware3DButton(
-                                        height: 44,
-                                        radius: 12,
-                                        isPushed: active,
-                                        glowColor: ent.value['accent'],
-                                        onTap: () {
-                                          app.setThemeKey(ent.key);
-                                          setDlg(() {});
+                              MechModuleCard(
+                                child: Column(
+                                  children: soundOptions.map((s) {
+                                    final bool active = app.soundType == s['key'];
+                                    return ListTile(
+                                      dense: true,
+                                      contentPadding: EdgeInsets.zero,
+                                      title: Text(
+                                        s['label']!,
+                                        style: TextStyle(
+                                          color: active ? (hc ? const Color(0xFFFFE500) : palette.primary) : Colors.white70,
+                                          fontWeight: active ? FontWeight.w900 : FontWeight.bold,
+                                          fontSize: active ? 15 : 14,
+                                        ),
+                                      ),
+                                      leading: Radio<String>(
+                                        value: s['key']!,
+                                        groupValue: app.soundType,
+                                        activeColor: palette.primary,
+                                        onChanged: (val) {
+                                          if (val != null) {
+                                            app.updateSettings(sound: val);
+                                            setDlg(() {});
+                                          }
                                         },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                                          child: Text(ent.value['name'], style: TextStyle(color: ent.value['accent'], fontWeight: FontWeight.bold)),
+                                      ),
+                                      trailing: Pneumatic3DButton(
+                                        height: 38,
+                                        width: 44,
+                                        palette: palette,
+                                        onTap: () => SoundGenerator.playAlertTone(s['key']!, app.soundVolume),
+                                        child: Icon(
+                                          s['key'] == 'voice' ? Icons.record_voice_over : Icons.play_arrow_rounded,
+                                          color: palette.highlight,
+                                          size: 20,
                                         ),
                                       ),
                                     );
                                   }).toList(),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+
+                              const SizedBox(height: 12),
+
+                              // 4. Master Volume Slider
+                              Row(
+                                children: [
+                                  Icon(Icons.volume_up, color: hc ? const Color(0xFFFFE500) : palette.primary),
+                                  const SizedBox(width: 8),
+                                  Text('${t['sound_vol']!}: ${(app.soundVolume * 100).toInt()}%', style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
+                                  Expanded(
+                                    child: Slider(
+                                      value: app.soundVolume,
+                                      activeColor: palette.primary,
+                                      onChanged: (v) {
+                                        app.updateSettings(volume: v);
+                                        setDlg(() {});
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(height: 12),
+
+                              // 5. Switches (Accessibility & Speech)
                               SwitchListTile(
+                                contentPadding: EdgeInsets.zero,
                                 title: Text(t['high_contrast']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900)),
                                 value: app.highContrast,
                                 activeColor: const Color(0xFFFFE500),
@@ -2589,9 +2708,10 @@ jobs:
                                 },
                               ),
                               SwitchListTile(
+                                contentPadding: EdgeInsets.zero,
                                 title: Text(t['voice_alerts']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.bold)),
                                 value: app.voiceAlerts,
-                                activeColor: const Color(0xFF00F0FF),
+                                activeColor: palette.primary,
                                 onChanged: (v) {
                                   app.updateSettings(voice: v);
                                   setDlg(() {});
@@ -2612,13 +2732,12 @@ jobs:
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
-              final palette = themePalettes[app.themeKey] ?? themePalettes['cyber']!;
-              final Color accent = hc ? const Color(0xFFFFE500) : palette['accent']!;
+              final palette = app.currentPalette;
+              final Color accent = hc ? const Color(0xFFFFE500) : palette.primary;
 
-              return DynamicFuturisticBackground(
-                accentColor: accent,
+              return Interactive3DGlassBackground(
+                palette: palette,
                 isHighContrast: hc,
-                effectType: app.bgEffect,
                 child: Scaffold(
                   backgroundColor: Colors.transparent,
                   appBar: AppBar(
@@ -2626,7 +2745,7 @@ jobs:
                     elevation: 0,
                     centerTitle: true,
                     leading: IconButton(
-                      icon: const Icon(Icons.language, color: Color(0xFF00F0FF), size: 28),
+                      icon: Icon(Icons.language, color: palette.primary, size: 28),
                       tooltip: t['select_language']!,
                       onPressed: _openLanguagePicker,
                     ),
@@ -2686,16 +2805,34 @@ jobs:
                                           const SizedBox(height: 4),
                                           Text('$timeStr • ${sched.pills.length} תרופות', style: TextStyle(fontSize: hc ? 16 : 14, color: Colors.white70, fontWeight: FontWeight.bold)),
                                           const SizedBox(height: 2),
-                                          ...sched.pills.map((p) => Text('• ${p.name} (מינון: ${p.dosage})', style: TextStyle(fontSize: hc ? 17 : 14, color: hc ? const Color(0xFFFFE500) : const Color(0xFF00F0FF), fontWeight: FontWeight.bold))),
+                                          ...sched.pills.map((p) => Text('• ${p.name} (מינון: ${p.dosage})', style: TextStyle(fontSize: hc ? 17 : 14, color: hc ? const Color(0xFFFFE500) : palette.primary, fontWeight: FontWeight.bold))),
                                         ],
                                       ),
-                                      trailing: IconButton(
-                                        icon: const Icon(Icons.delete_forever, color: Colors.redAccent),
-                                        onPressed: () {
-                                          HapticFeedback.mediumImpact();
-                                          setState(() => _schedules.removeAt(i));
-                                          _saveSchedules();
-                                        },
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          // 3D Play Audio Button beside schedule item
+                                          Pneumatic3DButton(
+                                            height: 40,
+                                            width: 44,
+                                            palette: palette,
+                                            onTap: () => _previewScheduleAudio(sched),
+                                            child: Icon(
+                                              Icons.play_arrow_rounded,
+                                              color: palette.highlight,
+                                              size: 24,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          IconButton(
+                                            icon: const Icon(Icons.delete_forever, color: Colors.redAccent),
+                                            onPressed: () {
+                                              HapticFeedback.mediumImpact();
+                                              setState(() => _schedules.removeAt(i));
+                                              _saveSchedules();
+                                            },
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   );
@@ -2709,26 +2846,26 @@ jobs:
                                 itemBuilder: (ctx, i) {
                                   final appItem = _apps[i];
                                   return MechModuleCard(
-                                    accentColor: const Color(0xFFA855F7),
+                                    accentColor: palette.primary,
                                     child: ListTile(
                                       contentPadding: EdgeInsets.zero,
-                                      leading: Icon(Icons.local_hospital, size: 36, color: hc ? const Color(0xFFFFE500) : const Color(0xFFA855F7)),
+                                      leading: Icon(Icons.local_hospital, size: 36, color: hc ? const Color(0xFFFFE500) : palette.primary),
                                       title: textChannel3D('${appItem.type}: ${appItem.doctor}', fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white),
                                       subtitle: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           const SizedBox(height: 4),
-                                          Text('${appItem.date}  •  ${appItem.time}', style: TextStyle(fontSize: hc ? 16 : 14, color: hc ? Colors.cyanAccent : const Color(0xFF38BDF8), fontWeight: FontWeight.bold)),
+                                          Text('${appItem.date}  •  ${appItem.time}', style: TextStyle(fontSize: hc ? 16 : 14, color: hc ? Colors.cyanAccent : palette.highlight, fontWeight: FontWeight.bold)),
                                           if (appItem.clinic.isNotEmpty) ...[
                                             const SizedBox(height: 4),
                                             Text('📍 ${appItem.clinic}', style: TextStyle(fontSize: hc ? 16 : 14, color: Colors.white70, fontWeight: FontWeight.bold)),
                                             const SizedBox(height: 8),
                                             Row(
                                               children: [
-                                                Hardware3DButton(
+                                                Pneumatic3DButton(
                                                   height: 38,
-                                                  radius: 10,
-                                                  glowColor: const Color(0xFF00D1FF),
+                                                  palette: palette,
+                                                  customGlow: const Color(0xFF00D1FF),
                                                   onTap: () => _launchMap(appItem.clinic, true),
                                                   child: Padding(
                                                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -2742,10 +2879,10 @@ jobs:
                                                   ),
                                                 ),
                                                 const SizedBox(width: 8),
-                                                Hardware3DButton(
+                                                Pneumatic3DButton(
                                                   height: 38,
-                                                  radius: 10,
-                                                  glowColor: const Color(0xFF34A853),
+                                                  palette: palette,
+                                                  customGlow: const Color(0xFF34A853),
                                                   onTap: () => _launchMap(appItem.clinic, false),
                                                   child: Padding(
                                                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -2779,10 +2916,9 @@ jobs:
                     ),
                   ),
                   floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-                  floatingActionButton: Hardware3DButton(
-                    radius: 22,
+                  floatingActionButton: Pneumatic3DButton(
                     height: 64,
-                    glowColor: accent,
+                    palette: palette,
                     onTap: () {
                       if (_tabController.index == 0) {
                         _openAddScheduleDialog();
