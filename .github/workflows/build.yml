@@ -1,15 +1,9 @@
-﻿name: Build APK
-
-
-
+name: Build APK
 
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
-
-
-
 
 jobs:
   build:
@@ -17,32 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-
-
-
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version: '17'
 
-
-
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
 
-
-
-
       - name: Create Flutter Skeleton
         run: |
           flutter create --org com.cyberpharma.app --project-name pill_reminder . --platforms=android --overwrite
-
-
-
 
       - name: Setup Futuristic 3D App Icon
         run: |
@@ -93,12 +75,10 @@ jobs:
           </vector>
           EOF
 
-
       - name: Configure Android Manifest, Desugaring and Kotlin Flags
         run: |
           mkdir -p android
           echo "android.suppressKotlinVersionCompatibilityCheck=true" >> android/gradle.properties
-
 
           cat << 'EOF' > android/app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -111,7 +91,6 @@ jobs:
               <uses-permission android:name="android.permission.WAKE_LOCK"/>
               <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
               <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
-
 
               <queries>
                   <intent>
@@ -129,7 +108,6 @@ jobs:
                   <package android:name="com.waze" />
                   <package android:name="com.google.android.apps.maps" />
               </queries>
-
 
               <application
                   android:label="CYBER PHARMA 3D"
@@ -159,7 +137,6 @@ jobs:
           </manifest>
           EOF
 
-
           python3 -c '
           import os
           fpath = "android/app/build.gradle.kts"
@@ -182,7 +159,6 @@ jobs:
                   with open(fpath_g, "w") as f:
                       f.write(txt)
           '
-
 
       - name: Create pubspec.yaml
         run: |
@@ -209,7 +185,6 @@ jobs:
             uses-material-design: true
           EOF
 
-
       - name: Create lib/main.dart
         run: |
           mkdir -p lib
@@ -234,11 +209,9 @@ jobs:
           import 'package:timezone/timezone.dart' as tz;
           import 'package:url_launcher/url_launcher.dart';
 
-
           final FlutterLocalNotificationsPlugin flutterNotifications = FlutterLocalNotificationsPlugin();
           final FlutterTts flutterTts = FlutterTts();
           final AudioPlayer audioPlayer = AudioPlayer();
-
 
           class SoundGenerator {
             static Uint8List createToneWav(
@@ -466,8 +439,6 @@ jobs:
               }
             }
           }
-
-
 
           class ThemePalette {
             final String id;
@@ -858,7 +829,6 @@ jobs:
               textSecondary: Color(0xFF00FFFF),
             ),
           };
-
 
           final Map<String, Map<String, String>> dict = {
             'he': {
@@ -1583,9 +1553,6 @@ jobs:
             },
           };
 
-
-
-
           void main() async {
             WidgetsFlutterBinding.ensureInitialized();
             tz.initializeTimeZones();
@@ -1607,19 +1574,15 @@ jobs:
             runApp(const CyberPillMasterApp());
           }
 
-
           class CyberPillMasterApp extends StatefulWidget {
             const CyberPillMasterApp({super.key});
-
 
             static _CyberPillMasterAppState of(BuildContext context) =>
                 context.findAncestorStateOfType<_CyberPillMasterAppState>()!;
 
-
             @override
             State<CyberPillMasterApp> createState() => _CyberPillMasterAppState();
           }
-
 
           class _CyberPillMasterAppState extends State<CyberPillMasterApp> {
             String _lang = 'he';
@@ -1638,7 +1601,6 @@ jobs:
             String get customSoundPath => _customSoundPath;
             String get customSoundName => _customSoundName;
 
-
             String get currentLang => _lang;
             String get userName => _userName;
             bool get voiceAlerts => _voiceAlerts;
@@ -1652,13 +1614,11 @@ jobs:
                 ? (themePalettes['high_contrast'] ?? themePalettes.values.first)
                 : (themePalettes[_themeKey] ?? themePalettes['cyber_neon'] ?? themePalettes.values.first);
 
-
             @override
             void initState() {
               super.initState();
               _loadConfig();
             }
-
 
             Future<void> _loadConfig() async {
               final prefs = await SharedPreferences.getInstance();
@@ -1678,7 +1638,6 @@ jobs:
               });
             }
 
-
             void setLanguage(String lang) async {
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('c_lang', lang);
@@ -1687,7 +1646,6 @@ jobs:
                 _lang = lang;
               });
             }
-
 
             void completeOnboarding(String name, String lang) async {
               final prefs = await SharedPreferences.getInstance();
@@ -1702,7 +1660,6 @@ jobs:
               });
             }
 
-
             void setBgStyle(String style) {
               setState(() {
                 _bgStyle = style;
@@ -1710,14 +1667,12 @@ jobs:
               SharedPreferences.getInstance().then((prefs) => prefs.setString('c_bg_style', style));
             }
 
-
             void setThemeKey(String key) {
               setState(() {
                 _themeKey = key;
               });
               SharedPreferences.getInstance().then((prefs) => prefs.setString('c_theme', key));
             }
-
 
             Future<void> saveFullSettings({
               String? lang,
@@ -1755,16 +1710,13 @@ jobs:
               if (customSoundName != null) await prefs.setString('c_custom_sound_name', customSoundName);
             }
 
-
             @override
             Widget build(BuildContext context) {
               if (!_initialized) return const SizedBox();
 
-
               final bool isRtl = _lang == 'he' || _lang == 'ar';
               final palette = currentPalette;
               final Color primary = _highContrast ? const Color(0xFFFFE500) : palette.primary;
-
 
               return MaterialApp(
                 title: 'CYBER PHARMA 3D',
@@ -1788,9 +1740,6 @@ jobs:
               );
             }
           }
-
-
-
 
           Widget textChannel3D(
             String text, {
@@ -1826,7 +1775,6 @@ jobs:
               ),
             );
           }
-
 
           // 3D Fluorescent Neon Button Text (עבה, זרחני, תלת מימדי ומבריק)
           Widget neon3DButtonText(
@@ -1875,7 +1823,6 @@ jobs:
               ),
             );
           }
-
 
           // Heavy Brushed Metal Dual Switch Console for Tabs (ללא שום קו תחתון ועם כפתורי מתכת בולטים ומבריקים)
           class MetallicDualConsoleTabs extends StatefulWidget {
@@ -2211,7 +2158,6 @@ jobs:
             final Color? customGlow;
             final bool isPushed;
 
-
             const Pneumatic3DButton({
               super.key,
               required this.child,
@@ -2224,22 +2170,18 @@ jobs:
               this.isPushed = false,
             });
 
-
             @override
             State<Pneumatic3DButton> createState() => _Pneumatic3DButtonState();
           }
 
-
           class _Pneumatic3DButtonState extends State<Pneumatic3DButton> {
             bool _down = false;
-
 
             @override
             Widget build(BuildContext context) {
               final glowColor = widget.customGlow ?? widget.palette.glow;
               final bool pressed = _down || widget.isPushed;
               final double currentOffset = pressed ? widget.depth : 0.0;
-
 
               return GestureDetector(
                 onTapDown: (_) {
@@ -2306,13 +2248,11 @@ jobs:
             }
           }
 
-
           class MechModuleCard extends StatelessWidget {
             final Widget child;
             final bool isPressed;
             final Color? accentColor;
             final bool showLed;
-
 
             const MechModuleCard({
               super.key,
@@ -2322,13 +2262,11 @@ jobs:
               this.showLed = true,
             });
 
-
             @override
             Widget build(BuildContext context) {
               final app = CyberPillMasterApp.of(context);
               final palette = app.currentPalette;
               final Color glow = accentColor ?? (app.highContrast ? const Color(0xFFFFE500) : palette.primary);
-
 
               return Container(
                 margin: const EdgeInsets.only(bottom: 12),
@@ -2393,13 +2331,11 @@ jobs:
             }
           }
 
-
           class Futuristic3DPillIcon extends StatelessWidget {
             final double size;
             final Color primaryColor;
             final Color secondaryColor;
             final Color glowColor;
-
 
             const Futuristic3DPillIcon({
               super.key,
@@ -2408,7 +2344,6 @@ jobs:
               required this.secondaryColor,
               required this.glowColor,
             });
-
 
             @override
             Widget build(BuildContext context) {
@@ -2446,16 +2381,10 @@ jobs:
             }
           }
 
-
-
-
           class Pill3DPainter extends CustomPainter {
             final Color topColor;
             final Color bottomColor;
             final Color glowColor;
-
-
-
 
             Pill3DPainter({
               required this.topColor,
@@ -2463,13 +2392,9 @@ jobs:
               required this.glowColor,
             });
 
-
-
-
             @override
             void paint(Canvas canvas, Size size) {
               final center = Offset(size.width / 2, size.height / 2);
-
 
               // 1. Radiant 360-Degree LED Glow Ring Around Capsule
               final ringRadius = size.width * 0.44;
@@ -2508,7 +2433,6 @@ jobs:
                   ..strokeWidth = 0.8,
               );
 
-
               // 12 High-Intensity Perimeter LED Nodes
               const ledColors = [
                 Color(0xFF00F5FF),
@@ -2542,21 +2466,17 @@ jobs:
                 canvas.drawCircle(diodePos, 0.7, Paint()..color = Colors.white);
               }
 
-
               // 2. 3D Floating Isometric Neon Capsule (Angled at 45°)
               canvas.save();
               canvas.translate(center.dx, center.dy);
               canvas.rotate(-math.pi / 4);
 
-
               final pillWidth = size.width * 0.38;
               final pillHeight = size.height * 0.82;
               final radius = pillWidth / 2;
 
-
               final baseRect = Rect.fromCenter(center: Offset.zero, width: pillWidth, height: pillHeight);
               final rrect = RRect.fromRectAndRadius(baseRect, Radius.circular(radius));
-
 
               // Deep 3D Contact Occlusion Shadows
               canvas.drawRRect(
@@ -2572,7 +2492,6 @@ jobs:
                   ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
               );
 
-
               // Outer Radiant Aura
               canvas.drawRRect(
                 rrect,
@@ -2581,9 +2500,7 @@ jobs:
                   ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12),
               );
 
-
               canvas.clipRRect(rrect);
-
 
               // 3. Top Half (Electric Laser Blue / Hyper-Cyan)
               final topHalfRect = Rect.fromLTRB(-pillWidth / 2, -pillHeight / 2, pillWidth / 2, 0);
@@ -2602,7 +2519,6 @@ jobs:
                 ).createShader(topHalfRect);
               canvas.drawRect(topHalfRect, topPaint);
 
-
               // 4. Bottom Half (Laser Radiant Purple / Neon Magenta)
               final bottomHalfRect = Rect.fromLTRB(-pillWidth / 2, 0, pillWidth / 2, pillHeight / 2);
               final bottomPaint = Paint()
@@ -2620,7 +2536,6 @@ jobs:
                 ).createShader(bottomHalfRect);
               canvas.drawRect(bottomHalfRect, bottomPaint);
 
-
               // 5. Central High-Tech Superconductor Connector Ring
               final ringRect = Rect.fromCenter(center: Offset.zero, width: pillWidth * 1.1, height: pillHeight * 0.08);
               canvas.drawRRect(
@@ -2636,7 +2551,6 @@ jobs:
                   ).createShader(beamRect),
               );
 
-
               // 6. Ultra-Gloss Glass Specular Reflections
               final sheenPath = Path()
                 ..moveTo(-pillWidth * 0.32, -pillHeight * 0.44)
@@ -2645,7 +2559,6 @@ jobs:
                 ..close();
               canvas.drawPath(sheenPath, Paint()..color = Colors.white.withOpacity(0.9));
 
-
               final glintPath = Path()
                 ..moveTo(-pillWidth * 0.36, -pillHeight * 0.38)
                 ..lineTo(-pillWidth * 0.36, -pillHeight * 0.1)
@@ -2653,7 +2566,6 @@ jobs:
                 ..lineTo(-pillWidth * 0.30, -pillHeight * 0.38)
                 ..close();
               canvas.drawPath(glintPath, Paint()..color = Colors.white.withOpacity(0.6));
-
 
               // Bottom Glass Fresnel Reflection Rim
               final rimPath = Path()
@@ -2672,20 +2584,12 @@ jobs:
                   ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
               );
 
-
               canvas.restore();
             }
-
-
-
 
             @override
             bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
           }
-
-
-
-
 
           class RotaryVolumeDial3D extends StatefulWidget {
             final double volume;
@@ -3038,8 +2942,6 @@ jobs:
             bool shouldRepaint(covariant _VolumeDial3DPainter oldDelegate) =>
                 oldDelegate.volume != volume || oldDelegate.palette != palette || oldDelegate.highContrast != highContrast;
           }
-
-
 
           class Multi3DGraphicsPainter extends CustomPainter {
             final double progress;
@@ -4178,13 +4080,11 @@ jobs:
             bool shouldRepaint(covariant Multi3DGraphicsPainter oldDelegate) => true;
           }
 
-
           class Interactive3DGlassBackground extends StatefulWidget {
             final Widget child;
             final ThemePalette palette;
             final bool isHighContrast;
             final String style;
-
 
             const Interactive3DGlassBackground({
               super.key,
@@ -4194,23 +4094,19 @@ jobs:
               required this.style,
             });
 
-
             @override
             State<Interactive3DGlassBackground> createState() => _Interactive3DGlassBackgroundState();
           }
 
-
           class _Interactive3DGlassBackgroundState extends State<Interactive3DGlassBackground>
               with SingleTickerProviderStateMixin {
             late AnimationController _anim;
-
 
             @override
             void initState() {
               super.initState();
               _anim = AnimationController(vsync: this, duration: const Duration(seconds: 12))..repeat();
             }
-
 
             @override
             void didUpdateWidget(covariant Interactive3DGlassBackground oldWidget) {
@@ -4220,20 +4116,17 @@ jobs:
               }
             }
 
-
             @override
             void dispose() {
               _anim.dispose();
               super.dispose();
             }
 
-
             @override
             Widget build(BuildContext context) {
               if (widget.isHighContrast) {
                 return Container(color: Colors.black, child: widget.child);
               }
-
 
               return Stack(
                 children: [
@@ -4271,7 +4164,6 @@ jobs:
                       ),
                     ),
 
-
                   ),
                   widget.child,
                 ],
@@ -4279,27 +4171,22 @@ jobs:
             }
           }
 
-
           class AppSplashScreen extends StatefulWidget {
             final Widget Function() onFinish;
             const AppSplashScreen({super.key, required this.onFinish});
-
 
             @override
             State<AppSplashScreen> createState() => _AppSplashScreenState();
           }
 
-
           class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProviderStateMixin {
             late AnimationController _anim;
-
 
             @override
             void initState() {
               super.initState();
               _requestPermissionsAndLaunch();
             }
-
 
             Future<void> _requestPermissionsAndLaunch() async {
               try {
@@ -4310,7 +4197,6 @@ jobs:
                     .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
                     ?.requestNotificationsPermission();
               } catch (_) {}
-
 
               _anim = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800))..forward();
               Timer(const Duration(milliseconds: 2100), () {
@@ -4326,19 +4212,16 @@ jobs:
               });
             }
 
-
             @override
             void dispose() {
               _anim.dispose();
               super.dispose();
             }
 
-
             @override
             Widget build(BuildContext context) {
               final app = CyberPillMasterApp.of(context);
               final palette = app.currentPalette;
-
 
               return Scaffold(
                 backgroundColor: const Color(0xFF03050B),
@@ -4411,27 +4294,22 @@ jobs:
             }
           }
 
-
           class FirstTimeSetupScreen extends StatefulWidget {
             const FirstTimeSetupScreen({super.key});
-
 
             @override
             State<FirstTimeSetupScreen> createState() => _FirstTimeSetupScreenState();
           }
 
-
           class _FirstTimeSetupScreenState extends State<FirstTimeSetupScreen> {
             final TextEditingController _nameController = TextEditingController();
             late String _selectedLang;
-
 
             @override
             void initState() {
               super.initState();
               _selectedLang = 'he';
             }
-
 
             final List<Map<String, String>> _languages = const [
               {'code': 'he', 'label': 'עברית', 'flag': '🇮🇱'},
@@ -4442,14 +4320,12 @@ jobs:
               {'code': 'es', 'label': 'Español', 'flag': '🇪🇸'},
             ];
 
-
             @override
             Widget build(BuildContext context) {
               final app = CyberPillMasterApp.of(context);
               final palette = app.currentPalette;
               final t = dict[_selectedLang] ?? dict['he']!;
               final bool isRtl = _selectedLang == 'he' || _selectedLang == 'ar';
-
 
               return Scaffold(
                 backgroundColor: palette.background,
@@ -4514,7 +4390,6 @@ jobs:
                               ),
                               const SizedBox(height: 14),
 
-
                               // Compact 3D Pill Icon
                               Futuristic3DPillIcon(
                                 size: 80,
@@ -4523,7 +4398,6 @@ jobs:
                                 glowColor: palette.glow,
                               ),
                               const SizedBox(height: 14),
-
 
                               // App Title
                               textChannel3D(
@@ -4534,7 +4408,6 @@ jobs:
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 4),
-
 
                               // Creator Credit
                               Text(
@@ -4548,7 +4421,6 @@ jobs:
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 16),
-
 
                               // Setup Box (Single Unified Panel)
                               Container(
@@ -4618,21 +4490,16 @@ jobs:
             }
           }
 
-
-
-
           class PillItem {
             String name;
             int dosage;
             int stock;
             PillItem({required this.name, required this.dosage, required this.stock});
 
-
             Map<String, dynamic> toJson() => {'name': name, 'dosage': dosage, 'stock': stock};
             factory PillItem.fromJson(Map<String, dynamic> j) =>
                 PillItem(name: j['name'] ?? '', dosage: j['dosage'] ?? 1, stock: j['stock'] ?? 30);
           }
-
 
           class ScheduleGroup {
             String id;
@@ -4641,7 +4508,6 @@ jobs:
             int minute;
             List<PillItem> pills;
             bool isTaken;
-
 
             ScheduleGroup({
               required this.id,
@@ -4652,7 +4518,6 @@ jobs:
               this.isTaken = false,
             });
 
-
             Map<String, dynamic> toJson() => {
                   'id': id,
                   'title': title,
@@ -4661,7 +4526,6 @@ jobs:
                   'pills': pills.map((p) => p.toJson()).toList(),
                   'isTaken': isTaken,
                 };
-
 
             factory ScheduleGroup.fromJson(Map<String, dynamic> j) => ScheduleGroup(
                   id: j['id'] ?? '',
@@ -4673,7 +4537,6 @@ jobs:
                 );
           }
 
-
           class AppointmentModel {
             String id;
             String type;
@@ -4681,7 +4544,6 @@ jobs:
             String clinic;
             String date;
             String time;
-
 
             AppointmentModel({
               required this.id,
@@ -4692,7 +4554,6 @@ jobs:
               required this.time,
             });
 
-
             Map<String, dynamic> toJson() => {
                   'id': id,
                   'type': type,
@@ -4701,7 +4562,6 @@ jobs:
                   'date': date,
                   'time': time,
                 };
-
 
             factory AppointmentModel.fromJson(Map<String, dynamic> j) => AppointmentModel(
                   id: j['id'] ?? '',
@@ -4713,15 +4573,12 @@ jobs:
                 );
           }
 
-
           class MainDashboard extends StatefulWidget {
             const MainDashboard({super.key});
-
 
             @override
             State<MainDashboard> createState() => _MainDashboardState();
           }
-
 
           class _MainDashboardState extends State<MainDashboard> with SingleTickerProviderStateMixin {
             late TabController _tabController;
@@ -4729,7 +4586,6 @@ jobs:
             List<ScheduleGroup> _schedules = [];
             List<AppointmentModel> _apps = [];
             Timer? _alarmCheckTimer;
-
 
             final List<Map<String, String>> _allLanguages = const [
               {'code': 'he', 'label': 'עברית', 'flag': '🇮🇱'},
@@ -4739,7 +4595,6 @@ jobs:
               {'code': 'fr', 'label': 'Français', 'flag': '🇫🇷'},
               {'code': 'es', 'label': 'Español', 'flag': '🇪🇸'},
             ];
-
 
             @override
             void initState() {
@@ -4757,14 +4612,12 @@ jobs:
               _startLiveReminderMonitor();
             }
 
-
             @override
             void dispose() {
               _alarmCheckTimer?.cancel();
               _tabController.dispose();
               super.dispose();
             }
-
 
             void _initTTS() async {
               final app = CyberPillMasterApp.of(context);
@@ -4776,7 +4629,6 @@ jobs:
               await flutterTts.setSpeechRate(0.48);
               await flutterTts.setVolume(app.soundVolume);
             }
-
 
             void _startLiveReminderMonitor() {
               _alarmCheckTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
@@ -4790,14 +4642,12 @@ jobs:
               });
             }
 
-
             void _previewScheduleAudio(ScheduleGroup sched) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               String pillNames = sched.pills.map((p) => '${p.name} במינון ${p.dosage}').join(', ');
               String ttsTemplate = t['tts_alert'] ?? 'תזכורת. הגיע הזמן לקחת את התרופה: {pills}';
               String speechText = ttsTemplate.replaceAll('{pills}', pillNames);
-
 
               SoundGenerator.playAlertTone(
                 app.soundType,
@@ -4807,16 +4657,13 @@ jobs:
               );
             }
 
-
             void _triggerHeadsUpAlert(ScheduleGroup sched) async {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
 
-
               String pillNames = sched.pills.map((p) => '${p.name} במינון ${p.dosage}').join(', ');
               String ttsTemplate = t['tts_alert'] ?? 'תזכורת. הגיע הזמן לקחת את התרופה: {pills}';
               String speechText = ttsTemplate.replaceAll('{pills}', pillNames);
-
 
               // High-Importance Android Heads-Up Notification (Importance.max, Priority.high)
               try {
@@ -4843,7 +4690,6 @@ jobs:
                 debugPrint('Notification error: $e');
               }
 
-
               // Vibration & Alert Tone / TTS strictly at reminder moment
               HapticFeedback.heavyImpact();
               SoundGenerator.playAlertTone(
@@ -4853,17 +4699,14 @@ jobs:
                 lang: app.currentLang,
               );
 
-
               _show3DHeadsUpDialog(sched);
             }
-
 
             void _show3DHeadsUpDialog(ScheduleGroup sched) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final palette = app.currentPalette;
               final bool isRtl = app.currentLang == 'he' || app.currentLang == 'ar';
-
 
               showDialog(
                 context: context,
@@ -4911,12 +4754,10 @@ jobs:
               );
             }
 
-
             void _loadData() async {
               final prefs = await SharedPreferences.getInstance();
               final schedStr = prefs.getString('c_schedules');
               final appStr = prefs.getString('c_apps');
-
 
               setState(() {
                 if (schedStr != null && schedStr.isNotEmpty) {
@@ -4928,34 +4769,28 @@ jobs:
               });
             }
 
-
             void _saveSchedules() async {
               final prefs = await SharedPreferences.getInstance();
               prefs.setString('c_schedules', jsonEncode(_schedules.map((s) => s.toJson()).toList()));
             }
-
 
             void _saveApps() async {
               final prefs = await SharedPreferences.getInstance();
               prefs.setString('c_apps', jsonEncode(_apps.map((a) => a.toJson()).toList()));
             }
 
-
             void _launchMap(String address, bool isWaze) async {
               String target = address.trim();
               if (target.isEmpty) return;
               final encoded = Uri.encodeComponent(target);
 
-
               final Uri nativeUri = isWaze
                   ? Uri.parse('waze://?q=$encoded&navigate=yes')
                   : Uri.parse('geo:0,0?q=$encoded');
 
-
               final Uri webUri = isWaze
                   ? Uri.parse('https://waze.com/ul?q=$encoded&navigate=yes')
                   : Uri.parse('https://www.google.com/maps/search/?api=1&query=$encoded');
-
 
               try {
                 if (await canLaunchUrl(nativeUri)) {
@@ -4963,7 +4798,6 @@ jobs:
                   return;
                 }
               } catch (_) {}
-
 
               try {
                 if (!await launchUrl(webUri, mode: LaunchMode.externalApplication)) {
@@ -4974,19 +4808,16 @@ jobs:
               }
             }
 
-
             void _openAddScheduleDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
               final palette = app.currentPalette;
 
-
               int hour = 8;
               int minute = 0;
               String autoTitle = t['morning']!;
               List<PillItem> workingPills = [PillItem(name: '', dosage: 1, stock: 30)];
-
 
               showModalBottomSheet(
                 context: context,
@@ -5273,12 +5104,10 @@ jobs:
               );
             }
 
-
             Widget _presetBtn(String label, String timeStr, int h, int m, VoidCallback onTap) {
               final app = CyberPillMasterApp.of(context);
               final hc = app.highContrast;
               final palette = app.currentPalette;
-
 
               return Pneumatic3DButton(
                 height: 44,
@@ -5316,10 +5145,6 @@ jobs:
                 ),
               );
             }
-
-
-
-
 
             void _openAddAppointmentDialog() {
               final app = CyberPillMasterApp.of(context);
@@ -6123,7 +5948,6 @@ jobs:
               final t = dict[app.currentLang] ?? dict['he']!;
               final palette = app.currentPalette;
 
-
               showDialog(
                 context: context,
                 builder: (ctx) => Directionality(
@@ -6212,10 +6036,6 @@ jobs:
                 ),
               );
             }
-
-
-
-
 
             void _showFullScreen3DPreview({
               required String initialStyle,
@@ -7393,14 +7213,12 @@ jobs:
               );
             }
 
-
           Widget build(BuildContext context) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
               final palette = app.currentPalette;
               final Color accent = hc ? const Color(0xFFFFE500) : palette.primary;
-
 
               return Interactive3DGlassBackground(
                 palette: palette,
@@ -7458,7 +7276,7 @@ jobs:
                               context: context,
                               builder: (ctx) => AlertDialog(
                                 backgroundColor: palette.surface,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: Border.all(color: palette.primary, width: 2)),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: BorderSide(color: palette.primary, width: 2)),
                                 title: Center(
                                   child: Text(
                                     'CYBER PHARMA 3D',
@@ -7592,7 +7410,6 @@ jobs:
                                 },
                               ),
 
-
                         // Doctor Appointments Tab (With Top-tier Z-Index Navigation Bar)
                         _apps.isEmpty
                             ? Center(child: textChannel3D(t['empty_apps']!, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white70))
@@ -7604,7 +7421,6 @@ jobs:
                                   final String navAddress = appItem.clinic.trim().isNotEmpty
                                       ? appItem.clinic.trim()
                                       : (appItem.doctor.trim().isNotEmpty ? appItem.doctor.trim() : '');
-
 
                                   return MechModuleCard(
                                     accentColor: palette.primary,
@@ -7771,21 +7587,11 @@ jobs:
 
           EOF
 
-
-
-
-
       - name: Install dependencies
         run: flutter pub get
 
-
-
-
       - name: Build APK
         run: flutter build apk --release
-
-
-
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
