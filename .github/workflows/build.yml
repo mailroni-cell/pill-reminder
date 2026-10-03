@@ -79,7 +79,6 @@ jobs:
         run: |
           mkdir -p android
           echo "android.suppressKotlinVersionCompatibilityCheck=true" >> android/gradle.properties
-          echo "android.experimental.checkAarMetadata=false" >> android/gradle.properties
 
           cat << 'EOF' > android/app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -164,12 +163,9 @@ jobs:
 
           root_kts = "android/build.gradle.kts"
           root_g = "android/build.gradle"
-          if os.path.exists(root_kts):
-              with open(root_kts, "a") as f:
-                  f.write("\nsubprojects {\n    tasks.matching { it.name.contains(\"AarMetadata\") }.configureEach {\n        enabled = false\n    }\n}\n")
-          elif os.path.exists(root_g):
+          if os.path.exists(root_g):
               with open(root_g, "a") as f:
-                  f.write("\nsubprojects {\n    afterEvaluate { project ->\n        if (project.hasProperty(\"android\")) {\n            project.android {\n                compileSdkVersion 36\n            }\n        }\n    }\n    tasks.matching { it.name.contains(\"AarMetadata\") }.configureEach {\n        enabled = false\n    }\n}\n")
+                  f.write("\nsubprojects {\n    afterEvaluate { project ->\n        if (project.hasProperty(\"android\")) {\n            project.android {\n                compileSdkVersion 36\n            }\n        }\n    }\n}\n")
           '
 
       - name: Create pubspec.yaml
@@ -7604,22 +7600,33 @@ jobs:
           flutter pub get
           python3 -c '
           import os, re
-          cache_dir = os.path.expanduser("~/.pub-cache")
-          for root, dirs, files in os.walk(cache_dir):
-              for f in files:
-                  if f in ("build.gradle", "build.gradle.kts"):
-                      p = os.path.join(root, f)
-                      try:
-                          with open(p, "r", encoding="utf-8", errors="ignore") as fp:
-                              c = fp.read()
-                          nc = re.sub(r"compileSdkVersion\s+[0-9]+", "compileSdkVersion 36", c)
-                          nc = re.sub(r"compileSdk\s*=\s*[0-9]+", "compileSdk = 36", nc)
-                          nc = re.sub(r"compileSdk\s+[0-9]+", "compileSdk 36", nc)
-                          if nc != c:
-                              with open(p, "w", encoding="utf-8") as fp:
-                                  fp.write(nc)
-                      except Exception:
-                          pass
+          dirs_to_check = [
+              os.environ.get("PUB_CACHE", ""),
+              os.path.expanduser("~/.pub-cache"),
+              "/home/runner/.pub-cache"
+          ]
+          checked = set()
+          for d in dirs_to_check:
+              if d and os.path.exists(d) and d not in checked:
+                  checked.add(d)
+                  for root, _, files in os.walk(d):
+                      for f in files:
+                          if f in ("build.gradle", "build.gradle.kts"):
+                              p = os.path.join(root, f)
+                              try:
+                                  with open(p, "r", encoding="utf-8", errors="ignore") as fp:
+                                      c = fp.read()
+                                  nc = re.sub(r"compileSdkVersion\s+[0-9]+", "compileSdkVersion 36", c)
+                                  nc = re.sub(r"compileSdk\s*=\s*[0-9]+", "compileSdk = 36", nc)
+                                  nc = re.sub(r"compileSdk\s+[0-9]+", "compileSdk 36", nc)
+                                  nc = re.sub(r"targetSdkVersion\s+[0-9]+", "targetSdkVersion 36", nc)
+                                  nc = re.sub(r"targetSdk\s*=\s*[0-9]+", "targetSdk = 36", nc)
+                                  if nc != c:
+                                      with open(p, "w", encoding="utf-8") as fp:
+                                          fp.write(nc)
+                                      print(f"Patched {f} in {os.path.basename(root)} to compileSdk 36")
+                              except Exception:
+                                  pass
           '
 
       - name: Build APK
