@@ -54,105 +54,42 @@ jobs:
               android:height="108dp"
               android:viewportWidth="108"
               android:viewportHeight="108">
-              <!-- ========================================== -->
-              <!-- 1. TRANSPARENT BACKGROUND (NO BASEPLATE)   -->
-              <!-- ========================================== -->
+              <!-- ============================================================== -->
+              <!-- 100% TRANSPARENT BACKGROUND (NO BASEPLATE, NO AURA, NO RINGS)  -->
+              <!-- PURE GLOSSY 3D FLUORESCENT PILL CAPSULE                        -->
+              <!-- ============================================================== -->
 
-
-              <!-- Ambient Radiant Neon Glow Halo Aura -->
-              <path android:fillColor="#0A00E5FF" android:pathData="M54,10 A44,44 0 1,1 53.9,10 Z"/>
-              <path android:fillColor="#147C4DFF" android:pathData="M54,14 A40,40 0 1,1 53.9,14 Z"/>
-              <path android:fillColor="#1ED500F9" android:pathData="M54,18 A36,36 0 1,1 53.9,18 Z"/>
-              <path android:fillColor="#2A00F5FF" android:pathData="M54,22 A32,32 0 1,1 53.9,22 Z"/>
-
-
-              <!-- Glowing 360-Degree LED Ring Around Capsule -->
-              <path android:strokeColor="#2600E5FF" android:strokeWidth="7" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
-              <path android:strokeColor="#557C4DFF" android:strokeWidth="4.5" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
-              <path android:strokeColor="#9900F5FF" android:strokeWidth="2.5" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
-              <path android:strokeColor="#FF00E5FF" android:strokeWidth="1.4" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
-              <path android:strokeColor="#E6FFFFFF" android:strokeWidth="0.7" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
-
-
-              <path android:fillColor="#060A14" android:pathData="M82.80,54.00 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#00F5FF" android:pathData="M83.50,54.00 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M84.30,54.00 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M78.65,69.50 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#80D8FF" android:pathData="M79.35,69.50 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M80.15,69.50 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M67.30,80.85 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#D500F9" android:pathData="M68.00,80.85 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M68.80,80.85 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M51.80,85.00 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#FF4081" android:pathData="M52.50,85.00 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M53.30,85.00 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M36.30,80.85 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#7C4DFF" android:pathData="M37.00,80.85 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M37.80,80.85 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M24.95,69.50 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#00E5FF" android:pathData="M25.65,69.50 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M26.45,69.50 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M20.80,54.00 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#00F5FF" android:pathData="M21.50,54.00 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M22.30,54.00 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M24.95,38.50 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#E040FB" android:pathData="M25.65,38.50 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M26.45,38.50 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M36.30,27.15 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#D500F9" android:pathData="M37.00,27.15 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M37.80,27.15 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M51.80,23.00 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#00FFCC" android:pathData="M52.50,23.00 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M53.30,23.00 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M67.30,27.15 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#80D8FF" android:pathData="M68.00,27.15 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M68.80,27.15 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-              <path android:fillColor="#060A14" android:pathData="M78.65,38.50 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
-              <path android:fillColor="#7C4DFF" android:pathData="M79.35,38.50 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M80.15,38.50 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
-
-
-              <!-- Deep 3D Floating Occlusion Shadow -->
-              <path android:fillColor="#020409" android:pathData="M43,42 L80,79 A16,16 0 0,1 58,101 L21,64 A16,16 0 0,1 43,42 Z"/>
-              <path android:fillColor="#040710" android:pathData="M41,40 L78,77 A15,15 0 0,1 57,98 L20,61 A15,15 0 0,1 41,40 Z"/>
-
-
-              <!-- 3D Capsule Bottom Half (Laser Purple) -->
+              <!-- 3D Capsule Bottom Half (Laser Neon Magenta/Purple) -->
               <path android:fillColor="#2E023D" android:pathData="M54,54 L75,75 A15,15 0 0,1 54,96 L33,75 Z"/>
               <path android:fillColor="#6A0572" android:pathData="M54,54 L74,74 A14,14 0 0,1 54,94 L34,74 Z"/>
               <path android:fillColor="#9C27B0" android:pathData="M53,53 L73,73 A13,13 0 0,1 55,91 L35,71 Z"/>
-
-
-              <path android:fillColor="#FF4081" android:pathData="M51,51 L68,68 A9,9 0 0,1 56,82 L39,65 Z"/>
-              <path android:fillColor="#FF80AB" android:pathData="M50,50 L64,64 A6,6 0 0,1 56,74 L42,60 Z"/>
+              <path android:fillColor="#D500F9" android:pathData="M52,52 L71,71 A11,11 0 0,1 55,87 L37,68 Z"/>
+              <path android:fillColor="#FF007F" android:pathData="M51,51 L68,68 A9,9 0 0,1 56,82 L39,65 Z"/>
+              <path android:fillColor="#FF4081" android:pathData="M50,50 L64,64 A6,6 0 0,1 56,74 L42,60 Z"/>
               <path android:fillColor="#40FFFFFF" android:pathData="M50,91 A13,13 0 0,0 72,75 L70,73 A12,12 0 0,1 50,89 Z"/>
 
-
-              <!-- 3D Capsule Top Half (Electric Laser Blue) -->
+              <!-- 3D Capsule Top Half (Electric Fluorescent Laser Cyan) -->
               <path android:fillColor="#002B49" android:pathData="M33,33 L54,54 L33,75 L12,54 A15,15 0 0,1 33,33 Z"/>
               <path android:fillColor="#0052CC" android:pathData="M34,34 L54,54 L34,74 L14,54 A14,14 0 0,1 34,34 Z"/>
               <path android:fillColor="#0091FF" android:pathData="M35,35 L53,53 L35,71 L17,53 A13,13 0 0,1 35,35 Z"/>
               <path android:fillColor="#00E5FF" android:pathData="M36,36 L52,52 L36,68 L20,52 A11,11 0 0,1 36,36 Z"/>
+              <path android:fillColor="#00F5FF" android:pathData="M36.5,36.5 L51.5,51.5 L36.5,66.5 L21.5,51.5 A10,10 0 0,1 36.5,36.5 Z"/>
               <path android:fillColor="#80D8FF" android:pathData="M37,37 L51,51 L39,63 L25,51 A9,9 0 0,1 37,37 Z"/>
               <path android:fillColor="#E0F7FA" android:pathData="M38,38 L49,49 L41,57 L30,48 A6,6 0 0,1 38,38 Z"/>
 
-
-              <!-- Central High-Tech Connector Band -->
+              <!-- Central High-Tech Connector Band (Chrome Metal) -->
               <path android:fillColor="#080E1C" android:pathData="M30,51 L51,30 L57,36 L36,57 Z"/>
               <path android:fillColor="#00FFCC" android:pathData="M31,52 L52,31 L55,34 L34,55 Z"/>
               <path android:fillColor="#FFFFFF" android:pathData="M32,53 L53,32 L54,33 L33,54 Z"/>
               <path android:fillColor="#00F5FF" android:pathData="M32,52 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z"/>
               <path android:fillColor="#FF007F" android:pathData="M51,33 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z"/>
 
-
-              <!-- Ultra-Gloss Glass Specular Reflections -->
+              <!-- Ultra-Gloss Glass Specular Reflections (3D Lacquer Sheen) -->
               <path android:fillColor="#B3FFFFFF" android:pathData="M27,33 L45,15 A12,12 0 0,1 52,22 L34,40 Z"/>
               <path android:fillColor="#E6FFFFFF" android:pathData="M24,39 L40,23 L37,20 L21,36 Z"/>
               <path android:fillColor="#FFFFFF" android:pathData="M33,23 L34.5,27 L38.5,28.5 L34.5,30 L33,34 L31.5,30 L27.5,28.5 L31.5,27 Z"/>
               <path android:fillColor="#CCFFFFFF" android:pathData="M24,31 L25,33 L27,34 L25,35 L24,37 L23,35 L21,34 L23,33 Z"/>
               <path android:fillColor="#55FFFFFF" android:pathData="M48,60 L62,46 L65,49 L51,63 Z"/>
-
-
           </vector>
           EOF
 
@@ -172,6 +109,8 @@ jobs:
               <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
               <uses-permission android:name="android.permission.VIBRATE"/>
               <uses-permission android:name="android.permission.WAKE_LOCK"/>
+              <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+              <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
 
 
               <queries>
@@ -265,6 +204,7 @@ jobs:
             path_provider: ^2.1.4
             url_launcher: ^6.3.0
             permission_handler: ^11.3.1
+            file_picker: ^8.1.2
           flutter:
             uses-material-design: true
           EOF
@@ -274,6 +214,7 @@ jobs:
         run: |
           mkdir -p lib
           cat << 'EOF' > lib/main.dart
+          import 'package:file_picker/file_picker.dart';
           import 'dart:async';
           import 'dart:convert';
           import 'dart:io';
@@ -300,135 +241,147 @@ jobs:
 
 
           class SoundGenerator {
-          static Uint8List createToneWav(
-          double frequency,
-          double durationSeconds, {
-          String type = 'sine',
-          double volume = 1.0,
-          double endFrequency = 0.0,
-          }) {
-          final int sampleRate = 22050;
-          final int numSamples = (sampleRate * durationSeconds).toInt();
-          final int dataLength = numSamples * 2;
-          final int bufferLength = 44 + dataLength;
+            static Uint8List createToneWav(
+              double frequency,
+              double durationSeconds, {
+              String type = 'sine',
+              double volume = 1.0,
+              double endFrequency = 0.0,
+            }) {
+              final int sampleRate = 22050;
+              final int numSamples = (sampleRate * durationSeconds).toInt();
+              final int dataLength = numSamples * 2;
+              final int bufferLength = 44 + dataLength;
 
-          final ByteData buffer = ByteData(bufferLength);
-          // RIFF header
-          buffer.setUint8(0, 0x52); buffer.setUint8(1, 0x49); buffer.setUint8(2, 0x46); buffer.setUint8(3, 0x46);
-          buffer.setUint32(4, 36 + dataLength, Endian.little);
-          buffer.setUint8(8, 0x57); buffer.setUint8(9, 0x41); buffer.setUint8(10, 0x56); buffer.setUint8(11, 0x45);
-          // fmt chunk
-          buffer.setUint8(12, 0x66); buffer.setUint8(13, 0x6D); buffer.setUint8(14, 0x74); buffer.setUint8(15, 0x20);
-          buffer.setUint32(16, 16, Endian.little);
-          buffer.setUint16(20, 1, Endian.little); // PCM
-          buffer.setUint16(22, 1, Endian.little); // mono
-          buffer.setUint32(24, sampleRate, Endian.little);
-          buffer.setUint32(28, sampleRate * 2, Endian.little);
-          buffer.setUint16(32, 2, Endian.little);
-          buffer.setUint16(34, 16, Endian.little); // 16-bit
-          // data chunk
-          buffer.setUint8(36, 0x64); buffer.setUint8(37, 0x61); buffer.setUint8(38, 0x74); buffer.setUint8(39, 0x61);
-          buffer.setUint32(40, dataLength, Endian.little);
+              final ByteData buffer = ByteData(bufferLength);
+              // RIFF header
+              buffer.setUint8(0, 0x52); buffer.setUint8(1, 0x49); buffer.setUint8(2, 0x46); buffer.setUint8(3, 0x46);
+              buffer.setUint32(4, 36 + dataLength, Endian.little);
+              buffer.setUint8(8, 0x57); buffer.setUint8(9, 0x41); buffer.setUint8(10, 0x56); buffer.setUint8(11, 0x45);
+              // fmt chunk
+              buffer.setUint8(12, 0x66); buffer.setUint8(13, 0x6D); buffer.setUint8(14, 0x74); buffer.setUint8(15, 0x20);
+              buffer.setUint32(16, 16, Endian.little);
+              buffer.setUint16(20, 1, Endian.little); // PCM
+              buffer.setUint16(22, 1, Endian.little); // mono
+              buffer.setUint32(24, sampleRate, Endian.little);
+              buffer.setUint32(28, sampleRate * 2, Endian.little);
+              buffer.setUint16(32, 2, Endian.little);
+              buffer.setUint16(34, 16, Endian.little); // 16-bit
+              // data chunk
+              buffer.setUint8(36, 0x64); buffer.setUint8(37, 0x61); buffer.setUint8(38, 0x74); buffer.setUint8(39, 0x61);
+              buffer.setUint32(40, dataLength, Endian.little);
 
-          final double effectiveVol = volume.clamp(0.0, 1.0);
-          int offset = 44;
-          for (int i = 0; i < numSamples; i++) {
-          double t = i / sampleRate;
-          double progress = t / durationSeconds;
-          double currentFreq = frequency;
-          if (endFrequency > 0.0) {
-          currentFreq = frequency + (endFrequency - frequency) * progress;
-          }
+              final double effectiveVol = volume.clamp(0.0, 1.0);
+              int offset = 44;
+              for (int i = 0; i < numSamples; i++) {
+                double t = i / sampleRate;
+                double progress = t / durationSeconds;
+                double currentFreq = frequency;
+                if (endFrequency > 0.0) {
+                  currentFreq = frequency + (endFrequency - frequency) * progress;
+                }
 
-          double attack = (progress * 30.0).clamp(0.0, 1.0);
-          double decay = math.exp(-3.2 * progress);
-          double ampEnvelope = attack * decay;
+                double attack = (progress * 30.0).clamp(0.0, 1.0);
+                double decay = math.exp(-3.2 * progress);
+                double ampEnvelope = attack * decay;
 
-          double sample = 0.0;
-          if (type == 'square') {
-          sample = math.sin(2 * math.pi * currentFreq * t) >= 0 ? 0.55 : -0.55;
-          ampEnvelope = (progress * 20.0).clamp(0.0, 1.0) * math.exp(-2.2 * progress);
-          } else if (type == 'sawtooth') {
-          sample = (2.0 * (t * currentFreq - (t * currentFreq).floor()) - 1.0) * 0.45;
-          } else if (type == 'triangle') {
-          sample = (2.0 * (2.0 * (t * currentFreq - (t * currentFreq).floor()) - 1.0).abs() - 1.0) * 0.65;
-          } else if (type == 'chime') {
-          sample = 0.40 * math.sin(2 * math.pi * currentFreq * t) +
+                double sample = 0.0;
+                if (type == 'square') {
+                  sample = math.sin(2 * math.pi * currentFreq * t) >= 0 ? 0.55 : -0.55;
+                  ampEnvelope = (progress * 20.0).clamp(0.0, 1.0) * math.exp(-2.2 * progress);
+                } else if (type == 'sawtooth') {
+                  sample = (2.0 * (t * currentFreq - (t * currentFreq).floor()) - 1.0) * 0.45;
+                } else if (type == 'triangle') {
+                  sample = (2.0 * (2.0 * (t * currentFreq - (t * currentFreq).floor()) - 1.0).abs() - 1.0) * 0.65;
+                } else if (type == 'chime') {
+                  sample = 0.40 * math.sin(2 * math.pi * currentFreq * t) +
                  0.30 * math.sin(2 * math.pi * currentFreq * 1.25 * t) +
                  0.20 * math.sin(2 * math.pi * currentFreq * 1.50 * t) +
                  0.10 * math.sin(2 * math.pi * currentFreq * 2.00 * t);
-          ampEnvelope = attack * math.exp(-2.5 * progress);
-          } else if (type == 'radar') {
-          double f = 450.0 + 850.0 * math.pow(progress, 1.4);
-          sample = math.sin(2 * math.pi * f * t) * 0.70;
-          ampEnvelope = (1.0 - progress);
-          } else if (type == 'sonar') {
-          sample = math.sin(2 * math.pi * 380.0 * t) * 0.80;
-          ampEnvelope = (progress < 0.08 ? progress * 12.5 : math.exp(-3.5 * (progress - 0.08)));
-          } else if (type == 'heartbeat') {
-          double hb1 = math.sin(2 * math.pi * 75.0 * t) * math.exp(-22.0 * ((t - 0.12).abs()));
-          double hb2 = math.sin(2 * math.pi * 60.0 * t) * math.exp(-22.0 * ((t - 0.38).abs()));
-          sample = (hb1 + hb2) * 0.85;
-          ampEnvelope = 1.0;
-          } else if (type == 'laser') {
-          double f = 1950.0 * math.exp(-5.5 * progress) + 160.0;
-          sample = math.sin(2 * math.pi * f * t) * 0.75;
-          ampEnvelope = (1.0 - progress);
-          } else if (type == 'telemetry') {
-          double cycle = (t * 6.0) % 1.0;
-          bool beepOn = cycle < 0.45 && t < 0.7;
-          sample = beepOn ? (math.sin(2 * math.pi * 1760.0 * t) * 0.65) : 0.0;
-          ampEnvelope = 1.0;
-          } else if (type == 'klaxon') {
-          double f = (t * 5.0).toInt() % 2 == 0 ? 600.0 : 880.0;
-          sample = (math.sin(2 * math.pi * f * t) >= 0 ? 0.55 : -0.55);
-          ampEnvelope = 0.9;
-          } else if (type == 'harp') {
-          int noteIdx = (progress * 4).toInt().clamp(0, 3);
-          double mult = [1.0, 1.25, 1.5, 2.0][noteIdx];
-          double noteProgress = (progress * 4) - noteIdx;
-          sample = math.sin(2 * math.pi * (currentFreq * mult) * t) * 0.75;
-          ampEnvelope = math.exp(-3.2 * noteProgress);
-          } else if (type == 'water') {
-          double f = 550.0 + 850.0 * math.sin(progress * math.pi);
-          sample = math.sin(2 * math.pi * f * t) * 0.70;
-          ampEnvelope = math.sin(progress * math.pi);
-          } else if (type == 'synthwave') {
-          sample = 0.40 * (2.0 * (t * currentFreq - (t * currentFreq).floor()) - 1.0) +
+                  ampEnvelope = attack * math.exp(-2.5 * progress);
+                } else if (type == 'radar') {
+                  double f = 450.0 + 850.0 * math.pow(progress, 1.4);
+                  sample = math.sin(2 * math.pi * f * t) * 0.70;
+                  ampEnvelope = (1.0 - progress);
+                } else if (type == 'sonar') {
+                  sample = math.sin(2 * math.pi * 380.0 * t) * 0.80;
+                  ampEnvelope = (progress < 0.08 ? progress * 12.5 : math.exp(-3.5 * (progress - 0.08)));
+                } else if (type == 'laser') {
+                  double f = 1950.0 * math.exp(-5.5 * progress) + 160.0;
+                  sample = math.sin(2 * math.pi * f * t) * 0.75;
+                  ampEnvelope = (1.0 - progress);
+                } else if (type == 'telemetry') {
+                  double cycle = (t * 6.0) % 1.0;
+                  bool beepOn = cycle < 0.45 && t < 0.7;
+                  sample = beepOn ? (math.sin(2 * math.pi * 1760.0 * t) * 0.65) : 0.0;
+                  ampEnvelope = 1.0;
+                } else if (type == 'klaxon') {
+                  double f = (t * 5.0).toInt() % 2 == 0 ? 600.0 : 880.0;
+                  sample = (math.sin(2 * math.pi * f * t) >= 0 ? 0.55 : -0.55);
+                  ampEnvelope = 0.9;
+                } else if (type == 'harp') {
+                  int noteIdx = (progress * 4).toInt().clamp(0, 3);
+                  double mult = [1.0, 1.25, 1.5, 2.0][noteIdx];
+                  double noteProgress = (progress * 4) - noteIdx;
+                  sample = math.sin(2 * math.pi * (currentFreq * mult) * t) * 0.75;
+                  ampEnvelope = math.exp(-3.2 * noteProgress);
+                } else if (type == 'water') {
+                  double f = 550.0 + 850.0 * math.sin(progress * math.pi);
+                  sample = math.sin(2 * math.pi * f * t) * 0.70;
+                  ampEnvelope = math.sin(progress * math.pi);
+                } else if (type == 'synthwave') {
+                  sample = 0.40 * (2.0 * (t * currentFreq - (t * currentFreq).floor()) - 1.0) +
                  0.30 * (2.0 * (t * currentFreq * 1.5 - (t * currentFreq * 1.5).floor()) - 1.0) +
                  0.30 * math.sin(2 * math.pi * currentFreq * 2.0 * t);
-          ampEnvelope = (progress < 0.1 ? progress / 0.1 : math.exp(-2.2 * (progress - 0.1)));
-          } else {
-          sample = math.sin(2 * math.pi * currentFreq * t) * 0.75;
-          }
+                  ampEnvelope = (progress < 0.1 ? progress / 0.1 : math.exp(-2.2 * (progress - 0.1)));
+                } else {
+                  sample = math.sin(2 * math.pi * currentFreq * t) * 0.75;
+                }
 
-          double finalSample = sample * ampEnvelope * effectiveVol;
-          int intSample = (finalSample * 32767.0).toInt().clamp(-32768, 32767);
-          buffer.setInt16(offset, intSample, Endian.little);
-          offset += 2;
-          }
-          return buffer.buffer.asUint8List();
-          }
+                double finalSample = sample * ampEnvelope * effectiveVol;
+                int intSample = (finalSample * 32767.0).toInt().clamp(-32768, 32767);
+                buffer.setInt16(offset, intSample, Endian.little);
+                offset += 2;
+              }
+              return buffer.buffer.asUint8List();
+            }
 
-          static Future<void> playAlertTone(
-          String soundType,
-          double volume, {
-          String? voiceText,
-          String lang = 'he',
-          }) async {
-          try {
-          await audioPlayer.stop();
-          await flutterTts.stop();
+            static Future<void> playAlertTone(
+              String soundType,
+              double volume, {
+              String? voiceText,
+              String lang = 'he',
+              String? customFilePath,
+            }) async {
+              try {
+                await audioPlayer.stop();
+                await flutterTts.stop();
 
-          final double safeVol = volume.clamp(0.0, 1.0);
+                final double safeVol = volume.clamp(0.0, 1.0);
 
-          if (soundType == 'voice') {
-          Map<String, String> langMap = {
+                // Play custom audio file from phone if selected
+                if (soundType == 'custom') {
+                  if (customFilePath != null && customFilePath.isNotEmpty) {
+                    final f = File(customFilePath);
+                    if (await f.exists()) {
+                      await audioPlayer.setVolume(safeVol);
+                      await audioPlayer.play(DeviceFileSource(customFilePath));
+                      return;
+                    }
+                  }
+                  final fallbackBytes = createToneWav(523.25, 0.8, type: 'chime', volume: safeVol);
+                  await audioPlayer.setVolume(safeVol);
+                  await audioPlayer.play(BytesSource(fallbackBytes), volume: safeVol);
+                  return;
+                }
+
+                if (soundType == 'voice') {
+                  Map<String, String> langMap = {
           'he': 'he-IL', 'en': 'en-US', 'ar': 'ar-SA',
           'ru': 'ru-RU', 'fr': 'fr-FR', 'es': 'es-ES'
-          };
-          String targetLocale = langMap[lang] ?? 'he-IL';
-          String textToSpeak = (voiceText != null && voiceText.trim().isNotEmpty)
+                  };
+                  String targetLocale = langMap[lang] ?? 'he-IL';
+                  String textToSpeak = (voiceText != null && voiceText.trim().isNotEmpty)
             ? voiceText.trim()
             : (lang == 'he' ? 'חיווי קולי פעיל: מערכת תזכורות פועלת כשורה' :
                lang == 'ar' ? 'التنبيه الصوتي نشط: نظام التذكير يعمل بشكل صحيح' :
@@ -437,7 +390,7 @@ jobs:
                lang == 'es' ? 'Alerta de voz activa: el sistema funciona correctamente' :
                'Voice alert active: reminder system operating normally');
 
-          try {
+                  try {
           await flutterTts.awaitSynthCompletion(true);
           await flutterTts.setLanguage(targetLocale);
           await flutterTts.setVolume(safeVol);
@@ -448,73 +401,70 @@ jobs:
             await audioPlayer.setVolume(safeVol);
             await audioPlayer.play(BytesSource(fallbackBytes), volume: safeVol);
           }
-          } catch (e) {
+                  } catch (e) {
           debugPrint('TTS speak error, falling back to chime: $e');
           final fallbackBytes = createToneWav(587.33, 0.8, type: 'chime', volume: safeVol);
           await audioPlayer.setVolume(safeVol);
           await audioPlayer.play(BytesSource(fallbackBytes), volume: safeVol);
-          }
-          return;
-          }
+                  }
+                  return;
+                }
 
-          Uint8List wavBytes;
-          switch (soundType) {
-          case 'chime':
+                Uint8List wavBytes;
+                switch (soundType) {
+                  case 'chime':
           wavBytes = createToneWav(523.25, 0.9, type: 'chime', volume: safeVol);
           break;
-          case 'electric':
+                  case 'electric':
           wavBytes = createToneWav(880.0, 0.5, type: 'sawtooth', volume: safeVol);
           break;
-          case 'gong':
+                  case 'gong':
           wavBytes = createToneWav(220.0, 1.4, type: 'sine', volume: safeVol);
           break;
-          case 'alarm':
+                  case 'alarm':
           wavBytes = createToneWav(1050.0, 0.6, type: 'square', volume: safeVol);
           break;
-          case 'bell':
+                  case 'bell':
           wavBytes = createToneWav(1046.5, 0.8, type: 'triangle', volume: safeVol);
           break;
-          case 'radar':
+                  case 'radar':
           wavBytes = createToneWav(400.0, 0.7, type: 'radar', volume: safeVol);
           break;
-          case 'sonar':
+                  case 'sonar':
           wavBytes = createToneWav(380.0, 1.1, type: 'sonar', volume: safeVol);
           break;
-          case 'heartbeat':
-          wavBytes = createToneWav(75.0, 0.8, type: 'heartbeat', volume: safeVol);
-          break;
-          case 'laser':
+                  case 'laser':
           wavBytes = createToneWav(1950.0, 0.6, type: 'laser', volume: safeVol);
           break;
-          case 'space':
+                  case 'space':
           wavBytes = createToneWav(440.0, 1.2, type: 'chime', volume: safeVol);
           break;
-          case 'telemetry':
+                  case 'telemetry':
           wavBytes = createToneWav(1760.0, 0.7, type: 'telemetry', volume: safeVol);
           break;
-          case 'klaxon':
+                  case 'klaxon':
           wavBytes = createToneWav(650.0, 0.8, type: 'klaxon', volume: safeVol);
           break;
-          case 'harp':
+                  case 'harp':
           wavBytes = createToneWav(440.0, 1.0, type: 'harp', volume: safeVol);
           break;
-          case 'digital_drop':
+                  case 'digital_drop':
           wavBytes = createToneWav(600.0, 0.6, type: 'water', volume: safeVol);
           break;
-          case 'synth_wave':
+                  case 'synth_wave':
           wavBytes = createToneWav(330.0, 1.1, type: 'synthwave', volume: safeVol);
           break;
-          default:
+                  default:
           wavBytes = createToneWav(523.25, 0.7, type: 'chime', volume: safeVol);
           break;
-          }
+                }
 
-          await audioPlayer.setVolume(safeVol);
-          await audioPlayer.play(BytesSource(wavBytes), volume: safeVol);
-          } catch (e) {
-          debugPrint('Audio playback error: $e');
-          }
-          }
+                await audioPlayer.setVolume(safeVol);
+                await audioPlayer.play(BytesSource(wavBytes), volume: safeVol);
+              } catch (e) {
+                debugPrint('Audio playback error: $e');
+              }
+            }
           }
 
 
@@ -891,11 +841,42 @@ jobs:
               textAccent: Color(0xFFFFEA00),
               textSecondary: Color(0xFFFDE68A),
             ),
+            'high_contrast': const ThemePalette(
+              id: 'high_contrast',
+              name: '17. ניגודיות שיא (כבדי ראייה)',
+              background: Color(0xFF000000),
+              chassis: Color(0xFF080808),
+              surface: Color(0xFF101010),
+              primary: Color(0xFFFFEA00),
+              highlight: Color(0xFF00FFFF),
+              bevelLight: Color(0xFFFFFFFF),
+              bevelDark: Color(0xFF000000),
+              glow: Color(0xFFFFEA00),
+              ledColor: Color(0xFFFFEA00),
+              textColor: Color(0xFFFFFFFF),
+              textAccent: Color(0xFFFFEA00),
+              textSecondary: Color(0xFF00FFFF),
+            ),
           };
 
 
           final Map<String, Map<String, String>> dict = {
             'he': {
+              'sound_opt_custom': '📁 קובץ שמע מותאם אישית מהמכשיר',
+              'pick_custom_file': 'בחר קובץ שמע מהטלפון',
+              'custom_file_selected': 'קובץ שנבחר מהמכשיר:',
+              'no_file_selected': 'טרם נבחר קובץ (ברירת מחדל)',
+              'test_sound': 'השמע בדיקה',
+              'theme_preview_title': 'תצוגה מקדימה לערכת צבעים',
+              'apply_theme': 'החל ערכת נושא זו',
+              'street_address': 'רחוב ומספר בית (לדוגמה: הרצל 15)',
+              'city': 'עיר',
+              'full_address': 'כתובת מלאה:',
+              'select_city_chip': 'בחר עיר מהרשימה:',
+              'free_time_meds': 'שעת נטילה חופשית:',
+              'app_info_title': 'אודות CYBER PHARMA 3D',
+              'developer_credit': 'יוצר ומפתח המערכת: רוני שניידר',
+              'credit_tag': 'פותח על ידי רוני שניידר',
               'sound_opt_voice': '🗣️ חיווי קולי חכם (הקראה מלאה)',
               'sound_opt_chime': '🎵 סייבר צ\'יים הרמוני',
               'sound_opt_electric': '⚡ סייבר אלקטרוני (Pulse)',
@@ -904,8 +885,7 @@ jobs:
               'sound_opt_bell': '⏱️ פעמון קריסטל נקי',
               'sound_opt_radar': '📡 סריקת מכ"ם קוונטי',
               'sound_opt_sonar': '🌊 פעימת סונאר תת-ימי',
-              'sound_opt_heartbeat': '💓 פעימת לב ביומטרית',
-              'sound_opt_laser': '💫 טיפת לייזר עתידנית',
+                  'sound_opt_laser': '💫 טיפת לייזר עתידנית',
               'sound_opt_space': '🪐 צליל חללי עמוק',
               'sound_opt_telemetry': '🛰️ ביפ טלמטריה מהיר',
               'sound_opt_klaxon': '⚠️ אזעקת קלאקסון חירום',
@@ -926,7 +906,7 @@ jobs:
 
               'app_name': 'CYBER PHARMA 3D',
               'welcome': 'שלום',
-              'creator': 'נוצר ופותח על ידי רוני שניידר',
+              'creator': 'פותח על ידי רוני שניידר',
               'select_language': 'בחר שפת ממשק',
               'enter_name_title': 'הגדרת קונסולה ראשונית',
               'name_hint': 'הקלד את שמך...',
@@ -1002,6 +982,21 @@ jobs:
               'close': 'סגור',
             },
             'en': {
+              'sound_opt_custom': '📁 Custom Audio File from Phone',
+              'pick_custom_file': 'Select Audio File from Phone',
+              'custom_file_selected': 'Selected Audio File:',
+              'no_file_selected': 'No custom file chosen (Default)',
+              'test_sound': 'Test Audio',
+              'theme_preview_title': 'Theme Palette Preview',
+              'apply_theme': 'Apply This Theme',
+              'street_address': 'Street & Number (e.g. 15 Main St)',
+              'city': 'City',
+              'full_address': 'Full Address:',
+              'select_city_chip': 'Choose City from List:',
+              'free_time_meds': 'Custom Dose Time:',
+              'app_info_title': 'About CYBER PHARMA 3D',
+              'developer_credit': 'Created & Developed by Roni Schneider',
+              'credit_tag': 'Developed by Roni Schneider',
               'sound_opt_voice': '🗣️ Smart Voice Alert (Full Speech)',
               'sound_opt_chime': '🎵 Cyber Harmonic Chime',
               'sound_opt_electric': '⚡ Cyber Pulse (Zap)',
@@ -1010,8 +1005,7 @@ jobs:
               'sound_opt_bell': '⏱️ Crisp Crystal Bell',
               'sound_opt_radar': '📡 Quantum Radar Sweep',
               'sound_opt_sonar': '🌊 Deep Submarine Sonar',
-              'sound_opt_heartbeat': '💓 Biometric Pulse',
-              'sound_opt_laser': '💫 Sci-Fi Laser Drop',
+                  'sound_opt_laser': '💫 Sci-Fi Laser Drop',
               'sound_opt_space': '🪐 Cosmic Deep Space Tone',
               'sound_opt_telemetry': '🛰️ Fast Telemetry Beep',
               'sound_opt_klaxon': '⚠️ Emergency Klaxon Alarm',
@@ -1108,6 +1102,21 @@ jobs:
               'close': 'Close',
             },
             'ar': {
+              'sound_opt_custom': '📁 ملف صوتي مخصص من الهاتف',
+              'pick_custom_file': 'اختر ملف صوتي من الهاتف',
+              'custom_file_selected': 'الملف الصوتي المحدد:',
+              'no_file_selected': 'لم يتم اختيار ملف (الافتراضي)',
+              'test_sound': 'تشغيل تجريبي',
+              'theme_preview_title': 'معاينة سمة الألوان',
+              'apply_theme': 'تطبيق هذا المظهر',
+              'street_address': 'الشارع ورقم المبنى',
+              'city': 'المدينة',
+              'full_address': 'العنوان الكامل:',
+              'select_city_chip': 'اختر المدينة من القائمة:',
+              'free_time_meds': 'وقت الجرعة الحر:',
+              'app_info_title': 'حول CYBER PHARMA 3D',
+              'developer_credit': 'تم التطوير بواسطة روني شنايدר',
+              'credit_tag': 'تطوير روني شنايدר',
               'sound_opt_voice': '🗣️ تنبيه صوتي ذكي (نطق كامل)',
               'sound_opt_chime': '🎵 رنين إلكتروني متناغم',
               'sound_opt_electric': '⚡ نبض كهربائي سايبر',
@@ -1116,8 +1125,7 @@ jobs:
               'sound_opt_bell': '⏱️ جرس كريستالي نقي',
               'sound_opt_radar': '📡 مسح رادار كمي',
               'sound_opt_sonar': '🌊 نبض سونار غواصة',
-              'sound_opt_heartbeat': '💓 نبض بيومتري حيوي',
-              'sound_opt_laser': '💫 هبوط ليزر مستقبلي',
+                  'sound_opt_laser': '💫 هبوط ليزر مستقبلي',
               'sound_opt_space': '🪐 نغمة فضاء كوني',
               'sound_opt_telemetry': '🛰️ إشارة قياس عن بعد',
               'sound_opt_klaxon': '⚠️ بوق طوارئ تحذيري',
@@ -1214,6 +1222,21 @@ jobs:
               'close': 'إغلاق',
             },
             'ru': {
+              'sound_opt_custom': '📁 Пользовательский аудиофайл',
+              'pick_custom_file': 'Выбрать аудиофайл с телефона',
+              'custom_file_selected': 'Выбранный аудиофайл:',
+              'no_file_selected': 'Файл не выбран (По умолчанию)',
+              'test_sound': 'Прослушать',
+              'theme_preview_title': 'Предпросмотр темы',
+              'apply_theme': 'Применить эту тему',
+              'street_address': 'Улица и номер дома',
+              'city': 'Город',
+              'full_address': 'Полный адрес:',
+              'select_city_chip': 'Выберите город из списка:',
+              'free_time_meds': 'Свободное время приема:',
+              'app_info_title': 'О программе CYBER PHARMA 3D',
+              'developer_credit': 'Создано и разработано Рони Шнайдером',
+              'credit_tag': 'Разработчик: Рони Шнайдер',
               'sound_opt_voice': '🗣️ Умное голосовое оповещение',
               'sound_opt_chime': '🎵 Кибер-гармонический перезвон',
               'sound_opt_electric': '⚡ Электронный кибер-импульс',
@@ -1222,8 +1245,7 @@ jobs:
               'sound_opt_bell': '⏱️ Чистый кристальный колокол',
               'sound_opt_radar': '📡 Квантовый радарный свип',
               'sound_opt_sonar': '🌊 Глубоководный сонар',
-              'sound_opt_heartbeat': '💓 Биометрический пульс',
-              'sound_opt_laser': '💫 Футуристический лазер',
+                  'sound_opt_laser': '💫 Футуристический лазер',
               'sound_opt_space': '🪐 Космический глубокий тон',
               'sound_opt_telemetry': '🛰️ Быстрая телеметрия',
               'sound_opt_klaxon': '⚠️ Аварийный клаксон',
@@ -1320,6 +1342,21 @@ jobs:
               'close': 'Закрыть',
             },
             'fr': {
+              'sound_opt_custom': '📁 Fichier audio personnalisé du téléphone',
+              'pick_custom_file': 'Choisir un fichier du téléphone',
+              'custom_file_selected': 'Fichier audio sélectionné:',
+              'no_file_selected': 'Aucun fichier choisi (Par défaut)',
+              'test_sound': 'Tester le son',
+              'theme_preview_title': 'Aperçu du thème',
+              'apply_theme': 'Appliquer ce thème',
+              'street_address': 'Rue et numéro',
+              'city': 'Ville',
+              'full_address': 'Adresse complète:',
+              'select_city_chip': 'Choisir la ville dans la liste:',
+              'free_time_meds': 'Heure de dose personnalisée:',
+              'app_info_title': 'À propos de CYBER PHARMA 3D',
+              'developer_credit': 'Créé et développé par Roni Schneider',
+              'credit_tag': 'Développé par Roni Schneider',
               'sound_opt_voice': '🗣️ Alerte vocale intelligente',
               'sound_opt_chime': '🎵 Carillon cyber harmonique',
               'sound_opt_electric': '⚡ Impulsion cyber électrique',
@@ -1328,8 +1365,7 @@ jobs:
               'sound_opt_bell': '⏱️ Cloche de cristal pure',
               'sound_opt_radar': '📡 Balayage radar quantique',
               'sound_opt_sonar': '🌊 Sonar sous-marin profond',
-              'sound_opt_heartbeat': '💓 Pulsation biométrique',
-              'sound_opt_laser': '💫 Goutte laser futuriste',
+                  'sound_opt_laser': '💫 Goutte laser futuriste',
               'sound_opt_space': '🪐 Tonalité spatiale cosmique',
               'sound_opt_telemetry': '🛰️ Bip de télémétrie rapide',
               'sound_opt_klaxon': '⚠️ Klaxon d\'urgence',
@@ -1426,6 +1462,21 @@ jobs:
               'close': 'Fermer',
             },
             'es': {
+              'sound_opt_custom': '📁 Archivo de audio personalizado',
+              'pick_custom_file': 'Elegir archivo del teléfono',
+              'custom_file_selected': 'Archivo seleccionado:',
+              'no_file_selected': 'Ningún archivo seleccionado (Predeterminado)',
+              'test_sound': 'Probar sonido',
+              'theme_preview_title': 'Vista previa del tema',
+              'apply_theme': 'Aplicar este tema',
+              'street_address': 'Calle y número',
+              'city': 'Ciudad',
+              'full_address': 'Dirección completa:',
+              'select_city_chip': 'Seleccionar ciudad de la lista:',
+              'free_time_meds': 'Hora de dosis personalizada:',
+              'app_info_title': 'Acerca de CYBER PHARMA 3D',
+              'developer_credit': 'Creado y desarrollado por Roni Schneider',
+              'credit_tag': 'Desarrollado por Roni Schneider',
               'sound_opt_voice': '🗣️ Alerta de voz inteligente',
               'sound_opt_chime': '🎵 Campana armónica cyber',
               'sound_opt_electric': '⚡ Pulso eléctrico cyber',
@@ -1434,8 +1485,7 @@ jobs:
               'sound_opt_bell': '⏱️ Campana de cristal pura',
               'sound_opt_radar': '📡 Barrido de radar cuántico',
               'sound_opt_sonar': '🌊 Sonar submarino profundo',
-              'sound_opt_heartbeat': '💓 Pulso biométrico',
-              'sound_opt_laser': '💫 Gota láser futurista',
+                  'sound_opt_laser': '💫 Gota láser futurista',
               'sound_opt_space': '🪐 Tono espacial cósmico',
               'sound_opt_telemetry': '🛰️ Pitido de telemetría rápida',
               'sound_opt_klaxon': '⚠️ Claxon de emergencia',
@@ -1578,10 +1628,15 @@ jobs:
             bool _highContrast = false;
             String _soundType = 'voice';
             double _soundVolume = 1.0;
+            String _customSoundPath = '';
+            String _customSoundName = '';
             String _themeKey = 'cyberpunk';
             String _bgStyle = 'space';
             bool _firstRun = true;
             bool _initialized = false;
+
+            String get customSoundPath => _customSoundPath;
+            String get customSoundName => _customSoundName;
 
 
             String get currentLang => _lang;
@@ -1593,7 +1648,9 @@ jobs:
             String get themeKey => _themeKey;
             String get bgStyle => _bgStyle;
             bool get firstRun => _firstRun;
-            ThemePalette get currentPalette => themePalettes[_themeKey] ?? themePalettes['cyberpunk']!;
+            ThemePalette get currentPalette => _highContrast
+                ? (themePalettes['high_contrast'] ?? themePalettes.values.first)
+                : (themePalettes[_themeKey] ?? themePalettes['cyber_neon'] ?? themePalettes.values.first);
 
 
             @override
@@ -1612,6 +1669,8 @@ jobs:
                 _highContrast = prefs.getBool('c_hc') ?? false;
                 _soundType = prefs.getString('c_sound') ?? 'voice';
                 _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
+                _customSoundPath = prefs.getString('c_custom_sound_path') ?? '';
+                _customSoundName = prefs.getString('c_custom_sound_name') ?? '';
                 _themeKey = prefs.getString('c_theme') ?? 'cyberpunk';
                 _bgStyle = prefs.getString('c_bg_style') ?? 'space';
                 _firstRun = prefs.getBool('c_first_run') ?? true;
@@ -1668,6 +1727,8 @@ jobs:
               double? volume,
               bool? hc,
               bool? voice,
+              String? customSoundPath,
+              String? customSoundName,
             }) async {
               if (lang != null) _lang = lang;
               if (theme != null) _themeKey = theme;
@@ -1676,11 +1737,11 @@ jobs:
               if (volume != null) _soundVolume = volume;
               if (hc != null) _highContrast = hc;
               if (voice != null) _voiceAlerts = voice;
-
+              if (customSoundPath != null) _customSoundPath = customSoundPath;
+              if (customSoundName != null) _customSoundName = customSoundName;
 
               HapticFeedback.heavyImpact();
               setState(() {});
-
 
               final prefs = await SharedPreferences.getInstance();
               if (lang != null) await prefs.setString('c_lang', lang);
@@ -1690,6 +1751,8 @@ jobs:
               if (volume != null) await prefs.setDouble('c_volume', volume);
               if (hc != null) await prefs.setBool('c_hc', hc);
               if (voice != null) await prefs.setBool('c_voice', voice);
+              if (customSoundPath != null) await prefs.setString('c_custom_sound_path', customSoundPath);
+              if (customSoundName != null) await prefs.setString('c_custom_sound_name', customSoundName);
             }
 
 
@@ -1764,6 +1827,379 @@ jobs:
             );
           }
 
+
+          // 3D Fluorescent Neon Button Text (עבה, זרחני, תלת מימדי ומבריק)
+          Widget neon3DButtonText(
+            String text, {
+            double fontSize = 13,
+            Color? color,
+            ThemePalette? palette,
+            bool highContrast = false,
+            TextAlign textAlign = TextAlign.center,
+            int? maxLines,
+            TextOverflow? overflow,
+          }) {
+            final Color baseColor = color ??
+                (highContrast
+                    ? const Color(0xFFFFEA00)
+                    : (palette != null ? palette.highlight : const Color(0xFF00F0FF)));
+
+            return Text(
+              text,
+              textAlign: textAlign,
+              maxLines: maxLines,
+              overflow: overflow,
+              style: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0.8,
+                color: baseColor,
+                decoration: TextDecoration.none,
+                shadows: [
+                  Shadow(
+                    offset: const Offset(0, -1.0),
+                    blurRadius: 1.0,
+                    color: Colors.white.withOpacity(0.85),
+                  ),
+                  Shadow(
+                    offset: const Offset(0, 2.0),
+                    blurRadius: 3.0,
+                    color: Colors.black.withOpacity(0.95),
+                  ),
+                  Shadow(
+                    offset: Offset.zero,
+                    blurRadius: 8.0,
+                    color: baseColor.withOpacity(0.65),
+                  ),
+                ],
+              ),
+            );
+          }
+
+
+          // Heavy Brushed Metal Dual Switch Console for Tabs (ללא שום קו תחתון ועם כפתורי מתכת בולטים ומבריקים)
+          class MetallicDualConsoleTabs extends StatefulWidget {
+            final TabController controller;
+            final ThemePalette palette;
+            final bool highContrast;
+            final String medsTabLabel;
+            final String appointmentsTabLabel;
+            final int medsCount;
+            final int appointmentsCount;
+
+            const MetallicDualConsoleTabs({
+              super.key,
+              required this.controller,
+              required this.palette,
+              required this.highContrast,
+              required this.medsTabLabel,
+              required this.appointmentsTabLabel,
+              this.medsCount = 0,
+              this.appointmentsCount = 0,
+            });
+
+            @override
+            State<MetallicDualConsoleTabs> createState() => _MetallicDualConsoleTabsState();
+          }
+
+          class _MetallicDualConsoleTabsState extends State<MetallicDualConsoleTabs> {
+            @override
+            void initState() {
+              super.initState();
+              widget.controller.addListener(_onTab);
+            }
+
+            @override
+            void didUpdateWidget(MetallicDualConsoleTabs old) {
+              super.didUpdateWidget(old);
+              if (old.controller != widget.controller) {
+                old.controller.removeListener(_onTab);
+                widget.controller.addListener(_onTab);
+              }
+            }
+
+            @override
+            void dispose() {
+              widget.controller.removeListener(_onTab);
+              super.dispose();
+            }
+
+            void _onTab() {
+              if (mounted) setState(() {});
+            }
+
+            Widget _rivet() {
+              return Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: const RadialGradient(
+                    colors: [Color(0xFFFFFFFF), Color(0xFF94A3B8), Color(0xFF1E293B)],
+                    stops: [0.15, 0.5, 1.0],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.8),
+                      offset: const Offset(0.5, 0.5),
+                      blurRadius: 1.0,
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            Widget _metalBtn({
+              required int index,
+              required String label,
+              required IconData icon,
+              required int count,
+            }) {
+              final bool isSel = widget.controller.index == index;
+              final Color neon = widget.highContrast
+                  ? const Color(0xFFFFEA00)
+                  : (index == 0 ? widget.palette.highlight : const Color(0xFF00FFCC));
+
+              return Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    widget.controller.animateTo(index);
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 140),
+                    margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+                    transform: Matrix4.translationValues(0, isSel ? 2.5 : 0.0, 0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: isSel
+                            ? [
+                                const Color(0xFF1E2530),
+                                const Color(0xFF10141C),
+                                const Color(0xFF080B10),
+                              ]
+                            : [
+                                const Color(0xFF5A6678),
+                                const Color(0xFF384252),
+                                const Color(0xFF222A36),
+                                const Color(0xFF161C24),
+                              ],
+                        stops: isSel ? const [0.0, 0.5, 1.0] : const [0.0, 0.35, 0.7, 1.0],
+                      ),
+                      border: Border.all(
+                        color: isSel ? neon : const Color(0xFF8A9BA8),
+                        width: isSel ? 2.2 : 1.4,
+                      ),
+                      boxShadow: isSel
+                          ? [
+                              BoxShadow(
+                                color: neon.withOpacity(0.55),
+                                blurRadius: 14,
+                                spreadRadius: 1,
+                              ),
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.9),
+                                offset: const Offset(0, 1),
+                                blurRadius: 3,
+                              ),
+                            ]
+                          : [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.85),
+                                offset: const Offset(0, 4),
+                                blurRadius: 6,
+                              ),
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.25),
+                                offset: const Offset(0, -1),
+                                blurRadius: 1,
+                              ),
+                            ],
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 1,
+                          left: 6,
+                          right: 6,
+                          height: 1.5,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.white.withOpacity(isSel ? 0.3 : 0.7),
+                                  Colors.transparent,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: isSel ? neon : const Color(0xFF2D3748),
+                                    boxShadow: isSel
+                                        ? [
+                                            BoxShadow(
+                                              color: neon.withOpacity(0.9),
+                                              blurRadius: 8,
+                                              spreadRadius: 2,
+                                            ),
+                                          ]
+                                        : null,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Icon(
+                                  icon,
+                                  size: 20,
+                                  color: isSel ? neon : const Color(0xFFCBD5E1),
+                                  shadows: isSel
+                                      ? [
+                                          Shadow(
+                                            color: neon.withOpacity(0.8),
+                                            blurRadius: 10,
+                                          ),
+                                        ]
+                                      : null,
+                                ),
+                                const SizedBox(width: 6),
+                                Flexible(
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      label,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 0.8,
+                                        color: isSel ? neon : const Color(0xFFE2E8F0),
+                                        decoration: TextDecoration.none,
+                                        shadows: isSel
+                                            ? [
+                                                const Shadow(offset: Offset(0, -1), blurRadius: 1, color: Colors.white),
+                                                const Shadow(offset: Offset(0, 2), blurRadius: 3, color: Colors.black),
+                                                Shadow(offset: Offset.zero, blurRadius: 8, color: neon.withOpacity(0.8)),
+                                              ]
+                                            : [
+                                                const Shadow(offset: Offset(0, 1.5), blurRadius: 2, color: Colors.black),
+                                              ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                if (count > 0) ...[
+                                  const SizedBox(width: 6),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+                                    decoration: BoxDecoration(
+                                      color: isSel ? neon.withOpacity(0.25) : Colors.black45,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: isSel ? neon : Colors.white24,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      '$count',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w900,
+                                        color: isSel ? neon : Colors.white70,
+                                        decoration: TextDecoration.none,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            @override
+            Widget build(BuildContext context) {
+              return Container(
+                height: 62,
+                margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF4A5568),
+                      Color(0xFF2D3748),
+                      Color(0xFF1A202C),
+                      Color(0xFF2D3748),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: const Color(0xFF718096),
+                    width: 1.8,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.85),
+                      offset: const Offset(0, 5),
+                      blurRadius: 10,
+                    ),
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.18),
+                      offset: const Offset(0, -1),
+                      blurRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(top: 3, left: 4, child: _rivet()),
+                    Positioned(top: 3, right: 4, child: _rivet()),
+                    Positioned(bottom: 3, left: 4, child: _rivet()),
+                    Positioned(bottom: 3, right: 4, child: _rivet()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        children: [
+                          _metalBtn(
+                            index: 0,
+                            label: widget.medsTabLabel,
+                            icon: Icons.medication_liquid_rounded,
+                            count: widget.medsCount,
+                          ),
+                          const SizedBox(width: 4),
+                          _metalBtn(
+                            index: 1,
+                            label: widget.appointmentsTabLabel,
+                            icon: Icons.calendar_month_rounded,
+                            count: widget.appointmentsCount,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+          }
 
           class Pneumatic3DButton extends StatefulWidget {
             final Widget child;
@@ -4598,7 +5034,159 @@ jobs:
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 12),
+                                                  const SizedBox(height: 12),
+                              // FREE-CHOICE HOURS SELECTION (הוספת שעות לבחירה חופשית בתזמון תרופות)
+                              MechModuleCard(
+                                accentColor: const Color(0xFF00F0FF),
+                                showLed: true,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.access_time_filled_rounded, color: Color(0xFF00F0FF), size: 24),
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  t['free_time_meds'] ?? 'שעת נטילה חופשית:',
+                                                  style: TextStyle(color: palette.textSecondary, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                ),
+                                                const SizedBox(height: 2),
+                                                Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black.withOpacity(0.65),
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    border: Border.all(color: const Color(0xFF00F0FF).withOpacity(0.8), width: 1.2),
+                                                  ),
+                                                  child: Text(
+                                                    '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
+                                                    style: const TextStyle(
+                                                      color: Color(0xFF00F0FF),
+                                                      fontSize: 22,
+                                                      fontWeight: FontWeight.w900,
+                                                      letterSpacing: 2.0,
+                                                      decoration: TextDecoration.none,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Pneumatic3DButton(
+                                        height: 44,
+                                        palette: palette,
+                                        customGlow: const Color(0xFF00F0FF),
+                                        onTap: () async {
+                                          HapticFeedback.lightImpact();
+                                          final picked = await showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay(hour: hour, minute: minute),
+                                            builder: (ctx3, child) => Theme(
+                                              data: ThemeData.dark().copyWith(
+                                                colorScheme: ColorScheme.dark(
+                                                  primary: palette.primary,
+                                                  onPrimary: Colors.black,
+                                                  surface: palette.surface,
+                                                  onSurface: Colors.white,
+                                                ),
+                                              ),
+                                              child: child!,
+                                            ),
+                                          );
+                                          if (picked != null) {
+                                            setDlg(() {
+                                              hour = picked.hour;
+                                              minute = picked.minute;
+                                              if (hour >= 5 && hour < 12) autoTitle = t['morning']!;
+                                              else if (hour >= 12 && hour < 17) autoTitle = t['noon']!;
+                                              else if (hour >= 17 && hour < 21) autoTitle = t['evening']!;
+                                              else autoTitle = t['night']!;
+                                            });
+                                          }
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(Icons.edit_calendar_rounded, size: 18, color: Color(0xFF00F0FF)),
+                                              const SizedBox(width: 8),
+                                              FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Text(
+                                                  t['pick_time'] ?? 'בחירת שעה חופשית (שעון מלא)',
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF00F0FF),
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w900,
+                                                    decoration: TextDecoration.none,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SizedBox(
+                                            width: 72,
+                                            height: 32,
+                                            child: Pneumatic3DButton(
+                                              height: 32,
+                                              palette: palette,
+                                              onTap: () => setDlg(() => hour = (hour - 1 + 24) % 24),
+                                              child: const Center(child: Text('-1h', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none))),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 72,
+                                            height: 32,
+                                            child: Pneumatic3DButton(
+                                              height: 32,
+                                              palette: palette,
+                                              onTap: () => setDlg(() => hour = (hour + 1) % 24),
+                                              child: const Center(child: Text('+1h', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none))),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 72,
+                                            height: 32,
+                                            child: Pneumatic3DButton(
+                                              height: 32,
+                                              palette: palette,
+                                              onTap: () => setDlg(() => minute = (minute - 5 + 60) % 60),
+                                              child: const Center(child: Text('-5m', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none))),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 72,
+                                            height: 32,
+                                            child: Pneumatic3DButton(
+                                              height: 32,
+                                              palette: palette,
+                                              onTap: () => setDlg(() => minute = (minute + 5) % 60),
+                                              child: const Center(child: Text('+5m', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none))),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+          const SizedBox(height: 12),
                               MechModuleCard(
                                 showLed: false,
                                 child: Column(
@@ -4739,10 +5327,18 @@ jobs:
               final hc = app.highContrast;
               final palette = app.currentPalette;
               final docCtrl = TextEditingController();
-              final clinicCtrl = TextEditingController();
+              final streetCtrl = TextEditingController();
+              final cityCtrl = TextEditingController(text: 'תל אביב - יפו');
               String selectedType = t['doc_doctor']!;
               DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
               TimeOfDay selectedTime = const TimeOfDay(hour: 10, minute: 0);
+
+              final List<String> israelCities = const [
+                'תל אביב - יפו', 'ירושלים', 'חיפה', 'ראשון לציון', 'פתח תקווה', 'אשדוד', 'נתניה',
+                'באר שבע', 'חולון', 'בני ברק', 'רמת גן', 'רחובות', 'בת ים', 'הרצליה', 'כפר סבא',
+                'רעננה', 'מודיעין-מכבים-רעות', 'נצרת', 'עכו', 'טבריה', 'אילת', 'חדרה', 'הוד השרון',
+                'גבעתיים', 'קריית אונו', 'רמת השרון', 'עפולה', 'כרמיאל', 'אשקלון', 'רמלה', 'לוד'
+              ];
 
               final typesList = [t['doc_doctor']!, t['doc_nurse']!, t['doc_test']!, t['doc_treatment']!];
 
@@ -4826,28 +5422,123 @@ jobs:
                                       ),
                                     ),
                                   ),
+                                  const SizedBox(height: 10),
+
+                                  // Split Address Card: Street & Number + City with Scrollable Quick-Select (חלוקה לפי כתובת ועיר עם גלילה)
                                   MechModuleCard(
                                     showLed: false,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
                                         TextField(
-                                          controller: clinicCtrl,
+                                          controller: streetCtrl,
                                           textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
                                           style: TextStyle(
                                             color: hc ? const Color(0xFFFFE500) : Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 15,
+                                            fontSize: 14,
                                             decoration: TextDecoration.none,
                                           ),
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: t['clinic_address']!,
-                                            hintStyle: const TextStyle(color: Colors.white38, decoration: TextDecoration.none),
+                                            prefixIcon: const Icon(Icons.home_work_rounded, color: Colors.white70, size: 20),
+                                            hintText: t['street_address'] ?? 'רחוב ומספר בית (לדוגמה: הרצל 15)',
+                                            hintStyle: const TextStyle(color: Colors.white38, fontSize: 13, decoration: TextDecoration.none),
+                                          ),
+                                          onChanged: (_) => setDlg(() {}),
+                                        ),
+                                        const Divider(color: Colors.white24, height: 6),
+                                        TextField(
+                                          controller: cityCtrl,
+                                          textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
+                                          style: TextStyle(
+                                            color: hc ? const Color(0xFFFFE500) : palette.highlight,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            prefixIcon: Icon(Icons.location_city_rounded, color: palette.highlight, size: 20),
+                                            hintText: t['city'] ?? 'עיר',
+                                            hintStyle: const TextStyle(color: Colors.white38, fontSize: 13, decoration: TextDecoration.none),
+                                          ),
+                                          onChanged: (_) => setDlg(() {}),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        Text(
+                                          t['select_city_chip'] ?? 'בחר עיר מהרשימה:',
+                                          style: TextStyle(color: palette.textSecondary, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        SizedBox(
+                                          height: 32,
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            physics: const BouncingScrollPhysics(),
+                                            itemCount: israelCities.length,
+                                            itemBuilder: (c, idx) {
+                                              final city = israelCities[idx];
+                                              final bool isSel = cityCtrl.text.trim() == city;
+                                              return Padding(
+                                                padding: const EdgeInsets.only(right: 6),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    HapticFeedback.lightImpact();
+                                                    setDlg(() => cityCtrl.text = city);
+                                                  },
+                                                  child: Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                                    decoration: BoxDecoration(
+                                                      color: isSel ? palette.primary.withOpacity(0.35) : const Color(0xFF1E2530),
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(
+                                                        color: isSel ? (hc ? const Color(0xFFFFEA00) : palette.highlight) : Colors.white24,
+                                                        width: isSel ? 1.6 : 1.0,
+                                                      ),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        city,
+                                                        style: TextStyle(
+                                                          color: isSel ? (hc ? const Color(0xFFFFEA00) : palette.highlight) : Colors.white70,
+                                                          fontSize: 11,
+                                                          fontWeight: isSel ? FontWeight.w900 : FontWeight.bold,
+                                                          decoration: TextDecoration.none,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           ),
                                         ),
-                                        const Divider(color: Colors.white24, height: 8),
-                                        // Waze & Google Maps Navigation Test Bar
+                                        const SizedBox(height: 8),
+
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                          decoration: BoxDecoration(
+                                            color: Colors.black45,
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(color: palette.primary.withOpacity(0.4), width: 1.0),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              const Icon(Icons.location_on_rounded, size: 16, color: Color(0xFF00FFCC)),
+                                              const SizedBox(width: 6),
+                                              Expanded(
+                                                child: Text(
+                                                  '${t['full_address'] ?? 'כתובת מלאה:'} ${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() + ", " : ""}${cityCtrl.text.trim()}',
+                                                  style: const TextStyle(color: Color(0xFF00FFCC), fontSize: 12, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
                                         Row(
                                           children: [
                                             Expanded(
@@ -4856,7 +5547,8 @@ jobs:
                                                 palette: palette,
                                                 customGlow: const Color(0xFF00D1FF),
                                                 onTap: () {
-                                                  final addr = clinicCtrl.text.trim().isNotEmpty ? clinicCtrl.text.trim() : docCtrl.text.trim();
+                                                  final fullAddr = '${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() + ", " : ""}${cityCtrl.text.trim()}'.trim();
+                                                  final addr = fullAddr.isNotEmpty ? fullAddr : docCtrl.text.trim();
                                                   if (addr.isNotEmpty) {
                                                     _launchMap(addr, true);
                                                   }
@@ -4878,7 +5570,8 @@ jobs:
                                                 palette: palette,
                                                 customGlow: const Color(0xFF34A853),
                                                 onTap: () {
-                                                  final addr = clinicCtrl.text.trim().isNotEmpty ? clinicCtrl.text.trim() : docCtrl.text.trim();
+                                                  final fullAddr = '${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() + ", " : ""}${cityCtrl.text.trim()}'.trim();
+                                                  final addr = fullAddr.isNotEmpty ? fullAddr : docCtrl.text.trim();
                                                   if (addr.isNotEmpty) {
                                                     _launchMap(addr, false);
                                                   }
@@ -4975,7 +5668,7 @@ jobs:
                                   ),
                                   const SizedBox(height: 12),
 
-                                  // FREE-FORM TIME SELECTION (בחירת שעה חופשית מלאה)
+                                  // FREE-FORM TIME SELECTION (בחירת שעה חופשית מלאה ללא שום חריגה מהכפתור!)
                                   MechModuleCard(
                                     accentColor: const Color(0xFF00F0FF),
                                     showLed: true,
@@ -5000,8 +5693,8 @@ jobs:
                                                     Container(
                                                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                                                       decoration: BoxDecoration(
-                                                        color: Colors.black.withOpacity(0.6),
-                                                        borderRadius: BorderRadius.circular(6),
+                                                        color: Colors.black.withOpacity(0.65),
+                                                        borderRadius: BorderRadius.circular(8),
                                                         border: Border.all(color: const Color(0xFF00F0FF).withOpacity(0.8), width: 1.2),
                                                       ),
                                                       child: Text(
@@ -5018,119 +5711,157 @@ jobs:
                                                   ],
                                                 ),
                                               ),
-                                              // Direct Clock Picker Button
-                                              Pneumatic3DButton(
-                                                height: 42,
-                                                width: 130,
-                                                palette: palette,
-                                                customGlow: const Color(0xFF00F0FF),
-                                                onTap: () async {
-                                                  HapticFeedback.lightImpact();
-                                                  final picked = await showTimePicker(
-                                                    context: context,
-                                                    initialTime: selectedTime,
-                                                    builder: (ctx3, child) => Theme(
-                                                      data: ThemeData.dark().copyWith(
-                                                        colorScheme: ColorScheme.dark(
-                                                          primary: palette.primary,
-                                                          onPrimary: Colors.black,
-                                                          surface: palette.surface,
-                                                          onSurface: Colors.white,
-                                                        ),
-                                                      ),
-                                                      child: child!,
-                                                    ),
-                                                  );
-                                                  if (picked != null) {
-                                                    setDlg(() => selectedTime = picked);
-                                                  }
-                                                },
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    const Icon(Icons.edit_calendar_rounded, size: 16, color: Color(0xFF00F0FF)),
-                                                    const SizedBox(width: 4),
-                                                    FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      child: Text(
-                                                        t['pick_time'] ?? 'בחירת שעה חופשית',
-                                                        style: const TextStyle(
-                                                          color: Color(0xFF00F0FF),
-                                                          fontSize: 11,
-                                                          fontWeight: FontWeight.w900,
-                                                          decoration: TextDecoration.none,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
                                             ],
                                           ),
                                           const SizedBox(height: 10),
+
+                                          // Full width 3D clock button with FittedBox - GUARANTEED ZERO OVERFLOW!
+                                          Pneumatic3DButton(
+                                            height: 44,
+                                            palette: palette,
+                                            customGlow: const Color(0xFF00F0FF),
+                                            onTap: () async {
+                                              HapticFeedback.lightImpact();
+                                              final picked = await showTimePicker(
+                                                context: context,
+                                                initialTime: selectedTime,
+                                                builder: (ctx3, child) => Theme(
+                                                  data: ThemeData.dark().copyWith(
+                                                    colorScheme: ColorScheme.dark(
+                                                      primary: palette.primary,
+                                                      onPrimary: Colors.black,
+                                                      surface: palette.surface,
+                                                      onSurface: Colors.white,
+                                                    ),
+                                                  ),
+                                                  child: child!,
+                                                ),
+                                              );
+                                              if (picked != null) {
+                                                setDlg(() => selectedTime = picked);
+                                              }
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  const Icon(Icons.edit_calendar_rounded, size: 18, color: Color(0xFF00F0FF)),
+                                                  const SizedBox(width: 8),
+                                                  FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                      t['pick_time'] ?? 'בחירת שעה חופשית (שעון מלא)',
+                                                      style: const TextStyle(
+                                                        color: Color(0xFF00F0FF),
+                                                        fontSize: 13,
+                                                        fontWeight: FontWeight.w900,
+                                                        decoration: TextDecoration.none,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+
                                           // Rapid Stepper Bar for Hours & Minutes
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              // -1 Hour
                                               SizedBox(
-                                                width: 68,
+                                                width: 72,
                                                 height: 32,
                                                 child: Pneumatic3DButton(
                                                   height: 32,
                                                   palette: palette,
                                                   onTap: () {
                                                     HapticFeedback.selectionClick();
-                                                    final newH = (selectedTime.hour - 1 + 24) % 24;
-                                                    setDlg(() => selectedTime = TimeOfDay(hour: newH, minute: selectedTime.minute));
+                                                    setDlg(() {
+                                                      final h = (selectedTime.hour - 1 + 24) % 24;
+                                                      selectedTime = TimeOfDay(hour: h, minute: selectedTime.minute);
+                                                    });
                                                   },
-                                                  child: const Text('-1 שעה', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white70, decoration: TextDecoration.none)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      '-1 שעה',
+                                                      style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                              // +1 Hour
                                               SizedBox(
-                                                width: 68,
+                                                width: 72,
                                                 height: 32,
                                                 child: Pneumatic3DButton(
                                                   height: 32,
                                                   palette: palette,
                                                   onTap: () {
                                                     HapticFeedback.selectionClick();
-                                                    final newH = (selectedTime.hour + 1) % 24;
-                                                    setDlg(() => selectedTime = TimeOfDay(hour: newH, minute: selectedTime.minute));
+                                                    setDlg(() {
+                                                      final h = (selectedTime.hour + 1) % 24;
+                                                      selectedTime = TimeOfDay(hour: h, minute: selectedTime.minute);
+                                                    });
                                                   },
-                                                  child: const Text('+1 שעה', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white70, decoration: TextDecoration.none)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      '+1 שעה',
+                                                      style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                              // -5 Minutes
                                               SizedBox(
-                                                width: 68,
+                                                width: 72,
                                                 height: 32,
                                                 child: Pneumatic3DButton(
                                                   height: 32,
                                                   palette: palette,
                                                   onTap: () {
                                                     HapticFeedback.selectionClick();
-                                                    int totalM = selectedTime.hour * 60 + selectedTime.minute - 5;
-                                                    if (totalM < 0) totalM += 24 * 60;
-                                                    setDlg(() => selectedTime = TimeOfDay(hour: (totalM ~/ 60) % 24, minute: totalM % 60));
+                                                    setDlg(() {
+                                                      int m = selectedTime.minute - 15;
+                                                      int h = selectedTime.hour;
+                                                      if (m < 0) {
+                                                        m += 60;
+                                                        h = (h - 1 + 24) % 24;
+                                                      }
+                                                      selectedTime = TimeOfDay(hour: h, minute: m);
+                                                    });
                                                   },
-                                                  child: const Text("-5 דק׳", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white70, decoration: TextDecoration.none)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      '-15 דק'',
+                                                      style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                              // +5 Minutes
                                               SizedBox(
-                                                width: 68,
+                                                width: 72,
                                                 height: 32,
                                                 child: Pneumatic3DButton(
                                                   height: 32,
                                                   palette: palette,
                                                   onTap: () {
                                                     HapticFeedback.selectionClick();
-                                                    int totalM = selectedTime.hour * 60 + selectedTime.minute + 5;
-                                                    setDlg(() => selectedTime = TimeOfDay(hour: (totalM ~/ 60) % 24, minute: totalM % 60));
+                                                    setDlg(() {
+                                                      int m = selectedTime.minute + 15;
+                                                      int h = selectedTime.hour;
+                                                      if (m >= 60) {
+                                                        m -= 60;
+                                                        h = (h + 1) % 24;
+                                                      }
+                                                      selectedTime = TimeOfDay(hour: h, minute: m);
+                                                    });
                                                   },
-                                                  child: const Text("+5 דק׳", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white70, decoration: TextDecoration.none)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      '+15 דק'',
+                                                      style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -5139,35 +5870,42 @@ jobs:
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 14),
+                                  const SizedBox(height: 18),
 
-                                  // Specific Bottom Confirmation Button: 'קבע תור'
+                                  // Physical 3D Confirm Button
                                   Pneumatic3DButton(
+                                    height: 54,
                                     palette: palette,
-                                    height: 52,
-                                    customGlow: const Color(0xFF00FF88),
+                                    customGlow: const Color(0xFF00FFCC),
                                     onTap: () {
                                       if (docCtrl.text.trim().isEmpty) return;
-                                      final dateStr = '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year}';
-                                      final timeStr = '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}';
+                                      final fullAddr = '${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() + ", " : ""}${cityCtrl.text.trim()}'.trim();
+                                      final newApp = AppointmentModel(
+                                        id: DateTime.now().millisecondsSinceEpoch.toString(),
+                                        doctorName: docCtrl.text.trim(),
+                                        doctorType: selectedType,
+                                        dateTime: DateTime(
+                                          selectedDate.year,
+                                          selectedDate.month,
+                                          selectedDate.day,
+                                          selectedTime.hour,
+                                          selectedTime.minute,
+                                        ),
+                                        clinicAddress: fullAddr,
+                                      );
                                       setState(() {
-                                        _apps.add(AppointmentModel(
-                                          id: DateTime.now().millisecondsSinceEpoch.toString(),
-                                          type: selectedType,
-                                          doctor: docCtrl.text.trim(),
-                                          clinic: clinicCtrl.text.trim(),
-                                          date: dateStr,
-                                          time: timeStr,
-                                        ));
+                                        _appointments.add(newApp);
+                                        _appointments.sort((a, b) => a.dateTime.compareTo(b.dateTime));
                                       });
                                       _saveApps();
                                       Navigator.pop(ctx);
                                     },
-                                    child: textChannel3D(
-                                      t['book_appointment_action'] ?? 'קבע תור',
-                                      fontSize: hc ? 19 : 17,
-                                      color: const Color(0xFF00FF88),
-                                      wordSpacing: 3.0,
+                                    child: Center(
+                                      child: neon3DButtonText(
+                                        t['book_appointment_action']!,
+                                        color: const Color(0xFF00FFCC),
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -5182,48 +5920,201 @@ jobs:
               );
             }
 
-
-          void _openLanguagePicker() {
+            void _openLanguagePicker() {
               final app = CyberPillMasterApp.of(context);
               final palette = app.currentPalette;
+              final hc = app.highContrast;
+              final t = dict[app.currentLang] ?? dict['he']!;
 
               showModalBottomSheet(
                 context: context,
-                backgroundColor: palette.surface,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
-                builder: (ctx) => Material(
-                  type: MaterialType.transparency,
-                  child: DefaultTextStyle(
-                    style: const TextStyle(decoration: TextDecoration.none),
-                    child: SafeArea(
-                      child: Container(
-                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: _allLanguages.map((l) {
-                              final bool isSel = app.currentLang == l['code'];
-                              return ListTile(
-                                title: Text(
-                                  '${l['flag']}  ${l['label']}',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: isSel ? palette.highlight : Colors.white,
-                                    fontWeight: isSel ? FontWeight.w900 : FontWeight.bold,
-                                    fontSize: 16,
-                                    decoration: TextDecoration.none,
-                                  ),
-                                ),
-                                onTap: () {
-                                  app.setLanguage(l['code']!);
-                                  setState(() {});
-                                  Navigator.pop(ctx);
-                                },
-                              );
-                            }).toList(),
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (ctx) => StatefulBuilder(
+                  builder: (ctx2, setModalState) => Material(
+                    type: MaterialType.transparency,
+                    child: Container(
+                      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.82),
+                      decoration: BoxDecoration(
+                        color: hc ? Colors.black : const Color(0xFF080C14),
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+                        border: Border.all(
+                          color: hc ? const Color(0xFFFFEA00) : palette.primary,
+                          width: 2.2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: (hc ? const Color(0xFFFFEA00) : palette.primary).withOpacity(0.4),
+                            blurRadius: 28,
+                            spreadRadius: 2,
                           ),
+                        ],
+                      ),
+                      child: SafeArea(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(height: 12),
+                            // 3D Pull Handle
+                            Container(
+                              width: 50,
+                              height: 5,
+                              decoration: BoxDecoration(
+                                color: (hc ? const Color(0xFFFFEA00) : palette.primary).withOpacity(0.6),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+
+                            // 3D Embossed Title
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.language_rounded, color: hc ? const Color(0xFFFFEA00) : palette.highlight, size: 26),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    t['select_language'] ?? 'בחר שפת ממשק',
+                                    style: TextStyle(
+                                      color: hc ? const Color(0xFFFFEA00) : palette.textColor,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900,
+                                      letterSpacing: 1.1,
+                                      decoration: TextDecoration.none,
+                                      shadows: [
+                                        Shadow(
+                                          offset: const Offset(0, 2),
+                                          blurRadius: 4,
+                                          color: Colors.black.withOpacity(0.9),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+
+                            // 3D Scrollable List of Language Cards
+                            Flexible(
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                shrinkWrap: true,
+                                itemCount: _allLanguages.length,
+                                itemBuilder: (ctx3, idx) {
+                                  final l = _allLanguages[idx];
+                                  final bool isSel = app.currentLang == l['code'];
+
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 12),
+                                    child: Pneumatic3DButton(
+                                      height: 62,
+                                      palette: palette,
+                                      isPushed: isSel,
+                                      customGlow: isSel
+                                          ? (hc ? const Color(0xFFFFEA00) : palette.highlight)
+                                          : Colors.transparent,
+                                      onTap: () {
+                                        HapticFeedback.heavyImpact();
+                                        app.setLanguage(l['code']!);
+                                        setState(() {});
+                                        Navigator.pop(ctx);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                                        child: Row(
+                                          children: [
+                                            // Flag Emblem in 3D circular frame
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                gradient: LinearGradient(
+                                                  colors: isSel
+                                                      ? [palette.primary.withOpacity(0.4), Colors.black]
+                                                      : [const Color(0xFF222B38), const Color(0xFF0F1520)],
+                                                ),
+                                                border: Border.all(
+                                                  color: isSel
+                                                      ? (hc ? const Color(0xFFFFEA00) : palette.highlight)
+                                                      : Colors.white24,
+                                                  width: 1.5,
+                                                ),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  l['flag'] ?? '🌐',
+                                                  style: const TextStyle(fontSize: 20),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 14),
+
+                                            // Native Name & Subtitle
+                                            Expanded(
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    l['label'] ?? '',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.w900,
+                                                      color: isSel
+                                                          ? (hc ? const Color(0xFFFFEA00) : palette.highlight)
+                                                          : Colors.white,
+                                                      decoration: TextDecoration.none,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    l['name'] ?? '',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: isSel
+                                                          ? (hc ? const Color(0xFFFFEA00).withOpacity(0.8) : palette.primary)
+                                                          : Colors.white54,
+                                                      fontWeight: FontWeight.bold,
+                                                      decoration: TextDecoration.none,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+
+                                            // Active LED Indicator
+                                            Container(
+                                              width: 14,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: isSel
+                                                    ? (hc ? const Color(0xFFFFEA00) : const Color(0xFF00FF66))
+                                                    : Colors.white12,
+                                                boxShadow: isSel
+                                                    ? [
+                                                        BoxShadow(
+                                                          color: (hc ? const Color(0xFFFFEA00) : const Color(0xFF00FF66)).withOpacity(0.8),
+                                                          blurRadius: 8,
+                                                          spreadRadius: 2,
+                                                        ),
+                                                      ]
+                                                    : null,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
                         ),
                       ),
                     ),
@@ -5232,8 +6123,7 @@ jobs:
               );
             }
 
-
-          void _openHelpGuideDialog() {
+            void _openHelpGuideDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final palette = app.currentPalette;
@@ -5518,6 +6408,289 @@ jobs:
               );
             }
 
+            void _showThemePreview({
+              required String initialThemeKey,
+              required String bgStyle,
+              required Map<String, String> t,
+              required ValueChanged<String> onSelect,
+            }) {
+              String currentPreviewKey = initialThemeKey;
+
+              showDialog(
+                context: context,
+                useSafeArea: false,
+                builder: (ctx) => StatefulBuilder(
+                  builder: (ctx2, setPreviewState) {
+                    final palette = themePalettes[currentPreviewKey] ?? themePalettes.values.first;
+                    final int currIdx = themePalettes.keys.toList().indexOf(currentPreviewKey);
+                    final keys = themePalettes.keys.toList();
+
+                    return Scaffold(
+                      backgroundColor: palette.background,
+                      body: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: Interactive3DGlassBackground(
+                              palette: palette,
+                              isHighContrast: false,
+                              style: bgStyle,
+                              child: const SizedBox(),
+                            ),
+                          ),
+                          Positioned(
+                            top: 40,
+                            left: 16,
+                            right: 16,
+                            child: SafeArea(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.85),
+                                  borderRadius: BorderRadius.circular(18),
+                                  border: Border.all(color: palette.primary, width: 2.0),
+                                  boxShadow: [
+                                    BoxShadow(color: palette.primary.withOpacity(0.4), blurRadius: 16),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: 12,
+                                          height: 12,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: palette.highlight,
+                                            boxShadow: [
+                                              BoxShadow(color: palette.highlight, blurRadius: 8, spreadRadius: 2),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Text(
+                                          t['theme_preview_title'] ?? 'תצוגה מקדימה לערכת צבעים',
+                                          style: TextStyle(
+                                            color: palette.highlight,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w900,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.close_rounded, color: Colors.white, size: 26),
+                                      onPressed: () => Navigator.pop(ctx),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    palette.name,
+                                    style: TextStyle(
+                                      color: palette.primary,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w900,
+                                      letterSpacing: 1.2,
+                                      decoration: TextDecoration.none,
+                                      shadows: [
+                                        Shadow(color: palette.primary.withOpacity(0.8), blurRadius: 16),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  MechModuleCard(
+                                    accentColor: palette.primary,
+                                    showLed: true,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '08:00 • בוקר',
+                                                style: TextStyle(
+                                                  color: palette.highlight,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w900,
+                                                  decoration: TextDecoration.none,
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                decoration: BoxDecoration(
+                                                  color: palette.primary.withOpacity(0.2),
+                                                  borderRadius: BorderRadius.circular(8),
+                                                  border: Border.all(color: palette.primary, width: 1),
+                                                ),
+                                                child: Text(
+                                                  'מלאי: 30',
+                                                  style: TextStyle(color: palette.primary, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            'אקמול 500 מ"ג (כדור 1)',
+                                            style: TextStyle(
+                                              color: palette.textColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          Pneumatic3DButton(
+                                            height: 44,
+                                            palette: palette,
+                                            onTap: () {},
+                                            child: Center(
+                                              child: neon3DButtonText(
+                                                'נלקח כעת',
+                                                palette: palette,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.75),
+                                      borderRadius: BorderRadius.circular(14),
+                                      border: Border.all(color: Colors.white24),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(width: 22, height: 22, decoration: BoxDecoration(color: palette.primary, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 1))),
+                                            const SizedBox(height: 2),
+                                            const Text('Primary', style: TextStyle(color: Colors.white70, fontSize: 9, decoration: TextDecoration.none)),
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(width: 22, height: 22, decoration: BoxDecoration(color: palette.highlight, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 1))),
+                                            const SizedBox(height: 2),
+                                            const Text('Highlight', style: TextStyle(color: Colors.white70, fontSize: 9, decoration: TextDecoration.none)),
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(width: 22, height: 22, decoration: BoxDecoration(color: palette.surface, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 1))),
+                                            const SizedBox(height: 2),
+                                            const Text('Surface', style: TextStyle(color: Colors.white70, fontSize: 9, decoration: TextDecoration.none)),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 30,
+                            left: 16,
+                            right: 16,
+                            child: SafeArea(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Pneumatic3DButton(
+                                      height: 48,
+                                      palette: palette,
+                                      onTap: () {
+                                        HapticFeedback.lightImpact();
+                                        setPreviewState(() {
+                                          final newIdx = (currIdx - 1 + keys.length) % keys.length;
+                                          currentPreviewKey = keys[newIdx];
+                                        });
+                                      },
+                                      child: const Center(
+                                        child: Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Pneumatic3DButton(
+                                      height: 48,
+                                      palette: palette,
+                                      customGlow: const Color(0xFF00FF66),
+                                      onTap: () {
+                                        HapticFeedback.heavyImpact();
+                                        onSelect(currentPreviewKey);
+                                        Navigator.pop(ctx);
+                                      },
+                                      child: Center(
+                                        child: Text(
+                                          t['apply_theme'] ?? 'החל ערכת נושא זו',
+                                          style: const TextStyle(
+                                            color: Color(0xFF00FF66),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w900,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Pneumatic3DButton(
+                                      height: 48,
+                                      palette: palette,
+                                      onTap: () {
+                                        HapticFeedback.lightImpact();
+                                        setPreviewState(() {
+                                          final newIdx = (currIdx + 1) % keys.length;
+                                          currentPreviewKey = keys[newIdx];
+                                        });
+                                      },
+                                      child: const Center(
+                                        child: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 20),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            }
+
             void _openSettingsDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
@@ -5529,6 +6702,8 @@ jobs:
               String tempBgStyle = app.bgStyle;
               String tempSoundType = app.soundType;
               double tempVolume = app.soundVolume;
+              String tempCustomSoundPath = app.customSoundPath;
+              String tempCustomSoundName = app.customSoundName;
               bool tempHc = app.highContrast;
               bool tempVoice = app.voiceAlerts;
 
@@ -5542,7 +6717,7 @@ jobs:
                 {'key': 'bell', 'label': t['sound_opt_bell'] ?? '⏱️ פעמון קריסטל נקי'},
                 {'key': 'radar', 'label': t['sound_opt_radar'] ?? '📡 סריקת מכ"ם קוונטי'},
                 {'key': 'sonar', 'label': t['sound_opt_sonar'] ?? '🌊 פעימת סונאר תת-ימי'},
-                {'key': 'heartbeat', 'label': t['sound_opt_heartbeat'] ?? '💓 פעימת לב ביומטרית'},
+                {'key': 'custom', 'label': t['sound_opt_custom'] ?? '📁 קובץ שמע מותאם אישית מהמכשיר'},
                 {'key': 'laser', 'label': t['sound_opt_laser'] ?? '💫 טיפת לייזר עתידנית'},
                 {'key': 'space', 'label': t['sound_opt_space'] ?? '🪐 צליל חללי עמוק'},
                 {'key': 'telemetry', 'label': t['sound_opt_telemetry'] ?? '🛰️ ביפ טלמטריה מהיר'},
@@ -5662,6 +6837,43 @@ jobs:
                                   ),
                                   const SizedBox(height: 10),
                                   // Color Themes Panel (Responsive Wrap with spring scroll)
+                                  Pneumatic3DButton(
+                                    height: 44,
+                                    palette: palette,
+                                    customGlow: palette.highlight,
+                                    onTap: () {
+                                      HapticFeedback.lightImpact();
+                                      _showThemePreview(
+                                        initialThemeKey: tempThemeKey,
+                                        bgStyle: tempBgStyle,
+                                        t: t,
+                                        onSelect: (newKey) {
+                                          setDlg(() => tempThemeKey = newKey);
+                                          app.setThemeKey(newKey);
+                                          setState(() {});
+                                        },
+                                      );
+                                    },
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.palette_rounded, size: 18, color: palette.highlight),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            t['theme_preview_title'] ?? '🔍 תצוגה מקדימה לערכות צבעים (מסך מלא)',
+                                            style: TextStyle(
+                                              color: palette.highlight,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w900,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
                                   Wrap(
                                     spacing: 8.0,
                                     runSpacing: 8.0,
@@ -5965,6 +7177,106 @@ jobs:
                                     ),
                                   ),
 
+                                  const SizedBox(height: 10),
+                                  // Custom Audio File Picker from Phone (בחירת קובץ שמע מהטלפון)
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.65),
+                                      borderRadius: BorderRadius.circular(14),
+                                      border: Border.all(
+                                        color: tempSoundType == 'custom' ? palette.highlight : Colors.white24,
+                                        width: tempSoundType == 'custom' ? 1.8 : 1.0,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.audio_file_rounded, color: palette.highlight, size: 22),
+                                            const SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                t['custom_file_selected'] ?? 'קובץ שמע מותאם מהמכשיר:',
+                                                style: TextStyle(color: palette.textSecondary, fontSize: 12, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 6),
+                                        Text(
+                                          tempCustomSoundName.isNotEmpty ? tempCustomSoundName : (t['no_file_selected'] ?? 'לא נבחר קובץ מהמכשיר'),
+                                          style: TextStyle(
+                                            color: tempCustomSoundName.isNotEmpty ? palette.highlight : Colors.white54,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w900,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 2,
+                                              child: Pneumatic3DButton(
+                                                height: 40,
+                                                palette: palette,
+                                                customGlow: palette.highlight,
+                                                onTap: () async {
+                                                  HapticFeedback.lightImpact();
+                                                  final result = await FilePicker.platform.pickFiles(
+                                                    type: FileType.custom,
+                                                    allowedExtensions: ['mp3', 'wav', 'ogg', 'm4a', 'aac', 'flac'],
+                                                  );
+                                                  if (result != null && result.files.single.path != null) {
+                                                    setDlg(() {
+                                                      tempCustomSoundPath = result.files.single.path!;
+                                                      tempCustomSoundName = result.files.single.name;
+                                                      tempSoundType = 'custom';
+                                                    });
+                                                    await SoundGenerator.playAlertTone('custom', tempVolume, customFilePath: tempCustomSoundPath);
+                                                  }
+                                                },
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      const Icon(Icons.folder_open_rounded, size: 16, color: Colors.white),
+                                                      const SizedBox(width: 6),
+                                                      Text(
+                                                        t['pick_custom_file'] ?? 'בחר קובץ מהטלפון',
+                                                        style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            if (tempCustomSoundPath.isNotEmpty) ...[
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Pneumatic3DButton(
+                                                  height: 40,
+                                                  palette: palette,
+                                                  customGlow: const Color(0xFF00FF66),
+                                                  onTap: () async {
+                                                    HapticFeedback.lightImpact();
+                                                    await SoundGenerator.playAlertTone('custom', tempVolume, customFilePath: tempCustomSoundPath);
+                                                  },
+                                                  child: const Center(
+                                                    child: Icon(Icons.play_arrow_rounded, color: Color(0xFF00FF66), size: 22),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
                                   const SizedBox(height: 14),
 
                                   // Master Volume Controller With 3D Tactile Rotary Knob
@@ -5992,7 +7304,11 @@ jobs:
                                     ),
                                     value: tempHc,
                                     activeColor: const Color(0xFFFFE500),
-                                    onChanged: (v) => setDlg(() => tempHc = v),
+                                    onChanged: (v) {
+                                      setDlg(() => tempHc = v);
+                                      app.saveFullSettings(hc: v);
+                                      setState(() {});
+                                    },
                                   ),
                                   SwitchListTile(
                                     contentPadding: EdgeInsets.zero,
@@ -6025,6 +7341,8 @@ jobs:
                                         volume: tempVolume,
                                         hc: tempHc,
                                         voice: tempVoice,
+                                        customSoundPath: tempCustomSoundPath,
+                                        customSoundName: tempCustomSoundName,
                                       );
                                       setState(() {});
                                       Navigator.pop(ctx);
@@ -6137,6 +7455,58 @@ jobs:
                     actions: [
                       SafeArea(
                         child: IconButton(
+                          icon: Icon(Icons.info_outline_rounded, size: 26, color: palette.highlight),
+                          tooltip: 'קרדיט ויוצר האפליקציה',
+                          onPressed: () {
+                            HapticFeedback.lightImpact();
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                backgroundColor: palette.surface,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: Border.all(color: palette.primary, width: 2)),
+                                title: Center(
+                                  child: Text(
+                                    'CYBER PHARMA 3D',
+                                    style: TextStyle(color: palette.highlight, fontWeight: FontWeight.w900, fontSize: 18),
+                                  ),
+                                ),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Futuristic3DPillIcon(size: 80),
+                                    const SizedBox(height: 14),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                      decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.6),
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(color: const Color(0xFF00FF66), width: 1.5),
+                                      ),
+                                      child: const Text(
+                                        'יוצר ומפתח האפליקציה:\nרוני שניידר',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(color: Color(0xFF00FF66), fontWeight: FontWeight.w900, fontSize: 16),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'כל הזכויות שמורות לרוני שניידר © 2026\nמערכת פיקוד רפואית תלת-מימדית',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(ctx),
+                                    child: Text(t['close'] ?? 'סגור', style: TextStyle(color: palette.highlight, fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
                           icon: Icon(Icons.help_outline_rounded, size: 26, color: palette.highlight),
                           tooltip: t['help_title']!,
                           onPressed: _openHelpGuideDialog,
@@ -6150,30 +7520,15 @@ jobs:
                       ),
                     ],
                     bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(60),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.55),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: palette.primary.withOpacity(0.5), width: 1.5),
-                        ),
-                        child: TabBar(
-                          controller: _tabController,
-                          indicator: BoxDecoration(
-                            color: palette.primary.withOpacity(0.35),
-                            borderRadius: BorderRadius.circular(13),
-                            border: Border.all(color: accent, width: 2),
-                          ),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          labelColor: accent,
-                          unselectedLabelColor: Colors.white70,
-                          labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13),
-                          tabs: [
-                            Tab(icon: const Icon(Icons.medication_liquid, size: 20), text: t['meds_tab']!),
-                            Tab(icon: const Icon(Icons.calendar_month, size: 20), text: t['appointments_tab']!),
-                          ],
-                        ),
+                      preferredSize: const Size.fromHeight(68),
+                      child: MetallicDualConsoleTabs(
+                        controller: _tabController,
+                        palette: palette,
+                        highContrast: hc,
+                        medsTabLabel: t['meds_tab']!,
+                        appointmentsTabLabel: t['appointments_tab']!,
+                        medsCount: _schedules.length,
+                        appointmentsCount: _appointments.length,
                       ),
                     ),
                   ),
