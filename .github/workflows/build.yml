@@ -406,7 +406,6 @@ jobs:
               glow: Color(0xFFFF007F),
               ledColor: Color(0xFF00FF66),
             ),
-            ),
             'industrial_green': const ThemePalette(
               id: 'industrial_green',
               name: '2. ירוק תעשייתי',
@@ -668,7 +667,7 @@ jobs:
               glow: Color(0xFFFF6D00),
               ledColor: Color(0xFFFFD600),
             ),
-
+          };
           final Map<String, Map<String, String>> dict = {
             'he': {
               'app_name': 'CYBER PHARMA 3D',
@@ -1339,6 +1338,7 @@ jobs:
                   Shadow(color: Colors.black.withOpacity(0.90), offset: const Offset(5.0, 7.0), blurRadius: 8.0),
                   // Atmospheric floating 3D neon glow
                   Shadow(color: glow.withOpacity(0.85), offset: const Offset(0.0, 0.0), blurRadius: 16.0),
+                ],
               ),
             );
           }
@@ -1779,6 +1779,136 @@ jobs:
             @override
             bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
           }
+
+          class Multi3DGraphicsPainter extends CustomPainter {
+            final double progress;
+            final ThemePalette palette;
+            final String style;
+
+            Multi3DGraphicsPainter({
+              required this.progress,
+              required this.palette,
+              required this.style,
+            });
+
+            @override
+            void paint(Canvas canvas, Size size) {
+              switch (style) {
+                case 'butterflies':
+                  _paint3DButterflies(canvas, size);
+                  break;
+                case 'planets':
+                  _paint3DPlanetarySystem(canvas, size);
+                  break;
+                case 'flowers':
+                  _paint3DLotusFlowers(canvas, size);
+                  break;
+                case 'space':
+                  _paint3DSpaceWarp(canvas, size);
+                  break;
+                case 'aurora':
+                  _paint3DAuroraWaves(canvas, size);
+                  break;
+                case 'fireflies':
+                  _paint3DFireflyForest(canvas, size);
+                  break;
+                case 'tunnel':
+                  _paintTronTunnel(canvas, size);
+                  break;
+                case 'blackhole':
+                  _paint3DBlackHole(canvas, size);
+                  break;
+                case 'reactor':
+                  _paint3DIndustrialReactor(canvas, size);
+                  break;
+                case 'crystal':
+                  _paint3DCrystalLattice(canvas, size);
+                  break;
+                case 'dna':
+                  _paint3DDNAHelix(canvas, size);
+                  break;
+                case 'supernova':
+                  _paint3DSupernova(canvas, size);
+                  break;
+                case 'matrix':
+                  _paint3DMatrixRain(canvas, size);
+                  break;
+                case 'nebula':
+                  _paint3DNebulaStorm(canvas, size);
+                  break;
+                default:
+                  _paint3DButterflies(canvas, size);
+                  break;
+              }
+            }
+
+            // 1. פרפרים זרחניים תלת-מימדיים עם עומק Z ונפנוף כנפיים ריאליסטי
+            void _paint3DButterflies(Canvas canvas, Size size) {
+              final cx = size.width * 0.5;
+              final cy = size.height * 0.5;
+              const int bCount = 7;
+              final hues = [
+                const Color(0xFF00FFFF),
+                const Color(0xFFFF007F),
+                const Color(0xFF76FF03),
+                const Color(0xFFFFD600),
+                const Color(0xFFB388FF),
+              ];
+
+              for (int i = 0; i < bCount; i++) {
+                double t = (i / bCount) + (progress * 1.25);
+                double theta = t * 2 * math.pi;
+                double bx = cx + math.sin(theta) * (size.width * 0.40);
+                double by = cy + math.cos(theta * 1.35) * (size.height * 0.30) + math.sin(t * 8 * math.pi) * 22;
+
+                double flap = math.cos(progress * 28 * math.pi + i * 2.4);
+                Color color = hues[i % hues.length];
+
+                for (int tr = 1; tr <= 5; tr++) {
+                  double trT = t - (tr * 0.015);
+                  double tx = cx + math.sin(trT * 2 * math.pi) * (size.width * 0.40);
+                  double ty = cy + math.cos(trT * 2.7 * math.pi) * (size.height * 0.30) + math.sin(trT * 8 * math.pi) * 22;
+                  canvas.drawCircle(
+                    Offset(tx, ty),
+                    (6.0 - tr),
+                    Paint()
+                      ..color = color.withOpacity(0.30 / tr)
+                      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3),
+                  );
+                }
+
+                canvas.save();
+                canvas.translate(bx, by);
+                canvas.rotate(math.sin(theta) * 0.5);
+
+                canvas.drawOval(
+                  Rect.fromCenter(center: Offset.zero, width: 4.0, height: 24),
+                  Paint()..color = Colors.white,
+                );
+
+                final wingPaint = Paint()
+                  ..color = color.withOpacity(0.88)
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4.5);
+
+                canvas.save();
+                canvas.scale(flap.abs(), 1.0);
+                Path rightWing = Path()
+                  ..moveTo(2, -2)
+                  ..cubicTo(32, -30, 46, 10, 2, 16);
+                canvas.drawPath(rightWing, wingPaint);
+                canvas.restore();
+
+                canvas.save();
+                canvas.scale(-flap.abs(), 1.0);
+                Path leftWing = Path()
+                  ..moveTo(2, -2)
+                  ..cubicTo(32, -30, 46, 10, 2, 16);
+                canvas.drawPath(leftWing, wingPaint);
+                canvas.restore();
+
+                canvas.restore();
+              }
+            }
 
             // 2. מערכת שמש קוסמית תלת-מימדית (כוכבי לכת עם טבעות ומסלולים אליפטיים)
             void _paint3DPlanetarySystem(Canvas canvas, Size size) {
@@ -2407,6 +2537,8 @@ jobs:
                   widget.child,
                 ],
               );
+            }
+          }
 
           class AppSplashScreen extends StatefulWidget {
             final Widget Function() onFinish;
@@ -2434,7 +2566,6 @@ jobs:
                     .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
                     ?.requestNotificationsPermission();
               } catch (_) {}
-            }
 
               _anim = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800))..forward();
               Timer(const Duration(milliseconds: 2100), () {
@@ -2524,6 +2655,13 @@ jobs:
                             ],
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+          }
 
           class FirstTimeSetupScreen extends StatefulWidget {
             const FirstTimeSetupScreen({super.key});
@@ -2932,6 +3070,9 @@ jobs:
                   lang: app.currentLang,
                 );
               }
+
+              _show3DHeadsUpDialog(sched);
+            }
 
             void _show3DHeadsUpDialog(ScheduleGroup sched) {
               final app = CyberPillMasterApp.of(context);
