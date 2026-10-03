@@ -5832,7 +5832,7 @@ jobs:
                                                   },
                                                   child: const Center(
                                                     child: Text(
-                                                      '-15 דק'',
+                                                      "-15 דק'",
                                                       style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
                                                     ),
                                                   ),
@@ -5858,7 +5858,7 @@ jobs:
                                                   },
                                                   child: const Center(
                                                     child: Text(
-                                                      '+15 דק'',
+                                                      "+15 דק'",
                                                       style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
                                                     ),
                                                   ),
@@ -5882,20 +5882,15 @@ jobs:
                                       final fullAddr = '${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() + ", " : ""}${cityCtrl.text.trim()}'.trim();
                                       final newApp = AppointmentModel(
                                         id: DateTime.now().millisecondsSinceEpoch.toString(),
-                                        doctorName: docCtrl.text.trim(),
-                                        doctorType: selectedType,
-                                        dateTime: DateTime(
-                                          selectedDate.year,
-                                          selectedDate.month,
-                                          selectedDate.day,
-                                          selectedTime.hour,
-                                          selectedTime.minute,
-                                        ),
-                                        clinicAddress: fullAddr,
+                                        type: selectedType,
+                                        doctor: docCtrl.text.trim(),
+                                        clinic: fullAddr,
+                                        date: '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}',
+                                        time: '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}',
                                       );
                                       setState(() {
-                                        _appointments.add(newApp);
-                                        _appointments.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+                                        _apps.add(newApp);
+                                        _apps.sort((a, b) => a.date.compareTo(b.date));
                                       });
                                       _saveApps();
                                       Navigator.pop(ctx);
@@ -7473,7 +7468,12 @@ jobs:
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const Futuristic3DPillIcon(size: 80),
+                                    Futuristic3DPillIcon(
+                                      size: 80,
+                                      primaryColor: palette.highlight,
+                                      secondaryColor: palette.primary,
+                                      glowColor: palette.glow,
+                                    ),
                                     const SizedBox(height: 14),
                                     Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -7506,7 +7506,9 @@ jobs:
                             );
                           },
                         ),
-                        IconButton(
+                      ),
+                      SafeArea(
+                        child: IconButton(
                           icon: Icon(Icons.help_outline_rounded, size: 26, color: palette.highlight),
                           tooltip: t['help_title']!,
                           onPressed: _openHelpGuideDialog,
@@ -7528,7 +7530,7 @@ jobs:
                         medsTabLabel: t['meds_tab']!,
                         appointmentsTabLabel: t['appointments_tab']!,
                         medsCount: _schedules.length,
-                        appointmentsCount: _appointments.length,
+                        appointmentsCount: _apps.length,
                       ),
                     ),
                   ),
