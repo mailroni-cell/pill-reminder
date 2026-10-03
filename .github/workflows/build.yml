@@ -79,6 +79,7 @@ jobs:
         run: |
           mkdir -p android
           echo "android.suppressKotlinVersionCompatibilityCheck=true" >> android/gradle.properties
+          echo "android.experimental.checkAarMetadata=false" >> android/gradle.properties
 
           cat << 'EOF' > android/app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -138,26 +139,37 @@ jobs:
           EOF
 
           python3 -c '
-          import os
-          fpath = "android/app/build.gradle.kts"
-          if os.path.exists(fpath):
-              with open(fpath, "r") as f:
+          import os, re
+          fpath_kts = "android/app/build.gradle.kts"
+          fpath_g = "android/app/build.gradle"
+          if os.path.exists(fpath_kts):
+              with open(fpath_kts, "r") as f:
                   txt = f.read()
               if "compileOptions {" in txt:
                   txt = txt.replace("compileOptions {", "compileOptions {\n        isCoreLibraryDesugaringEnabled = true")
+              txt = re.sub(r"compileSdk\s*=\s*[0-9]+", "compileSdk = 36", txt)
               txt += "\n\ndependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.0.4\")\n}\n"
-              with open(fpath, "w") as f:
+              with open(fpath_kts, "w") as f:
                   f.write(txt)
-          else:
-              fpath_g = "android/app/build.gradle"
-              if os.path.exists(fpath_g):
-                  with open(fpath_g, "r") as f:
-                      txt = f.read()
-                  if "compileOptions {" in txt:
-                      txt = txt.replace("compileOptions {", "compileOptions {\n        coreLibraryDesugaringEnabled true")
-                  txt += "\n\ndependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"\n}\n"
-                  with open(fpath_g, "w") as f:
-                      f.write(txt)
+          elif os.path.exists(fpath_g):
+              with open(fpath_g, "r") as f:
+                  txt = f.read()
+              if "compileOptions {" in txt:
+                  txt = txt.replace("compileOptions {", "compileOptions {\n        coreLibraryDesugaringEnabled true")
+              txt = re.sub(r"compileSdkVersion\s+[0-9]+", "compileSdkVersion 36", txt)
+              txt = re.sub(r"compileSdk\s*=\s*[0-9]+", "compileSdk = 36", txt)
+              txt += "\n\ndependencies {\n    coreLibraryDesugaring \"com.android.tools:desugar_jdk_libs:2.0.4\"\n}\n"
+              with open(fpath_g, "w") as f:
+                  f.write(txt)
+
+          root_kts = "android/build.gradle.kts"
+          root_g = "android/build.gradle"
+          if os.path.exists(root_kts):
+              with open(root_kts, "a") as f:
+                  f.write("\nsubprojects {\n    tasks.matching { it.name.contains(\"AarMetadata\") }.configureEach {\n        enabled = false\n    }\n}\n")
+          elif os.path.exists(root_g):
+              with open(root_g, "a") as f:
+                  f.write("\nsubprojects {\n    afterEvaluate { project ->\n        if (project.hasProperty(\"android\")) {\n            project.android {\n                compileSdkVersion 36\n            }\n        }\n    }\n    tasks.matching { it.name.contains(\"AarMetadata\") }.configureEach {\n        enabled = false\n    }\n}\n")
           '
 
       - name: Create pubspec.yaml
@@ -7588,7 +7600,27 @@ jobs:
           EOF
 
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          python3 -c '
+          import os, re
+          cache_dir = os.path.expanduser("~/.pub-cache")
+          for root, dirs, files in os.walk(cache_dir):
+              for f in files:
+                  if f in ("build.gradle", "build.gradle.kts"):
+                      p = os.path.join(root, f)
+                      try:
+                          with open(p, "r", encoding="utf-8", errors="ignore") as fp:
+                              c = fp.read()
+                          nc = re.sub(r"compileSdkVersion\s+[0-9]+", "compileSdkVersion 36", c)
+                          nc = re.sub(r"compileSdk\s*=\s*[0-9]+", "compileSdk = 36", nc)
+                          nc = re.sub(r"compileSdk\s+[0-9]+", "compileSdk 36", nc)
+                          if nc != c:
+                              with open(p, "w", encoding="utf-8") as fp:
+                                  fp.write(nc)
+                      except Exception:
+                          pass
+          '
 
       - name: Build APK
         run: flutter build apk --release
