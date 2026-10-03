@@ -42,11 +42,9 @@ jobs:
               android:height="108dp"
               android:viewportWidth="108"
               android:viewportHeight="108">
-              <!-- Deep Obsidian Industrial Chassis Base -->
-              <path android:fillColor="#03050B" android:pathData="M18,6 L90,6 A12,12 0 0,1 102,18 L102,90 A12,12 0 0,1 90,102 L18,102 A12,12 0 0,1 6,90 L6,18 A12,12 0 0,1 18,6 Z"/>
-              <path android:fillColor="#070D1B" android:pathData="M20,9 L88,9 A11,11 0 0,1 99,20 L99,88 A11,11 0 0,1 88,99 L20,99 A11,11 0 0,1 9,20 L9,20 A11,11 0 0,1 20,9 Z"/>
-              <path android:fillColor="#0B1528" android:pathData="M23,13 L85,13 A10,10 0 0,1 95,23 L95,85 A10,10 0 0,1 85,95 L23,95 A10,10 0 0,1 13,85 L13,23 A10,10 0 0,1 23,13 Z"/>
-              <path android:fillColor="#D500F9" android:pathData="M52,52 L71,71 A11,11 0 0,1 55,87 L36,68 Z"/>              <path android:fillColor="#060913" android:pathData="M54,16 L88,34 L88,74 L54,92 L20,74 L20,34 Z"/>
+              <!-- ========================================== -->
+              <!-- 1. TRANSPARENT BACKGROUND (NO BASEPLATE)   -->
+              <!-- ========================================== -->
 
               <!-- Ambient Radiant Neon Glow Halo Aura -->
               <path android:fillColor="#0A00E5FF" android:pathData="M54,10 A44,44 0 1,1 53.9,10 Z"/>
@@ -133,23 +131,6 @@ jobs:
               <path android:fillColor="#CCFFFFFF" android:pathData="M24,31 L25,33 L27,34 L25,35 L24,37 L23,35 L21,34 L23,33 Z"/>
               <path android:fillColor="#55FFFFFF" android:pathData="M48,60 L62,46 L65,49 L51,63 Z"/>
 
-              <!-- Industrial Machine Corner LEDs &amp; Calibration Marks -->
-              <path android:fillColor="#2000E5FF" android:pathData="M16,16 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z"/>
-              <path android:fillColor="#00F5FF" android:pathData="M18,16 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M20,16 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z"/>
-              <path android:fillColor="#20D500F9" android:pathData="M80,16 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z"/>
-              <path android:fillColor="#FF007F" android:pathData="M82,16 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M84,16 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z"/>
-              <path android:fillColor="#2000FF66" android:pathData="M16,80 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z"/>
-              <path android:fillColor="#00FF66" android:pathData="M18,80 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M20,80 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z"/>
-              <path android:fillColor="#20FFD600" android:pathData="M80,80 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z"/>
-              <path android:fillColor="#FFD600" android:pathData="M82,80 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M84,80 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z"/>
-              <path android:fillColor="#3300E5FF" android:pathData="M53,6 L55,6 L55,14 L53,14 Z"/>
-              <path android:fillColor="#3300E5FF" android:pathData="M53,94 L55,94 L55,102 L53,102 Z"/>
-              <path android:fillColor="#33D500F9" android:pathData="M6,53 L14,53 L14,55 L6,55 Z"/>
-              <path android:fillColor="#33D500F9" android:pathData="M94,53 L102,53 L102,55 L94,55 Z"/>
           </vector>
           EOF
 
@@ -1178,7 +1159,7 @@ jobs:
             String _soundType = 'voice';
             double _soundVolume = 1.0;
             String _themeKey = 'cyberpunk';
-            String _bgStyle = 'butterflies';
+            String _bgStyle = 'space';
             bool _firstRun = true;
             bool _initialized = false;
 
@@ -1209,7 +1190,7 @@ jobs:
                 _soundType = prefs.getString('c_sound') ?? 'voice';
                 _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
                 _themeKey = prefs.getString('c_theme') ?? 'cyberpunk';
-                _bgStyle = prefs.getString('c_bg_style') ?? 'butterflies';
+                _bgStyle = prefs.getString('c_bg_style') ?? 'space';
                 _firstRun = prefs.getBool('c_first_run') ?? true;
                 _initialized = true;
               });
@@ -3556,9 +3537,10 @@ jobs:
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
                 builder: (ctx) => SafeArea(
                   child: Container(
-                    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.80),
+                    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: _allLanguages.map((l) {
@@ -3575,6 +3557,7 @@ jobs:
                             ),
                             onTap: () {
                               app.setLanguage(l['code']!);
+                              setState(() {});
                               Navigator.pop(ctx);
                             },
                           );
@@ -3729,9 +3712,10 @@ jobs:
                     textDirection: (tempLang == 'he' || tempLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: SafeArea(
                       child: Container(
-                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.80),
+                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                         child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisSize: MainAxisSize.min,
@@ -3772,6 +3756,8 @@ jobs:
                                     onChanged: (newLang) {
                                       if (newLang != null) {
                                         setDlg(() => tempLang = newLang);
+                                        app.setLanguage(newLang);
+                                        setState(() {});
                                       }
                                     },
                                   ),
@@ -3779,82 +3765,79 @@ jobs:
                               ),
 
                               const SizedBox(height: 14),
-
-                              // Color Themes Carousel
                               Text(t['themes_title']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
+                              // Color Themes Panel (Responsive Wrap with spring scroll)
+                              // Color Themes Panel (Responsive Wrap with spring scroll)
                               const SizedBox(height: 10),
-                              SizedBox(
-                                height: 80,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: themePalettes.values.length,
-                                  itemBuilder: (context, idx) {
-                                    final p = themePalettes.values.elementAt(idx);
-                                    final bool active = tempThemeKey == p.id;
-                                    return Container(
-                                      width: 165,
-                                      margin: const EdgeInsets.only(right: 12, bottom: 4),
-                                      child: Pneumatic3DButton(
-                                        height: 72,
-                                        palette: p,
+                              Wrap(
+                                spacing: 8.0,
+                                runSpacing: 8.0,
+                                alignment: WrapAlignment.center,
+                                children: themePalettes.values.map((p) {
+                                  final bool active = tempThemeKey == p.id;
+                                  return SizedBox(
+                                    width: 155,
+                                    child: Pneumatic3DButton(
+                                      height: 64,
+                                      palette: p,
                                         isPushed: active,
                                         customGlow: active ? p.glow : Colors.transparent,
                                         onTap: () {
                                           setDlg(() => tempThemeKey = p.id);
                                           app.setThemeKey(p.id);
+                                        setState(() {});
                                         },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                Container(width: 12, height: 12, decoration: BoxDecoration(color: p.primary, shape: BoxShape.circle)),
-                                                const SizedBox(width: 8),
-                                                Container(width: 12, height: 12, decoration: BoxDecoration(color: p.highlight, shape: BoxShape.circle)),
+                                                Container(width: 10, height: 10, decoration: BoxDecoration(color: p.primary, shape: BoxShape.circle)),
+                                                const SizedBox(width: 6),
+                                                Container(width: 10, height: 10, decoration: BoxDecoration(color: p.highlight, shape: BoxShape.circle)),
                                               ],
                                             ),
-                                            const SizedBox(height: 6),
-                                            Text(
-                                              p.name,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(color: active ? p.highlight : Colors.white, fontWeight: FontWeight.w900, fontSize: 11),
+                                            const SizedBox(height: 4),
+                                            FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Text(
+                                                p.name,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(color: active ? p.highlight : Colors.white, fontWeight: FontWeight.w900, fontSize: 11),
+                                              ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                }).toList(),
                               ),
 
                               const SizedBox(height: 14),
 
-                              // 14 3D Display Modes Carousel
+                              // 14 3D Display Modes Panel (Responsive Wrap with spring scroll)
                               Text(t['bg_style']!, style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
-                              const SizedBox(height: 10),
-                              SizedBox(
-                                height: 48,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: bgStyles.length,
-                                  itemBuilder: (context, idx) {
-                                    final item = bgStyles[idx];
-                                    final bool active = tempBgStyle == item['key'];
-                                    return Container(
-                                      margin: const EdgeInsets.only(right: 10),
-                                      child: Pneumatic3DButton(
-                                        height: 42,
-                                        palette: palette,
-                                        isPushed: active,
-                                        customGlow: active ? palette.glow : Colors.transparent,
-                                        onTap: () {
-                                          HapticFeedback.selectionClick();
-                                          setDlg(() => tempBgStyle = item['key']!);
-                                          app.setBgStyle(item['key']!);
-                                        },
+                              Wrap(
+                                spacing: 8.0,
+                                runSpacing: 8.0,
+                                alignment: WrapAlignment.center,
+                                children: bgStyles.map((item) {
+                                  final bool active = tempBgStyle == item['key'];
+                                  return Pneumatic3DButton(
+                                    height: 42,
+                                    palette: palette,
+                                    isPushed: active,
+                                    customGlow: active ? palette.glow : Colors.transparent,
+                                    onTap: () {
+                                      HapticFeedback.selectionClick();
+                                      setDlg(() => tempBgStyle = item['key']!);
+                                      app.setBgStyle(item['key']!);
+                                      setState(() {});
+                                    },
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 14),
                                           child: Text(
@@ -3866,10 +3849,8 @@ jobs:
                                             ),
                                           ),
                                         ),
-                                      ),
                                     );
-                                  },
-                                ),
+                                }).toList(),
                               ),
 
                               const SizedBox(height: 14),
@@ -4039,37 +4020,58 @@ jobs:
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     centerTitle: true,
-                    leading: IconButton(
-                      icon: Icon(Icons.language, color: palette.highlight, size: 26),
-                      tooltip: t['select_language']!,
-                      onPressed: _openLanguagePicker,
+                    toolbarHeight: 78,
+                    leading: SafeArea(
+                      child: IconButton(
+                        icon: Icon(Icons.language, color: palette.highlight, size: 26),
+                        tooltip: t['select_language']!,
+                        onPressed: _openLanguagePicker,
+                      ),
                     ),
-                    title: Column(
-                      children: [
-                        textChannel3D(
-                          t['app_name']!,
-                          fontSize: hc ? 22 : 20,
-                          color: accent,
+                    title: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              textChannel3D(
+                                t['app_name']!,
+                                fontSize: hc ? 22 : 19,
+                                color: accent,
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                '${t['welcome']!}: ${app.userName.isNotEmpty ? app.userName : "משתמש"}',
+                                style: TextStyle(
+                                  fontSize: hc ? 14 : 12,
+                                  color: hc ? const Color(0xFFFFE500) : Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          '${t['welcome']!}: ${app.userName.isNotEmpty ? app.userName : "משתמש"}',
-                          style: TextStyle(fontSize: hc ? 16 : 13, color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900),
-                        ),
-                      ],
+                      ),
                     ),
                     actions: [
-                      IconButton(
-                        icon: Icon(Icons.help_outline_rounded, size: 26, color: palette.highlight),
-                        tooltip: t['help_title']!,
-                        onPressed: _openHelpGuideDialog,
+                      SafeArea(
+                        child: IconButton(
+                          icon: Icon(Icons.help_outline_rounded, size: 26, color: palette.highlight),
+                          tooltip: t['help_title']!,
+                          onPressed: _openHelpGuideDialog,
+                        ),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.settings, size: hc ? 30 : 26, color: hc ? const Color(0xFFFFE500) : accent),
-                        onPressed: _openSettingsDialog,
+                      SafeArea(
+                        child: IconButton(
+                          icon: Icon(Icons.settings, size: hc ? 30 : 26, color: hc ? const Color(0xFFFFE500) : accent),
+                          onPressed: _openSettingsDialog,
+                        ),
                       ),
                     ],
                     bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(56),
+                      preferredSize: const Size.fromHeight(60),
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                         decoration: BoxDecoration(
@@ -4087,10 +4089,10 @@ jobs:
                           indicatorSize: TabBarIndicatorSize.tab,
                           labelColor: accent,
                           unselectedLabelColor: Colors.white70,
-                          labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 14),
+                          labelStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13),
                           tabs: [
-                            Tab(icon: const Icon(Icons.medication_liquid), text: t['meds_tab']!),
-                            Tab(icon: const Icon(Icons.calendar_month), text: t['appointments_tab']!),
+                            Tab(icon: const Icon(Icons.medication_liquid, size: 20), text: t['meds_tab']!),
+                            Tab(icon: const Icon(Icons.calendar_month, size: 20), text: t['appointments_tab']!),
                           ],
                         ),
                       ),
@@ -4108,15 +4110,14 @@ jobs:
                                 itemCount: _schedules.length,
                                 itemBuilder: (ctx, i) {
                                   final sched = _schedules[i];
-                                  final timeStr = '${sched.hour.toString().padLeft(2, '0')}:${sched.minute.toString().padLeft(2, '0')}';
+                                  final String timeStr = '${sched.hour.toString().padLeft(2, '0')}:${sched.minute.toString().padLeft(2, '0')}';
                                   return MechModuleCard(
-                                    isPressed: sched.isTaken,
+                                    accentColor: palette.primary,
                                     showLed: true,
                                     child: ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      leading: Icon(sched.isTaken ? Icons.check_circle : Icons.alarm_on, color: sched.isTaken ? const Color(0xFF00FF88) : accent, size: 36),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                                       title: textChannel3D(
-                                        sched.title.isNotEmpty ? sched.title : timeStr,
+                                        sched.title,
                                         fontSize: hc ? 22 : 18,
                                         color: hc ? const Color(0xFFFFE500) : Colors.white,
                                       ),
