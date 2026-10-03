@@ -42,47 +42,114 @@ jobs:
               android:height="108dp"
               android:viewportWidth="108"
               android:viewportHeight="108">
-              <!-- Deep Obsidian Beveled Reactor Base -->
-              <path android:fillColor="#050811" android:pathData="M16,6 L92,6 A10,10 0 0,1 102,16 L102,92 A10,10 0 0,1 92,102 L16,102 A10,10 0 0,1 6,92 L6,16 A10,10 0 0,1 16,6 Z"/>
-              <path android:fillColor="#0D1527" android:pathData="M18,9 L90,9 A9,9 0 0,1 99,18 L99,90 A9,9 0 0,1 90,99 L18,99 A9,9 0 0,1 9,18 L9,18 A9,9 0 0,1 18,9 Z"/>
-              <path android:fillColor="#142038" android:pathData="M22,13 L86,13 A9,9 0 0,1 95,22 L95,86 A9,9 0 0,1 86,95 L22,95 A9,9 0 0,1 13,86 L13,22 A9,9 0 0,1 22,13 Z"/>
+              <!-- Deep Obsidian Industrial Chassis Base -->
+              <path android:fillColor="#03050B" android:pathData="M18,6 L90,6 A12,12 0 0,1 102,18 L102,90 A12,12 0 0,1 90,102 L18,102 A12,12 0 0,1 6,90 L6,18 A12,12 0 0,1 18,6 Z"/>
+              <path android:fillColor="#070D1B" android:pathData="M20,9 L88,9 A11,11 0 0,1 99,20 L99,88 A11,11 0 0,1 88,99 L20,99 A11,11 0 0,1 9,20 L9,20 A11,11 0 0,1 20,9 Z"/>
+              <path android:fillColor="#0B1528" android:pathData="M23,13 L85,13 A10,10 0 0,1 95,23 L95,85 A10,10 0 0,1 85,95 L23,95 A10,10 0 0,1 13,85 L13,23 A10,10 0 0,1 23,13 Z"/>
+              <path android:fillColor="#D500F9" android:pathData="M52,52 L71,71 A11,11 0 0,1 55,87 L36,68 Z"/>              <path android:fillColor="#060913" android:pathData="M54,16 L88,34 L88,74 L54,92 L20,74 L20,34 Z"/>
 
-              <!-- Inner High-Tech Hexagonal Chamber -->
-              <path android:fillColor="#080E1C" android:pathData="M54,18 L88,36 L88,72 L54,90 L20,72 L20,36 Z"/>
-              <path android:fillColor="#0E1A32" android:pathData="M54,21 L85,38 L85,70 L54,87 L23,70 L23,38 Z"/>
+              <!-- Ambient Radiant Neon Glow Halo Aura -->
+              <path android:fillColor="#0A00E5FF" android:pathData="M54,10 A44,44 0 1,1 53.9,10 Z"/>
+              <path android:fillColor="#147C4DFF" android:pathData="M54,14 A40,40 0 1,1 53.9,14 Z"/>
+              <path android:fillColor="#1ED500F9" android:pathData="M54,18 A36,36 0 1,1 53.9,18 Z"/>
+              <path android:fillColor="#2A00F5FF" android:pathData="M54,22 A32,32 0 1,1 53.9,22 Z"/>
 
-              <!-- Holographic 3D Glowing Medical Cross Base -->
-              <path android:fillColor="#003822" android:pathData="M46,30 L62,30 L62,46 L78,46 L78,62 L62,62 L62,78 L46,78 L46,62 L30,62 L30,46 L46,46 Z"/>
-              <path android:fillColor="#00E676" android:pathData="M48,32 L60,32 L60,48 L76,48 L76,60 L60,60 L60,76 L48,76 L48,60 L32,60 L32,48 L48,48 Z"/>
-              <path android:fillColor="#B9F6CA" android:pathData="M50,34 L58,34 L58,50 L74,50 L74,58 L58,58 L58,74 L50,74 L50,58 L34,58 L34,50 L50,50 Z"/>
+              <!-- Glowing 360-Degree LED Ring Around Capsule -->
+              <path android:strokeColor="#2600E5FF" android:strokeWidth="7" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
+              <path android:strokeColor="#557C4DFF" android:strokeWidth="4.5" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
+              <path android:strokeColor="#9900F5FF" android:strokeWidth="2.5" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
+              <path android:strokeColor="#FF00E5FF" android:strokeWidth="1.4" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
+              <path android:strokeColor="#E6FFFFFF" android:strokeWidth="0.7" android:fillColor="#00000000" android:pathData="M54,23 A31,31 0 1,1 53.9,23 Z"/>
 
-              <!-- 3D Isometric Neon Capsule Floating at 45 Degrees -->
-              <path android:fillColor="#03060D" android:pathData="M38,34 L76,72 A16,16 0 0,1 54,94 L16,56 A16,16 0 0,1 38,34 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M82.80,54.00 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#00F5FF" android:pathData="M83.50,54.00 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M84.30,54.00 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M78.65,69.50 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#80D8FF" android:pathData="M79.35,69.50 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M80.15,69.50 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M67.30,80.85 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#D500F9" android:pathData="M68.00,80.85 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M68.80,80.85 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M51.80,85.00 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#FF4081" android:pathData="M52.50,85.00 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M53.30,85.00 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M36.30,80.85 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#7C4DFF" android:pathData="M37.00,80.85 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M37.80,80.85 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M24.95,69.50 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#00E5FF" android:pathData="M25.65,69.50 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M26.45,69.50 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M20.80,54.00 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#00F5FF" android:pathData="M21.50,54.00 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M22.30,54.00 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M24.95,38.50 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#E040FB" android:pathData="M25.65,38.50 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M26.45,38.50 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M36.30,27.15 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#D500F9" android:pathData="M37.00,27.15 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M37.80,27.15 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M51.80,23.00 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#00FFCC" android:pathData="M52.50,23.00 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M53.30,23.00 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M67.30,27.15 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#80D8FF" android:pathData="M68.00,27.15 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M68.80,27.15 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
+              <path android:fillColor="#060A14" android:pathData="M78.65,38.50 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z"/>
+              <path android:fillColor="#7C4DFF" android:pathData="M79.35,38.50 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M80.15,38.50 a0.7,0.7 0 1,0 1.4,0 a0.7,0.7 0 1,0 -1.4,0 Z"/>
 
-              <!-- Bottom Capsule Half (Laser Radiant Magenta Core) -->
-              <path android:fillColor="#880E4F" android:pathData="M52,50 L74,72 A15,15 0 0,1 53,93 L31,71 Z"/>
-              <path android:fillColor="#D500F9" android:pathData="M54,48 L76,70 A14,14 0 0,1 56,90 L34,68 Z"/>
-              <path android:fillColor="#FF4081" android:pathData="M56,50 L74,68 A12,12 0 0,1 58,84 L40,66 Z"/>
+              <!-- Deep 3D Floating Occlusion Shadow -->
+              <path android:fillColor="#020409" android:pathData="M43,42 L80,79 A16,16 0 0,1 58,101 L21,64 A16,16 0 0,1 43,42 Z"/>
+              <path android:fillColor="#040710" android:pathData="M41,40 L78,77 A15,15 0 0,1 57,98 L20,61 A15,15 0 0,1 41,40 Z"/>
 
-              <!-- Top Capsule Half (Electric Hyper-Cyan) -->
-              <path android:fillColor="#006064" android:pathData="M31,29 L53,51 L31,73 L9,51 A15,15 0 0,1 31,29 Z"/>
-              <path android:fillColor="#00E5FF" android:pathData="M33,27 L55,49 L35,69 L13,47 A14,14 0 0,1 33,27 Z"/>
-              <path android:fillColor="#80D8FF" android:pathData="M35,29 L53,47 L37,63 L19,45 A12,12 0 0,1 35,29 Z"/>
+              <!-- 3D Capsule Bottom Half (Laser Purple) -->
+              <path android:fillColor="#2E023D" android:pathData="M54,54 L75,75 A15,15 0 0,1 54,96 L33,75 Z"/>
+              <path android:fillColor="#6A0572" android:pathData="M54,54 L74,74 A14,14 0 0,1 54,94 L34,74 Z"/>
+              <path android:fillColor="#9C27B0" android:pathData="M53,53 L73,73 A13,13 0 0,1 55,91 L35,71 Z"/>
 
-              <!-- High-Gloss Specular Glass Highlight Curves -->
-              <path android:fillColor="#FFFFFF" android:pathData="M26,34 L44,16 A12,12 0 0,1 50,22 L32,40 Z"/>
-              <path android:fillColor="#E0F7FA" android:pathData="M23,41 L39,25 L36,22 L20,38 Z"/>
+              <path android:fillColor="#FF4081" android:pathData="M51,51 L68,68 A9,9 0 0,1 56,82 L39,65 Z"/>
+              <path android:fillColor="#FF80AB" android:pathData="M50,50 L64,64 A6,6 0 0,1 56,74 L42,60 Z"/>
+              <path android:fillColor="#40FFFFFF" android:pathData="M50,91 A13,13 0 0,0 72,75 L70,73 A12,12 0 0,1 50,89 Z"/>
 
-              <!-- Central Superconductor Accelerator Ring with Pulse Beam -->
-              <path android:fillColor="#001F24" android:pathData="M36,44 L64,72 L58,78 L30,50 Z"/>
-              <path android:fillColor="#00FFCC" android:pathData="M38,46 L62,70 L58,74 L34,50 Z"/>
-              <path android:fillColor="#FFFFFF" android:pathData="M40,48 L60,68 L58,70 L38,50 Z"/>
+              <!-- 3D Capsule Top Half (Electric Laser Blue) -->
+              <path android:fillColor="#002B49" android:pathData="M33,33 L54,54 L33,75 L12,54 A15,15 0 0,1 33,33 Z"/>
+              <path android:fillColor="#0052CC" android:pathData="M34,34 L54,54 L34,74 L14,54 A14,14 0 0,1 34,34 Z"/>
+              <path android:fillColor="#0091FF" android:pathData="M35,35 L53,53 L35,71 L17,53 A13,13 0 0,1 35,35 Z"/>
+              <path android:fillColor="#00E5FF" android:pathData="M36,36 L52,52 L36,68 L20,52 A11,11 0 0,1 36,36 Z"/>
+              <path android:fillColor="#80D8FF" android:pathData="M37,37 L51,51 L39,63 L25,51 A9,9 0 0,1 37,37 Z"/>
+              <path android:fillColor="#E0F7FA" android:pathData="M38,38 L49,49 L41,57 L30,48 A6,6 0 0,1 38,38 Z"/>
 
-              <!-- High-Tech Corner Status Power LEDs -->
-              <path android:fillColor="#00F5FF" android:pathData="M16,16a4,4 0 1,1 8,0a4,4 0 1,1 -8,0z"/>
-              <path android:fillColor="#FF007F" android:pathData="M84,16a4,4 0 1,1 8,0a4,4 0 1,1 -8,0z"/>
-              <path android:fillColor="#00FF66" android:pathData="M16,84a4,4 0 1,1 8,0a4,4 0 1,1 -8,0z"/>
-              <path android:fillColor="#FFD600" android:pathData="M84,84a4,4 0 1,1 8,0a4,4 0 1,1 -8,0z"/>
+              <!-- Central High-Tech Connector Band -->
+              <path android:fillColor="#080E1C" android:pathData="M30,51 L51,30 L57,36 L36,57 Z"/>
+              <path android:fillColor="#00FFCC" android:pathData="M31,52 L52,31 L55,34 L34,55 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M32,53 L53,32 L54,33 L33,54 Z"/>
+              <path android:fillColor="#00F5FF" android:pathData="M32,52 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z"/>
+              <path android:fillColor="#FF007F" android:pathData="M51,33 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z"/>
+
+              <!-- Ultra-Gloss Glass Specular Reflections -->
+              <path android:fillColor="#B3FFFFFF" android:pathData="M27,33 L45,15 A12,12 0 0,1 52,22 L34,40 Z"/>
+              <path android:fillColor="#E6FFFFFF" android:pathData="M24,39 L40,23 L37,20 L21,36 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M33,23 L34.5,27 L38.5,28.5 L34.5,30 L33,34 L31.5,30 L27.5,28.5 L31.5,27 Z"/>
+              <path android:fillColor="#CCFFFFFF" android:pathData="M24,31 L25,33 L27,34 L25,35 L24,37 L23,35 L21,34 L23,33 Z"/>
+              <path android:fillColor="#55FFFFFF" android:pathData="M48,60 L62,46 L65,49 L51,63 Z"/>
+
+              <!-- Industrial Machine Corner LEDs &amp; Calibration Marks -->
+              <path android:fillColor="#2000E5FF" android:pathData="M16,16 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z"/>
+              <path android:fillColor="#00F5FF" android:pathData="M18,16 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M20,16 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z"/>
+              <path android:fillColor="#20D500F9" android:pathData="M80,16 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z"/>
+              <path android:fillColor="#FF007F" android:pathData="M82,16 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M84,16 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z"/>
+              <path android:fillColor="#2000FF66" android:pathData="M16,80 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z"/>
+              <path android:fillColor="#00FF66" android:pathData="M18,80 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M20,80 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z"/>
+              <path android:fillColor="#20FFD600" android:pathData="M80,80 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z"/>
+              <path android:fillColor="#FFD600" android:pathData="M82,80 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z"/>
+              <path android:fillColor="#FFFFFF" android:pathData="M84,80 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 Z"/>
+              <path android:fillColor="#3300E5FF" android:pathData="M53,6 L55,6 L55,14 L53,14 Z"/>
+              <path android:fillColor="#3300E5FF" android:pathData="M53,94 L55,94 L55,102 L53,102 Z"/>
+              <path android:fillColor="#33D500F9" android:pathData="M6,53 L14,53 L14,55 L6,55 Z"/>
+              <path android:fillColor="#33D500F9" android:pathData="M94,53 L102,53 L102,55 L94,55 Z"/>
           </vector>
           EOF
 
@@ -188,6 +255,7 @@ jobs:
             audioplayers: ^6.0.0
             path_provider: ^2.1.4
             url_launcher: ^6.3.0
+            permission_handler: ^11.3.1
           flutter:
             uses-material-design: true
           EOF
@@ -209,6 +277,7 @@ jobs:
           import 'package:flutter_local_notifications/flutter_local_notifications.dart';
           import 'package:flutter_tts/flutter_tts.dart';
           import 'package:path_provider/path_provider.dart';
+          import 'package:permission_handler/permission_handler.dart';
           import 'package:shared_preferences/shared_preferences.dart';
           import 'package:timezone/data/latest_all.dart' as tz;
           import 'package:timezone/timezone.dart' as tz;
@@ -324,9 +393,219 @@ jobs:
           }
 
           final Map<String, ThemePalette> themePalettes = {
+            'cyber_neon': const ThemePalette(
+              id: 'cyber_neon',
+              name: '1. סייבר ניאון',
+              background: Color(0xFF040208),
+              chassis: Color(0xFF0F0818),
+              surface: Color(0xFF1B0E2A),
+              primary: Color(0xFFFF007F),
+              highlight: Color(0xFF00F0FF),
+              bevelLight: Color(0xFFFF3399),
+              bevelDark: Color(0xFF0A0212),
+              glow: Color(0xFFFF007F),
+              ledColor: Color(0xFF00FF66),
+            ),
+            ),
+            'industrial_green': const ThemePalette(
+              id: 'industrial_green',
+              name: '2. ירוק תעשייתי',
+              background: Color(0xFF020A05),
+              chassis: Color(0xFF061A0C),
+              surface: Color(0xFF0C2B15),
+              primary: Color(0xFF00E676),
+              highlight: Color(0xFFB9F6CA),
+              bevelLight: Color(0xFF00FF88),
+              bevelDark: Color(0xFF020D06),
+              glow: Color(0xFF00E676),
+              ledColor: Color(0xFF00E5FF),
+            ),
+            'lava_red': const ThemePalette(
+              id: 'lava_red',
+              name: '3. אדום לבה',
+              background: Color(0xFF0F0202),
+              chassis: Color(0xFF210505),
+              surface: Color(0xFF380A0A),
+              primary: Color(0xFFFF1744),
+              highlight: Color(0xFFFF8A80),
+              bevelLight: Color(0xFFFF5252),
+              bevelDark: Color(0xFF140202),
+              glow: Color(0xFFFF1744),
+              ledColor: Color(0xFFFFD600),
+            ),
+            'deep_ocean': const ThemePalette(
+              id: 'deep_ocean',
+              name: '4. אוקיינוס עמוק',
+              background: Color(0xFF010810),
+              chassis: Color(0xFF051424),
+              surface: Color(0xFF0A223B),
+              primary: Color(0xFF00D2FF),
+              highlight: Color(0xFF80EAFF),
+              bevelLight: Color(0xFF164770),
+              bevelDark: Color(0xFF020912),
+              glow: Color(0xFF00B4D8),
+              ledColor: Color(0xFF00F0FF),
+            ),
+            'matrix_gold': const ThemePalette(
+              id: 'matrix_gold',
+              name: '5. מטריקס זהב',
+              background: Color(0xFF0A0801),
+              chassis: Color(0xFF1A1503),
+              surface: Color(0xFF2C2407),
+              primary: Color(0xFFFFD700),
+              highlight: Color(0xFFFFF176),
+              bevelLight: Color(0xFFFFE082),
+              bevelDark: Color(0xFF0E0B02),
+              glow: Color(0xFFFFC107),
+              ledColor: Color(0xFF00FF66),
+            ),
+            'radioactive_yellow': const ThemePalette(
+              id: 'radioactive_yellow',
+              name: '6. צהוב רדיואקטיבי',
+              background: Color(0xFF0A0A01),
+              chassis: Color(0xFF1C1C02),
+              surface: Color(0xFF2D2E04),
+              primary: Color(0xFFEEFF41),
+              highlight: Color(0xFFFFFF8D),
+              bevelLight: Color(0xFFF4FF81),
+              bevelDark: Color(0xFF0E0E01),
+              glow: Color(0xFFC6FF00),
+              ledColor: Color(0xFF00E5FF),
+            ),
+            'plasma_purple': const ThemePalette(
+              id: 'plasma_purple',
+              name: '7. סגול פלזמה',
+              background: Color(0xFF08020D),
+              chassis: Color(0xFF150522),
+              surface: Color(0xFF250A3B),
+              primary: Color(0xFFD500F9),
+              highlight: Color(0xFFEA80FC),
+              bevelLight: Color(0xFFE040FB),
+              bevelDark: Color(0xFF0B0212),
+              glow: Color(0xFFD500F9),
+              ledColor: Color(0xFF00F0FF),
+            ),
+            'minimal_chrome': const ThemePalette(
+              id: 'minimal_chrome',
+              name: '8. כרום מינימלי',
+              background: Color(0xFF08090B),
+              chassis: Color(0xFF121418),
+              surface: Color(0xFF1E2127),
+              primary: Color(0xFFECEFF1),
+              highlight: Color(0xFFFFFFFF),
+              bevelLight: Color(0xFF455A64),
+              bevelDark: Color(0xFF07080A),
+              glow: Color(0xFF90A4AE),
+              ledColor: Color(0xFF00E5FF),
+            ),
+            'electric_cyan': const ThemePalette(
+              id: 'electric_cyan',
+              name: '9. ציאן חשמלי',
+              background: Color(0xFF01090C),
+              chassis: Color(0xFF03161C),
+              surface: Color(0xFF07242E),
+              primary: Color(0xFF00F5FF),
+              highlight: Color(0xFFE0F7FA),
+              bevelLight: Color(0xFF18FFFF),
+              bevelDark: Color(0xFF010B0E),
+              glow: Color(0xFF00E5FF),
+              ledColor: Color(0xFFFF007F),
+            ),
+            'acid_lime': const ThemePalette(
+              id: 'acid_lime',
+              name: '10. אסיד ליים',
+              background: Color(0xFF050A01),
+              chassis: Color(0xFF0E1A03),
+              surface: Color(0xFF182C07),
+              primary: Color(0xFF76FF03),
+              highlight: Color(0xFFCCFF90),
+              bevelLight: Color(0xFFB2FF59),
+              bevelDark: Color(0xFF060D02),
+              glow: Color(0xFF64DD17),
+              ledColor: Color(0xFFFFD600),
+            ),
+            'magma_orange': const ThemePalette(
+              id: 'magma_orange',
+              name: '11. כתום מאגמה',
+              background: Color(0xFF0D0501),
+              chassis: Color(0xFF1F0C03),
+              surface: Color(0xFF331506),
+              primary: Color(0xFFFF6D00),
+              highlight: Color(0xFFFFAB40),
+              bevelLight: Color(0xFFFF9100),
+              bevelDark: Color(0xFF100602),
+              glow: Color(0xFFFF6D00),
+              ledColor: Color(0xFF00FF66),
+            ),
+            'laser_pink': const ThemePalette(
+              id: 'laser_pink',
+              name: '12. ורוד לייזר',
+              background: Color(0xFF0D0207),
+              chassis: Color(0xFF1F0511),
+              surface: Color(0xFF33091D),
+              primary: Color(0xFFFF0055),
+              highlight: Color(0xFFFF80AB),
+              bevelLight: Color(0xFFFF4081),
+              bevelDark: Color(0xFF100208),
+              glow: Color(0xFFFF0055),
+              ledColor: Color(0xFF00F5FF),
+            ),
+            'carbon_gray': const ThemePalette(
+              id: 'carbon_gray',
+              name: '13. אפור פחמן',
+              background: Color(0xFF050608),
+              chassis: Color(0xFF0E1015),
+              surface: Color(0xFF181B22),
+              primary: Color(0xFF94A3B8),
+              highlight: Color(0xFFF1F5F9),
+              bevelLight: Color(0xFF475569),
+              bevelDark: Color(0xFF040507),
+              glow: Color(0xFF64748B),
+              ledColor: Color(0xFF00FF88),
+            ),
+            'quantum_violet': const ThemePalette(
+              id: 'quantum_violet',
+              name: '14. סגול קוונטי',
+              background: Color(0xFF05020B),
+              chassis: Color(0xFF0E051C),
+              surface: Color(0xFF190930),
+              primary: Color(0xFF7C4DFF),
+              highlight: Color(0xFFB388FF),
+              bevelLight: Color(0xFF651FFF),
+              bevelDark: Color(0xFF07020E),
+              glow: Color(0xFF7C4DFF),
+              ledColor: Color(0xFF00E5FF),
+            ),
+            'solar_flare': const ThemePalette(
+              id: 'solar_flare',
+              name: '15. הבזק סולארי',
+              background: Color(0xFF140800),
+              chassis: Color(0xFF241002),
+              surface: Color(0xFF3D1C05),
+              primary: Color(0xFFFF9100),
+              highlight: Color(0xFFFFEA00),
+              bevelLight: Color(0xFFFFAB40),
+              bevelDark: Color(0xFF0F0400),
+              glow: Color(0xFFFF6D00),
+              ledColor: Color(0xFFFFD600),
+            ),
+            'ice_storm': const ThemePalette(
+              id: 'ice_storm',
+              name: '16. סופת קרח',
+              background: Color(0xFF02070D),
+              chassis: Color(0xFF05121F),
+              surface: Color(0xFF0A1D33),
+              primary: Color(0xFF40C4FF),
+              highlight: Color(0xFFE1F5FE),
+              bevelLight: Color(0xFF00B0FF),
+              bevelDark: Color(0xFF020810),
+              glow: Color(0xFF00E5FF),
+              ledColor: Color(0xFF00E5FF),
+            ),
+            // Legacy aliases
             'cyberpunk': const ThemePalette(
-              id: 'cyberpunk',
-              name: 'Cyberpunk Neon Heavy',
+              id: 'cyber_neon',
+              name: '1. סייבר ניאון',
               background: Color(0xFF040208),
               chassis: Color(0xFF0F0818),
               surface: Color(0xFF1B0E2A),
@@ -338,8 +617,8 @@ jobs:
               ledColor: Color(0xFF00FF66),
             ),
             'ocean': const ThemePalette(
-              id: 'ocean',
-              name: 'Deep Oceanic Reactor',
+              id: 'deep_ocean',
+              name: '4. אוקיינוס עמוק',
               background: Color(0xFF010810),
               chassis: Color(0xFF051424),
               surface: Color(0xFF0A223B),
@@ -351,34 +630,34 @@ jobs:
               ledColor: Color(0xFF00F0FF),
             ),
             'clean_medical': const ThemePalette(
-              id: 'clean_medical',
-              name: 'Medical Titanium Clean',
-              background: Color(0xFF081016),
-              chassis: Color(0xFF0E1C28),
-              surface: Color(0xFF162B3D),
-              primary: Color(0xFF00E5A3),
-              highlight: Color(0xFFA7F3D0),
-              bevelLight: Color(0xFF265275),
-              bevelDark: Color(0xFF040A0F),
-              glow: Color(0xFF10B981),
-              ledColor: Color(0xFF10B981),
+              id: 'industrial_green',
+              name: '2. ירוק תעשייתי',
+              background: Color(0xFF020A05),
+              chassis: Color(0xFF061A0C),
+              surface: Color(0xFF0C2B15),
+              primary: Color(0xFF00E676),
+              highlight: Color(0xFFB9F6CA),
+              bevelLight: Color(0xFF00FF88),
+              bevelDark: Color(0xFF020D06),
+              glow: Color(0xFF00E676),
+              ledColor: Color(0xFF00E5FF),
             ),
             'minimalist_dark': const ThemePalette(
-              id: 'minimalist_dark',
-              name: 'Stealth Carbon Matrix',
+              id: 'carbon_gray',
+              name: '13. אפור פחמן',
               background: Color(0xFF050608),
               chassis: Color(0xFF0E1015),
               surface: Color(0xFF181B22),
-              primary: Color(0xFFE2E8F0),
-              highlight: Color(0xFFFFFFFF),
-              bevelLight: Color(0xFF3F4756),
+              primary: Color(0xFF94A3B8),
+              highlight: Color(0xFFF1F5F9),
+              bevelLight: Color(0xFF475569),
               bevelDark: Color(0xFF040507),
-              glow: Color(0xFF94A3B8),
-              ledColor: Color(0xFFFFB703),
+              glow: Color(0xFF64748B),
+              ledColor: Color(0xFF00FF88),
             ),
             'solarpunk': const ThemePalette(
-              id: 'solarpunk',
-              name: 'Solar Plasma Forge',
+              id: 'solar_flare',
+              name: '15. הבזק סולארי',
               background: Color(0xFF140800),
               chassis: Color(0xFF241002),
               surface: Color(0xFF3D1C05),
@@ -389,7 +668,6 @@ jobs:
               glow: Color(0xFFFF6D00),
               ledColor: Color(0xFFFFD600),
             ),
-          };
 
           final Map<String, Map<String, String>> dict = {
             'he': {
@@ -865,11 +1143,21 @@ jobs:
           void main() async {
             WidgetsFlutterBinding.ensureInitialized();
             tz.initializeTimeZones();
-
+            // Configure High Importance Notification Channel for Real-time Heads-up Alerts
+            const AndroidNotificationChannel channel = AndroidNotificationChannel(
+              'cyber_pharma_critical_alerts',
+              'Cyber Pharma Critical Reminders',
+              description: 'High priority alerts for medicine reminders',
+              importance: Importance.max,
+              playSound: true,
+              enableVibration: true,
+            );
+            await flutterNotifications
+                .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+                ?.createNotificationChannel(channel);
             const AndroidInitializationSettings initAndroid = AndroidInitializationSettings('@drawable/ic_launcher_cyber');
             const InitializationSettings initSettings = InitializationSettings(android: initAndroid);
             await flutterNotifications.initialize(initSettings);
-
             runApp(const CyberPillMasterApp());
           }
 
@@ -1038,17 +1326,19 @@ jobs:
                 fontSize: fontSize,
                 fontWeight: fontWeight,
                 color: color,
-                letterSpacing: 0.5,
+                letterSpacing: 0.6,
                 wordSpacing: wordSpacing,
                 shadows: [
-                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(-1.5, -1.5), blurRadius: 1.0),
-                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(1.5, -1.5), blurRadius: 1.0),
-                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(-1.5, 1.5), blurRadius: 1.0),
-                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(1.5, 1.5), blurRadius: 1.0),
+                  // Crisp high-contrast rim occlusion
+                  Shadow(color: Colors.black.withOpacity(0.98), offset: const Offset(-1.5, -1.5), blurRadius: 1.0),
+                  Shadow(color: Colors.black.withOpacity(0.98), offset: const Offset(1.5, -1.5), blurRadius: 1.0),
+                  Shadow(color: Colors.black.withOpacity(0.98), offset: const Offset(-1.5, 1.5), blurRadius: 1.0),
+                  Shadow(color: Colors.black.withOpacity(0.98), offset: const Offset(1.5, 1.5), blurRadius: 1.0),
+                  // Deep physical bevel cast shadows
                   Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(3.0, 4.0), blurRadius: 3.0),
                   Shadow(color: Colors.black.withOpacity(0.90), offset: const Offset(5.0, 7.0), blurRadius: 8.0),
-                  Shadow(color: glow.withOpacity(0.75), offset: const Offset(0.0, 0.0), blurRadius: 16.0),
-                ],
+                  // Atmospheric floating 3D neon glow
+                  Shadow(color: glow.withOpacity(0.85), offset: const Offset(0.0, 0.0), blurRadius: 16.0),
               ),
             );
           }
@@ -1249,14 +1539,19 @@ jobs:
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: glowColor.withOpacity(0.8),
-                      blurRadius: size * 0.5,
-                      spreadRadius: size * 0.1,
+                      color: const Color(0xFF00E5FF).withOpacity(0.4),
+                      blurRadius: size * 0.45,
+                      spreadRadius: size * 0.08,
                     ),
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.98),
-                      offset: Offset(0, size * 0.18),
+                      color: const Color(0xFFD500F9).withOpacity(0.35),
                       blurRadius: size * 0.35,
+                      spreadRadius: size * 0.05,
+                    ),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.95),
+                      offset: Offset(0, size * 0.15),
+                      blurRadius: size * 0.3,
                     ),
                   ],
                 ),
@@ -1271,10 +1566,12 @@ jobs:
             }
           }
 
+
           class Pill3DPainter extends CustomPainter {
             final Color topColor;
             final Color bottomColor;
             final Color glowColor;
+
 
             Pill3DPainter({
               required this.topColor,
@@ -1282,9 +1579,82 @@ jobs:
               required this.glowColor,
             });
 
+
             @override
             void paint(Canvas canvas, Size size) {
               final center = Offset(size.width / 2, size.height / 2);
+
+              // 1. Radiant 360-Degree LED Glow Ring Around Capsule
+              final ringRadius = size.width * 0.44;
+              canvas.drawCircle(
+                center,
+                ringRadius,
+                Paint()
+                  ..color = const Color(0xFF00E5FF).withOpacity(0.25)
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10)
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 6.0,
+              );
+              canvas.drawCircle(
+                center,
+                ringRadius,
+                Paint()
+                  ..color = const Color(0xFFD500F9).withOpacity(0.35)
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5)
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 3.5,
+              );
+              canvas.drawCircle(
+                center,
+                ringRadius,
+                Paint()
+                  ..color = const Color(0xFF00F5FF)
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 1.8,
+              );
+              canvas.drawCircle(
+                center,
+                ringRadius,
+                Paint()
+                  ..color = Colors.white.withOpacity(0.9)
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 0.8,
+              );
+
+              // 12 High-Intensity Perimeter LED Nodes
+              const ledColors = [
+                Color(0xFF00F5FF),
+                Color(0xFF80D8FF),
+                Color(0xFFD500F9),
+                Color(0xFFFF4081),
+                Color(0xFF7C4DFF),
+                Color(0xFF00E5FF),
+                Color(0xFF00F5FF),
+                Color(0xFFE040FB),
+                Color(0xFFD500F9),
+                Color(0xFF00FFCC),
+                Color(0xFF80D8FF),
+                Color(0xFF7C4DFF),
+              ];
+              for (int i = 0; i < 12; i++) {
+                final angle = i * (2 * math.pi / 12);
+                final diodePos = Offset(
+                  center.dx + ringRadius * math.cos(angle),
+                  center.dy + ringRadius * math.sin(angle),
+                );
+                canvas.drawCircle(diodePos, 3.0, Paint()..color = const Color(0xFF060A14));
+                canvas.drawCircle(
+                  diodePos,
+                  2.2,
+                  Paint()
+                    ..color = ledColors[i].withOpacity(0.6)
+                    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+                );
+                canvas.drawCircle(diodePos, 1.6, Paint()..color = ledColors[i]);
+                canvas.drawCircle(diodePos, 0.7, Paint()..color = Colors.white);
+              }
+
+              // 2. 3D Floating Isometric Neon Capsule (Angled at 45°)
               canvas.save();
               canvas.translate(center.dx, center.dy);
               canvas.rotate(-math.pi / 4);
@@ -1296,199 +1666,119 @@ jobs:
               final baseRect = Rect.fromCenter(center: Offset.zero, width: pillWidth, height: pillHeight);
               final rrect = RRect.fromRectAndRadius(baseRect, Radius.circular(radius));
 
-              final glowPaint = Paint()
-                ..color = glowColor.withOpacity(0.4)
-                ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
-              canvas.drawRRect(rrect, glowPaint);
+              // Deep 3D Contact Occlusion Shadows
+              canvas.drawRRect(
+                rrect.shift(const Offset(6, 10)),
+                Paint()
+                  ..color = Colors.black.withOpacity(0.85)
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10),
+              );
+              canvas.drawRRect(
+                rrect.shift(const Offset(3, 5)),
+                Paint()
+                  ..color = const Color(0xFF020409).withOpacity(0.9)
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
+              );
 
-              final shadowPaint = Paint()
-                ..color = Colors.black.withOpacity(0.7)
-                ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
-              canvas.drawRRect(rrect.shift(const Offset(4, 6)), shadowPaint);
+              // Outer Radiant Aura
+              canvas.drawRRect(
+                rrect,
+                Paint()
+                  ..color = const Color(0xFF00E5FF).withOpacity(0.4)
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12),
+              );
 
               canvas.clipRRect(rrect);
 
+              // 3. Top Half (Electric Laser Blue / Hyper-Cyan)
               final topHalfRect = Rect.fromLTRB(-pillWidth / 2, -pillHeight / 2, pillWidth / 2, 0);
               final topPaint = Paint()
-                ..shader = LinearGradient(
+                ..shader = const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Colors.white.withOpacity(0.9), topColor, topColor.withOpacity(0.6)],
+                  colors: [
+                    Color(0xFFFFFFFF),
+                    Color(0xFF80D8FF),
+                    Color(0xFF00E5FF),
+                    Color(0xFF0052CC),
+                    Color(0xFF002B49),
+                  ],
+                  stops: [0.0, 0.25, 0.55, 0.85, 1.0],
                 ).createShader(topHalfRect);
               canvas.drawRect(topHalfRect, topPaint);
 
+              // 4. Bottom Half (Laser Radiant Purple / Neon Magenta)
               final bottomHalfRect = Rect.fromLTRB(-pillWidth / 2, 0, pillWidth / 2, pillHeight / 2);
               final bottomPaint = Paint()
-                ..shader = LinearGradient(
+                ..shader = const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [bottomColor, bottomColor.withOpacity(0.8), Colors.black.withOpacity(0.6)],
+                  colors: [
+                    Color(0xFFFF80AB),
+                    Color(0xFFFF4081),
+                    Color(0xFFD500F9),
+                    Color(0xFF7B1FA2),
+                    Color(0xFF2E023D),
+                  ],
+                  stops: [0.0, 0.25, 0.55, 0.85, 1.0],
                 ).createShader(bottomHalfRect);
               canvas.drawRect(bottomHalfRect, bottomPaint);
 
-              final ringRect = Rect.fromCenter(center: Offset.zero, width: pillWidth * 1.08, height: pillHeight * 0.08);
-              final ringPaint = Paint()
-                ..shader = const LinearGradient(
-                  colors: [Colors.white, Color(0xFF00FFCC), Colors.white],
-                ).createShader(ringRect);
-              canvas.drawRRect(RRect.fromRectAndRadius(ringRect, const Radius.circular(3)), ringPaint);
+              // 5. Central High-Tech Superconductor Connector Ring
+              final ringRect = Rect.fromCenter(center: Offset.zero, width: pillWidth * 1.1, height: pillHeight * 0.08);
+              canvas.drawRRect(
+                RRect.fromRectAndRadius(ringRect, const Radius.circular(3)),
+                Paint()..color = const Color(0xFF080E1C),
+              );
+              final beamRect = Rect.fromCenter(center: Offset.zero, width: pillWidth * 1.05, height: pillHeight * 0.035);
+              canvas.drawRRect(
+                RRect.fromRectAndRadius(beamRect, const Radius.circular(2)),
+                Paint()
+                  ..shader = const LinearGradient(
+                    colors: [Color(0xFF00E5FF), Color(0xFF00FFCC), Colors.white, Color(0xFF00FFCC), Color(0xFF00E5FF)],
+                  ).createShader(beamRect),
+              );
 
+              // 6. Ultra-Gloss Glass Specular Reflections
               final sheenPath = Path()
-                ..moveTo(-pillWidth * 0.3, -pillHeight * 0.42)
-                ..quadraticBezierTo(-pillWidth * 0.1, -pillHeight * 0.42, 0, -pillHeight * 0.2)
-                ..lineTo(-pillWidth * 0.25, -pillHeight * 0.2)
+                ..moveTo(-pillWidth * 0.32, -pillHeight * 0.44)
+                ..quadraticBezierTo(-pillWidth * 0.05, -pillHeight * 0.42, 0, -pillHeight * 0.18)
+                ..lineTo(-pillWidth * 0.22, -pillHeight * 0.18)
                 ..close();
-              canvas.drawPath(sheenPath, Paint()..color = Colors.white.withOpacity(0.85));
+              canvas.drawPath(sheenPath, Paint()..color = Colors.white.withOpacity(0.9));
+
+              final glintPath = Path()
+                ..moveTo(-pillWidth * 0.36, -pillHeight * 0.38)
+                ..lineTo(-pillWidth * 0.36, -pillHeight * 0.1)
+                ..lineTo(-pillWidth * 0.30, -pillHeight * 0.1)
+                ..lineTo(-pillWidth * 0.30, -pillHeight * 0.38)
+                ..close();
+              canvas.drawPath(glintPath, Paint()..color = Colors.white.withOpacity(0.6));
+
+              // Bottom Glass Fresnel Reflection Rim
+              final rimPath = Path()
+                ..arcTo(
+                  Rect.fromCircle(center: Offset(0, pillHeight * 0.25), radius: pillWidth * 0.42),
+                  math.pi * 0.2,
+                  math.pi * 0.6,
+                  false,
+                );
+              canvas.drawPath(
+                rimPath,
+                Paint()
+                  ..color = const Color(0xFFD500F9).withOpacity(0.4)
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2.0
+                  ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+              );
 
               canvas.restore();
             }
 
+
             @override
             bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
           }
-
-          class Multi3DGraphicsPainter extends CustomPainter {
-            final double progress;
-            final ThemePalette palette;
-            final String style;
-
-
-            Multi3DGraphicsPainter({
-              required this.progress,
-              required this.palette,
-              required this.style,
-            });
-
-
-            @override
-            void paint(Canvas canvas, Size size) {
-              switch (style) {
-                case 'butterflies':
-                  _paint3DButterflies(canvas, size);
-                  break;
-                case 'planets':
-                  _paint3DPlanetarySystem(canvas, size);
-                  break;
-                case 'flowers':
-                  _paint3DLotusFlowers(canvas, size);
-                  break;
-                case 'space':
-                  _paint3DSpaceWarp(canvas, size);
-                  break;
-                case 'aurora':
-                  _paint3DAuroraWaves(canvas, size);
-                  break;
-                case 'fireflies':
-                  _paint3DFireflyForest(canvas, size);
-                  break;
-                case 'tunnel':
-                  _paintTronTunnel(canvas, size);
-                  break;
-                case 'blackhole':
-                  _paint3DBlackHole(canvas, size);
-                  break;
-                case 'reactor':
-                  _paint3DIndustrialReactor(canvas, size);
-                  break;
-                case 'crystal':
-                  _paint3DCrystalLattice(canvas, size);
-                  break;
-                case 'dna':
-                  _paint3DDNAHelix(canvas, size);
-                  break;
-                case 'supernova':
-                  _paint3DSupernova(canvas, size);
-                  break;
-                case 'matrix':
-                  _paint3DMatrixRain(canvas, size);
-                  break;
-                case 'nebula':
-                  _paint3DNebulaStorm(canvas, size);
-                  break;
-                default:
-                  _paint3DButterflies(canvas, size);
-                  break;
-              }
-            }
-
-
-            // 1. פרפרים זרחניים תלת-מימדיים עם עומק Z ונפנוף כנפיים ריאליסטי
-            void _paint3DButterflies(Canvas canvas, Size size) {
-              final cx = size.width * 0.5;
-              final cy = size.height * 0.5;
-              const int bCount = 7;
-              final hues = [
-                const Color(0xFF00FFFF),
-                const Color(0xFFFF007F),
-                const Color(0xFF76FF03),
-                const Color(0xFFFFD600),
-                const Color(0xFFB388FF),
-              ];
-
-
-              for (int i = 0; i < bCount; i++) {
-                double t = (i / bCount) + (progress * 1.25);
-                double theta = t * 2 * math.pi;
-                double bx = cx + math.sin(theta) * (size.width * 0.40);
-                double by = cy + math.cos(theta * 1.35) * (size.height * 0.30) + math.sin(t * 8 * math.pi) * 22;
-
-
-                double flap = math.cos(progress * 28 * math.pi + i * 2.4);
-                Color color = hues[i % hues.length];
-
-
-                for (int tr = 1; tr <= 5; tr++) {
-                  double trT = t - (tr * 0.015);
-                  double tx = cx + math.sin(trT * 2 * math.pi) * (size.width * 0.40);
-                  double ty = cy + math.cos(trT * 2.7 * math.pi) * (size.height * 0.30) + math.sin(trT * 8 * math.pi) * 22;
-                  canvas.drawCircle(
-                    Offset(tx, ty),
-                    (6.0 - tr),
-                    Paint()
-                      ..color = color.withOpacity(0.30 / tr)
-                      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3),
-                  );
-                }
-
-
-                canvas.save();
-                canvas.translate(bx, by);
-                canvas.rotate(math.sin(theta) * 0.5);
-
-
-                canvas.drawOval(
-                  Rect.fromCenter(center: Offset.zero, width: 4.0, height: 24),
-                  Paint()..color = Colors.white,
-                );
-
-
-                final wingPaint = Paint()
-                  ..color = color.withOpacity(0.88)
-                  ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4.5);
-
-
-                canvas.save();
-                canvas.scale(flap.abs(), 1.0);
-                Path rightWing = Path()
-                  ..moveTo(2, -2)
-                  ..cubicTo(32, -30, 46, 10, 2, 16);
-                canvas.drawPath(rightWing, wingPaint);
-                canvas.restore();
-
-
-                canvas.save();
-                canvas.scale(-flap.abs(), 1.0);
-                Path leftWing = Path()
-                  ..moveTo(2, -2)
-                  ..cubicTo(32, -30, 46, 10, 2, 16);
-                canvas.drawPath(leftWing, wingPaint);
-                canvas.restore();
-
-
-                canvas.restore();
-              }
-            }
-
 
             // 2. מערכת שמש קוסמית תלת-מימדית (כוכבי לכת עם טבעות ומסלולים אליפטיים)
             void _paint3DPlanetarySystem(Canvas canvas, Size size) {
@@ -2080,39 +2370,43 @@ jobs:
               return Stack(
                 children: [
                   Container(color: widget.palette.background),
-                  AnimatedBuilder(
-                    animation: _anim,
-                    builder: (context, _) {
-                      return CustomPaint(
-                        size: Size.infinite,
-                        painter: Multi3DGraphicsPainter(
-                          progress: _anim.value,
-                          palette: widget.palette,
-                          style: widget.style,
-                        ),
-                      );
-                    },
-                  ),
-                  // High-clarity subtle vignette for pristine contrast & uncompromised 3D visibility
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: RadialGradient(
-                        center: Alignment.center,
-                        radius: 1.25,
-                        colors: [
-                          widget.palette.background.withOpacity(0.08),
-                          widget.palette.background.withOpacity(0.30),
-                          Colors.black.withOpacity(0.55),
-                        ],
+                  ClipRect(
+                    child: RepaintBoundary(
+                      child: AnimatedBuilder(
+                        animation: _anim,
+                        builder: (context, _) {
+                          return CustomPaint(
+                            size: Size.infinite,
+                            painter: Multi3DGraphicsPainter(
+                              progress: _anim.value,
+                              palette: widget.palette,
+                              style: widget.style,
+                            ),
+                          );
+                        },
                       ),
                     ),
+                  ),
+                  // High-clarity subtle vignette with IgnorePointer to ensure zero interference with buttons
+                  IgnorePointer(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          center: Alignment.center,
+                          radius: 1.25,
+                          colors: [
+                            widget.palette.background.withOpacity(0.08),
+                            widget.palette.background.withOpacity(0.30),
+                            Colors.black.withOpacity(0.55),
+                          ],
+                        ),
+                      ),
+                    ),
+
                   ),
                   widget.child,
                 ],
               );
-            }
-          }
-
 
           class AppSplashScreen extends StatefulWidget {
             final Widget Function() onFinish;
@@ -2128,6 +2422,20 @@ jobs:
             @override
             void initState() {
               super.initState();
+              _requestPermissionsAndLaunch();
+            }
+
+            Future<void> _requestPermissionsAndLaunch() async {
+              try {
+                await Permission.notification.request();
+              } catch (_) {}
+              try {
+                await flutterNotifications
+                    .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+                    ?.requestNotificationsPermission();
+              } catch (_) {}
+            }
+
               _anim = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800))..forward();
               Timer(const Duration(milliseconds: 2100), () {
                 if (mounted) {
@@ -2154,43 +2462,68 @@ jobs:
               final palette = app.currentPalette;
 
               return Scaffold(
-                backgroundColor: Colors.black,
+                backgroundColor: const Color(0xFF03050B),
                 body: Center(
                   child: FadeTransition(
                     opacity: _anim,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Futuristic3DPillIcon(
-                          size: 140,
-                          primaryColor: palette.highlight,
-                          secondaryColor: palette.primary,
-                          glowColor: palette.glow,
+                        const Futuristic3DPillIcon(
+                          size: 150,
+                          primaryColor: Color(0xFF00E5FF),
+                          secondaryColor: Color(0xFFD500F9),
+                          glowColor: Color(0xFF00F5FF),
                         ),
                         const SizedBox(height: 32),
                         textChannel3D(
                           'CYBER PHARMA 3D',
                           fontSize: 26,
-                          color: palette.highlight,
-                          glowColor: palette.glow,
+                          color: const Color(0xFF00E5FF),
+                          glowColor: const Color(0xFF00F5FF),
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          dict[app.currentLang]?['creator'] ?? 'רוני שניידר',
-                          style: TextStyle(
-                            color: palette.primary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.1,
+                        const SizedBox(height: 16),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF080D1A),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: const Color(0xFF00E5FF).withOpacity(0.5), width: 1.5),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF00E5FF).withOpacity(0.2),
+                                blurRadius: 12,
+                                spreadRadius: 1,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF00FF66),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(color: Color(0xFF00FF66), blurRadius: 6, spreadRadius: 2),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                dict[app.currentLang]?['creator'] ?? 'רוני שניידר',
+                                style: const TextStyle(
+                                  color: Color(0xFF00F5FF),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.1,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }
-          }
 
           class FirstTimeSetupScreen extends StatefulWidget {
             const FirstTimeSetupScreen({super.key});
@@ -2564,15 +2897,41 @@ jobs:
               String ttsTemplate = t['tts_alert'] ?? 'תזכורת. הגיע הזמן לקחת את התרופה: {pills}';
               String speechText = ttsTemplate.replaceAll('{pills}', pillNames);
 
-              SoundGenerator.playAlertTone(
-                app.soundType,
-                app.soundVolume,
-                voiceText: speechText,
-                lang: app.currentLang,
-              );
+              // High-Importance Android Heads-Up Notification (Importance.max, Priority.high)
+              try {
+                const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+                  'cyber_pharma_critical_alerts',
+                  'Cyber Pharma Critical Reminders',
+                  channelDescription: 'High priority alerts for medicine reminders',
+                  importance: Importance.max,
+                  priority: Priority.high,
+                  ticker: 'Cyber Pharma Reminder Alert',
+                  icon: '@drawable/ic_launcher_cyber',
+                  fullScreenIntent: true,
+                  enableVibration: true,
+                  playSound: true,
+                );
+                const NotificationDetails notifDetails = NotificationDetails(android: androidDetails);
+                await flutterNotifications.show(
+                  sched.id.hashCode,
+                  '🚨 ${t['app_title'] ?? 'CYBER PHARMA 3D'}',
+                  speechText,
+                  notifDetails,
+                );
+              } catch (e) {
+                debugPrint('Notification error: $e');
+              }
 
-              _show3DHeadsUpDialog(sched);
-            }
+              // Vibration & TTS strictly at reminder moment
+              HapticFeedback.heavyImpact();
+              if (app.voiceAlerts) {
+                SoundGenerator.playAlertTone(
+                  app.soundType,
+                  app.soundVolume,
+                  voiceText: speechText,
+                  lang: app.currentLang,
+                );
+              }
 
             void _show3DHeadsUpDialog(ScheduleGroup sched) {
               final app = CyberPillMasterApp.of(context);
@@ -2713,22 +3072,26 @@ jobs:
                             children: [
                               textChannel3D(t['add_med']!, fontSize: hc ? 22 : 19, color: hc ? const Color(0xFFFFE500) : palette.primary),
                               const SizedBox(height: 12),
-                              // Responsive Time Presets (Expanded Row with FittedBox - Zero Overflow)
-                              Row(
+                              // Responsive Time Presets with Wrap to guarantee zero overflow
+                              Wrap(
+                                spacing: 8.0,
+                                runSpacing: 8.0,
+                                alignment: WrapAlignment.center,
                                 children: [
-                                  Expanded(
+                                  SizedBox(
+                                    width: 76,
                                     child: _presetBtn(t['morning']!, '08:00', 8, 0, () => setDlg(() { hour = 8; minute = 0; autoTitle = t['morning']!; })),
                                   ),
-                                  const SizedBox(width: 6),
-                                  Expanded(
+                                  SizedBox(
+                                    width: 76,
                                     child: _presetBtn(t['noon']!, '13:00', 13, 0, () => setDlg(() { hour = 13; minute = 0; autoTitle = t['noon']!; })),
                                   ),
-                                  const SizedBox(width: 6),
-                                  Expanded(
+                                  SizedBox(
+                                    width: 76,
                                     child: _presetBtn(t['evening']!, '19:00', 19, 0, () => setDlg(() { hour = 19; minute = 0; autoTitle = t['evening']!; })),
                                   ),
-                                  const SizedBox(width: 6),
-                                  Expanded(
+                                  SizedBox(
+                                    width: 76,
                                     child: _presetBtn(t['night']!, '22:00', 22, 0, () => setDlg(() { hour = 22; minute = 0; autoTitle = t['night']!; })),
                                   ),
                                 ],
@@ -3052,7 +3415,7 @@ jobs:
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
                 builder: (ctx) => SafeArea(
                   child: Container(
-                    constraints: const BoxConstraints(maxHeight: 340),
+                    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.80),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: SingleChildScrollView(
                       child: Column(
@@ -3225,7 +3588,7 @@ jobs:
                     textDirection: (tempLang == 'he' || tempLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
                     child: SafeArea(
                       child: Container(
-                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.90),
+                        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.80),
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                         child: SingleChildScrollView(
                           child: Column(
