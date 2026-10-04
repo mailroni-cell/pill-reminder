@@ -2754,6 +2754,7 @@ jobs:
 
             @override
             Widget build(BuildContext context) {
+              final app = CyberPillMasterApp.of(context);
               final palette = widget.palette;
               final hc = widget.highContrast;
               final accentColor = hc ? const Color(0xFFFFE500) : palette.primary;
