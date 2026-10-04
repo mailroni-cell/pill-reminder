@@ -1,9 +1,11 @@
-name: Build APK
+﻿name: Build APK
+
 
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
+
 
 jobs:
   build:
@@ -11,20 +13,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version: '17'
 
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
 
+
       - name: Create Flutter Skeleton
         run: |
           flutter create --org com.cyberpharma.app --project-name pill_reminder . --platforms=android --overwrite
+
 
       - name: Setup Futuristic 3D App Icon
         run: |
@@ -41,6 +47,7 @@ jobs:
               <!-- PURE GLOSSY 3D FLUORESCENT PILL CAPSULE                        -->
               <!-- ============================================================== -->
 
+
               <!-- 3D Capsule Bottom Half (Laser Neon Magenta/Purple) -->
               <path android:fillColor="#2E023D" android:pathData="M54,54 L75,75 A15,15 0 0,1 54,96 L33,75 Z"/>
               <path android:fillColor="#6A0572" android:pathData="M54,54 L74,74 A14,14 0 0,1 54,94 L34,74 Z"/>
@@ -49,6 +56,7 @@ jobs:
               <path android:fillColor="#FF007F" android:pathData="M51,51 L68,68 A9,9 0 0,1 56,82 L39,65 Z"/>
               <path android:fillColor="#FF4081" android:pathData="M50,50 L64,64 A6,6 0 0,1 56,74 L42,60 Z"/>
               <path android:fillColor="#40FFFFFF" android:pathData="M50,91 A13,13 0 0,0 72,75 L70,73 A12,12 0 0,1 50,89 Z"/>
+
 
               <!-- 3D Capsule Top Half (Electric Fluorescent Laser Cyan) -->
               <path android:fillColor="#002B49" android:pathData="M33,33 L54,54 L33,75 L12,54 A15,15 0 0,1 33,33 Z"/>
@@ -59,12 +67,14 @@ jobs:
               <path android:fillColor="#80D8FF" android:pathData="M37,37 L51,51 L39,63 L25,51 A9,9 0 0,1 37,37 Z"/>
               <path android:fillColor="#E0F7FA" android:pathData="M38,38 L49,49 L41,57 L30,48 A6,6 0 0,1 38,38 Z"/>
 
+
               <!-- Central High-Tech Connector Band (Chrome Metal) -->
               <path android:fillColor="#080E1C" android:pathData="M30,51 L51,30 L57,36 L36,57 Z"/>
               <path android:fillColor="#00FFCC" android:pathData="M31,52 L52,31 L55,34 L34,55 Z"/>
               <path android:fillColor="#FFFFFF" android:pathData="M32,53 L53,32 L54,33 L33,54 Z"/>
               <path android:fillColor="#00F5FF" android:pathData="M32,52 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z"/>
               <path android:fillColor="#FF007F" android:pathData="M51,33 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 Z"/>
+
 
               <!-- Ultra-Gloss Glass Specular Reflections (3D Lacquer Sheen) -->
               <path android:fillColor="#B3FFFFFF" android:pathData="M27,33 L45,15 A12,12 0 0,1 52,22 L34,40 Z"/>
@@ -75,10 +85,12 @@ jobs:
           </vector>
           EOF
 
+
       - name: Configure Android Manifest, Desugaring and Kotlin Flags
         run: |
           mkdir -p android
           echo "android.suppressKotlinVersionCompatibilityCheck=true" >> android/gradle.properties
+
 
           cat << 'EOF' > android/app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -93,6 +105,7 @@ jobs:
               <uses-permission android:name="android.permission.WAKE_LOCK"/>
               <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
               <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+
 
               <queries>
                   <intent>
@@ -110,6 +123,7 @@ jobs:
                   <package android:name="com.waze" />
                   <package android:name="com.google.android.apps.maps" />
               </queries>
+
 
               <application
                   android:label="CYBER PHARMA 3D"
@@ -139,6 +153,7 @@ jobs:
           </manifest>
           EOF
 
+
           python3 -c '
           import os, re
           fpath_kts = "android/app/build.gradle.kts"
@@ -163,12 +178,14 @@ jobs:
               with open(fpath_g, "w") as f:
                   f.write(txt)
 
+
           root_kts = "android/build.gradle.kts"
           root_g = "android/build.gradle"
           if os.path.exists(root_g):
               with open(root_g, "a") as f:
                   f.write("\nsubprojects {\n    afterEvaluate { project ->\n        if (project.hasProperty(\"android\")) {\n            project.android {\n                compileSdkVersion 36\n            }\n        }\n    }\n}\n")
           '
+
 
       - name: Create pubspec.yaml
         run: |
@@ -197,6 +214,7 @@ jobs:
             uses-material-design: true
           EOF
 
+
       - name: Create lib/main.dart
         run: |
           mkdir -p lib
@@ -222,9 +240,11 @@ jobs:
           import 'package:timezone/timezone.dart' as tz;
           import 'package:url_launcher/url_launcher.dart';
 
+
           final FlutterLocalNotificationsPlugin flutterNotifications = FlutterLocalNotificationsPlugin();
           final FlutterTts flutterTts = FlutterTts();
           final AudioPlayer audioPlayer = AudioPlayer();
+
 
           class SoundGenerator {
             static Uint8List createToneWav(
@@ -238,6 +258,7 @@ jobs:
               final int numSamples = (sampleRate * durationSeconds).toInt();
               final int dataLength = numSamples * 2;
               final int bufferLength = 44 + dataLength;
+
 
               final ByteData buffer = ByteData(bufferLength);
               // RIFF header
@@ -257,6 +278,7 @@ jobs:
               buffer.setUint8(36, 0x64); buffer.setUint8(37, 0x61); buffer.setUint8(38, 0x74); buffer.setUint8(39, 0x61);
               buffer.setUint32(40, dataLength, Endian.little);
 
+
               final double effectiveVol = volume.clamp(0.0, 1.0);
               int offset = 44;
               for (int i = 0; i < numSamples; i++) {
@@ -267,9 +289,11 @@ jobs:
                   currentFreq = frequency + (endFrequency - frequency) * progress;
                 }
 
+
                 double attack = (progress * 30.0).clamp(0.0, 1.0);
                 double decay = math.exp(-3.2 * progress);
                 double ampEnvelope = attack * decay;
+
 
                 double sample = 0.0;
                 if (type == 'square') {
@@ -324,6 +348,7 @@ jobs:
                   sample = math.sin(2 * math.pi * currentFreq * t) * 0.75;
                 }
 
+
                 double finalSample = sample * ampEnvelope * effectiveVol;
                 int intSample = (finalSample * 32767.0).toInt().clamp(-32768, 32767);
                 buffer.setInt16(offset, intSample, Endian.little);
@@ -331,6 +356,7 @@ jobs:
               }
               return buffer.buffer.asUint8List();
             }
+
 
             static Future<void> playAlertTone(
               String soundType,
@@ -343,7 +369,9 @@ jobs:
                 await audioPlayer.stop();
                 await flutterTts.stop();
 
+
                 final double safeVol = volume.clamp(0.0, 1.0);
+
 
                 // Play custom audio file from phone if selected
                 if (soundType == 'custom') {
@@ -361,6 +389,7 @@ jobs:
                   return;
                 }
 
+
                 if (soundType == 'voice') {
                   Map<String, String> langMap = {
           'he': 'he-IL', 'en': 'en-US', 'ar': 'ar-SA',
@@ -375,6 +404,7 @@ jobs:
                lang == 'fr' ? 'Alerte vocale active: le système fonctionne correctement' :
                lang == 'es' ? 'Alerta de voz activa: el sistema funciona correctamente' :
                'Voice alert active: reminder system operating normally');
+
 
                   try {
           await flutterTts.awaitSynthCompletion(true);
@@ -395,6 +425,7 @@ jobs:
                   }
                   return;
                 }
+
 
                 Uint8List wavBytes;
                 switch (soundType) {
@@ -445,6 +476,7 @@ jobs:
           break;
                 }
 
+
                 await audioPlayer.setVolume(safeVol);
                 await audioPlayer.play(BytesSource(wavBytes), volume: safeVol);
               } catch (e) {
@@ -452,6 +484,7 @@ jobs:
               }
             }
           }
+
 
           class ThemePalette {
             final String id;
@@ -469,6 +502,7 @@ jobs:
             final Color textAccent;
             final Color textSecondary;
             final List<Color> borderGradient;
+
 
             const ThemePalette({
               required this.id,
@@ -488,6 +522,7 @@ jobs:
               this.borderGradient = const [Color(0xFF00F5FF), Color(0xFFFF007F), Color(0xFF00F5FF)],
             });
           }
+
 
           final Map<String, ThemePalette> themePalettes = {
             'cyber_neon': const ThemePalette(
@@ -777,8 +812,8 @@ jobs:
               'help_title': 'מדריך הפעלה לקונסולה',
               'help_text': 'ברוכים הבאים למערכת CYBER PHARMA 3D!\\n\\n1. תזמון תרופות ובדיקת רופא הוחלפו לשמאל/ימין לנוחות מרבית.\\n2. ניתן לערוך תזמונים קיימים באמצעות כפתור העריכה.\\n3. תפריט ערכות צבע כולל כעת מסך תצוגה מקדימה נגלל בדיוק כמו מצבי התצוגה.\\n4. שמות תרופות וערים כוללים השלמה אוטומטית מלאה ממאגרים מתעדכנים.',
               'close': 'סגור',
-              'dial_title': (dict[CyberPillMasterApp.of(context).currentLang]?['dial_title'] ?? 'חוגת עוצמת שמע 3D (Master Volume)'),
-              'dial_hint': (dict[CyberPillMasterApp.of(context).currentLang]?['dial_hint'] ?? 'סובב את החוגה או החלק למעלה/למטה לכיוון רציף'),
+              'dial_title': 'חוגת עוצמת שמע 3D (Master Volume)',
+              'dial_hint': 'סובב את החוגה או החלק למעלה/למטה לכיוון רציף',
               'mute': 'השתק',
               'prev': 'הקודם',
               'next': 'הבא',
@@ -1481,6 +1516,7 @@ jobs:
             },
           };
 
+
           void main() async {
             WidgetsFlutterBinding.ensureInitialized();
             try {
@@ -1488,6 +1524,7 @@ jobs:
             } catch (e) {
               debugPrint('Timezone initialization error: $e');
             }
+
 
             try {
               const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -1508,18 +1545,23 @@ jobs:
               debugPrint('Notification setup error: $e');
             }
 
+
             runApp(const CyberPillMasterApp());
           }
+
 
           class CyberPillMasterApp extends StatefulWidget {
             const CyberPillMasterApp({super.key});
 
+
             static _CyberPillMasterAppState of(BuildContext context) =>
                 context.findAncestorStateOfType<_CyberPillMasterAppState>()!;
+
 
             @override
             State<CyberPillMasterApp> createState() => _CyberPillMasterAppState();
           }
+
 
           class _CyberPillMasterAppState extends State<CyberPillMasterApp> {
             String _lang = 'he';
@@ -1536,8 +1578,10 @@ jobs:
             bool _initialized = false;
             bool _splashFinished = false;
 
+
             String get customSoundPath => _customSoundPath;
             String get customSoundName => _customSoundName;
+
 
             String get currentLang => _lang;
             String get userName => _userName;
@@ -1552,11 +1596,13 @@ jobs:
                 ? (themePalettes['high_contrast'] ?? themePalettes.values.first)
                 : (themePalettes[_themeKey] ?? themePalettes['cyber_neon'] ?? themePalettes.values.first);
 
+
             @override
             void initState() {
               super.initState();
               _loadConfig();
             }
+
 
             Future<void> _loadConfig() async {
               try {
@@ -1583,6 +1629,7 @@ jobs:
               }
             }
 
+
             void setLanguage(String lang) async {
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('c_lang', lang);
@@ -1591,6 +1638,7 @@ jobs:
                 _lang = lang;
               });
             }
+
 
             void completeOnboarding(String name, String lang) async {
               final prefs = await SharedPreferences.getInstance();
@@ -1605,6 +1653,7 @@ jobs:
               });
             }
 
+
             void setBgStyle(String style) {
               setState(() {
                 _bgStyle = style;
@@ -1612,12 +1661,14 @@ jobs:
               SharedPreferences.getInstance().then((prefs) => prefs.setString('c_bg_style', style));
             }
 
+
             void setThemeKey(String key) {
               setState(() {
                 _themeKey = key;
               });
               SharedPreferences.getInstance().then((prefs) => prefs.setString('c_theme', key));
             }
+
 
             Future<void> saveFullSettings({
               String? lang,
@@ -1640,8 +1691,10 @@ jobs:
               if (customSoundPath != null) _customSoundPath = customSoundPath;
               if (customSoundName != null) _customSoundName = customSoundName;
 
+
               HapticFeedback.heavyImpact();
               setState(() {});
+
 
               final prefs = await SharedPreferences.getInstance();
               if (lang != null) await prefs.setString('c_lang', lang);
@@ -1655,12 +1708,15 @@ jobs:
               if (customSoundName != null) await prefs.setString('c_custom_sound_name', customSoundName);
             }
 
+
             @override
             Widget build(BuildContext context) {
+
 
               final bool isRtl = _lang == 'he' || _lang == 'ar';
               final palette = currentPalette;
               final Color primary = _highContrast ? const Color(0xFFFFE500) : palette.primary;
+
 
               return MaterialApp(
                 title: 'CYBER PHARMA 3D',
@@ -1704,6 +1760,7 @@ jobs:
             }
           }
 
+
           Widget textChannel3D(
             String text, {
             required double fontSize,
@@ -1733,6 +1790,7 @@ jobs:
             );
           }
 
+
           // 3D Fluorescent Neon Button Text (עבה, זרחני, תלת מימדי ומבריק)
           Widget neon3DButtonText(
             String text, {
@@ -1748,6 +1806,7 @@ jobs:
                 (highContrast
                     ? const Color(0xFFFFEA00)
                     : (palette != null ? palette.highlight : const Color(0xFF00F0FF)));
+
 
             return Text(
               text,
@@ -1781,6 +1840,7 @@ jobs:
             );
           }
 
+
           // Heavy Brushed Metal Dual Switch Console for Tabs (ללא שום קו תחתון ועם כפתורי מתכת בולטים ומבריקים)
           class MetallicDualConsoleTabs extends StatefulWidget {
             final TabController controller;
@@ -1790,6 +1850,7 @@ jobs:
             final String appointmentsTabLabel;
             final int medsCount;
             final int appointmentsCount;
+
 
             const MetallicDualConsoleTabs({
               super.key,
@@ -1802,9 +1863,11 @@ jobs:
               this.appointmentsCount = 0,
             });
 
+
             @override
             State<MetallicDualConsoleTabs> createState() => _MetallicDualConsoleTabsState();
           }
+
 
           class _MetallicDualConsoleTabsState extends State<MetallicDualConsoleTabs> {
             @override
@@ -1812,6 +1875,7 @@ jobs:
               super.initState();
               widget.controller.addListener(_onTab);
             }
+
 
             @override
             void didUpdateWidget(MetallicDualConsoleTabs old) {
@@ -1822,15 +1886,18 @@ jobs:
               }
             }
 
+
             @override
             void dispose() {
               widget.controller.removeListener(_onTab);
               super.dispose();
             }
 
+
             void _onTab() {
               if (mounted) setState(() {});
             }
+
 
             Widget _rivet() {
               return Container(
@@ -1853,6 +1920,7 @@ jobs:
               );
             }
 
+
             Widget _metalBtn({
               required int index,
               required String label,
@@ -1863,6 +1931,7 @@ jobs:
               final Color neon = widget.highContrast
                   ? const Color(0xFFFFEA00)
                   : (index == 0 ? widget.palette.highlight : const Color(0xFF00FFCC));
+
 
               return Expanded(
                 child: GestureDetector(
@@ -2039,6 +2108,7 @@ jobs:
               );
             }
 
+
             @override
             Widget build(BuildContext context) {
               return Container(
@@ -2106,6 +2176,7 @@ jobs:
             }
           }
 
+
           class Pneumatic3DButton extends StatefulWidget {
             final Widget child;
             final VoidCallback onTap;
@@ -2115,6 +2186,7 @@ jobs:
             final ThemePalette palette;
             final Color? customGlow;
             final bool isPushed;
+
 
             const Pneumatic3DButton({
               super.key,
@@ -2128,14 +2200,17 @@ jobs:
               this.isPushed = false,
             });
 
+
             @override
             State<Pneumatic3DButton> createState() => _Pneumatic3DButtonState();
           }
+
 
           class _Pneumatic3DButtonState extends State<Pneumatic3DButton> with SingleTickerProviderStateMixin {
             bool _down = false;
             late AnimationController _animController;
             late Animation<double> _scaleAnimation;
+
 
             @override
             void initState() {
@@ -2149,17 +2224,20 @@ jobs:
               );
             }
 
+
             @override
             void dispose() {
               _animController.dispose();
               super.dispose();
             }
 
+
             @override
             Widget build(BuildContext context) {
               final glowColor = widget.customGlow ?? widget.palette.glow;
               final bool pressed = _down || widget.isPushed;
               final double currentOffset = pressed ? (widget.depth * 0.55).clamp(3.0, 5.0) : 0.0;
+
 
               return GestureDetector(
                 onTapDown: (_) {
@@ -2248,11 +2326,13 @@ jobs:
             }
           }
 
+
           class MechModuleCard extends StatelessWidget {
             final Widget child;
             final Color accentColor;
             final bool showLed;
             final double elevation;
+
 
             const MechModuleCard({
               super.key,
@@ -2261,6 +2341,7 @@ jobs:
               this.showLed = false,
               this.elevation = 8.0,
             });
+
 
             @override
             Widget build(BuildContext context) {
@@ -2347,6 +2428,7 @@ jobs:
             final Color secondaryColor;
             final Color glowColor;
 
+
             const Futuristic3DPillIcon({
               super.key,
               this.size = 120,
@@ -2354,6 +2436,7 @@ jobs:
               required this.secondaryColor,
               required this.glowColor,
             });
+
 
             @override
             Widget build(BuildContext context) {
@@ -2391,10 +2474,12 @@ jobs:
             }
           }
 
+
           class Pill3DPainter extends CustomPainter {
             final Color topColor;
             final Color bottomColor;
             final Color glowColor;
+
 
             Pill3DPainter({
               required this.topColor,
@@ -2402,9 +2487,11 @@ jobs:
               required this.glowColor,
             });
 
+
             @override
             void paint(Canvas canvas, Size size) {
               final center = Offset(size.width / 2, size.height / 2);
+
 
               // 1. Radiant 360-Degree LED Glow Ring Around Capsule
               final ringRadius = size.width * 0.44;
@@ -2443,6 +2530,7 @@ jobs:
                   ..strokeWidth = 0.8,
               );
 
+
               // 12 High-Intensity Perimeter LED Nodes
               const ledColors = [
                 Color(0xFF00F5FF),
@@ -2476,17 +2564,21 @@ jobs:
                 canvas.drawCircle(diodePos, 0.7, Paint()..color = Colors.white);
               }
 
+
               // 2. 3D Floating Isometric Neon Capsule (Angled at 45°)
               canvas.save();
               canvas.translate(center.dx, center.dy);
               canvas.rotate(-math.pi / 4);
 
+
               final pillWidth = size.width * 0.38;
               final pillHeight = size.height * 0.82;
               final radius = pillWidth / 2;
 
+
               final baseRect = Rect.fromCenter(center: Offset.zero, width: pillWidth, height: pillHeight);
               final rrect = RRect.fromRectAndRadius(baseRect, Radius.circular(radius));
+
 
               // Deep 3D Contact Occlusion Shadows
               canvas.drawRRect(
@@ -2502,6 +2594,7 @@ jobs:
                   ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
               );
 
+
               // Outer Radiant Aura
               canvas.drawRRect(
                 rrect,
@@ -2510,7 +2603,9 @@ jobs:
                   ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12),
               );
 
+
               canvas.clipRRect(rrect);
+
 
               // 3. Top Half (Electric Laser Blue / Hyper-Cyan)
               final topHalfRect = Rect.fromLTRB(-pillWidth / 2, -pillHeight / 2, pillWidth / 2, 0);
@@ -2529,6 +2624,7 @@ jobs:
                 ).createShader(topHalfRect);
               canvas.drawRect(topHalfRect, topPaint);
 
+
               // 4. Bottom Half (Laser Radiant Purple / Neon Magenta)
               final bottomHalfRect = Rect.fromLTRB(-pillWidth / 2, 0, pillWidth / 2, pillHeight / 2);
               final bottomPaint = Paint()
@@ -2546,6 +2642,7 @@ jobs:
                 ).createShader(bottomHalfRect);
               canvas.drawRect(bottomHalfRect, bottomPaint);
 
+
               // 5. Central High-Tech Superconductor Connector Ring
               final ringRect = Rect.fromCenter(center: Offset.zero, width: pillWidth * 1.1, height: pillHeight * 0.08);
               canvas.drawRRect(
@@ -2561,6 +2658,7 @@ jobs:
                   ).createShader(beamRect),
               );
 
+
               // 6. Ultra-Gloss Glass Specular Reflections
               final sheenPath = Path()
                 ..moveTo(-pillWidth * 0.32, -pillHeight * 0.44)
@@ -2569,6 +2667,7 @@ jobs:
                 ..close();
               canvas.drawPath(sheenPath, Paint()..color = Colors.white.withOpacity(0.9));
 
+
               final glintPath = Path()
                 ..moveTo(-pillWidth * 0.36, -pillHeight * 0.38)
                 ..lineTo(-pillWidth * 0.36, -pillHeight * 0.1)
@@ -2576,6 +2675,7 @@ jobs:
                 ..lineTo(-pillWidth * 0.30, -pillHeight * 0.38)
                 ..close();
               canvas.drawPath(glintPath, Paint()..color = Colors.white.withOpacity(0.6));
+
 
               // Bottom Glass Fresnel Reflection Rim
               final rimPath = Path()
@@ -2594,18 +2694,22 @@ jobs:
                   ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
               );
 
+
               canvas.restore();
             }
+
 
             @override
             bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
           }
+
 
           class RotaryVolumeDial3D extends StatefulWidget {
             final double volume;
             final ValueChanged<double> onChanged;
             final ThemePalette palette;
             final bool highContrast;
+
 
             const RotaryVolumeDial3D({
               super.key,
@@ -2615,18 +2719,22 @@ jobs:
               this.highContrast = false,
             });
 
+
             @override
             State<RotaryVolumeDial3D> createState() => _RotaryVolumeDial3DState();
           }
 
+
           class _RotaryVolumeDial3DState extends State<RotaryVolumeDial3D> {
             double _currentVol = 1.0;
+
 
             @override
             void initState() {
               super.initState();
               _currentVol = widget.volume;
             }
+
 
             @override
             void didUpdateWidget(covariant RotaryVolumeDial3D oldWidget) {
@@ -2636,11 +2744,13 @@ jobs:
               }
             }
 
+
             void _updateVolume(double newVol) {
               final double clamped = newVol.clamp(0.0, 1.0);
               setState(() => _currentVol = clamped);
               widget.onChanged(clamped);
             }
+
 
             @override
             Widget build(BuildContext context) {
@@ -2648,6 +2758,7 @@ jobs:
               final hc = widget.highContrast;
               final accentColor = hc ? const Color(0xFFFFE500) : palette.primary;
               final highlightColor = hc ? const Color(0xFFFFE500) : palette.highlight;
+
 
               return MechModuleCard(
                 accentColor: accentColor,
@@ -2743,7 +2854,7 @@ jobs:
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [0.0, 0.25, 0.50, 0.75, 1.0].map((preset) {
                           final bool isCurr = (_currentVol * 100).round() == (preset * 100).round();
-                          final String label = preset == 0.0 ? (dict[CyberPillMasterApp.of(context).currentLang]?['mute'] ?? 'השתק') : '${(preset * 100).toInt()}%';
+                          final String label = preset == 0.0 ? (dict[app.currentLang]?['mute'] ?? 'השתק') : '${(preset * 100).toInt()}%';
                           return SizedBox(
                             height: 32,
                             width: 52,
@@ -2799,16 +2910,19 @@ jobs:
             }
           }
 
+
           class _VolumeDial3DPainter extends CustomPainter {
             final double volume;
             final ThemePalette palette;
             final bool highContrast;
+
 
             _VolumeDial3DPainter({
               required this.volume,
               required this.palette,
               required this.highContrast,
             });
+
 
             @override
             void paint(Canvas canvas, Size size) {
@@ -2818,6 +2932,7 @@ jobs:
               final accentColor = highContrast ? const Color(0xFFFFE500) : palette.primary;
               final highlightColor = highContrast ? const Color(0xFFFFE500) : palette.highlight;
 
+
               // 1. Outer Chassis Shadow & Bezel
               final outerRect = Rect.fromCircle(center: Offset(cx, cy), radius: radius);
               canvas.drawCircle(
@@ -2825,6 +2940,7 @@ jobs:
                 radius,
                 Paint()..color = Colors.black.withOpacity(0.65)..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8),
               );
+
 
               // Metallic Bezel Gradient
               final bezelPaint = Paint()
@@ -2834,10 +2950,12 @@ jobs:
                 ).createShader(outerRect);
               canvas.drawCircle(Offset(cx, cy), radius, bezelPaint);
 
+
               // 2. LED Arc Track (270 degrees: from 135 deg to 405 deg)
               const double startAngle = 135 * (math.pi / 180);
               const double totalSweep = 270 * (math.pi / 180);
               final trackRect = Rect.fromCircle(center: Offset(cx, cy), radius: radius * 0.82);
+
 
               // Dark recessed slot
               final trackBgPaint = Paint()
@@ -2846,6 +2964,7 @@ jobs:
                 ..strokeWidth = 9
                 ..strokeCap = StrokeCap.round;
               canvas.drawArc(trackRect, startAngle, totalSweep, false, trackBgPaint);
+
 
               // Active illuminated arc
               final double activeSweep = totalSweep * volume.clamp(0.0, 1.0);
@@ -2857,6 +2976,7 @@ jobs:
                   ..strokeCap = StrokeCap.round
                   ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 7);
                 canvas.drawArc(trackRect, startAngle, activeSweep, false, glowPaint);
+
 
                 final arcPaint = Paint()
                   ..shader = SweepGradient(
@@ -2871,9 +2991,11 @@ jobs:
                 canvas.drawArc(trackRect, startAngle, activeSweep, false, arcPaint);
               }
 
+
               // 3. Inner 3D Rotating Knob Body
               final knobRadius = radius * 0.65;
               final knobRect = Rect.fromCircle(center: Offset(cx, cy), radius: knobRadius);
+
 
               // Drop shadow of knob
               canvas.drawCircle(
@@ -2881,6 +3003,7 @@ jobs:
                 knobRadius,
                 Paint()..color = Colors.black.withOpacity(0.75)..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
               );
+
 
               // 3D Knob Surface Gradient
               final knobPaint = Paint()
@@ -2890,6 +3013,7 @@ jobs:
                   stops: const [0.0, 0.7, 1.0],
                 ).createShader(knobRect);
               canvas.drawCircle(Offset(cx, cy), knobRadius, knobPaint);
+
 
               // Knurled perimeter notches
               const int notchCount = 24;
@@ -2908,12 +3032,14 @@ jobs:
                 );
               }
 
+
               // 4. Illuminated Pointer Notch on Knob
               final double pointerAngle = startAngle + activeSweep;
               final double px1 = cx + math.cos(pointerAngle) * (knobRadius * 0.35);
               final double py1 = cy + math.sin(pointerAngle) * (knobRadius * 0.35);
               final double px2 = cx + math.cos(pointerAngle) * (knobRadius * 0.88);
               final double py2 = cy + math.sin(pointerAngle) * (knobRadius * 0.88);
+
 
               // Glowing indicator line
               canvas.drawLine(
@@ -2925,6 +3051,7 @@ jobs:
                   ..strokeCap = StrokeCap.round
                   ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 3),
               );
+
 
               // 5. Center Metallic Cap
               final capRadius = knobRadius * 0.32;
@@ -2948,15 +3075,18 @@ jobs:
               );
             }
 
+
             @override
             bool shouldRepaint(covariant _VolumeDial3DPainter oldDelegate) =>
                 oldDelegate.volume != volume || oldDelegate.palette != palette || oldDelegate.highContrast != highContrast;
           }
 
+
           class Multi3DGraphicsPainter extends CustomPainter {
             final double progress;
             final ThemePalette palette;
             final String style;
+
 
             Multi3DGraphicsPainter({
               required this.progress,
@@ -2964,12 +3094,14 @@ jobs:
               required this.style,
             });
 
+
             @override
             void paint(Canvas canvas, Size size) {
               if (size.width <= 0 || size.height <= 0) return;
               canvas.save();
               // STRICT CLIPPING TO SCREEN BOUNDARIES: No element ever spills out
               canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
 
               switch (style) {
                 case 'butterflies':
@@ -3019,8 +3151,10 @@ jobs:
                   break;
               }
 
+
               canvas.restore();
             }
+
 
             // 1. פרפרים זרחניים תלת-מימדיים עם עומק Z ונפנוף כנפיים ריאליסטי (3D Cyber Butterflies)
             void _paint3DButterflies(Canvas canvas, Size size) {
@@ -3035,15 +3169,18 @@ jobs:
                 const Color(0xFFFFD700),
               ];
 
+
               for (int i = 0; i < bCount; i++) {
                 final double seed = i * 137.5;
                 final double speed = 0.7 + (i % 3) * 0.25;
                 final double phase = (progress * speed + seed) % 1.0;
 
+
                 // 3D Lissajous orbit in space
                 final double rawX = (size.width * 0.42) * math.sin(phase * 2 * math.pi + seed);
                 final double rawY = (size.height * 0.38) * math.sin(phase * 4 * math.pi + seed * 0.5);
                 final double rawZ = 200.0 + 150.0 * math.cos(phase * 3 * math.pi + seed);
+
 
                 // 3D perspective projection
                 final double fov = 320.0;
@@ -3051,8 +3188,10 @@ jobs:
                 final double sx = cx + rawX * scale;
                 final double sy = cy + rawY * scale;
 
+
                 // Screen boundary check
                 if (sx < -20 || sx > size.width + 20 || sy < -20 || sy > size.height + 20) continue;
+
 
                 final Color bColor = hues[i % hues.length];
                 final double flap = math.sin((progress * 26.0) + seed * 2.0);
@@ -3060,9 +3199,11 @@ jobs:
                 final double wingH = 16.0 * scale;
                 final double alpha = (scale * 0.9).clamp(0.2, 0.95);
 
+
                 canvas.save();
                 canvas.translate(sx, sy);
                 canvas.rotate(math.sin(phase * 2 * math.pi) * 0.4);
+
 
                 // Glowing trailing particles behind butterfly
                 for (int p = 1; p <= 4; p++) {
@@ -3075,6 +3216,7 @@ jobs:
                     Paint()..color = bColor.withOpacity(alpha * (0.6 / p))..maskFilter = const MaskFilter.blur(BlurStyle.solid, 2),
                   );
                 }
+
 
                 // 3D Left Wing with perspective flap
                 final Path leftWing = Path();
@@ -3091,6 +3233,7 @@ jobs:
                   Paint()..color = bColor.withOpacity(alpha)..style = PaintingStyle.stroke..strokeWidth = 1.3 * scale,
                 );
 
+
                 // 3D Right Wing
                 final Path rightWing = Path();
                 rightWing.moveTo(0, 0);
@@ -3106,21 +3249,25 @@ jobs:
                   Paint()..color = bColor.withOpacity(alpha)..style = PaintingStyle.stroke..strokeWidth = 1.3 * scale,
                 );
 
+
                 // Glowing Butterfly Torso & Antennae
                 canvas.drawOval(
                   Rect.fromCenter(center: Offset.zero, width: 3.5 * scale, height: 11 * scale),
                   Paint()..color = Colors.white.withOpacity(alpha)..maskFilter = const MaskFilter.blur(BlurStyle.solid, 2),
                 );
 
+
                 canvas.restore();
               }
             }
+
 
             // 2. מערכת כוכבי לכת וגירוסקופ תלת-מימדי (3D Celestial Gyroscope & Orbitals)
             void _paint3DPlanetarySystem(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
               final maxR = math.min(size.width, size.height) * 0.45;
+
 
               // 1. Central Blazing Sun with Multi-Harmonic Corona
               final sunRadius = 26.0;
@@ -3144,6 +3291,7 @@ jobs:
                   ).createShader(Rect.fromCircle(center: Offset(cx, cy), radius: sunRadius)),
               );
 
+
               // 2. Three 3D Multi-Axis Gyroscope Rings
               final ringAngles = [
                 progress * 2 * math.pi,
@@ -3152,12 +3300,14 @@ jobs:
               ];
               final ringRadii = [maxR * 0.55, maxR * 0.78, maxR * 0.98];
 
+
               for (int r = 0; r < 3; r++) {
                 final double rRadius = ringRadii[r];
                 final double angle = ringAngles[r];
                 final Path ringFront = Path();
                 final Path ringBack = Path();
                 const int segments = 40;
+
 
                 for (int s = 0; s <= segments; s++) {
                   final double theta = (s / segments) * 2 * math.pi;
@@ -3169,13 +3319,16 @@ jobs:
                   final double y1 = y0 * math.cos(tilt);
                   final double z1 = y0 * math.sin(tilt);
 
+
                   final double x2 = x0 * math.cos(angle) - z1 * math.sin(angle);
                   final double z2 = x0 * math.sin(angle) + z1 * math.cos(angle);
+
 
                   final double fov = 380.0;
                   final double pScale = fov / (fov + z2);
                   final double sx = cx + x2 * pScale;
                   final double sy = cy + y1 * pScale;
+
 
                   if (z2 >= 0) {
                     if (ringFront.getBounds().isEmpty) {
@@ -3192,6 +3345,7 @@ jobs:
                   }
                 }
 
+
                 // Draw Back of Ring (behind central sun)
                 canvas.drawPath(
                   ringBack,
@@ -3200,6 +3354,7 @@ jobs:
                     ..style = PaintingStyle.stroke
                     ..strokeWidth = 1.4,
                 );
+
 
                 // Draw Front of Ring (in front of central sun with glow)
                 canvas.drawPath(
@@ -3212,6 +3367,7 @@ jobs:
                 );
               }
 
+
               // 3. Orbiting 3D Shaded Spherical Planets
               for (int p = 0; p < 4; p++) {
                 final double pSpeed = 0.5 + p * 0.35;
@@ -3219,9 +3375,11 @@ jobs:
                 final double pDist = maxR * (0.35 + p * 0.18);
                 final double tilt = 0.55 + p * 0.2;
 
+
                 final double px = pDist * math.cos(pAngle);
                 final double pz = pDist * math.sin(pAngle);
                 final double py = (pDist * 0.3) * math.sin(pAngle) * math.sin(tilt);
+
 
                 final double fov = 380.0;
                 final double scale = fov / (fov + pz);
@@ -3230,12 +3388,14 @@ jobs:
                 final double pr = (7.0 + p * 2.2) * scale;
                 final double alpha = (scale * 0.95).clamp(0.25, 1.0);
 
+
                 final Color planetColor = [
                   const Color(0xFF00F0FF),
                   const Color(0xFFFF2A85),
                   const Color(0xFF00FF88),
                   const Color(0xFFFFD700),
                 ][p];
+
 
                 // 3D Spherical Light Shader
                 final pRect = Rect.fromCircle(center: Offset(sx, sy), radius: pr);
@@ -3249,6 +3409,7 @@ jobs:
                       stops: const [0.0, 0.55, 1.0],
                     ).createShader(pRect),
                 );
+
 
                 // Small moon for planet 2 and 3
                 if (p == 1 || p == 2) {
@@ -3264,11 +3425,13 @@ jobs:
               }
             }
 
+
             // 3. פרחי לוטוס ומנדלת גיאומטריה מקודשת 3D (3D Blooming Sacred Geometry Lotus)
             void _paint3DLotusFlowers(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
               final maxR = math.min(size.width, size.height) * 0.44;
+
 
               // Concentric rotating sacred rings
               for (int r = 1; r <= 3; r++) {
@@ -3283,6 +3446,7 @@ jobs:
                 );
               }
 
+
               // 3 Tiers of Blooming Lotus Petals in 3D Perspective
               const int tiers = 3;
               for (int tier = 0; tier < tiers; tier++) {
@@ -3292,28 +3456,35 @@ jobs:
                 final double bloom = 0.85 + 0.15 * math.sin(progress * 4 * math.pi + tier);
                 final double alpha = (0.75 - tier * 0.18).clamp(0.2, 0.85);
 
+
                 for (int i = 0; i < petals; i++) {
                   final double a = (i / petals) * 2 * math.pi + rot;
                   final double pLen = tierR * bloom;
                   final double pW = (pLen * 0.38) * (1.0 - tier * 0.15);
 
+
                   final double tipX = cx + math.cos(a) * pLen;
                   final double tipY = cy + math.sin(a) * pLen;
 
+
                   final double leftAngle = a + 0.35;
                   final double rightAngle = a - 0.35;
+
 
                   final double ctrlLX = cx + math.cos(leftAngle) * (pLen * 0.65);
                   final double ctrlLY = cy + math.sin(leftAngle) * (pLen * 0.65);
                   final double ctrlRX = cx + math.cos(rightAngle) * (pLen * 0.65);
                   final double ctrlRY = cy + math.sin(rightAngle) * (pLen * 0.65);
 
+
                   final Path petalPath = Path();
                   petalPath.moveTo(cx, cy);
                   petalPath.quadraticBezierTo(ctrlLX, ctrlLY, tipX, tipY);
                   petalPath.quadraticBezierTo(ctrlRX, ctrlRY, cx, cy);
 
+
                   final Color petalColor = tier == 0 ? palette.highlight : (tier == 1 ? palette.primary : const Color(0xFF00FFCC));
+
 
                   canvas.drawPath(
                     petalPath,
@@ -3326,6 +3497,7 @@ jobs:
                       ..style = PaintingStyle.fill,
                   );
 
+
                   canvas.drawPath(
                     petalPath,
                     Paint()
@@ -3335,6 +3507,7 @@ jobs:
                   );
                 }
               }
+
 
               // Glowing Golden Core Crystal
               canvas.drawCircle(
@@ -3348,11 +3521,13 @@ jobs:
               );
             }
 
+
             // 4. שדה כוכבים תלת-מימדי בעיוות מהירות אור (3D Relativistic Starfield Warp)
             void _paint3DSpaceWarp(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
               const int starCount = 130;
+
 
               // Distant rotating galactic vortex at center
               final double gRot = progress * 2 * math.pi;
@@ -3375,18 +3550,22 @@ jobs:
                 );
               }
 
+
               // 130 3D Warp Stars traveling through depth Z
               for (int i = 0; i < starCount; i++) {
                 final double seed = i * 277.3;
                 final double speed = 1.0 + (i % 4) * 0.5;
                 final double p = (progress * speed + seed) % 1.0;
 
+
                 // Z goes from 1000 (far) to 20 (close)
                 final double z = (1.0 - p) * 980.0 + 20.0;
                 final double prevZ = z + 40.0;
 
+
                 final double rawX = math.cos(seed) * (size.width * 0.85);
                 final double rawY = math.sin(seed * 1.3) * (size.height * 0.85);
+
 
                 final double fov = 260.0;
                 final double sx = cx + (rawX * fov / z);
@@ -3394,10 +3573,13 @@ jobs:
                 final double prevSx = cx + (rawX * fov / prevZ);
                 final double prevSy = cy + (rawY * fov / prevZ);
 
+
                 if (sx < 0 || sx > size.width || sy < 0 || sy > size.height) continue;
+
 
                 final double intensity = (1.0 - (z / 1000.0)).clamp(0.1, 1.0);
                 final Color starColor = (i % 3 == 0) ? palette.highlight : ((i % 3 == 1) ? palette.primary : Colors.white);
+
 
                 // Hyperdrive motion streak
                 canvas.drawLine(
@@ -3409,6 +3591,7 @@ jobs:
                     ..strokeCap = StrokeCap.round,
                 );
 
+
                 // Star point head
                 canvas.drawCircle(
                   Offset(sx, sy),
@@ -3417,6 +3600,7 @@ jobs:
                 );
               }
             }
+
 
             // 5. גלי זוהר קטבים ופלזמה תלת-מימדיים (3D Quantum Plasma Aurora)
             void _paint3DAuroraWaves(Canvas canvas, Size size) {
@@ -3428,17 +3612,21 @@ jobs:
                 const Color(0xFF7C4DFF),
               ];
 
+
               for (int l = 0; l < layers; l++) {
                 final double lSpeed = 0.4 + l * 0.25;
                 final double phase = progress * lSpeed * 2 * math.pi + l * 1.2;
                 final double baseY = size.height * (0.35 + l * 0.12);
                 final Color aColor = colors[l % colors.length];
 
+
                 const int steps = 30;
                 final double stepW = size.width / steps;
 
+
                 final Path waveRibbon = Path();
                 waveRibbon.moveTo(0, baseY);
+
 
                 for (int s = 0; s <= steps; s++) {
                   final double x = s * stepW;
@@ -3449,9 +3637,11 @@ jobs:
                   waveRibbon.lineTo(x, y1);
                 }
 
+
                 waveRibbon.lineTo(size.width, size.height);
                 waveRibbon.lineTo(0, size.height);
                 waveRibbon.close();
+
 
                 canvas.drawPath(
                   waveRibbon,
@@ -3469,6 +3659,7 @@ jobs:
                     ..style = PaintingStyle.fill,
                 );
 
+
                 // Vertical glowing light pillars of aurora
                 for (int p = 0; p < 8; p++) {
                   final double px = size.width * ((p / 8.0 + progress * 0.1 * (l + 1)) % 1.0);
@@ -3485,40 +3676,49 @@ jobs:
               }
             }
 
+
             // 6. יער גחליליות ונחיל אורות ביו-לומיננטי 3D (3D Firefly Micro-Verse Swarm)
             void _paint3DFireflyForest(Canvas canvas, Size size) {
               const int count = 38;
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
 
+
               final List<Offset> positions = [];
               final List<double> scales = [];
+
 
               for (int i = 0; i < count; i++) {
                 final double seed = i * 83.7;
                 final double speed = 0.5 + (i % 3) * 0.3;
                 final double t = progress * speed * 2 * math.pi + seed;
 
+
                 // Smooth 3D wandering trajectory
                 final double rawX = (size.width * 0.46) * math.sin(t * 0.7 + seed);
                 final double rawY = (size.height * 0.44) * math.cos(t * 0.9 + seed * 0.8);
                 final double rawZ = 120.0 + 100.0 * math.sin(t * 1.1 + seed * 1.5);
+
 
                 final double fov = 260.0;
                 final double scale = (fov / (fov + rawZ)).clamp(0.4, 1.4);
                 final double sx = cx + rawX * scale;
                 final double sy = cy + rawY * scale;
 
+
                 positions.add(Offset(sx, sy));
                 scales.add(scale);
+
 
                 final double pulse = 0.5 + 0.5 * math.sin(progress * 10 * math.pi + seed * 3.0);
                 final double r = (4.0 * scale) * (0.8 + 0.4 * pulse);
                 final double alpha = (scale * 0.85 * pulse).clamp(0.15, 0.95);
 
+
                 final Color fColor = (i % 3 == 0)
                     ? const Color(0xFF00FF66)
                     : ((i % 3 == 1) ? palette.highlight : const Color(0xFFFFE500));
+
 
                 // Glowing halo
                 canvas.drawCircle(
@@ -3533,6 +3733,7 @@ jobs:
                   Paint()..color = Colors.white.withOpacity(alpha),
                 );
               }
+
 
               // Interconnecting bioluminescent filaments when near
               for (int i = 0; i < count; i++) {
@@ -3550,10 +3751,12 @@ jobs:
               }
             }
 
+
             // 7. מנהרת טרון ואופק סייבר תלת-מימדי (3D Synthwave Horizon & Wireframe Tunnel)
             void _paintTronTunnel(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.52; // horizon line
+
 
               // Distant Neon Sun at Horizon
               final sunRadius = size.width * 0.22;
@@ -3569,6 +3772,7 @@ jobs:
                   ).createShader(sunRect),
               );
 
+
               // Horizontal scanline slats across the sun
               for (int s = 1; s <= 7; s++) {
                 final double slatY = cy + (s * (sunRadius / 8.0));
@@ -3578,6 +3782,7 @@ jobs:
                   Paint()..color = palette.background,
                 );
               }
+
 
               // 3D Receding Floor Grid lines (Transverse)
               const int floorLines = 14;
@@ -3594,6 +3799,7 @@ jobs:
                 );
               }
 
+
               // 3D Longitudinal Grid Lines (Radiating to Horizon)
               const int rays = 16;
               for (int r = 0; r <= rays; r++) {
@@ -3607,6 +3813,7 @@ jobs:
                 );
               }
 
+
               // Floating 3D Wireframe Cyber Cubes tumbling in tunnel
               for (int c = 0; c < 3; c++) {
                 final double cPhase = (progress * 0.8 + c * 0.33) % 1.0;
@@ -3614,17 +3821,21 @@ jobs:
                 final double cX = (c == 0 ? -120.0 : (c == 1 ? 120.0 : 0.0));
                 final double cY = (c == 2 ? -100.0 : 40.0);
 
+
                 final double fov = 260.0;
                 final double scale = fov / (fov + cZ);
                 final double cubeCx = cx + cX * scale;
                 final double cubeCy = (cy * 0.8) + cY * scale;
                 final double cubeSize = 34.0 * scale;
 
+
                 final double rot = progress * 4 * math.pi + c * 2.0;
+
 
                 canvas.save();
                 canvas.translate(cubeCx, cubeCy);
                 canvas.rotate(rot);
+
 
                 canvas.drawRect(
                   Rect.fromCenter(center: Offset.zero, width: cubeSize, height: cubeSize),
@@ -3637,11 +3848,13 @@ jobs:
               }
             }
 
+
             // 8. חור שחור קוסמי ודיסקת ספיחה (3D Relativistic Singularity & Accretion Disk)
             void _paint3DBlackHole(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
               final maxR = math.min(size.width, size.height) * 0.44;
+
 
               // Dual Relativistic Polar Jets
               for (int dir in [-1, 1]) {
@@ -3650,6 +3863,7 @@ jobs:
                 jet.lineTo(cx - 16, cy + dir * maxR * 1.1);
                 jet.lineTo(cx + 16, cy + dir * maxR * 1.1);
                 jet.close();
+
 
                 canvas.drawPath(
                   jet,
@@ -3663,6 +3877,7 @@ jobs:
                 );
               }
 
+
               // Warped 3D Accretion Disk (36 Spiral Streamlines)
               const int streams = 24;
               for (int i = 0; i < streams; i++) {
@@ -3670,7 +3885,9 @@ jobs:
                 final double rot = progress * (3.0 / (1.0 + i * 0.15)) * 2 * math.pi + (i * 0.25);
                 final double tilt = 0.38; // 3D tilt
 
+
                 final Rect diskRect = Rect.fromCenter(center: Offset(cx, cy), width: streamR * 2.2, height: streamR * 0.85);
+
 
                 // Relativistic beaming: one side is brighter
                 canvas.save();
@@ -3695,6 +3912,7 @@ jobs:
                 canvas.restore();
               }
 
+
               // Gravitational Lensing Halo (Ring around event horizon)
               canvas.drawCircle(
                 Offset(cx, cy),
@@ -3706,6 +3924,7 @@ jobs:
                   ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4),
               );
 
+
               // Absolute Black Hole Void
               canvas.drawCircle(
                 Offset(cx, cy),
@@ -3714,11 +3933,13 @@ jobs:
               );
             }
 
+
             // 9. כור היתוך תעשייתי ובוכנות מגנטיות 3D (3D Tokamak Fusion Core)
             void _paint3DIndustrialReactor(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
               final maxR = math.min(size.width, size.height) * 0.44;
+
 
               // Outer Toroidal Magnetic Coils (12 3D Elliptical Ribs)
               const int coils = 12;
@@ -3727,9 +3948,11 @@ jobs:
                 final double coilX = cx + math.cos(a) * (maxR * 0.72);
                 final double coilY = cy + math.sin(a) * (maxR * 0.72);
 
+
                 canvas.save();
                 canvas.translate(coilX, coilY);
                 canvas.rotate(a + math.pi / 2);
+
 
                 canvas.drawRRect(
                   RRect.fromRectAndRadius(
@@ -3751,6 +3974,7 @@ jobs:
                     ..strokeWidth = 1.8,
                 );
 
+
                 // LED Status on each coil
                 final bool activeLed = ((progress * coils * 2).toInt() % coils) == i;
                 canvas.drawCircle(
@@ -3759,8 +3983,10 @@ jobs:
                   Paint()..color = activeLed ? const Color(0xFF00FF66) : palette.bevelLight,
                 );
 
+
                 canvas.restore();
               }
+
 
               // Helical Twisting Plasma Rope in Center
               const int ropePoints = 50;
@@ -3782,6 +4008,7 @@ jobs:
                   ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4),
               );
 
+
               // Central Blazing Plasma Core
               final double corePulse = 0.85 + 0.15 * math.sin(progress * 8 * math.pi);
               canvas.drawCircle(
@@ -3795,11 +4022,13 @@ jobs:
               );
             }
 
+
             // 10. מארג גבישים קוונטי פוליהדרלי 3D (3D Rotating Polyhedral Quantum Geode)
             void _paint3DCrystalLattice(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
               final maxR = math.min(size.width, size.height) * 0.42;
+
 
               // 12 Vertices of an Icosahedron in 3D
               const double phi = 1.6180339887; // golden ratio
@@ -3809,17 +4038,21 @@ jobs:
                 [ phi, 0, -1], [ phi, 0,  1], [-phi, 0, -1], [-phi, 0,  1],
               ];
 
+
               final double rotX = progress * 1.8 * math.pi;
               final double rotY = progress * 2.4 * math.pi;
               final double rotZ = progress * 0.9 * math.pi;
 
+
               final List<Offset> projected = [];
               final List<double> depths = [];
+
 
               for (var v in vertices) {
                 double x = v[0] * (maxR * 0.5);
                 double y = v[1] * (maxR * 0.5);
                 double z = v[2] * (maxR * 0.5);
+
 
                 // Rotate around X
                 double y1 = y * math.cos(rotX) - z * math.sin(rotX);
@@ -3831,11 +4064,13 @@ jobs:
                 double x3 = x2 * math.cos(rotZ) - y1 * math.sin(rotZ);
                 double y3 = x2 * math.sin(rotZ) + y1 * math.cos(rotZ);
 
+
                 final double fov = 350.0;
                 final double scale = fov / (fov + z2);
                 projected.add(Offset(cx + x3 * scale, cy + y3 * scale));
                 depths.add(z2);
               }
+
 
               // Draw connecting wireframe edges (based on golden ratio distance)
               for (int i = 0; i < vertices.length; i++) {
@@ -3844,6 +4079,7 @@ jobs:
                   double dy = vertices[i][1] - vertices[j][1];
                   double dz = vertices[i][2] - vertices[j][2];
                   double distSq = dx * dx + dy * dy + dz * dz;
+
 
                   // In a unit icosahedron, edges have length = 2.0 (distSq = 4.0)
                   if ((distSq - 4.0).abs() < 0.1) {
@@ -3860,6 +4096,7 @@ jobs:
                 }
               }
 
+
               // Draw Glowing Vertices
               for (int i = 0; i < projected.length; i++) {
                 final double alpha = (0.6 + (depths[i] / (maxR * 0.5)) * 0.4).clamp(0.2, 1.0);
@@ -3871,6 +4108,7 @@ jobs:
               }
             }
 
+
             // 11. סליל DNA תלת-מימדי וננו-חלקיקים (3D Molecular DNA Double Helix)
             void _paint3DDNAHelix(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
@@ -3878,17 +4116,21 @@ jobs:
               final double startY = size.height * 0.08;
               final double stepH = (size.height * 0.84) / rungs;
 
+
               for (int i = 0; i < rungs; i++) {
                 final double theta = (i / rungs) * 4 * math.pi + (progress * 2 * math.pi);
                 final double y = startY + i * stepH;
                 final double span = (size.width * 0.38) * math.sin(theta);
                 final double z = math.cos(theta); // depth: -1 to 1
 
+
                 final Offset p1 = Offset(cx + span, y);
                 final Offset p2 = Offset(cx - span, y);
 
+
                 final double alpha = (0.55 + z * 0.4).clamp(0.15, 0.95);
                 final double atomRadius = (z > 0 ? 6.5 : 3.5);
+
 
                 // Connecting Base Pair Rod
                 canvas.drawLine(
@@ -3902,6 +4144,7 @@ jobs:
                     ..strokeWidth = (z > 0 ? 2.4 : 1.2),
                 );
 
+
                 // Strand 1 Nucleotide Atom (3D shaded)
                 canvas.drawCircle(
                   p1,
@@ -3912,6 +4155,7 @@ jobs:
                       colors: [Colors.white, palette.highlight, Colors.black],
                     ).createShader(Rect.fromCircle(center: p1, radius: atomRadius)),
                 );
+
 
                 // Strand 2 Nucleotide Atom (3D shaded)
                 canvas.drawCircle(
@@ -3926,17 +4170,20 @@ jobs:
               }
             }
 
+
             // 12. פיצוץ סופרנובה תלת-מימדי עם גלי הלם (3D Volumetric Supernova)
             void _paint3DSupernova(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
               final maxR = math.min(size.width, size.height) * 0.46;
 
+
               // 1. Concentric Relativistic Shockwave Ellipses
               for (int ring = 1; ring <= 3; ring++) {
                 final double rPhase = (progress + ring * 0.33) % 1.0;
                 final double rRadius = maxR * rPhase;
                 final double rAlpha = (1.0 - rPhase).clamp(0.0, 0.85);
+
 
                 canvas.save();
                 canvas.translate(cx, cy);
@@ -3952,6 +4199,7 @@ jobs:
                 canvas.restore();
               }
 
+
               // 2. High-Velocity Radial Ejecta Particles (80 rays)
               const int particles = 75;
               for (int i = 0; i < particles; i++) {
@@ -3961,9 +4209,11 @@ jobs:
                 final double r = maxR * pDist;
                 final double angle = (i / particles) * 2 * math.pi + seed;
 
+
                 final double px = cx + math.cos(angle) * r;
                 final double py = cy + math.sin(angle) * r;
                 final double alpha = (1.0 - pDist).clamp(0.1, 0.95);
+
 
                 canvas.drawCircle(
                   Offset(px, py),
@@ -3971,6 +4221,7 @@ jobs:
                   Paint()..color = (i % 2 == 0 ? palette.highlight : palette.primary).withOpacity(alpha),
                 );
               }
+
 
               // 3. Central Pulsing Protostar Core
               final double coreFlash = 0.85 + 0.15 * math.sin(progress * 12 * math.pi);
@@ -3985,10 +4236,12 @@ jobs:
               );
             }
 
+
             // 13. גשם קוד מטריקס סייבר 3D (3D Depth-Layered Matrix Rain)
             void _paint3DMatrixRain(Canvas canvas, Size size) {
               const int cols = 26;
               final double colW = size.width / cols;
+
 
               for (int c = 0; c < cols; c++) {
                 final double speed = 0.55 + (c % 4) * 0.22;
@@ -3996,10 +4249,12 @@ jobs:
                 final double dropY = ((progress * speed * size.height * 1.5 + offset) % (size.height * 1.4)) - (size.height * 0.2);
                 final double x = c * colW + colW * 0.5;
 
+
                 // 3D Depth layer: closer columns are thicker & brighter
                 final int depthLayer = (c % 3);
                 final double alphaMult = depthLayer == 0 ? 1.0 : (depthLayer == 1 ? 0.65 : 0.40);
                 final double strokeW = depthLayer == 0 ? 2.2 : (depthLayer == 1 ? 1.6 : 1.1);
+
 
                 // Stream Trail
                 for (int s = 0; s < 12; s++) {
@@ -4007,14 +4262,17 @@ jobs:
                   if (sy < 0 || sy > size.height) continue;
                   final double charAlpha = ((12 - s) / 12.0) * alphaMult;
 
+
                   // Leading char is bright white, trailing is neon
                   final Color cColor = s == 0 ? Colors.white : (depthLayer == 0 ? palette.highlight : palette.primary);
+
 
                   canvas.drawRect(
                     Rect.fromCenter(center: Offset(x, sy), width: colW * 0.55, height: 11),
                     Paint()..color = cColor.withOpacity(charAlpha.clamp(0.05, 0.95)),
                   );
                 }
+
 
                 // Splash impact ripple when reaching bottom
                 if (dropY >= size.height - 20 && dropY <= size.height + 40) {
@@ -4030,16 +4288,19 @@ jobs:
               }
             }
 
+
             // 14. ערפילית סערה קוסמית 3D (3D Galactic Cyclone & Stellar Nursery)
             void _paint3DNebulaStorm(Canvas canvas, Size size) {
               final cx = size.width * 0.5;
               final cy = size.height * 0.5;
               final maxR = math.min(size.width, size.height) * 0.46;
 
+
               // Rotating Chromatic Galaxy Arms
               const int arms = 3;
               for (int a = 0; a < arms; a++) {
                 final double armPhase = a * (2 * math.pi / arms) + progress * 1.5 * math.pi;
+
 
                 final Path armPath = Path();
                 for (double r = 10; r < maxR; r += 6) {
@@ -4049,7 +4310,9 @@ jobs:
                   if (r == 10) armPath.moveTo(x, y); else armPath.lineTo(x, y);
                 }
 
+
                 final Color armColor = a == 0 ? palette.highlight : (a == 1 ? palette.primary : const Color(0xFF7C4DFF));
+
 
                 canvas.drawPath(
                   armPath,
@@ -4060,6 +4323,7 @@ jobs:
                     ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12),
                 );
 
+
                 canvas.drawPath(
                   armPath,
                   Paint()
@@ -4069,6 +4333,7 @@ jobs:
                 );
               }
 
+
               // Foreground Twinkling Diffraction Stars
               for (int s = 0; s < 6; s++) {
                 final double sa = s * (math.pi / 3) + progress * 0.4 * math.pi;
@@ -4076,8 +4341,10 @@ jobs:
                 final double sx = cx + math.cos(sa) * sDist;
                 final double sy = cy + math.sin(sa) * (sDist * 0.7);
 
+
                 final double sPulse = 0.5 + 0.5 * math.sin(progress * 14 * math.pi + s * 2.0);
                 final double rayLen = (12.0 + sPulse * 8.0);
+
 
                 // 4-point cross diffraction spikes
                 canvas.drawLine(Offset(sx - rayLen, sy), Offset(sx + rayLen, sy), Paint()..color = Colors.white.withOpacity(0.8)..strokeWidth = 1.2);
@@ -4086,15 +4353,18 @@ jobs:
               }
             }
 
+
             @override
             bool shouldRepaint(covariant Multi3DGraphicsPainter oldDelegate) => true;
           }
+
 
           class Interactive3DGlassBackground extends StatefulWidget {
             final Widget child;
             final ThemePalette palette;
             final bool isHighContrast;
             final String style;
+
 
             const Interactive3DGlassBackground({
               super.key,
@@ -4104,19 +4374,23 @@ jobs:
               required this.style,
             });
 
+
             @override
             State<Interactive3DGlassBackground> createState() => _Interactive3DGlassBackgroundState();
           }
 
+
           class _Interactive3DGlassBackgroundState extends State<Interactive3DGlassBackground>
               with SingleTickerProviderStateMixin {
             late AnimationController _anim;
+
 
             @override
             void initState() {
               super.initState();
               _anim = AnimationController(vsync: this, duration: const Duration(seconds: 12))..repeat();
             }
+
 
             @override
             void didUpdateWidget(covariant Interactive3DGlassBackground oldWidget) {
@@ -4126,17 +4400,20 @@ jobs:
               }
             }
 
+
             @override
             void dispose() {
               _anim.dispose();
               super.dispose();
             }
 
+
             @override
             Widget build(BuildContext context) {
               if (widget.isHighContrast) {
                 return Container(color: Colors.black, child: widget.child);
               }
+
 
               return Stack(
                 children: [
@@ -4174,6 +4451,7 @@ jobs:
                       ),
                     ),
 
+
                   ),
                   widget.child,
                 ],
@@ -4181,18 +4459,22 @@ jobs:
             }
           }
 
+
           class AppSplashScreen extends StatefulWidget {
             final Widget Function() onFinish;
             const AppSplashScreen({super.key, required this.onFinish});
+
 
             @override
             State<AppSplashScreen> createState() => _AppSplashScreenState();
           }
 
+
           class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProviderStateMixin {
             late final AnimationController _anim;
             bool _navigated = false;
             Timer? _navTimer;
+
 
             @override
             void initState() {
@@ -4203,12 +4485,15 @@ jobs:
                 duration: const Duration(milliseconds: 1400),
               )..forward();
 
+
               // Navigation timer guaranteed to fire without being blocked by permissions
               _navTimer = Timer(const Duration(milliseconds: 1800), _navigateToNextScreen);
+
 
               // Non-blocking background permission request
               _requestPermissions();
             }
+
 
             void _navigateToNextScreen() {
               if (!mounted || _navigated) return;
@@ -4226,6 +4511,7 @@ jobs:
               }
             }
 
+
             Future<void> _requestPermissions() async {
               try {
                 await Permission.notification.request();
@@ -4237,6 +4523,7 @@ jobs:
               } catch (_) {}
             }
 
+
             @override
             void dispose() {
               _navTimer?.cancel();
@@ -4244,10 +4531,12 @@ jobs:
               super.dispose();
             }
 
+
             @override
             Widget build(BuildContext context) {
               final app = CyberPillMasterApp.of(context);
               final palette = app.currentPalette;
+
 
               return Scaffold(
                 backgroundColor: const Color(0xFF03050B),
@@ -4320,22 +4609,27 @@ jobs:
             }
           }
 
+
           class FirstTimeSetupScreen extends StatefulWidget {
             const FirstTimeSetupScreen({super.key});
+
 
             @override
             State<FirstTimeSetupScreen> createState() => _FirstTimeSetupScreenState();
           }
 
+
           class _FirstTimeSetupScreenState extends State<FirstTimeSetupScreen> {
             final TextEditingController _nameController = TextEditingController();
             late String _selectedLang;
+
 
             @override
             void initState() {
               super.initState();
               _selectedLang = 'he';
             }
+
 
             final List<Map<String, String>> _languages = const [
               {'code': 'he', 'label': 'עברית', 'flag': '🇮🇱'},
@@ -4346,12 +4640,14 @@ jobs:
               {'code': 'es', 'label': 'Español', 'flag': '🇪🇸'},
             ];
 
+
             @override
             Widget build(BuildContext context) {
               final app = CyberPillMasterApp.of(context);
               final palette = app.currentPalette;
               final t = dict[_selectedLang] ?? dict['he']!;
               final bool isRtl = _selectedLang == 'he' || _selectedLang == 'ar';
+
 
               return Scaffold(
                 backgroundColor: palette.background,
@@ -4417,6 +4713,7 @@ jobs:
                               ),
                               const SizedBox(height: 14),
 
+
                               // Compact 3D Pill Icon
                               Futuristic3DPillIcon(
                                 size: 80,
@@ -4425,6 +4722,7 @@ jobs:
                                 glowColor: palette.glow,
                               ),
                               const SizedBox(height: 14),
+
 
                               // App Title
                               textChannel3D(
@@ -4435,6 +4733,7 @@ jobs:
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 4),
+
 
                               // Creator Credit
                               Text(
@@ -4448,6 +4747,7 @@ jobs:
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 16),
+
 
                               // Setup Box (Single Unified Panel)
                               Container(
@@ -4544,16 +4844,19 @@ jobs:
             }
           }
 
+
           class PillItem {
             String name;
             int dosage;
             int stock;
             PillItem({required this.name, required this.dosage, required this.stock});
 
+
             Map<String, dynamic> toJson() => {'name': name, 'dosage': dosage, 'stock': stock};
             factory PillItem.fromJson(Map<String, dynamic> j) =>
                 PillItem(name: j['name'] ?? '', dosage: j['dosage'] ?? 1, stock: j['stock'] ?? 30);
           }
+
 
           class ScheduleGroup {
             String id;
@@ -4562,6 +4865,7 @@ jobs:
             int minute;
             List<PillItem> pills;
             bool isTaken;
+
 
             ScheduleGroup({
               required this.id,
@@ -4572,6 +4876,7 @@ jobs:
               this.isTaken = false,
             });
 
+
             Map<String, dynamic> toJson() => {
                   'id': id,
                   'title': title,
@@ -4580,6 +4885,7 @@ jobs:
                   'pills': pills.map((p) => p.toJson()).toList(),
                   'isTaken': isTaken,
                 };
+
 
             factory ScheduleGroup.fromJson(Map<String, dynamic> j) => ScheduleGroup(
                   id: j['id'] ?? '',
@@ -4591,6 +4897,7 @@ jobs:
                 );
           }
 
+
           class AppointmentModel {
             String id;
             String type;
@@ -4598,6 +4905,7 @@ jobs:
             String clinic;
             String date;
             String time;
+
 
             AppointmentModel({
               required this.id,
@@ -4608,6 +4916,7 @@ jobs:
               required this.time,
             });
 
+
             Map<String, dynamic> toJson() => {
                   'id': id,
                   'type': type,
@@ -4616,6 +4925,7 @@ jobs:
                   'date': date,
                   'time': time,
                 };
+
 
             factory AppointmentModel.fromJson(Map<String, dynamic> j) => AppointmentModel(
                   id: j['id'] ?? '',
@@ -4626,6 +4936,7 @@ jobs:
                   time: j['time'] ?? '',
                 );
           }
+
 
           const List<String> defaultMedicationsCatalog = [
             'אקמול (Acamol)', 'אופטלגין (Optalgin)', 'נורופן (Nurofen)', 'אדוויל (Advil)', 'דקסמול (Dexamol)',
@@ -4666,26 +4977,33 @@ jobs:
             'אבץ (Zinc)', 'אומגה 3 (Omega 3)'
           ];
 
+
           class LiveAddressItem {
             final String address;
             final String source; // 'waze' or 'google'
 
+
             const LiveAddressItem({required this.address, required this.source});
           }
 
+
           class GoogleWazeAddressService {
             static final Map<String, List<LiveAddressItem>> _cache = {};
+
 
             static Future<List<LiveAddressItem>> search(String query) async {
               final clean = query.trim();
               if (clean.length < 2) return [];
 
+
               if (_cache.containsKey(clean)) {
                 return _cache[clean]!;
               }
 
+
               final List<LiveAddressItem> results = [];
               final Set<String> seen = {};
+
 
               // 1. Live Fetch from Waze SearchServer (Precision Israeli addresses, clinics, streets, numbers)
               try {
@@ -4707,10 +5025,12 @@ jobs:
                       final street = (it['street'] ?? '').toString().trim();
                       final city = (it['city'] ?? '').toString().trim();
 
+
                       final List<String> parts = [];
                       if (name.isNotEmpty) parts.add(name);
                       if (street.isNotEmpty && !parts.contains(street)) parts.add(street);
                       if (city.isNotEmpty && !parts.contains(city)) parts.add(city);
+
 
                       final full = parts.join(', ');
                       if (full.isNotEmpty && !seen.contains(full)) {
@@ -4721,6 +5041,7 @@ jobs:
                   }
                 }
               } catch (_) {}
+
 
               // 2. Live Fetch from Google Suggest API (Live Google Maps & Web Data)
               try {
@@ -4747,6 +5068,7 @@ jobs:
                 }
               } catch (_) {}
 
+
               if (results.isNotEmpty) {
                 _cache[clean] = results;
               }
@@ -4754,8 +5076,10 @@ jobs:
             }
           }
 
+
           class MedicationsRegistry {
             static List<String> cachedMeds = List.from(defaultMedicationsCatalog);
+
 
             static Future<void> init() async {
               try {
@@ -4766,6 +5090,7 @@ jobs:
                 }
               } catch (_) {}
             }
+
 
             static void addCustomMedication(String name) async {
               final trimmed = name.trim();
@@ -4780,12 +5105,15 @@ jobs:
             }
           }
 
+
           class MainDashboard extends StatefulWidget {
             const MainDashboard({super.key});
+
 
             @override
             State<MainDashboard> createState() => _MainDashboardState();
           }
+
 
           class _MainDashboardState extends State<MainDashboard> with SingleTickerProviderStateMixin {
             late TabController _tabController;
@@ -4793,6 +5121,7 @@ jobs:
             List<ScheduleGroup> _schedules = [];
             List<AppointmentModel> _apps = [];
             Timer? _alarmCheckTimer;
+
 
             final List<Map<String, String>> _allLanguages = const [
               {'code': 'he', 'label': 'עברית', 'name': 'Hebrew', 'flag': '🇮🇱'},
@@ -4802,6 +5131,7 @@ jobs:
               {'code': 'fr', 'label': 'Français', 'name': 'French', 'flag': '🇫🇷'},
               {'code': 'es', 'label': 'Español', 'name': 'Spanish', 'flag': '🇪🇸'},
             ];
+
 
             @override
             void initState() {
@@ -4819,12 +5149,14 @@ jobs:
               _startLiveReminderMonitor();
             }
 
+
             @override
             void dispose() {
               _alarmCheckTimer?.cancel();
               _tabController.dispose();
               super.dispose();
             }
+
 
             void _initTTS() async {
               try {
@@ -4841,6 +5173,7 @@ jobs:
               }
             }
 
+
             void _startLiveReminderMonitor() {
               _alarmCheckTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
                 final now = DateTime.now();
@@ -4852,6 +5185,7 @@ jobs:
                 }
               });
             }
+
 
             String _getGenericVoiceReminderText(String lang) {
               switch (lang) {
@@ -4870,9 +5204,11 @@ jobs:
               }
             }
 
+
             void _previewScheduleAudio(ScheduleGroup sched) {
               final app = CyberPillMasterApp.of(context);
               final String speechText = _getGenericVoiceReminderText(app.currentLang);
+
 
               SoundGenerator.playAlertTone(
                 app.soundType,
@@ -4882,10 +5218,12 @@ jobs:
               );
             }
 
+
             void _triggerHeadsUpAlert(ScheduleGroup sched) async {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final String speechText = _getGenericVoiceReminderText(app.currentLang);
+
 
               // High-Importance Android Heads-Up Notification (Importance.max, Priority.high)
               try {
@@ -4912,6 +5250,7 @@ jobs:
                 debugPrint('Notification error: $e');
               }
 
+
               // Vibration & Alert Tone / TTS strictly at reminder moment
               HapticFeedback.heavyImpact();
               SoundGenerator.playAlertTone(
@@ -4921,14 +5260,17 @@ jobs:
                 lang: app.currentLang,
               );
 
+
               _show3DHeadsUpDialog(sched);
             }
+
 
             void _snoozeSchedule(ScheduleGroup sched, int minutes) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final now = DateTime.now().add(Duration(minutes: minutes));
               final String timeStr = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -4955,11 +5297,13 @@ jobs:
               );
             }
 
+
             void _show3DHeadsUpDialog(ScheduleGroup sched) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final palette = app.currentPalette;
               final bool isRtl = app.currentLang == 'he' || app.currentLang == 'ar';
+
 
               showDialog(
                 context: context,
@@ -5096,11 +5440,13 @@ jobs:
               );
             }
 
+
             void _loadData() async {
               try {
                 final prefs = await SharedPreferences.getInstance();
                 final schedStr = prefs.getString('c_schedules');
                 final appStr = prefs.getString('c_apps');
+
 
                 if (mounted) {
                   setState(() {
@@ -5121,28 +5467,34 @@ jobs:
               }
             }
 
+
             void _saveSchedules() async {
               final prefs = await SharedPreferences.getInstance();
               prefs.setString('c_schedules', jsonEncode(_schedules.map((s) => s.toJson()).toList()));
             }
+
 
             void _saveApps() async {
               final prefs = await SharedPreferences.getInstance();
               prefs.setString('c_apps', jsonEncode(_apps.map((a) => a.toJson()).toList()));
             }
 
+
             void _launchMap(String address, bool isWaze) async {
               String target = address.trim();
               if (target.isEmpty) return;
               final encoded = Uri.encodeComponent(target);
 
+
               final Uri nativeUri = isWaze
                   ? Uri.parse('waze://?q=$encoded&navigate=yes')
                   : Uri.parse('geo:0,0?q=$encoded');
 
+
               final Uri webUri = isWaze
                   ? Uri.parse('https://waze.com/ul?q=$encoded&navigate=yes')
                   : Uri.parse('https://www.google.com/maps/search/?api=1&query=$encoded');
+
 
               try {
                 if (await canLaunchUrl(nativeUri)) {
@@ -5150,6 +5502,7 @@ jobs:
                   return;
                 }
               } catch (_) {}
+
 
               try {
                 if (!await launchUrl(webUri, mode: LaunchMode.externalApplication)) {
@@ -5160,11 +5513,13 @@ jobs:
               }
             }
 
+
             void _openScheduleDialog({ScheduleGroup? existingSchedule, int? editIndex}) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
               final palette = app.currentPalette;
+
 
               final bool isEditing = existingSchedule != null;
               int hour = existingSchedule?.hour ?? 8;
@@ -5173,6 +5528,7 @@ jobs:
               List<PillItem> workingPills = existingSchedule != null
                   ? existingSchedule.pills.map((p) => PillItem(name: p.name, dosage: p.dosage, stock: p.stock)).toList()
                   : [PillItem(name: '', dosage: 1, stock: 30)];
+
 
               showModalBottomSheet(
                 context: context,
@@ -5551,12 +5907,15 @@ jobs:
               );
             }
 
+
             void _openAddScheduleDialog() => _openScheduleDialog();
+
 
             Widget _presetBtn(String label, String timeStr, int h, int m, VoidCallback onTap) {
               final app = CyberPillMasterApp.of(context);
               final hc = app.highContrast;
               final palette = app.currentPalette;
+
 
               return Pneumatic3DButton(
                 height: 44,
@@ -5595,6 +5954,7 @@ jobs:
               );
             }
 
+
             void _openGoogleWazeAddressPicker(Function(String) onSelectAddress) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
@@ -5604,6 +5964,7 @@ jobs:
               List<LiveAddressItem> liveResults = [];
               bool isLoading = false;
               Timer? debounceTimer;
+
 
               showModalBottomSheet(
                 context: context,
@@ -5636,6 +5997,7 @@ jobs:
                         }
                       });
                     }
+
 
                     return Directionality(
                       textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
@@ -5719,6 +6081,7 @@ jobs:
                                         final bool isWaze = item.source == 'waze';
                                         final Color badgeColor = isWaze ? const Color(0xFF00E5FF) : const Color(0xFFFF5252);
 
+
                                         return Container(
                                           margin: const EdgeInsets.symmetric(vertical: 4),
                                           decoration: BoxDecoration(
@@ -5774,6 +6137,7 @@ jobs:
               );
             }
 
+
             void _openAddAppointmentDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
@@ -5789,7 +6153,9 @@ jobs:
               bool isSearchingAddress = false;
               Timer? addressDebounce;
 
+
               final typesList = [t['doc_doctor']!, t['doc_nurse']!, t['doc_test']!, t['doc_treatment']!];
+
 
               showModalBottomSheet(
                 context: context,
@@ -5855,6 +6221,7 @@ jobs:
                                   ),
                                   const SizedBox(height: 14),
 
+
                                   // Doctor Name
                                   TextField(
                                     controller: docCtrl,
@@ -5868,6 +6235,7 @@ jobs:
                                     ),
                                   ),
                                   const SizedBox(height: 12),
+
 
                                   // 100% Live Google & Waze Address Selection with Free-form Input
                                   Container(
@@ -5908,6 +6276,7 @@ jobs:
                                           ],
                                         ),
                                         const SizedBox(height: 10),
+
 
                                         // Free-form TextField with live suggestions
                                         TextField(
@@ -5965,6 +6334,7 @@ jobs:
                                           ),
                                         ),
 
+
                                         if (isSearchingAddress) ...[
                                           const SizedBox(height: 6),
                                           Row(
@@ -5982,6 +6352,7 @@ jobs:
                                             ],
                                           ),
                                         ],
+
 
                                         // Inline non-obstructive suggestion box
                                         if (liveSuggestions.isNotEmpty) ...[
@@ -6038,7 +6409,9 @@ jobs:
                                           ),
                                         ],
 
+
                                         const SizedBox(height: 8),
+
 
                                         // Dedicated Full Search button
                                         Pneumatic3DButton(
@@ -6074,6 +6447,7 @@ jobs:
                                           ),
                                         ),
 
+
                                         const SizedBox(height: 8),
                                         Text(
                                           '${t['full_address'] ?? 'כתובת מלאה:'} ${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() : (cityCtrl.text.trim().isNotEmpty ? cityCtrl.text.trim() : "")}',
@@ -6082,6 +6456,7 @@ jobs:
                                       ],
                                     ),
                                   ),
+
 
                                   const SizedBox(height: 12),
                                   // Date & Time Picker
@@ -6169,6 +6544,7 @@ jobs:
                                     ],
                                   ),
 
+
                                   const SizedBox(height: 16),
                                   Pneumatic3DButton(
                                     height: 52,
@@ -6216,11 +6592,13 @@ jobs:
               );
             }
 
+
             void _openLanguagePicker() {
               final app = CyberPillMasterApp.of(context);
               final palette = app.currentPalette;
               final hc = app.highContrast;
               final t = dict[app.currentLang] ?? dict['he']!;
+
 
               showModalBottomSheet(
                 context: context,
@@ -6262,6 +6640,7 @@ jobs:
                             ),
                             const SizedBox(height: 14),
 
+
                             // 3D Embossed Title
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -6292,6 +6671,7 @@ jobs:
                             ),
                             const SizedBox(height: 14),
 
+
                             // 3D Scrollable List of Language Cards
                             Flexible(
                               child: ListView.builder(
@@ -6302,6 +6682,7 @@ jobs:
                                 itemBuilder: (ctx3, idx) {
                                   final l = _allLanguages[idx];
                                   final bool isSel = app.currentLang == l['code'];
+
 
                                   return Container(
                                     margin: const EdgeInsets.only(bottom: 12),
@@ -6349,6 +6730,7 @@ jobs:
                                             ),
                                             const SizedBox(width: 14),
 
+
                                             // Native Name & Subtitle
                                             Expanded(
                                               child: Column(
@@ -6380,6 +6762,7 @@ jobs:
                                                 ],
                                               ),
                                             ),
+
 
                                             // Active LED Indicator
                                             Container(
@@ -6419,10 +6802,12 @@ jobs:
               );
             }
 
+
             void _openHelpGuideDialog() {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final palette = app.currentPalette;
+
 
               showDialog(
                 context: context,
@@ -6513,6 +6898,7 @@ jobs:
               );
             }
 
+
             void _showFullScreen3DPreview({
               required String initialStyle,
               required String themeKey,
@@ -6523,6 +6909,7 @@ jobs:
             }) {
               String currentPreviewStyle = initialStyle;
 
+
               showDialog(
                 context: context,
                 useSafeArea: false,
@@ -6530,6 +6917,7 @@ jobs:
                   builder: (ctx2, setPreviewState) {
                     final int currIdx = bgStyles.indexWhere((b) => b['key'] == currentPreviewStyle);
                     final String bgTitle = (currIdx >= 0) ? bgStyles[currIdx]['label']! : currentPreviewStyle;
+
 
                     return Scaffold(
                       backgroundColor: Colors.transparent,
@@ -6544,6 +6932,7 @@ jobs:
                               child: const SizedBox(),
                             ),
                           ),
+
 
                           // 2. High-Tech Holographic HUD Controls (Top Bar)
                           Positioned(
@@ -6606,6 +6995,7 @@ jobs:
                             ),
                           ),
 
+
                           // 3. Navigation Controls & Apply Button (Bottom Bar)
                           Positioned(
                             bottom: 30,
@@ -6660,6 +7050,7 @@ jobs:
                                   ),
                                   const SizedBox(height: 14),
 
+
                                   // Apply This Background Button
                                   Pneumatic3DButton(
                                     height: 52,
@@ -6699,6 +7090,7 @@ jobs:
               );
             }
 
+
             void _showThemePreview({
               required String initialThemeKey,
               required String bgStyle,
@@ -6706,6 +7098,7 @@ jobs:
               required ValueChanged<String> onSelect,
             }) {
               String currentPreviewKey = initialThemeKey;
+
 
               showDialog(
                 context: context,
@@ -6715,6 +7108,7 @@ jobs:
                     final palette = themePalettes[currentPreviewKey] ?? themePalettes.values.first;
                     final int currIdx = themePalettes.keys.toList().indexOf(currentPreviewKey);
                     final keys = themePalettes.keys.toList();
+
 
                     return Scaffold(
                       backgroundColor: palette.background,
@@ -6982,10 +7376,12 @@ jobs:
               );
             }
 
+
             void _openSettingsDialog() {
               final app = CyberPillMasterApp.of(context);
               final hc = app.highContrast;
               final palette = app.currentPalette;
+
 
               String tempLang = app.currentLang;
               String tempThemeKey = app.themeKey;
@@ -6997,6 +7393,7 @@ jobs:
               bool tempHc = app.highContrast;
               bool tempVoice = app.voiceAlerts;
 
+
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
@@ -7006,6 +7403,7 @@ jobs:
                   builder: (ctx2, setDlg) {
                     final curT = dict[tempLang] ?? dict['he']!;
                     final bool isRtl = tempLang == 'he' || tempLang == 'ar';
+
 
                     final soundOptions = [
                       {'key': 'voice', 'label': curT['sound_opt_voice'] ?? '🗣️ חיווי קולי חכם (תזכורת כללית)'},
@@ -7026,6 +7424,7 @@ jobs:
                       {'key': 'synth_wave', 'label': curT['sound_opt_synth_wave'] ?? "🎹 גל סינת'סייזר רטרו"},
                     ];
 
+
                     final bgStyles = [
                       {'key': 'butterflies', 'label': curT['bg_butterflies'] ?? 'פרפרים זרחניים 3D'},
                       {'key': 'planets', 'label': curT['bg_planets'] ?? 'כוכבי לכת ומסלולים 3D'},
@@ -7043,7 +7442,9 @@ jobs:
                       {'key': 'nebula', 'label': curT['bg_nebula'] ?? 'ערפילית סערה קוסמית 3D'},
                     ];
 
+
                     final curPalette = themePalettes[tempThemeKey] ?? palette;
+
 
                     return Directionality(
                       textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
@@ -7073,6 +7474,7 @@ jobs:
                                   ),
                                 ),
                                 const SizedBox(height: 14),
+
 
                                 // Top Language Bar with 3D selector
                                 Row(
@@ -7128,6 +7530,7 @@ jobs:
                                   ],
                                 ),
                                 const SizedBox(height: 16),
+
 
                                 // LIVE 3D PREVIEW MONITOR WINDOW (חלונית תצוגה מקדימה 3D)
                                 MechModuleCard(
@@ -7302,6 +7705,7 @@ jobs:
                                 ),
                                 const SizedBox(height: 16),
 
+
                                 // SECTION 1: COLOR THEMES (ערכות צבע - גלילה כלפי מטה)
                                 Text(
                                   curT['themes_title']!,
@@ -7362,6 +7766,7 @@ jobs:
                                 ),
                                 const SizedBox(height: 16),
 
+
                                 // SECTION 2: 3D DISPLAY MODES (מצבי תצוגה תלת-מימדיים - גלילה כלפי מטה)
                                 Text(
                                   curT['bg_style']!,
@@ -7421,6 +7826,7 @@ jobs:
                                 ),
                                 const SizedBox(height: 16),
 
+
                                 // Sound Alert Types
                                 Text(
                                   curT['alert_sound']!,
@@ -7476,6 +7882,7 @@ jobs:
                                   ),
                                 ),
                                 const SizedBox(height: 10),
+
 
                                 // Custom Audio File Picker from Phone
                                 MechModuleCard(
@@ -7586,6 +7993,7 @@ jobs:
                                 ),
                                 const SizedBox(height: 14),
 
+
                                 // Master Volume Controller With 3D Tactile Rotary Knob
                                 RotaryVolumeDial3D(
                                   volume: tempVolume,
@@ -7594,6 +8002,7 @@ jobs:
                                   onChanged: (v) => setDlg(() => tempVolume = v),
                                 ),
                                 const SizedBox(height: 12),
+
 
                                 // High Contrast & Voice Switches
                                 SwitchListTile(
@@ -7629,7 +8038,9 @@ jobs:
                                   onChanged: (v) => setDlg(() => tempVoice = v),
                                 ),
 
+
                                 const SizedBox(height: 20),
+
 
                                 // Dedicated Physical Mechanical Save Button
                                 Pneumatic3DButton(
@@ -7701,12 +8112,14 @@ jobs:
               );
             }
 
+
             Widget build(BuildContext context) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
               final palette = app.currentPalette;
               final Color accent = hc ? const Color(0xFFFFE500) : palette.primary;
+
 
               return Interactive3DGlassBackground(
                 palette: palette,
@@ -7849,6 +8262,7 @@ jobs:
                                 },
                               ),
 
+
                         // Doctor Appointments Tab (With Top-tier Z-Index Navigation Bar)
                         _apps.isEmpty
                             ? Center(child: textChannel3D(t['empty_apps']!, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white70))
@@ -7860,6 +8274,7 @@ jobs:
                                   final String navAddress = appItem.clinic.trim().isNotEmpty
                                       ? appItem.clinic.trim()
                                       : (appItem.doctor.trim().isNotEmpty ? appItem.doctor.trim() : '');
+
 
                                   return MechModuleCard(
                                     accentColor: palette.primary,
@@ -8022,8 +8437,10 @@ jobs:
               );
             }
 
+
           }
           EOF
+
 
       - name: Install dependencies
         run: |
@@ -8059,12 +8476,13 @@ jobs:
                                   pass
           '
 
+
       - name: Build APK
         run: flutter build apk --release
+
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
-
