@@ -2201,7 +2201,7 @@ jobs:
           Locale('fr'),
           Locale('es'),
           ],
-          localizationsDelegates: const [
+          localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
@@ -6202,9 +6202,9 @@ jobs:
                                         },
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
-                                          children: const [
-                                            Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.white),
-                                            SizedBox(width: 6),
+                                          children: [
+                                            const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.white),
+                                            const SizedBox(width: 6),
                                             Text(t['prev_btn'] ?? 'הקודם', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13, decoration: TextDecoration.none)),
                                           ],
                                         ),
@@ -6221,10 +6221,10 @@ jobs:
                                         },
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
-                                          children: const [
+                                          children: [
                                             Text(t['next_btn'] ?? 'הבא', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13, decoration: TextDecoration.none)),
-                                            SizedBox(width: 6),
-                                            Icon(Icons.arrow_back_ios_new_rounded, size: 14, color: Colors.white),
+                                            const SizedBox(width: 6),
+                                            const Icon(Icons.arrow_back_ios_new_rounded, size: 14, color: Colors.white),
                                           ],
                                         ),
                                       ),
