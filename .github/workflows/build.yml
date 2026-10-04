@@ -182,6 +182,8 @@ jobs:
           dependencies:
             flutter:
               sdk: flutter
+            flutter_localizations:
+              sdk: flutter
             flutter_local_notifications: ^17.2.1
             timezone: ^0.9.4
             shared_preferences: ^2.3.2
@@ -209,6 +211,7 @@ jobs:
           import 'package:audioplayers/audioplayers.dart';
           import 'package:flutter/cupertino.dart' hide TextDirection;
           import 'package:flutter/material.dart';
+          import 'package:flutter_localizations/flutter_localizations.dart';
           import 'package:flutter/services.dart';
           import 'package:flutter_local_notifications/flutter_local_notifications.dart';
           import 'package:flutter_tts/flutter_tts.dart';
@@ -1627,6 +1630,11 @@ jobs:
                 title: 'CYBER PHARMA 3D',
                 debugShowCheckedModeBanner: false,
                 locale: Locale(_lang),
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
                 supportedLocales: const [
                   Locale('he', 'IL'),
                   Locale('en', 'US'),
@@ -4157,16 +4165,16 @@ jobs:
             @override
             void initState() {
               super.initState();
-              // 1. Initialize AnimationController SYNCHRONOUSLY so it is ALWAYS ready for build() on frame 0!
+              // Synchronous animation initialization on frame 0
               _anim = AnimationController(
                 vsync: this,
                 duration: const Duration(milliseconds: 1400),
               )..forward();
 
-              // 2. Start navigation timer IMMEDIATELY so navigation NEVER hangs or gets blocked by permissions!
+              // Navigation timer guaranteed to fire without being blocked by permissions
               _navTimer = Timer(const Duration(milliseconds: 1800), _navigateToNextScreen);
 
-              // 3. Request permissions in background asynchronously without blocking animation or navigation
+              // Non-blocking background permission request
               _requestPermissions();
             }
 
@@ -4419,63 +4427,77 @@ jobs:
                                     BoxShadow(color: Colors.black.withOpacity(0.8), blurRadius: 10, offset: const Offset(0, 5)),
                                   ],
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      t['enter_name_title']!,
-                                      style: TextStyle(color: palette.highlight, fontSize: 15, fontWeight: FontWeight.w900),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 12),
-                                    TextField(
-                                      controller: _nameController,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(color: palette.highlight, fontSize: 16, fontWeight: FontWeight.bold),
-                                      decoration: InputDecoration(
-                                        hintText: t['name_hint']!,
-                                        hintStyle: const TextStyle(color: Colors.white38, fontSize: 14),
-                                        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                                        filled: true,
-                                        fillColor: palette.surface,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(12),
-                                          borderSide: BorderSide(color: palette.bevelLight.withOpacity(0.5)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(12),
-                                          borderSide: BorderSide(color: palette.highlight, width: 1.8),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 14),
-                                    Pneumatic3DButton(
-                                      height: 48,
-                                      palette: palette,
-                                      customGlow: palette.glow,
-                                      onTap: () {
-                                        final name = _nameController.text.trim();
-                                        final chosenName = name.isNotEmpty ? name : 'משתמש';
-                                        app.completeOnboarding(chosenName, _selectedLang);
-                                        Navigator.of(context).pushReplacement(
-                                          PageRouteBuilder(
-                                            transitionDuration: const Duration(milliseconds: 500),
-                                            pageBuilder: (_, __, ___) => const MainDashboard(),
-                                            transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
-                                          ),
-                                        );
-                                      },
-                                      child: Text(
-                                        t['continue_btn']!,
+                                child: Material(
+                                  type: MaterialType.transparency,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        t['enter_name_title']!,
                                         style: TextStyle(
                                           color: palette.highlight,
-                                          fontSize: 16,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.w900,
                                           decoration: TextDecoration.none,
                                         ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(height: 12),
+                                      TextField(
+                                        controller: _nameController,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: palette.highlight,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.none,
+                                        ),
+                                        decoration: InputDecoration(
+                                          hintText: t['name_hint']!,
+                                          hintStyle: const TextStyle(color: Colors.white38, fontSize: 14, decoration: TextDecoration.none),
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                          filled: true,
+                                          fillColor: palette.surface,
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(12),
+                                            borderSide: BorderSide(color: palette.bevelLight.withOpacity(0.5)),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(12),
+                                            borderSide: BorderSide(color: palette.highlight, width: 1.8),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 14),
+                                      Pneumatic3DButton(
+                                        height: 48,
+                                        palette: palette,
+                                        customGlow: palette.glow,
+                                        onTap: () {
+                                          final name = _nameController.text.trim();
+                                          final chosenName = name.isNotEmpty ? name : 'משתמש';
+                                          app.completeOnboarding(chosenName, _selectedLang);
+                                          Navigator.of(context).pushReplacement(
+                                            PageRouteBuilder(
+                                              transitionDuration: const Duration(milliseconds: 500),
+                                              pageBuilder: (_, __, ___) => const MainDashboard(),
+                                              transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          t['continue_btn']!,
+                                          style: TextStyle(
+                                            color: palette.highlight,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w900,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
