@@ -643,6 +643,12 @@ jobs:
           };
           final Map<String, Map<String, String>> dict = {
             'he': {
+              'google_waze_search': '🌐 חיפוש כתובת חי מתוך Google / Waze',
+              'google_waze_hint': 'הקלד רחוב, מרפאה, בית חולים או עיר (נשאב מגוגל/ווייז)...',
+              'searching_google_waze': 'שואב נתונים חיים מ-Waze ומ-Google...',
+              'no_google_waze_results': 'לא נמצאו כתובות ב-Google וב-Waze עבור חיפוש זה.',
+              'source_waze': '🚙 Waze',
+              'source_google': '🔍 Google',
               'network_address_search': 'חיפוש כתובת ישיר ברשת',
               'search_address_online_hint': 'הקלד רחוב, מרפאה, בית חולים או עיר (נשאב מהרשת)...',
               'fetching_from_web': 'שואב כתובות מהרשת בזמן אמת...',
@@ -770,6 +776,12 @@ jobs:
               'close': 'סגור',
             },
             'en': {
+              'google_waze_search': '🌐 Live Address Search (Google / Waze)',
+              'google_waze_hint': 'Type street, clinic, hospital or city (from Google/Waze)...',
+              'searching_google_waze': 'Fetching live data from Waze & Google...',
+              'no_google_waze_results': 'No addresses found on Google & Waze for this query.',
+              'source_waze': '🚙 Waze',
+              'source_google': '🔍 Google',
               'network_address_search': 'Online Address Search',
               'search_address_online_hint': 'Type street, clinic, hospital, or city (fetched online)...',
               'fetching_from_web': 'Fetching addresses online in real time...',
@@ -897,6 +909,12 @@ jobs:
               'close': 'Close',
             },
             'fr': {
+              'google_waze_search': '🌐 Recherche d\'adresse en direct (Google / Waze)',
+              'google_waze_hint': 'Tapez rue, clinique, hôpital ou ville (Google/Waze)...',
+              'searching_google_waze': 'Récupération en direct depuis Waze et Google...',
+              'no_google_waze_results': 'Aucune adresse trouvée sur Google et Waze.',
+              'source_waze': '🚙 Waze',
+              'source_google': '🔍 Google',
               'network_address_search': 'Recherche d\'adresse en ligne',
               'search_address_online_hint': 'Tapez rue, clinique, hôpital ou ville (en direct du réseau)...',
               'fetching_from_web': 'Récupération d\'adresses en direct...',
@@ -1024,6 +1042,12 @@ jobs:
               'close': 'Fermer',
             },
             'ar': {
+              'google_waze_search': '🌐 بحث مباشر عن العناوين من Google / Waze',
+              'google_waze_hint': 'اكتب الشارع، العيادة، المستشفى أو المدينة (من Google/Waze)...',
+              'searching_google_waze': 'جاري جلب البيانات من Waze و Google...',
+              'no_google_waze_results': 'لم يتم العثور على عناوين في Google و Waze.',
+              'source_waze': '🚙 Waze',
+              'source_google': '🔍 Google',
               'network_address_search': 'البحث عن العنوان عبر الإنترنت',
               'search_address_online_hint': 'اكتب الشارع، العيادة، المستشفى، أو المدينة (مباشر من الشبكة)...',
               'fetching_from_web': 'جاري جلب العناوين من الشبكة مباشرة...',
@@ -1151,6 +1175,12 @@ jobs:
               'close': 'إغلاق',
             },
             'ru': {
+              'google_waze_search': '🌐 Поиск адреса онлайн (Google / Waze)',
+              'google_waze_hint': 'Введите улицу, клинику, больницу или город (Google/Waze)...',
+              'searching_google_waze': 'Загрузка данных из Waze и Google...',
+              'no_google_waze_results': 'Адреса в Google и Waze не найдены.',
+              'source_waze': '🚙 Waze',
+              'source_google': '🔍 Google',
               'network_address_search': 'Поиск адреса в сети',
               'search_address_online_hint': 'Введите улицу, клинику, больницу или город (из сети)...',
               'fetching_from_web': 'Получение адресов из сети в реальном времени...',
@@ -1278,6 +1308,12 @@ jobs:
               'close': 'Закрыть',
             },
             'es': {
+              'google_waze_search': '🌐 Búsqueda de dirección en vivo (Google / Waze)',
+              'google_waze_hint': 'Escriba calle, clínica, hospital o ciudad (Google/Waze)...',
+              'searching_google_waze': 'Obteniendo datos en vivo de Waze y Google...',
+              'no_google_waze_results': 'No se encontraron direcciones en Google y Waze.',
+              'source_waze': '🚙 Waze',
+              'source_google': '🔍 Google',
               'network_address_search': 'Búsqueda de dirección en línea',
               'search_address_online_hint': 'Escriba calle, clínica, hospital o ciudad (de la red)...',
               'fetching_from_web': 'Obteniendo direcciones de la red en tiempo real...',
@@ -4492,47 +4528,6 @@ jobs:
                 );
           }
 
-          const List<String> israelAllLocalities = [
-            "אבו גוש", "אבו סנאן", "אבו קרינאת", "אבן יהודה", "אום אל-פחם",
-            "אום בטין", "אופקים", "אור יהודה", "אור עקיבא", "אזור",
-            "אילת", "אכסאל", "אליכין", "אלעד", "אלפי מנשה",
-            "אלקנה", "אעבלין", "אפרת", "אריאל", "אשדוד",
-            "אשקלון", "באקה אל-גרבייה", "באר יעקב", "באר שבע", "בוקעאתא",
-            "ביר אל-מכסור", "בית אל", "בית ג'ן", "בית דגן", "בית שאן",
-            "בית שמש", "ביתר עילית", "בני ברק", "בני עי\"ש", "בנימינה - גבעת עדה",
-            "בסמת טבעון", "בענה", "בת ים", "ג'דיידה-מכר", "ג'ולס",
-            "ג'לג'וליה", "ג'סר א-זרקא", "ג'ש (גוש חלב)", "גבעת שמואל", "גבעתיים",
-            "גדרה", "גן יבנה", "גני תקווה", "דבורייה", "דליית אל-כרמל",
-            "דמיידה", "דריג'את", "הוד השרון", "הר אדר", "הרצליה",
-            "זכרון יעקב", "זמר", "זרזיר", "חברון (קריית ארבע)", "חדרה",
-            "חולון", "חורה", "חורפיש", "חיפה", "חצור הגלילית",
-            "חריש", "טבריה", "טובא-זנגרייה", "טורעאן", "טייבה",
-            "טירה", "טירת כרמל", "טמרה", "יאנוח-ג'ת", "יאפה נצרת",
-            "יבנה", "יהוד-מונוסון", "יסוד המעלה", "יקנעם עילית", "ירוחם",
-            "ירושלים", "ירכא", "כאבול", "כאוכב אבו אל-היג'א", "כוכב יאיר - צור יגאל",
-            "כסיפה", "כסרא-סמיע", "כפר ברא", "כפר ורדים", "כפר יונה",
-            "כפר יאסיף", "כפר כמא", "כפר כנא", "כפר מנדא", "כפר סבא",
-            "כפר קאסם", "כפר קרע", "כפר שמריהו", "כפר תבור", "כרמיאל",
-            "לוד", "לוחמי הגטאות", "להבים", "לקיה", "מבשרת ציון",
-            "מג'ד אל-כרום", "מג'דל שמס", "מגאר", "מגדל", "מגדל העמק",
-            "מודיעין-מכבים-רעות", "מודיעין עילית", "מולדה", "מטולה", "מיתר",
-            "מסעדה", "מעיליא", "מעלה אדומים", "מעלה אפרים", "מעלה יוסף",
-            "מעלה עירון", "מעלות-תרשיחא", "מצפה רמון", "משהד", "נהריה",
-            "נוף הגליל", "נחף", "נס ציונה", "נצרת", "נשר",
-            "נתיבות", "נתניה", "סאג'ור", "סביון", "סח'נין",
-            "סלאמה", "עומר", "עיילבון", "עין מאהל", "עין קיניה",
-            "עכו", "עמנואל", "עספיא", "עפולה", "עראבה",
-            "ערד", "ערערה", "ערערה בנגב", "פוריידיס", "פסוטה",
-            "פקיעין", "פרדס חנה - כרכור", "פתח תקווה", "צור הדסה", "צפת",
-            "קדימה-צורן", "קלנסווה", "קצרין", "קריית אונו", "קריית אתא",
-            "קריית ביאליק", "קריית גת", "קריית ים", "קריית מוצקין", "קריית מלאכי",
-            "קריית שמונה", "קרני שומרון", "ראמה", "ראש העין", "ראש פינה",
-            "ראשון לציון", "רהט", "רחובות", "ריינה", "רכסים",
-            "רמלה", "רמת גן", "רמת השרון", "רמת ישי", "רעננה",
-            "שבלי - אום אל-גנם", "שדרות", "שוהם", "שלומי", "שעב",
-            "שפרעם", "תל אביב - יפו", "תל מונד", "תל שבע"
-          ];
-
           const List<String> defaultMedicationsCatalog = [
             'אקמול (Acamol)', 'אופטלגין (Optalgin)', 'נורופן (Nurofen)', 'אדוויל (Advil)', 'דקסמול (Dexamol)',
             'פרצטמול (Paracetamol)', 'איבופרופן (Ibuprofen)', 'דיפירון (Dipyrone)', 'אוגמנטין (Augmentin)',
@@ -4572,119 +4567,89 @@ jobs:
             'אבץ (Zinc)', 'אומגה 3 (Omega 3)'
           ];
 
-          class LiveAddressService {
-            static final Map<String, List<String>> _memoryCache = {};
+          class LiveAddressItem {
+            final String address;
+            final String source; // 'waze' or 'google'
 
-            static Future<List<String>> searchAddresses(String query) async {
+            const LiveAddressItem({required this.address, required this.source});
+          }
+
+          class GoogleWazeAddressService {
+            static final Map<String, List<LiveAddressItem>> _cache = {};
+
+            static Future<List<LiveAddressItem>> search(String query) async {
               final clean = query.trim();
               if (clean.length < 2) return [];
 
-              if (_memoryCache.containsKey(clean)) {
-                return _memoryCache[clean]!;
+              if (_cache.containsKey(clean)) {
+                return _cache[clean]!;
               }
 
-              final List<String> results = [];
+              final List<LiveAddressItem> results = [];
+              final Set<String> seen = {};
 
-              // 1. Try OpenStreetMap Nominatim API (Supports Streets, Clinics, Hospitals, Cities in Israel)
+              // 1. Live Fetch from Waze SearchServer (Precision Israeli addresses, clinics, streets, numbers)
               try {
                 final client = HttpClient();
                 client.connectionTimeout = const Duration(seconds: 4);
                 final uri = Uri.parse(
-                  'https://nominatim.openstreetmap.org/search?q=${Uri.encodeComponent(clean)}&format=json&countrycodes=il&addressdetails=1&limit=10&accept-language=he,en',
+                  'https://www.waze.com/SearchServer/mozi?q=${Uri.encodeComponent(clean)}&lang=he&origin=livemap',
                 );
                 final request = await client.getUrl(uri);
-                request.headers.set('User-Agent', 'CyberPharma3D/1.0 (Mobile App)');
+                request.headers.set('User-Agent', 'Mozilla/5.0 (Android; Mobile) CyberPharma/1.0');
                 final response = await request.close().timeout(const Duration(seconds: 5));
                 if (response.statusCode == 200) {
                   final body = await response.transform(utf8.decoder).join();
-                  final List<dynamic> list = jsonDecode(body);
-                  for (final item in list) {
-                    if (item is Map && item.containsKey('display_name')) {
-                      final addr = item['address'] as Map<String, dynamic>?;
-                      String formatted = '';
-                      if (addr != null) {
-                        final road = (addr['road'] ?? addr['pedestrian'] ?? addr['footway'] ?? '').toString();
-                        final houseNumber = (addr['house_number'] ?? '').toString();
-                        final city = (addr['city'] ?? addr['town'] ?? addr['village'] ?? addr['municipality'] ?? addr['hamlet'] ?? '').toString();
-                        final amenity = (addr['amenity'] ?? addr['hospital'] ?? addr['clinic'] ?? addr['pharmacy'] ?? '').toString();
+                  final decoded = jsonDecode(body);
+                  final List<dynamic> items = decoded is List ? decoded : (decoded is Map ? (decoded['results'] ?? []) : []);
+                  for (final it in items) {
+                    if (it is Map) {
+                      final name = (it['name'] ?? '').toString().trim();
+                      final street = (it['street'] ?? '').toString().trim();
+                      final city = (it['city'] ?? '').toString().trim();
 
-                        final List<String> parts = [];
-                        if (amenity.isNotEmpty) parts.add(amenity);
-                        if (road.isNotEmpty) {
-                          parts.add(houseNumber.isNotEmpty ? '$road $houseNumber' : road);
-                        }
-                        if (city.isNotEmpty && !parts.contains(city)) parts.add(city);
+                      final List<String> parts = [];
+                      if (name.isNotEmpty) parts.add(name);
+                      if (street.isNotEmpty && !parts.contains(street)) parts.add(street);
+                      if (city.isNotEmpty && !parts.contains(city)) parts.add(city);
 
-                        if (parts.isNotEmpty) {
-                          formatted = parts.join(', ');
-                        }
-                      }
-                      if (formatted.isEmpty) {
-                        final String raw = item['display_name'].toString();
-                        formatted = raw.split(',').take(3).map((e) => e.trim()).join(', ');
-                      }
-                      if (formatted.isNotEmpty && !results.contains(formatted)) {
-                        results.add(formatted);
+                      final full = parts.join(', ');
+                      if (full.isNotEmpty && !seen.contains(full)) {
+                        seen.add(full);
+                        results.add(LiveAddressItem(address: full, source: 'waze'));
                       }
                     }
                   }
                 }
               } catch (_) {}
 
-              // 2. Try Komoot Photon API if Nominatim yielded few/no results
-              if (results.length < 3) {
-                try {
-                  final client = HttpClient();
-                  client.connectionTimeout = const Duration(seconds: 3);
-                  final uri = Uri.parse(
-                    'https://photon.komoot.io/api/?q=${Uri.encodeComponent(clean)}&limit=8&lang=he',
-                  );
-                  final request = await client.getUrl(uri);
-                  final response = await request.close().timeout(const Duration(seconds: 4));
-                  if (response.statusCode == 200) {
-                    final body = await response.transform(utf8.decoder).join();
-                    final Map<String, dynamic> data = jsonDecode(body);
-                    final List<dynamic> features = data['features'] ?? [];
-                    for (final f in features) {
-                      final props = f['properties'] as Map<String, dynamic>?;
-                      if (props != null) {
-                        final country = (props['country'] ?? '').toString();
-                        if (country.isNotEmpty && country != 'Israel' && country != 'ישראל') {
-                          continue;
-                        }
-                        final name = (props['name'] ?? '').toString();
-                        final street = (props['street'] ?? '').toString();
-                        final houseNumber = (props['housenumber'] ?? '').toString();
-                        final city = (props['city'] ?? props['town'] ?? props['village'] ?? '').toString();
-
-                        final List<String> parts = [];
-                        if (name.isNotEmpty) parts.add(name);
-                        if (street.isNotEmpty && !parts.contains(street)) {
-                          parts.add(houseNumber.isNotEmpty ? '$street $houseNumber' : street);
-                        }
-                        if (city.isNotEmpty && !parts.contains(city)) parts.add(city);
-
-                        final formatted = parts.join(', ');
-                        if (formatted.isNotEmpty && !results.contains(formatted)) {
-                          results.add(formatted);
-                        }
+              // 2. Live Fetch from Google Suggest API (Live Google Maps & Web Data)
+              try {
+                final client = HttpClient();
+                client.connectionTimeout = const Duration(seconds: 4);
+                final uri = Uri.parse(
+                  'https://suggestqueries.google.com/complete/search?client=chrome&q=${Uri.encodeComponent(clean)}&hl=iw&gl=il',
+                );
+                final request = await client.getUrl(uri);
+                request.headers.set('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CyberPharma/1.0');
+                final response = await request.close().timeout(const Duration(seconds: 5));
+                if (response.statusCode == 200) {
+                  final body = await response.transform(utf8.decoder).join();
+                  final decoded = jsonDecode(body);
+                  if (decoded is List && decoded.length >= 2 && decoded[1] is List) {
+                    for (final item in decoded[1]) {
+                      final s = item.toString().trim();
+                      if (s.isNotEmpty && !seen.contains(s)) {
+                        seen.add(s);
+                        results.add(LiveAddressItem(address: s, source: 'google'));
                       }
                     }
                   }
-                } catch (_) {}
-              }
-
-              // 3. Fallback / supplement with local Israeli settlements if offline or zero results
-              if (results.isEmpty) {
-                final localMatches = israelAllLocalities
-                    .where((l) => l.contains(clean))
-                    .take(6)
-                    .toList();
-                results.addAll(localMatches);
-              }
+                }
+              } catch (_) {}
 
               if (results.isNotEmpty) {
-                _memoryCache[clean] = results;
+                _cache[clean] = results;
               }
               return results;
             }
@@ -5500,13 +5465,13 @@ jobs:
               );
             }
 
-            void _openLiveAddressPicker(Function(String) onSelectAddress) {
+            void _openGoogleWazeAddressPicker(Function(String) onSelectAddress) {
               final app = CyberPillMasterApp.of(context);
               final t = dict[app.currentLang] ?? dict['he']!;
               final palette = app.currentPalette;
               final hc = app.highContrast;
               String searchQuery = '';
-              List<String> liveResults = [];
+              List<LiveAddressItem> liveResults = [];
               bool isLoading = false;
               Timer? debounceTimer;
 
@@ -5531,8 +5496,8 @@ jobs:
                         searchQuery = q;
                         isLoading = true;
                       });
-                      debounceTimer = Timer(const Duration(milliseconds: 350), () async {
-                        final res = await LiveAddressService.searchAddresses(q);
+                      debounceTimer = Timer(const Duration(milliseconds: 320), () async {
+                        final res = await GoogleWazeAddressService.search(q);
                         if (ctx.mounted) {
                           setModalState(() {
                             liveResults = res;
@@ -5558,10 +5523,10 @@ jobs:
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.travel_explore_rounded, color: palette.highlight, size: 22),
+                                Icon(Icons.satellite_alt_rounded, color: palette.highlight, size: 22),
                                 const SizedBox(width: 8),
                                 Text(
-                                  t['online_address_picker'] ?? '🌐 איתור כתובת חי מהרשת',
+                                  t['google_waze_search'] ?? '🌐 חיפוש כתובת חי מתוך Google / Waze',
                                   style: TextStyle(color: palette.highlight, fontSize: 16, fontWeight: FontWeight.w900),
                                 ),
                               ],
@@ -5579,7 +5544,7 @@ jobs:
                                 autofocus: true,
                                 style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                 decoration: InputDecoration(
-                                  hintText: t['search_address_online_hint'] ?? 'הקלד רחוב, מרפאה, בית חולים או עיר (נשאב מהרשת)...',
+                                  hintText: t['google_waze_hint'] ?? 'הקלד רחוב, מרפאה, בית חולים או עיר (נשאב מגוגל/ווייז)...',
                                   hintStyle: const TextStyle(color: Colors.white38, fontSize: 12),
                                   border: InputBorder.none,
                                   prefixIcon: Icon(Icons.search_rounded, color: palette.highlight),
@@ -5604,7 +5569,7 @@ jobs:
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8),
                                 child: Text(
-                                  t['fetching_from_web'] ?? 'שואב כתובות מהרשת בזמן אמת...',
+                                  t['searching_google_waze'] ?? 'שואב נתונים חיים מ-Waze ומ-Google...',
                                   style: TextStyle(color: palette.highlight, fontSize: 12, fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -5612,7 +5577,7 @@ jobs:
                               child: liveResults.isEmpty && !isLoading && searchQuery.trim().length >= 2
                                   ? Center(
                                       child: Text(
-                                        t['no_address_found'] ?? 'לא נמצאו כתובות ברשת. נסה ניסוח אחר.',
+                                        t['no_google_waze_results'] ?? 'לא נמצאו כתובות ב-Google וב-Waze עבור חיפוש זה.',
                                         style: const TextStyle(color: Colors.white54, fontSize: 13),
                                       ),
                                     )
@@ -5620,130 +5585,55 @@ jobs:
                                       physics: const BouncingScrollPhysics(),
                                       itemCount: liveResults.length,
                                       itemBuilder: (ctxL, idx) {
-                                        final addr = liveResults[idx];
+                                        final item = liveResults[idx];
+                                        final bool isWaze = item.source == 'waze';
+                                        final Color badgeColor = isWaze ? const Color(0xFF00E5FF) : const Color(0xFFFF5252);
+
                                         return Container(
                                           margin: const EdgeInsets.symmetric(vertical: 4),
                                           decoration: BoxDecoration(
                                             color: Colors.black.withOpacity(0.35),
                                             borderRadius: BorderRadius.circular(12),
-                                            border: Border.all(color: palette.highlight.withOpacity(0.3), width: 1),
+                                            border: Border.all(color: badgeColor.withOpacity(0.4), width: 1.2),
                                           ),
                                           child: ListTile(
                                             leading: Container(
                                               padding: const EdgeInsets.all(6),
                                               decoration: BoxDecoration(
-                                                color: palette.primary.withOpacity(0.2),
+                                                color: badgeColor.withOpacity(0.2),
                                                 shape: BoxShape.circle,
                                               ),
-                                              child: Icon(Icons.location_on_rounded, color: palette.highlight, size: 20),
+                                              child: Icon(
+                                                isWaze ? Icons.navigation_rounded : Icons.place_rounded,
+                                                color: badgeColor,
+                                                size: 20,
+                                              ),
                                             ),
                                             title: Text(
-                                              addr,
+                                              item.address,
                                               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                                             ),
                                             trailing: Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                               decoration: BoxDecoration(
-                                                color: Colors.black.withOpacity(0.6),
+                                                color: Colors.black.withOpacity(0.7),
                                                 borderRadius: BorderRadius.circular(6),
-                                                border: Border.all(color: palette.highlight.withOpacity(0.5), width: 1),
+                                                border: Border.all(color: badgeColor.withOpacity(0.6), width: 1),
                                               ),
                                               child: Text(
-                                                t['online_badge'] ?? '🌐 רשת',
-                                                style: TextStyle(color: palette.highlight, fontSize: 10, fontWeight: FontWeight.bold),
+                                                isWaze ? (t['source_waze'] ?? '🚙 Waze') : (t['source_google'] ?? '🔍 Google'),
+                                                style: TextStyle(color: badgeColor, fontSize: 11, fontWeight: FontWeight.w900),
                                               ),
                                             ),
                                             onTap: () {
                                               HapticFeedback.lightImpact();
-                                              onSelectAddress(addr);
+                                              onSelectAddress(item.address);
                                               Navigator.pop(ctx);
                                             },
                                           ),
                                         );
                                       },
                                     ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            }
-
-            void _openAllCitiesPicker(Function(String) onSelectCity) {
-              final app = CyberPillMasterApp.of(context);
-              final t = dict[app.currentLang] ?? dict['he']!;
-              final palette = app.currentPalette;
-              final hc = app.highContrast;
-              String filter = '';
-
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: hc ? Colors.black : palette.surface,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
-                builder: (ctx) => StatefulBuilder(
-                  builder: (ctx2, setModalState) {
-                    final filtered = israelAllLocalities
-                        .where((c) => c.contains(filter.trim()))
-                        .toList();
-
-                    return Directionality(
-                      textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.78,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 44,
-                              height: 5,
-                              decoration: BoxDecoration(color: palette.highlight.withOpacity(0.5), borderRadius: BorderRadius.circular(10)),
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              t['select_all_localities'] ?? '📜 כל יישובי ישראל (בחירה מרשימה)',
-                              style: TextStyle(color: palette.highlight, fontSize: 16, fontWeight: FontWeight.w900),
-                            ),
-                            const SizedBox(height: 10),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: palette.primary.withOpacity(0.7), width: 1.5),
-                              ),
-                              child: TextField(
-                                onChanged: (v) => setModalState(() => filter = v),
-                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                                decoration: InputDecoration(
-                                  hintText: t['search_locality'] ?? 'חיפוש עיר, כפר, קיבוץ או מושב...',
-                                  hintStyle: const TextStyle(color: Colors.white38),
-                                  border: InputBorder.none,
-                                  prefixIcon: const Icon(Icons.search, color: Colors.white70),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Expanded(
-                              child: ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: filtered.length,
-                                itemBuilder: (ctxL, idx) {
-                                  final city = filtered[idx];
-                                  return ListTile(
-                                    title: Text(city, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                    trailing: Icon(Icons.arrow_forward_ios_rounded, size: 14, color: palette.highlight),
-                                    onTap: () {
-                                      HapticFeedback.lightImpact();
-                                      onSelectCity(city);
-                                      Navigator.pop(ctx);
-                                    },
-                                  );
-                                },
-                              ),
                             ),
                           ],
                         ),
@@ -5846,7 +5736,7 @@ jobs:
                                   ),
                                   const SizedBox(height: 12),
 
-                                  // Live Network-Powered Address Section (OpenStreetMap / Komoot & Localities)
+                                  // 100% Live Google & Waze Address Selection (No Local Database)
                                   Container(
                                     padding: const EdgeInsets.all(12),
                                     decoration: BoxDecoration(
@@ -5877,23 +5767,23 @@ jobs:
                                                 borderRadius: BorderRadius.circular(6),
                                                 border: Border.all(color: palette.highlight.withOpacity(0.5), width: 1),
                                               ),
-                                              child: Text(
-                                                '🌐 Live Web',
-                                                style: TextStyle(color: palette.highlight, fontSize: 9, fontWeight: FontWeight.w900),
+                                              child: const Text(
+                                                '🌐 Google & Waze',
+                                                style: TextStyle(color: Color(0xFF00E5FF), fontSize: 9, fontWeight: FontWeight.w900),
                                               ),
                                             ),
                                           ],
                                         ),
                                         const SizedBox(height: 10),
 
-                                        // Button 1: Dedicated Live Network Address Search
+                                        // Button: Dedicated Google & Waze Live Address Search
                                         Pneumatic3DButton(
-                                          height: 44,
+                                          height: 46,
                                           palette: palette,
-                                          customGlow: palette.highlight,
+                                          customGlow: const Color(0xFF00E5FF),
                                           onTap: () {
                                             HapticFeedback.lightImpact();
-                                            _openLiveAddressPicker((liveAddr) {
+                                            _openGoogleWazeAddressPicker((liveAddr) {
                                               setDlg(() {
                                                 streetCtrl.text = liveAddr;
                                                 cityCtrl.text = '';
@@ -5905,13 +5795,13 @@ jobs:
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                Icon(Icons.travel_explore_rounded, size: 18, color: palette.highlight),
+                                                const Icon(Icons.satellite_alt_rounded, size: 20, color: Color(0xFF00E5FF)),
                                                 const SizedBox(width: 8),
                                                 Flexible(
                                                   child: Text(
-                                                    t['online_address_picker'] ?? '🌐 איתור כתובת חי מהרשת (רחוב/מרפאה/עיר)',
+                                                    t['google_waze_search'] ?? '🌐 חיפוש כתובת חי מתוך Google / Waze',
                                                     overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(color: palette.highlight, fontSize: 12, fontWeight: FontWeight.w900),
+                                                    style: const TextStyle(color: Color(0xFF00E5FF), fontSize: 13, fontWeight: FontWeight.w900),
                                                   ),
                                                 ),
                                               ],
@@ -5920,45 +5810,38 @@ jobs:
                                         ),
                                         const SizedBox(height: 10),
 
-                                        // Street / Clinic text field with direct live typing
-                                        TextField(
-                                          controller: streetCtrl,
-                                          textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
-                                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                                          decoration: InputDecoration(
-                                            labelText: t['street_address'] ?? 'רחוב ומספר בית / שם מרפאה',
-                                            labelStyle: TextStyle(color: palette.highlight),
-                                            prefixIcon: Icon(Icons.signpost_rounded, color: palette.highlight),
-                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-
-                                        // City with Autocomplete (supports live network or local settlements)
+                                        // Live Autocomplete TextField powered by Google & Waze
                                         Autocomplete<String>(
-                                          initialValue: TextEditingValue(text: cityCtrl.text),
-                                          optionsBuilder: (TextEditingValue textEditingValue) {
-                                            if (textEditingValue.text.isEmpty) {
+                                          initialValue: TextEditingValue(text: streetCtrl.text.isNotEmpty ? streetCtrl.text : cityCtrl.text),
+                                          optionsBuilder: (TextEditingValue textEditingValue) async {
+                                            if (textEditingValue.text.trim().length < 2) {
                                               return const Iterable<String>.empty();
                                             }
-                                            final q = textEditingValue.text.trim();
-                                            return israelAllLocalities.where((c) => c.contains(q)).take(8);
+                                            final items = await GoogleWazeAddressService.search(textEditingValue.text);
+                                            return items.map((i) => i.address).take(8);
                                           },
                                           onSelected: (String selection) {
-                                            cityCtrl.text = selection;
-                                            setDlg(() {});
+                                            setDlg(() {
+                                              streetCtrl.text = selection;
+                                              cityCtrl.text = '';
+                                            });
                                           },
                                           fieldViewBuilder: (ctxF, textCtrl, focusNode, onSubmitted) {
                                             return TextField(
                                               controller: textCtrl,
                                               focusNode: focusNode,
-                                              onChanged: (v) => cityCtrl.text = v,
+                                              onChanged: (v) {
+                                                streetCtrl.text = v;
+                                                cityCtrl.text = '';
+                                              },
                                               textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
                                               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                               decoration: InputDecoration(
-                                                labelText: t['city'] ?? 'עיר / יישוב',
+                                                labelText: t['street_address'] ?? 'כתובת מרפאה (רחוב, מספר, עיר)',
                                                 labelStyle: TextStyle(color: palette.highlight),
-                                                prefixIcon: Icon(Icons.location_city_rounded, color: palette.highlight),
+                                                hintText: 'הקלד לחיפוש חי ב-Google ו-Waze...',
+                                                hintStyle: const TextStyle(color: Colors.white38, fontSize: 12),
+                                                prefixIcon: Icon(Icons.travel_explore_rounded, color: palette.highlight),
                                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                                               ),
                                             );
@@ -5974,7 +5857,7 @@ jobs:
                                                   side: BorderSide(color: palette.highlight, width: 1.5),
                                                 ),
                                                 child: ConstrainedBox(
-                                                  constraints: const BoxConstraints(maxHeight: 180, maxWidth: 280),
+                                                  constraints: const BoxConstraints(maxHeight: 220, maxWidth: 320),
                                                   child: ListView.builder(
                                                     padding: const EdgeInsets.symmetric(vertical: 4),
                                                     shrinkWrap: true,
@@ -5985,9 +5868,17 @@ jobs:
                                                         onTap: () => onSelected(option),
                                                         child: Padding(
                                                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                                          child: Text(
-                                                            option,
-                                                            style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(Icons.location_on_rounded, size: 16, color: palette.highlight),
+                                                              const SizedBox(width: 8),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  option,
+                                                                  style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
                                                       );
@@ -5999,26 +5890,8 @@ jobs:
                                           },
                                         ),
                                         const SizedBox(height: 8),
-
-                                        // Button 2: Scrollable Localities list
-                                        Pneumatic3DButton(
-                                          height: 38,
-                                          palette: palette,
-                                          onTap: () {
-                                            _openAllCitiesPicker((chosenCity) {
-                                              setDlg(() => cityCtrl.text = chosenCity);
-                                            });
-                                          },
-                                          child: Center(
-                                            child: Text(
-                                              t['select_all_localities'] ?? '📜 כל יישובי ישראל (בחירה מרשימה נגללת)',
-                                              style: TextStyle(color: palette.highlight, fontSize: 12, fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 6),
                                         Text(
-                                          '${t['full_address'] ?? 'כתובת מלאה:'} ${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() + (cityCtrl.text.trim().isNotEmpty ? ", " : "") : ""}${cityCtrl.text.trim()}',
+                                          '${t['full_address'] ?? 'כתובת מלאה:'} ${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() : (cityCtrl.text.trim().isNotEmpty ? cityCtrl.text.trim() : "")}',
                                           style: const TextStyle(color: Color(0xFF00FFCC), fontSize: 12, fontWeight: FontWeight.bold),
                                         ),
                                       ],
