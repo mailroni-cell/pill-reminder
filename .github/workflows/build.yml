@@ -1600,7 +1600,7 @@ jobs:
           'duration_2w': '2 semaines',
           'duration_1m': '1 mois',
           'city_label': 'Ville',
-          'popup_reminder_title': 'Quand définir l'alerte du RDV ?',
+          'popup_reminder_title': 'Quand définir l\'alerte du RDV ?',
           'auto_complete_title': 'Médicaments suggérés :',
           'dosage_scroll_hint': 'Faites défiler vers le bas pour le dosage',
               'sound_opt_voice': '🗣️ Alerte vocale intelligente',
@@ -2289,16 +2289,6 @@ jobs:
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.transparent,
           colorSchemeSeed: primary,
-          tabBarTheme: const TabBarTheme(
-          dividerColor: Colors.transparent,
-          dividerHeight: 0,
-          ),
-          appBarTheme: const AppBarTheme(
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          surfaceTintColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          ),
           fontFamily: 'sans-serif-medium',
           textTheme: ThemeData.dark().textTheme.apply(
           fontFamily: 'sans-serif-medium',
