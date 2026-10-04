@@ -1,7 +1,7 @@
 name: Build APK
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:A
   push:
     branches: [ main ]
 
@@ -898,6 +898,19 @@ jobs:
 
           final Map<String, Map<String, String>> dict = {
             'he': {
+          'custom_time': 'שעה חופשית',
+          'duration_label': 'משך תזמון',
+          'duration_permanent': 'קבוע',
+          'duration_1d': 'יום 1',
+          'duration_2d': 'יומיים',
+          'duration_3d': '3 ימים',
+          'duration_1w': 'שבוע',
+          'duration_2w': 'שבועיים',
+          'duration_1m': 'חודש',
+          'city_label': 'עיר',
+          'popup_reminder_title': 'מתי להגדיר התרעה לתור?',
+          'auto_complete_title': 'הצעות לתרופה:',
+          'dosage_scroll_hint': 'גלול למטה לבחירת מינון',
               'sound_opt_voice': '🗣️ חיווי קולי חכם (הקראה מלאה)',
               'sound_opt_chime': '🎵 סייבר צ\'יים הרמוני',
               'sound_opt_electric': '⚡ סייבר אלקטרוני (Pulse)',
@@ -1058,6 +1071,19 @@ jobs:
               'navigate_now': 'נווט עכשיו',
             },
             'en': {
+          'custom_time': 'Custom Time',
+          'duration_label': 'Duration',
+          'duration_permanent': 'Permanent',
+          'duration_1d': '1 Day',
+          'duration_2d': '2 Days',
+          'duration_3d': '3 Days',
+          'duration_1w': '1 Week',
+          'duration_2w': '2 Weeks',
+          'duration_1m': '1 Month',
+          'city_label': 'City',
+          'popup_reminder_title': 'When to set appointment alert?',
+          'auto_complete_title': 'Suggested medications:',
+          'dosage_scroll_hint': 'Scroll down to select dosage',
               'sound_opt_voice': '🗣️ Smart Voice Alert (Full Speech)',
               'sound_opt_chime': '🎵 Cyber Harmonic Chime',
               'sound_opt_electric': '⚡ Cyber Pulse (Zap)',
@@ -1218,6 +1244,19 @@ jobs:
               'navigate_now': 'Navigate Now',
             },
             'ar': {
+          'custom_time': 'وقت مخصص',
+          'duration_label': 'مدة التوقيت',
+          'duration_permanent': 'دائم',
+          'duration_1d': 'يوم 1',
+          'duration_2d': 'يومان',
+          'duration_3d': '3 أيام',
+          'duration_1w': 'أسبوع',
+          'duration_2w': 'أسبوعان',
+          'duration_1m': 'شهر',
+          'city_label': 'المدينة',
+          'popup_reminder_title': 'متى تريد ضبط تنبيه الموعد؟',
+          'auto_complete_title': 'اقتراحات الأدوية:',
+          'dosage_scroll_hint': 'مرر لأسفل لتحديد الجرعة',
               'sound_opt_voice': '🗣️ تنبيه صوتي ذكي (نطق كامل)',
               'sound_opt_chime': '🎵 رنين إلكتروني متناغم',
               'sound_opt_electric': '⚡ نبض كهربائي سايبر',
@@ -1378,6 +1417,19 @@ jobs:
               'navigate_now': 'انتقل الآن',
             },
             'ru': {
+          'custom_time': 'Свое время',
+          'duration_label': 'Длительность',
+          'duration_permanent': 'Постоянно',
+          'duration_1d': '1 день',
+          'duration_2d': '2 дня',
+          'duration_3d': '3 дня',
+          'duration_1w': '1 неделя',
+          'duration_2w': '2 недели',
+          'duration_1m': '1 месяц',
+          'city_label': 'Город',
+          'popup_reminder_title': 'Когда напомнить о приеме?',
+          'auto_complete_title': 'Предложенные лекарства:',
+          'dosage_scroll_hint': 'Прокрутите вниз для дозировки',
               'sound_opt_voice': '🗣️ Умное голосовое оповещение',
               'sound_opt_chime': '🎵 Кибер-гармонический перезвон',
               'sound_opt_electric': '⚡ Электронный кибер-импульс',
@@ -1538,6 +1590,19 @@ jobs:
               'navigate_now': 'Маршрут',
             },
             'fr': {
+          'custom_time': 'Heure personnalisée',
+          'duration_label': 'Durée',
+          'duration_permanent': 'Permanent',
+          'duration_1d': '1 jour',
+          'duration_2d': '2 jours',
+          'duration_3d': '3 jours',
+          'duration_1w': '1 semaine',
+          'duration_2w': '2 semaines',
+          'duration_1m': '1 mois',
+          'city_label': 'Ville',
+          'popup_reminder_title': 'Quand définir l'alerte du RDV ?',
+          'auto_complete_title': 'Médicaments suggérés :',
+          'dosage_scroll_hint': 'Faites défiler vers le bas pour le dosage',
               'sound_opt_voice': '🗣️ Alerte vocale intelligente',
               'sound_opt_chime': '🎵 Carillon cyber harmonique',
               'sound_opt_electric': '⚡ Impulsion cyber électrique',
@@ -1698,6 +1763,19 @@ jobs:
               'navigate_now': 'Naviguer',
             },
             'es': {
+          'custom_time': 'Hora personalizada',
+          'duration_label': 'Duración',
+          'duration_permanent': 'Permanente',
+          'duration_1d': '1 día',
+          'duration_2d': '2 días',
+          'duration_3d': '3 días',
+          'duration_1w': '1 semana',
+          'duration_2w': '2 semanas',
+          'duration_1m': '1 mes',
+          'city_label': 'Ciudad',
+          'popup_reminder_title': '¿Cuándo configurar la alerta de la cita?',
+          'auto_complete_title': 'Medicamentos sugeridos:',
+          'dosage_scroll_hint': 'Desplácese hacia abajo para seleccionar la dosis',
               'sound_opt_voice': '🗣️ Alerta de voz inteligente',
               'sound_opt_chime': '🎵 Campana armónica cyber',
               'sound_opt_electric': '⚡ Pulso eléctrico cyber',
@@ -2211,6 +2289,16 @@ jobs:
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.transparent,
           colorSchemeSeed: primary,
+          tabBarTheme: const TabBarTheme(
+          dividerColor: Colors.transparent,
+          dividerHeight: 0,
+          ),
+          appBarTheme: const AppBarTheme(
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          surfaceTintColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          ),
           fontFamily: 'sans-serif-medium',
           textTheme: ThemeData.dark().textTheme.apply(
           fontFamily: 'sans-serif-medium',
@@ -4654,6 +4742,7 @@ jobs:
             int minute;
             List<PillItem> pills;
             bool isTaken;
+            int durationDays;
 
             ScheduleGroup({
               required this.id,
@@ -4662,6 +4751,7 @@ jobs:
               required this.minute,
               required this.pills,
               this.isTaken = false,
+              this.durationDays = -1,
             });
 
             Map<String, dynamic> toJson() => {
@@ -4671,6 +4761,7 @@ jobs:
                   'minute': minute,
                   'pills': pills.map((p) => p.toJson()).toList(),
                   'isTaken': isTaken,
+                  'durationDays': durationDays,
                 };
 
             factory ScheduleGroup.fromJson(Map<String, dynamic> j) => ScheduleGroup(
@@ -4680,6 +4771,7 @@ jobs:
                   minute: j['minute'] ?? 0,
                   pills: (j['pills'] as List? ?? []).map((p) => PillItem.fromJson(p)).toList(),
                   isTaken: j['isTaken'] ?? false,
+                  durationDays: j['durationDays'] ?? -1,
                 );
           }
 
@@ -4688,6 +4780,7 @@ jobs:
             String type;
             String doctor;
             String clinic;
+            String city;
             String date;
             String time;
             int reminderMinutesBefore;
@@ -4697,6 +4790,7 @@ jobs:
               required this.type,
               required this.doctor,
               required this.clinic,
+              this.city = '',
               required this.date,
               required this.time,
               this.reminderMinutesBefore = 60,
@@ -4707,6 +4801,7 @@ jobs:
                   'type': type,
                   'doctor': doctor,
                   'clinic': clinic,
+                  'city': city,
                   'date': date,
                   'time': time,
                   'reminder': reminderMinutesBefore,
@@ -4717,6 +4812,7 @@ jobs:
                   type: j['type'] ?? '',
                   doctor: j['doctor'] ?? '',
                   clinic: j['clinic'] ?? '',
+                  city: j['city'] ?? '',
                   date: j['date'] ?? '',
                   time: j['time'] ?? '',
                   reminderMinutesBefore: j['reminder'] ?? 60,
@@ -5146,7 +5242,7 @@ jobs:
                     NotificationService.scheduleAppointmentReminder(
                       id: a.id,
                       title: t['app_alert_title'] ?? '🩺 תזכורת תור לרופא!',
-                      body: '${a.type}: ${a.doctor} (${a.clinic})',
+                      body: '${a.type}: ${a.doctor}${a.clinic.isNotEmpty || a.city.isNotEmpty ? " (" + [a.clinic, a.city].where((s) => s.isNotEmpty).join(", ") + ")" : ""}',
                       appointmentDateTime: appDt,
                       minutesBefore: a.reminderMinutesBefore,
                     );
@@ -5192,8 +5288,34 @@ jobs:
 
               int hour = 8;
               int minute = 0;
+              int durationDays = -1; // -1 = קבוע (permanent)
               String autoTitle = t['morning']!;
               List<PillItem> workingPills = [PillItem(name: '', dosage: 1, stock: 30)];
+              final List<TextEditingController> controllers = [TextEditingController()];
+
+              final durationOptions = [
+                {'days': -1, 'label': t['duration_permanent'] ?? 'קבוע'},
+                {'days': 1, 'label': t['duration_1d'] ?? 'יום 1'},
+                {'days': 2, 'label': t['duration_2d'] ?? 'יומיים'},
+                {'days': 3, 'label': t['duration_3d'] ?? '3 ימים'},
+                {'days': 7, 'label': t['duration_1w'] ?? 'שבוע'},
+                {'days': 14, 'label': t['duration_2w'] ?? 'שבועיים'},
+                {'days': 30, 'label': t['duration_1m'] ?? 'חודש'},
+              ];
+
+              const List<String> commonMeds = [
+                'אקמול', 'אופטלגין', 'נורופן', 'אדוויל', 'אספירין', 'פראצטמול', 'איבופרופן',
+                'קלגרון', 'סטרפסילס', 'דקסמול', 'סינופד', 'אוטריוין', 'אלטרוקסין', 'יותירוקס',
+                'קרדילוק', 'נורמיטן', 'לוסרטן', 'אנלדקס', 'אמלודיפין', 'ליפיטור', 'סימבסטטין',
+                'גלוקופאז\'', 'מטפורמין', 'אומפרדקס', 'לוסק', 'פמוטידין', 'לנטון', 'קונטרולוק',
+                'מוקסיפן', 'אוגמנטין', 'צפורוקסים', 'אזיתרומיצין', 'רספרים', 'ויטמין D',
+                'ויטמין C', 'ויטמין B12', 'ברזל', 'חומצה פולית', 'מגנזיום', 'אבץ', 'קלציום',
+                'פרוביוטיקה', 'ציפרלקס', 'סרטרלין', 'פלוקסטין', 'קסנקס', 'לוריבן', 'קלונקס',
+                'ונטולין', 'פליקסוטייד', 'סרטייד', 'סימביקורט', 'אוזמפיק', 'ריבלסוס', 'לנטוס',
+                'Acamol', 'Optalgin', 'Nurofen', 'Advil', 'Aspirin', 'Paracetamol', 'Ibuprofen',
+                'Amoxicillin', 'Augmentin', 'Omeprazole', 'Metformin', 'Atorvastatin', 'Lipitor',
+                'Cardiloc', 'Losartan', 'Amlodipine', 'Vitamin D', 'Vitamin C', 'Vitamin B12', 'Iron'
+              ];
 
               showModalBottomSheet(
                 context: context,
@@ -5217,7 +5339,8 @@ jobs:
                             children: [
                               textChannel3D(t['add_med']!, fontSize: hc ? 22 : 19, color: hc ? const Color(0xFFFFE500) : palette.primary),
                               const SizedBox(height: 12),
-                              // Responsive Time Presets with Wrap to guarantee zero overflow
+
+                              // Responsive Time Presets + Free Time Selection
                               Wrap(
                                 spacing: 8.0,
                                 runSpacing: 8.0,
@@ -5239,9 +5362,174 @@ jobs:
                                     width: 76,
                                     child: _presetBtn(t['night']!, '22:00', 22, 0, () => setDlg(() { hour = 22; minute = 0; autoTitle = t['night']!; })),
                                   ),
+                                  // Free custom time button (בחירת שעה חופשית)
+                                  SizedBox(
+                                    width: 82,
+                                    child: Pneumatic3DButton(
+                                      height: 44,
+                                      palette: palette,
+                                      customGlow: const Color(0xFF00F0FF),
+                                      onTap: () async {
+                                        HapticFeedback.lightImpact();
+                                        final picked = await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay(hour: hour, minute: minute),
+                                          builder: (ctx3, child) => Theme(
+                                            data: ThemeData.dark().copyWith(
+                                              colorScheme: ColorScheme.dark(
+                                                primary: palette.primary,
+                                                onPrimary: Colors.black,
+                                                surface: palette.surface,
+                                                onSurface: Colors.white,
+                                              ),
+                                            ),
+                                            child: child!,
+                                          ),
+                                        );
+                                        if (picked != null) {
+                                          setDlg(() {
+                                            hour = picked.hour;
+                                            minute = picked.minute;
+                                            autoTitle = '${t['custom_time'] ?? 'שעה חופשית'} (${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')})';
+                                          });
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                t['custom_time'] ?? 'שעה חופשית',
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w900,
+                                                  color: Color(0xFF00F0FF),
+                                                ),
+                                              ),
+                                              const Icon(Icons.edit_calendar_rounded, size: 14, color: Color(0xFF00F0FF)),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
+                              const SizedBox(height: 10),
+
+                              // Prominent Display of Chosen Time
+                              InkWell(
+                                onTap: () async {
+                                  HapticFeedback.lightImpact();
+                                  final picked = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay(hour: hour, minute: minute),
+                                    builder: (ctx3, child) => Theme(
+                                      data: ThemeData.dark().copyWith(
+                                        colorScheme: ColorScheme.dark(
+                                          primary: palette.primary,
+                                          onPrimary: Colors.black,
+                                          surface: palette.surface,
+                                          onSurface: Colors.white,
+                                        ),
+                                      ),
+                                      child: child!,
+                                    ),
+                                  );
+                                  if (picked != null) {
+                                    setDlg(() {
+                                      hour = picked.hour;
+                                      minute = picked.minute;
+                                      autoTitle = '${t['custom_time'] ?? 'שעה חופשית'} (${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')})';
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.55),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: palette.highlight.withOpacity(0.7), width: 1.5),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.alarm_on_rounded, size: 18, color: palette.highlight),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        '${t['selected_time'] ?? 'שעה נבחרת'}: ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
+                                        style: TextStyle(
+                                          color: palette.highlight,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Icon(Icons.edit, size: 14, color: palette.highlight.withOpacity(0.8)),
+                                    ],
+                                  ),
+                                ),
+                              ),
                               const SizedBox(height: 12),
+
+                              // Schedule Duration Selector (משך תזמון יום, יומיים, שבוע וכו')
+                              Align(
+                                alignment: AlignmentDirectional.centerStart,
+                                child: Text(
+                                  '${t['duration_label'] ?? 'משך תזמון'}:',
+                                  style: TextStyle(
+                                    color: hc ? const Color(0xFFFFE500) : Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              SizedBox(
+                                height: 38,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  child: Row(
+                                    children: durationOptions.map((dur) {
+                                      final int d = dur['days'] as int;
+                                      final bool isSel = durationDays == d;
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                                        child: SizedBox(
+                                          height: 36,
+                                          child: Pneumatic3DButton(
+                                            height: 36,
+                                            palette: palette,
+                                            isPushed: isSel,
+                                            customGlow: isSel ? palette.primary : Colors.transparent,
+                                            onTap: () {
+                                              HapticFeedback.selectionClick();
+                                              setDlg(() => durationDays = d);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                              child: Text(
+                                                dur['label'] as String,
+                                                style: TextStyle(
+                                                  color: isSel ? (hc ? const Color(0xFFFFE500) : palette.highlight) : Colors.white70,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+
                               MechModuleCard(
                                 showLed: false,
                                 child: Column(
@@ -5249,60 +5537,190 @@ jobs:
                                     ...workingPills.asMap().entries.map((entry) {
                                       final idx = entry.key;
                                       final pill = entry.value;
+                                      while (controllers.length <= idx) {
+                                        controllers.add(TextEditingController(text: pill.name));
+                                      }
+                                      if (controllers[idx].text != pill.name) {
+                                        controllers[idx].text = pill.name;
+                                      }
+
+                                      final String query = pill.name.trim().toLowerCase();
+                                      final List<String> suggestions = query.isEmpty
+                                          ? const []
+                                          : commonMeds
+                                              .where((m) => m.toLowerCase().contains(query) && m.toLowerCase() != query)
+                                              .take(5)
+                                              .toList();
+
                                       return Container(
-                                        margin: const EdgeInsets.only(bottom: 10),
-                                        padding: const EdgeInsets.all(10),
+                                        margin: const EdgeInsets.only(bottom: 12),
+                                        padding: const EdgeInsets.all(12),
                                         decoration: BoxDecoration(
                                           color: palette.surface,
-                                          borderRadius: BorderRadius.circular(14),
-                                          border: Border.all(color: palette.primary.withOpacity(0.4), width: 1.2),
+                                          borderRadius: BorderRadius.circular(16),
+                                          border: Border.all(color: palette.primary.withOpacity(0.45), width: 1.3),
                                         ),
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
+                                            // Medication Name Input with Clear Button
                                             Row(
                                               children: [
                                                 Expanded(
                                                   child: TextField(
-                                                    onChanged: (v) => pill.name = v,
-                                                    style: TextStyle(color: palette.highlight, fontWeight: FontWeight.bold, fontSize: 15),
+                                                    controller: controllers[idx],
+                                                    onChanged: (v) {
+                                                      pill.name = v;
+                                                      setDlg(() {});
+                                                    },
+                                                    style: TextStyle(
+                                                      color: hc ? const Color(0xFFFFE500) : palette.highlight,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16,
+                                                    ),
                                                     decoration: InputDecoration(
                                                       hintText: '${t['pill_name']!} ${idx + 1}',
-                                                      hintStyle: const TextStyle(color: Colors.white38, fontSize: 13),
+                                                      hintStyle: const TextStyle(color: Colors.white38, fontSize: 14),
                                                       isDense: true,
                                                       border: InputBorder.none,
                                                     ),
                                                   ),
                                                 ),
+                                                if (workingPills.length > 1)
+                                                  IconButton(
+                                                    icon: const Icon(Icons.close, color: Colors.redAccent, size: 18),
+                                                    onPressed: () {
+                                                      HapticFeedback.lightImpact();
+                                                      setDlg(() {
+                                                        workingPills.removeAt(idx);
+                                                        controllers.removeAt(idx);
+                                                      });
+                                                    },
+                                                  ),
                                               ],
                                             ),
-                                            const SizedBox(height: 6),
-                                            // Scrollable Dosage Selector Strip (גלילה למינון הכמות ליד שם התרופה)
-                                            Row(
-                                              children: [
-                                                Icon(Icons.tune_rounded, size: 16, color: palette.highlight),
-                                                const SizedBox(width: 6),
-                                                Text(
-                                                  '${t['dosage_label'] ?? 'מינון'}:',
-                                                  style: TextStyle(color: palette.highlight, fontWeight: FontWeight.w900, fontSize: 12),
+
+                                            // Autocomplete medication suggestion chips
+                                            if (suggestions.isNotEmpty)
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 4, bottom: 8),
+                                                child: SizedBox(
+                                                  height: 32,
+                                                  child: SingleChildScrollView(
+                                                    scrollDirection: Axis.horizontal,
+                                                    physics: const BouncingScrollPhysics(),
+                                                    child: Row(
+                                                      children: suggestions.map((sug) => Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                                                        child: InkWell(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          onTap: () {
+                                                            HapticFeedback.selectionClick();
+                                                            setDlg(() {
+                                                              pill.name = sug;
+                                                              controllers[idx].text = sug;
+                                                            });
+                                                          },
+                                                          child: Container(
+                                                            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                                                            decoration: BoxDecoration(
+                                                              color: palette.primary.withOpacity(0.25),
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              border: Border.all(color: palette.highlight.withOpacity(0.8), width: 1),
+                                                            ),
+                                                            child: Row(
+                                                              mainAxisSize: MainAxisSize.min,
+                                                              children: [
+                                                                Icon(Icons.auto_awesome, size: 12, color: palette.highlight),
+                                                                const SizedBox(width: 4),
+                                                                Text(
+                                                                  sug,
+                                                                  style: TextStyle(
+                                                                    color: palette.highlight,
+                                                                    fontSize: 12,
+                                                                    fontWeight: FontWeight.bold,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )).toList(),
+                                                    ),
+                                                  ),
                                                 ),
-                                                const SizedBox(width: 8),
+                                              ),
+
+                                            const SizedBox(height: 8),
+
+                                            // Vertical Scrolling Dosage Picker (את המינון תעשה בגלילה למטה ולא הצידה)
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Icon(Icons.tune_rounded, size: 16, color: palette.highlight),
+                                                        const SizedBox(width: 6),
+                                                        Text(
+                                                          '${t['dosage_label'] ?? 'מינון'}:',
+                                                          style: TextStyle(
+                                                            color: hc ? const Color(0xFFFFE500) : Colors.white,
+                                                            fontWeight: FontWeight.w900,
+                                                            fontSize: 13,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 4),
+                                                    Container(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.black.withOpacity(0.55),
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        border: Border.all(color: palette.primary, width: 1.5),
+                                                      ),
+                                                      child: Text(
+                                                        '${pill.dosage}',
+                                                        style: TextStyle(
+                                                          fontSize: 22,
+                                                          fontWeight: FontWeight.w900,
+                                                          color: palette.highlight,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Text(
+                                                      t['dosage_scroll_hint'] ?? 'גלול לבחירה ↓',
+                                                      style: const TextStyle(fontSize: 10, color: Colors.white54, fontWeight: FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(width: 16),
+                                                // Scrollable Dosage Selector Strip Scrolling VERTICALLY downwards
                                                 Expanded(
-                                                  child: SizedBox(
-                                                    height: 32,
+                                                  child: Container(
+                                                    height: 84,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black.withOpacity(0.4),
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      border: Border.all(color: palette.primary.withOpacity(0.4), width: 1.2),
+                                                    ),
                                                     child: SingleChildScrollView(
-                                                      scrollDirection: Axis.horizontal,
+                                                      scrollDirection: Axis.vertical,
                                                       physics: const BouncingScrollPhysics(),
-                                                      child: Row(
-                                                        children: [1, 2, 3, 4, 5, 6, 8, 10].map((dose) {
+                                                      child: Column(
+                                                        children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20].map((dose) {
                                                           final bool isSel = pill.dosage == dose;
                                                           return Padding(
-                                                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                                                            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                                                             child: SizedBox(
-                                                              height: 30,
-                                                              width: 40,
+                                                              height: 32,
+                                                              width: double.infinity,
                                                               child: Pneumatic3DButton(
-                                                                height: 30,
+                                                                height: 32,
                                                                 palette: palette,
                                                                 isPushed: isSel,
                                                                 customGlow: isSel ? palette.primary : Colors.transparent,
@@ -5313,9 +5731,9 @@ jobs:
                                                                 child: Text(
                                                                   '$dose',
                                                                   style: TextStyle(
-                                                                    color: isSel ? palette.highlight : Colors.white70,
+                                                                    color: isSel ? (hc ? const Color(0xFFFFE500) : palette.highlight) : Colors.white70,
                                                                     fontWeight: FontWeight.w900,
-                                                                    fontSize: 12,
+                                                                    fontSize: 13,
                                                                   ),
                                                                 ),
                                                               ),
@@ -5333,9 +5751,12 @@ jobs:
                                       );
                                     }).toList(),
                                     TextButton.icon(
-                                      onPressed: () => setDlg(() => workingPills.add(PillItem(name: '', dosage: 1, stock: 30))),
+                                      onPressed: () => setDlg(() {
+                                        workingPills.add(PillItem(name: '', dosage: 1, stock: 30));
+                                        controllers.add(TextEditingController());
+                                      }),
                                       icon: Icon(Icons.add_circle, color: palette.highlight, size: 20),
-                                      label: Text(t['add_pill_btn']!, style: TextStyle(color: palette.highlight, fontWeight: FontWeight.bold)),
+                                      label: Text(t['add_pill_btn']!, style: TextStyle(color: palette.highlight, fontWeight: FontWeight.bold, fontSize: 14)),
                                     ),
                                   ],
                                 ),
@@ -5356,6 +5777,7 @@ jobs:
                                       hour: hour,
                                       minute: minute,
                                       pills: validPills,
+                                      durationDays: durationDays,
                                     ));
                                   });
                                   _saveSchedules();
@@ -5427,18 +5849,10 @@ jobs:
               final palette = app.currentPalette;
               final docCtrl = TextEditingController();
               final clinicCtrl = TextEditingController();
+              final cityCtrl = TextEditingController();
               String selectedType = t['doc_doctor']!;
               DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
               TimeOfDay selectedTime = const TimeOfDay(hour: 10, minute: 0);
-              int selectedReminderMinutes = 60;
-              final reminderOptions = [
-                {'mins': 0, 'label': t['remind_at_time'] ?? 'במועד התור'},
-                {'mins': 15, 'label': t['remind_15m'] ?? '15 דק׳ לפני'},
-                {'mins': 30, 'label': t['remind_30m'] ?? '30 דק׳ לפני'},
-                {'mins': 60, 'label': t['remind_1h'] ?? 'שעה לפני'},
-                {'mins': 120, 'label': t['remind_2h'] ?? 'שעתיים לפני'},
-                {'mins': 1440, 'label': t['remind_1d'] ?? 'יום לפני'},
-              ];
 
               final typesList = [t['doc_doctor']!, t['doc_nurse']!, t['doc_test']!, t['doc_treatment']!];
 
@@ -5476,6 +5890,8 @@ jobs:
                                     ),
                                   ),
                                   const SizedBox(height: 12),
+
+                                  // Appointment Type Selection
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: typesList.map((type) {
@@ -5504,6 +5920,8 @@ jobs:
                                     }).toList(),
                                   ),
                                   const SizedBox(height: 12),
+
+                                  // Doctor / Specialist Name Input
                                   MechModuleCard(
                                     showLed: false,
                                     child: TextField(
@@ -5512,7 +5930,7 @@ jobs:
                                       style: TextStyle(
                                         color: hc ? const Color(0xFFFFE500) : palette.highlight,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 15,
+                                        fontSize: 16,
                                         decoration: TextDecoration.none,
                                       ),
                                       decoration: InputDecoration(
@@ -5522,6 +5940,9 @@ jobs:
                                       ),
                                     ),
                                   ),
+                                  const SizedBox(height: 12),
+
+                                  // Address Card with Street Address AND City (בשורת הכתובת להוסיף עיר)
                                   MechModuleCard(
                                     showLed: false,
                                     child: Column(
@@ -5543,6 +5964,22 @@ jobs:
                                           ),
                                         ),
                                         const Divider(color: Colors.white24, height: 8),
+                                        TextField(
+                                          controller: cityCtrl,
+                                          textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
+                                          style: TextStyle(
+                                            color: hc ? const Color(0xFFFFE500) : palette.highlight,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: t['city_label'] ?? 'עיר',
+                                            hintStyle: const TextStyle(color: Colors.white38, decoration: TextDecoration.none),
+                                          ),
+                                        ),
+                                        const Divider(color: Colors.white24, height: 8),
                                         // Waze & Google Maps Navigation Test Bar
                                         Row(
                                           children: [
@@ -5552,9 +5989,10 @@ jobs:
                                                 palette: palette,
                                                 customGlow: const Color(0xFF00D1FF),
                                                 onTap: () {
-                                                  final addr = clinicCtrl.text.trim().isNotEmpty ? clinicCtrl.text.trim() : docCtrl.text.trim();
-                                                  if (addr.isNotEmpty) {
-                                                    _launchMap(addr, true);
+                                                  final addr = [clinicCtrl.text.trim(), cityCtrl.text.trim()].where((s) => s.isNotEmpty).join(' ');
+                                                  final targetAddr = addr.isNotEmpty ? addr : docCtrl.text.trim();
+                                                  if (targetAddr.isNotEmpty) {
+                                                    _launchMap(targetAddr, true);
                                                   }
                                                 },
                                                 child: Row(
@@ -5574,9 +6012,10 @@ jobs:
                                                 palette: palette,
                                                 customGlow: const Color(0xFF34A853),
                                                 onTap: () {
-                                                  final addr = clinicCtrl.text.trim().isNotEmpty ? clinicCtrl.text.trim() : docCtrl.text.trim();
-                                                  if (addr.isNotEmpty) {
-                                                    _launchMap(addr, false);
+                                                  final addr = [clinicCtrl.text.trim(), cityCtrl.text.trim()].where((s) => s.isNotEmpty).join(' ');
+                                                  final targetAddr = addr.isNotEmpty ? addr : docCtrl.text.trim();
+                                                  if (targetAddr.isNotEmpty) {
+                                                    _launchMap(targetAddr, false);
                                                   }
                                                 },
                                                 child: Row(
@@ -5671,257 +6110,78 @@ jobs:
                                   ),
                                   const SizedBox(height: 12),
 
-                                  // FREE-FORM TIME SELECTION (בחירת שעה חופשית מלאה)
+                                  // Dedicated Time Card: ONLY time displayed, click to pick custom time (חלונית רק עם שעה שלחיצה פותחת בחירה חופשית)
                                   MechModuleCard(
                                     accentColor: const Color(0xFF00F0FF),
                                     showLed: true,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.access_time_filled_rounded, color: Color(0xFF00F0FF), size: 24),
-                                              const SizedBox(width: 12),
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      t['selected_time'] ?? 'שעת התור הנבחרת:',
-                                                      style: TextStyle(color: palette.textSecondary, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
-                                                    ),
-                                                    const SizedBox(height: 2),
-                                                    Container(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.black.withOpacity(0.6),
-                                                        borderRadius: BorderRadius.circular(6),
-                                                        border: Border.all(color: const Color(0xFF00F0FF).withOpacity(0.8), width: 1.2),
-                                                      ),
-                                                      child: Text(
-                                                        '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}',
-                                                        style: const TextStyle(
-                                                          color: Color(0xFF00F0FF),
-                                                          fontSize: 22,
-                                                          fontWeight: FontWeight.w900,
-                                                          letterSpacing: 2.0,
-                                                          decoration: TextDecoration.none,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(16),
+                                        onTap: () async {
+                                          HapticFeedback.lightImpact();
+                                          final picked = await showTimePicker(
+                                            context: context,
+                                            initialTime: selectedTime,
+                                            builder: (ctx3, child) => Theme(
+                                              data: ThemeData.dark().copyWith(
+                                                colorScheme: ColorScheme.dark(
+                                                  primary: palette.primary,
+                                                  onPrimary: Colors.black,
+                                                  surface: palette.surface,
+                                                  onSurface: Colors.white,
                                                 ),
                                               ),
-                                              // Direct Clock Picker Button
-                                              Pneumatic3DButton(
-                                                height: 42,
-                                                width: 130,
-                                                palette: palette,
-                                                customGlow: const Color(0xFF00F0FF),
-                                                onTap: () async {
-                                                  HapticFeedback.lightImpact();
-                                                  final picked = await showTimePicker(
-                                                    context: context,
-                                                    initialTime: selectedTime,
-                                                    builder: (ctx3, child) => Theme(
-                                                      data: ThemeData.dark().copyWith(
-                                                        colorScheme: ColorScheme.dark(
-                                                          primary: palette.primary,
-                                                          onPrimary: Colors.black,
-                                                          surface: palette.surface,
-                                                          onSurface: Colors.white,
-                                                        ),
-                                                      ),
-                                                      child: child!,
-                                                    ),
-                                                  );
-                                                  if (picked != null) {
-                                                    setDlg(() => selectedTime = picked);
-                                                  }
-                                                },
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    const Icon(Icons.edit_calendar_rounded, size: 16, color: Color(0xFF00F0FF)),
-                                                    const SizedBox(width: 4),
-                                                    FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      child: Text(
-                                                        t['pick_time'] ?? 'בחירת שעה חופשית',
-                                                        style: const TextStyle(
-                                                          color: Color(0xFF00F0FF),
-                                                          fontSize: 11,
-                                                          fontWeight: FontWeight.w900,
-                                                          decoration: TextDecoration.none,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                              child: child!,
+                                            ),
+                                          );
+                                          if (picked != null) {
+                                            setDlg(() => selectedTime = picked);
+                                          }
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(Icons.access_time_filled_rounded, color: Color(0xFF00F0FF), size: 28),
+                                              const SizedBox(width: 14),
+                                              Text(
+                                                '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}',
+                                                style: const TextStyle(
+                                                  color: Color(0xFF00F0FF),
+                                                  fontSize: 34,
+                                                  fontWeight: FontWeight.w900,
+                                                  letterSpacing: 2.5,
+                                                  decoration: TextDecoration.none,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 10),
-                                          // Rapid Stepper Bar for Hours & Minutes
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              // -1 Hour
-                                              SizedBox(
-                                                width: 68,
-                                                height: 32,
-                                                child: Pneumatic3DButton(
-                                                  height: 32,
-                                                  palette: palette,
-                                                  onTap: () {
-                                                    HapticFeedback.selectionClick();
-                                                    final newH = (selectedTime.hour - 1 + 24) % 24;
-                                                    setDlg(() => selectedTime = TimeOfDay(hour: newH, minute: selectedTime.minute));
-                                                  },
-                                                  child: Text(t['minus_1_hr'] ?? '-1 Hr', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white70, decoration: TextDecoration.none)),
-                                                ),
-                                              ),
-                                              // +1 Hour
-                                              SizedBox(
-                                                width: 68,
-                                                height: 32,
-                                                child: Pneumatic3DButton(
-                                                  height: 32,
-                                                  palette: palette,
-                                                  onTap: () {
-                                                    HapticFeedback.selectionClick();
-                                                    final newH = (selectedTime.hour + 1) % 24;
-                                                    setDlg(() => selectedTime = TimeOfDay(hour: newH, minute: selectedTime.minute));
-                                                  },
-                                                  child: Text(t['plus_1_hr'] ?? '+1 Hr', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white70, decoration: TextDecoration.none)),
-                                                ),
-                                              ),
-                                              // -5 Minutes
-                                              SizedBox(
-                                                width: 68,
-                                                height: 32,
-                                                child: Pneumatic3DButton(
-                                                  height: 32,
-                                                  palette: palette,
-                                                  onTap: () {
-                                                    HapticFeedback.selectionClick();
-                                                    int totalM = selectedTime.hour * 60 + selectedTime.minute - 5;
-                                                    if (totalM < 0) totalM += 24 * 60;
-                                                    setDlg(() => selectedTime = TimeOfDay(hour: (totalM ~/ 60) % 24, minute: totalM % 60));
-                                                  },
-                                                  child: Text(t['minus_5_min'] ?? '-5 Min', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white70, decoration: TextDecoration.none)),
-                                                ),
-                                              ),
-                                              // +5 Minutes
-                                              SizedBox(
-                                                width: 68,
-                                                height: 32,
-                                                child: Pneumatic3DButton(
-                                                  height: 32,
-                                                  palette: palette,
-                                                  onTap: () {
-                                                    HapticFeedback.selectionClick();
-                                                    int totalM = selectedTime.hour * 60 + selectedTime.minute + 5;
-                                                    setDlg(() => selectedTime = TimeOfDay(hour: (totalM ~/ 60) % 24, minute: totalM % 60));
-                                                  },
-                                                  child: Text(t['plus_5_min'] ?? '+5 Min', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white70, decoration: TextDecoration.none)),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 14),
+                                  const SizedBox(height: 18),
 
-                                  // Dedicated Reminder Timing Window (חלונית מתי לתזמן את ההתרעה לביקור)
-                                  MechModuleCard(
-                                    accentColor: palette.primary,
-                                    showLed: true,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(Icons.notifications_active_rounded, color: palette.highlight, size: 18),
-                                            const SizedBox(width: 8),
-                                            Text(
-                                              t['reminder_time_title'] ?? 'מועד התרעה לתור',
-                                              style: TextStyle(color: palette.highlight, fontWeight: FontWeight.w900, fontSize: 13),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 8),
-                                        SizedBox(
-                                          height: 38,
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            physics: const BouncingScrollPhysics(),
-                                            child: Row(
-                                              children: reminderOptions.map((opt) {
-                                                final int m = opt['mins'] as int;
-                                                final bool isSel = selectedReminderMinutes == m;
-                                                return Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                                                  child: SizedBox(
-                                                    height: 36,
-                                                    child: Pneumatic3DButton(
-                                                      height: 36,
-                                                      palette: palette,
-                                                      isPushed: isSel,
-                                                      customGlow: isSel ? palette.primary : Colors.transparent,
-                                                      onTap: () {
-                                                        HapticFeedback.selectionClick();
-                                                        setDlg(() => selectedReminderMinutes = m);
-                                                      },
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                                                        child: Text(
-                                                          opt['label'] as String,
-                                                          style: TextStyle(
-                                                            color: isSel ? palette.highlight : Colors.white70,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }).toList(),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 14),
-
-                                  // Specific Bottom Confirmation Button: 'קבע תור'
+                                  // 'קבע תור' Button -> Triggers Reminder Selection Popup Window
                                   Pneumatic3DButton(
                                     palette: palette,
                                     height: 52,
                                     customGlow: const Color(0xFF00FF88),
                                     onTap: () {
                                       if (docCtrl.text.trim().isEmpty) return;
-                                      final dateStr = '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year}';
-                                      final timeStr = '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}';
-                                      setState(() {
-                                        _apps.add(AppointmentModel(
-                                          id: DateTime.now().millisecondsSinceEpoch.toString(),
-                                          type: selectedType,
-                                          doctor: docCtrl.text.trim(),
-                                          clinic: clinicCtrl.text.trim(),
-                                          date: dateStr,
-                                          time: timeStr,
-                                          reminderMinutesBefore: selectedReminderMinutes,
-                                        ));
-                                      });
-                                      _saveApps();
-                                      Navigator.pop(ctx);
+                                      HapticFeedback.mediumImpact();
+                                      _showAppointmentReminderChoiceModal(
+                                        parentCtx: context,
+                                        dialogCtx: ctx,
+                                        type: selectedType,
+                                        doctor: docCtrl.text.trim(),
+                                        clinic: clinicCtrl.text.trim(),
+                                        city: cityCtrl.text.trim(),
+                                        selectedDate: selectedDate,
+                                        selectedTime: selectedTime,
+                                      );
                                     },
                                     child: textChannel3D(
                                       t['book_appointment_action'] ?? 'קבע תור',
@@ -5942,6 +6202,119 @@ jobs:
               );
             }
 
+            // Dedicated Popup Window for Alert Timing after Appointment Creation
+            void _showAppointmentReminderChoiceModal({
+              required BuildContext parentCtx,
+              required BuildContext dialogCtx,
+              required String type,
+              required String doctor,
+              required String clinic,
+              required String city,
+              required DateTime selectedDate,
+              required TimeOfDay selectedTime,
+            }) {
+              final app = CyberPillMasterApp.of(parentCtx);
+              final t = dict[app.currentLang] ?? dict['he']!;
+              final hc = app.highContrast;
+              final palette = app.currentPalette;
+
+              final reminderOptions = [
+                {'mins': 0, 'label': t['remind_at_time'] ?? 'במועד התור'},
+                {'mins': 15, 'label': t['remind_15m'] ?? '15 דק׳ לפני'},
+                {'mins': 30, 'label': t['remind_30m'] ?? '30 דק׳ לפני'},
+                {'mins': 60, 'label': t['remind_1h'] ?? 'שעה לפני'},
+                {'mins': 120, 'label': t['remind_2h'] ?? 'שעתיים לפני'},
+                {'mins': 1440, 'label': t['remind_1d'] ?? 'יום לפני (24 שעות)'},
+              ];
+
+              showDialog(
+                context: parentCtx,
+                barrierDismissible: true,
+                builder: (modalCtx) => Directionality(
+                  textDirection: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
+                  child: AlertDialog(
+                    backgroundColor: hc ? Colors.black : palette.surface,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      side: BorderSide(color: palette.primary, width: 2.5),
+                    ),
+                    title: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.notifications_active_rounded, color: palette.highlight, size: 36),
+                        const SizedBox(height: 8),
+                        Text(
+                          t['popup_reminder_title'] ?? 'מתי להגדיר התרעה לתור?',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: hc ? 20 : 18,
+                            fontWeight: FontWeight.w900,
+                            color: hc ? const Color(0xFFFFE500) : palette.highlight,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '$type: $doctor',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 13, color: Colors.white70, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: reminderOptions.map((opt) {
+                          final int mins = opt['mins'] as int;
+                          final String label = opt['label'] as String;
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 44,
+                              child: Pneumatic3DButton(
+                                height: 44,
+                                palette: palette,
+                                customGlow: mins == 60 ? palette.primary : Colors.transparent,
+                                onTap: () {
+                                  HapticFeedback.mediumImpact();
+                                  final dateStr = '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year}';
+                                  final timeStr = '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}';
+                                  setState(() {
+                                    _apps.add(AppointmentModel(
+                                      id: DateTime.now().millisecondsSinceEpoch.toString(),
+                                      type: type,
+                                      doctor: doctor,
+                                      clinic: clinic,
+                                      city: city,
+                                      date: dateStr,
+                                      time: timeStr,
+                                      reminderMinutesBefore: mins,
+                                    ));
+                                  });
+                                  _saveApps();
+                                  Navigator.pop(modalCtx);
+                                  Navigator.pop(dialogCtx);
+                                },
+                                child: Center(
+                                  child: Text(
+                                    label,
+                                    style: TextStyle(
+                                      color: mins == 60 ? (hc ? const Color(0xFFFFE500) : palette.highlight) : Colors.white,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
           void _openLanguagePicker() {
               final app = CyberPillMasterApp.of(context);
               final palette = app.currentPalette;
@@ -6989,6 +7362,9 @@ jobs:
                   appBar: AppBar(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
+                    scrolledUnderElevation: 0,
+                    surfaceTintColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
                     centerTitle: true,
                     toolbarHeight: 78,
                     leading: SafeArea(
@@ -7081,6 +7457,8 @@ jobs:
                         ),
                         child: TabBar(
                           controller: _tabController,
+                          dividerColor: Colors.transparent,
+                          dividerHeight: 0,
                           indicator: BoxDecoration(
                             color: palette.primary.withOpacity(0.35),
                             borderRadius: BorderRadius.circular(13),
@@ -7104,7 +7482,27 @@ jobs:
                       children: [
                         // Medicine Schedules Tab
                         _schedules.isEmpty
-                            ? Center(child: textChannel3D(t['empty_meds']!, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white70))
+                            ? Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.medication_liquid_rounded,
+                                        size: 64,
+                                        color: hc ? const Color(0xFFFFE500) : palette.highlight,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      textChannel3D(
+                                        t['empty_meds']!,
+                                        fontSize: hc ? 26 : 24,
+                                        color: hc ? const Color(0xFFFFE500) : palette.highlight,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
                             : ListView.builder(
                                 padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 95),
                                 itemCount: _schedules.length,
@@ -7125,7 +7523,36 @@ jobs:
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           const SizedBox(height: 4),
-                                          Text('$timeStr • ${(t['pills_count'] ?? '{n} תרופות').replaceAll('{n}', sched.pills.length.toString())}', style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold)),
+                                          Row(
+                                              children: [
+                                                Text('$timeStr • ${(t['pills_count'] ?? '{n} תרופות').replaceAll('{n}', sched.pills.length.toString())}', style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold)),
+                                                const SizedBox(width: 8),
+                                                Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                                  decoration: BoxDecoration(
+                                                    color: palette.primary.withOpacity(0.25),
+                                                    borderRadius: BorderRadius.circular(6),
+                                                    border: Border.all(color: palette.highlight.withOpacity(0.6), width: 1),
+                                                  ),
+                                                  child: Text(
+                                                    sched.durationDays == -1
+                                                        ? (t['duration_permanent'] ?? 'קבוע')
+                                                        : (sched.durationDays == 1
+                                                            ? (t['duration_1d'] ?? 'יום 1')
+                                                            : (sched.durationDays == 2
+                                                                ? (t['duration_2d'] ?? 'יומיים')
+                                                                : (sched.durationDays == 7
+                                                                    ? (t['duration_1w'] ?? 'שבוע')
+                                                                    : '${sched.durationDays} ימים'))),
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: palette.highlight,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           const SizedBox(height: 2),
                                           ...sched.pills.map((p) {
                                             final String dLabel = t['dosage_label'] ?? 'מינון';
@@ -7161,7 +7588,27 @@ jobs:
 
                         // Doctor Appointments Tab (With Top-tier Z-Index Navigation Bar)
                         _apps.isEmpty
-                            ? Center(child: textChannel3D(t['empty_apps']!, fontSize: hc ? 22 : 18, color: hc ? const Color(0xFFFFE500) : Colors.white70))
+                            ? Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.event_available_rounded,
+                                        size: 64,
+                                        color: hc ? const Color(0xFFFFE500) : palette.highlight,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      textChannel3D(
+                                        t['empty_apps']!,
+                                        fontSize: hc ? 26 : 24,
+                                        color: hc ? const Color(0xFFFFE500) : palette.highlight,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
                             : ListView.builder(
                                 padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 95),
                                 itemCount: _apps.length,
