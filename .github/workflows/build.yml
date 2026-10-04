@@ -1444,22 +1444,31 @@ jobs:
 
           void main() async {
             WidgetsFlutterBinding.ensureInitialized();
-            tz.initializeTimeZones();
-            // Configure High Importance Notification Channel for Real-time Heads-up Alerts
-            const AndroidNotificationChannel channel = AndroidNotificationChannel(
-              'cyber_pharma_critical_alerts',
-              'Cyber Pharma Critical Reminders',
-              description: 'High priority alerts for medicine reminders',
-              importance: Importance.max,
-              playSound: true,
-              enableVibration: true,
-            );
-            await flutterNotifications
-                .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-                ?.createNotificationChannel(channel);
-            const AndroidInitializationSettings initAndroid = AndroidInitializationSettings('@drawable/ic_launcher_cyber');
-            const InitializationSettings initSettings = InitializationSettings(android: initAndroid);
-            await flutterNotifications.initialize(initSettings);
+            try {
+              tz.initializeTimeZones();
+            } catch (e) {
+              debugPrint('Timezone initialization error: $e');
+            }
+
+            try {
+              const AndroidNotificationChannel channel = AndroidNotificationChannel(
+                'cyber_pharma_critical_alerts',
+                'Cyber Pharma Critical Reminders',
+                description: 'High priority alerts for medicine reminders',
+                importance: Importance.max,
+                playSound: true,
+                enableVibration: true,
+              );
+              await flutterNotifications
+                  .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+                  ?.createNotificationChannel(channel);
+              const AndroidInitializationSettings initAndroid = AndroidInitializationSettings('@drawable/ic_launcher_cyber');
+              const InitializationSettings initSettings = InitializationSettings(android: initAndroid);
+              await flutterNotifications.initialize(initSettings);
+            } catch (e) {
+              debugPrint('Notification setup error: $e');
+            }
+
             runApp(const CyberPillMasterApp());
           }
 
@@ -1511,21 +1520,28 @@ jobs:
             }
 
             Future<void> _loadConfig() async {
-              final prefs = await SharedPreferences.getInstance();
-              setState(() {
-                _lang = prefs.getString('c_lang') ?? 'he';
-                _userName = prefs.getString('c_user_name') ?? '';
-                _voiceAlerts = prefs.getBool('c_voice') ?? true;
-                _highContrast = prefs.getBool('c_hc') ?? false;
-                _soundType = prefs.getString('c_sound') ?? 'voice';
-                _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
-                _customSoundPath = prefs.getString('c_custom_sound_path') ?? '';
-                _customSoundName = prefs.getString('c_custom_sound_name') ?? '';
-                _themeKey = prefs.getString('c_theme') ?? 'cyberpunk';
-                _bgStyle = prefs.getString('c_bg_style') ?? 'space';
-                _firstRun = prefs.getBool('c_first_run') ?? true;
-                _initialized = true;
-              });
+              try {
+                final prefs = await SharedPreferences.getInstance();
+                if (mounted) {
+                  setState(() {
+                    _lang = prefs.getString('c_lang') ?? 'he';
+                    _userName = prefs.getString('c_user_name') ?? '';
+                    _voiceAlerts = prefs.getBool('c_voice') ?? true;
+                    _highContrast = prefs.getBool('c_hc') ?? false;
+                    _soundType = prefs.getString('c_sound') ?? 'voice';
+                    _soundVolume = prefs.getDouble('c_volume') ?? 1.0;
+                    _customSoundPath = prefs.getString('c_custom_sound_path') ?? '';
+                    _customSoundName = prefs.getString('c_custom_sound_name') ?? '';
+                    _themeKey = prefs.getString('c_theme') ?? 'cyber_neon';
+                    _bgStyle = prefs.getString('c_bg_style') ?? 'space';
+                    _firstRun = prefs.getBool('c_first_run') ?? true;
+                    _initialized = true;
+                  });
+                }
+              } catch (e) {
+                debugPrint('Config load error: $e');
+                if (mounted) setState(() => _initialized = true);
+              }
             }
 
             void setLanguage(String lang) async {
@@ -1602,7 +1618,6 @@ jobs:
 
             @override
             Widget build(BuildContext context) {
-              if (!_initialized) return const SizedBox();
 
               final bool isRtl = _lang == 'he' || _lang == 'ar';
               final palette = currentPalette;
@@ -4135,15 +4150,43 @@ jobs:
           }
 
           class _AppSplashScreenState extends State<AppSplashScreen> with SingleTickerProviderStateMixin {
-            late AnimationController _anim;
+            late final AnimationController _anim;
+            bool _navigated = false;
+            Timer? _navTimer;
 
             @override
             void initState() {
               super.initState();
-              _requestPermissionsAndLaunch();
+              // 1. Initialize AnimationController SYNCHRONOUSLY so it is ALWAYS ready for build() on frame 0!
+              _anim = AnimationController(
+                vsync: this,
+                duration: const Duration(milliseconds: 1400),
+              )..forward();
+
+              // 2. Start navigation timer IMMEDIATELY so navigation NEVER hangs or gets blocked by permissions!
+              _navTimer = Timer(const Duration(milliseconds: 1800), _navigateToNextScreen);
+
+              // 3. Request permissions in background asynchronously without blocking animation or navigation
+              _requestPermissions();
             }
 
-            Future<void> _requestPermissionsAndLaunch() async {
+            void _navigateToNextScreen() {
+              if (!mounted || _navigated) return;
+              _navigated = true;
+              try {
+                Navigator.of(context).pushReplacement(
+                  PageRouteBuilder(
+                    transitionDuration: const Duration(milliseconds: 500),
+                    pageBuilder: (_, __, ___) => widget.onFinish(),
+                    transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+                  ),
+                );
+              } catch (e) {
+                debugPrint('Splash navigation error: $e');
+              }
+            }
+
+            Future<void> _requestPermissions() async {
               try {
                 await Permission.notification.request();
               } catch (_) {}
@@ -4152,23 +4195,11 @@ jobs:
                     .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
                     ?.requestNotificationsPermission();
               } catch (_) {}
-
-              _anim = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800))..forward();
-              Timer(const Duration(milliseconds: 2100), () {
-                if (mounted) {
-                  Navigator.of(context).pushReplacement(
-                    PageRouteBuilder(
-                      transitionDuration: const Duration(milliseconds: 700),
-                      pageBuilder: (_, __, ___) => widget.onFinish(),
-                      transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
-                    ),
-                  );
-                }
-              });
             }
 
             @override
             void dispose() {
+              _navTimer?.cancel();
               _anim.dispose();
               super.dispose();
             }
@@ -4424,11 +4455,24 @@ jobs:
                                       customGlow: palette.glow,
                                       onTap: () {
                                         final name = _nameController.text.trim();
-                                        app.completeOnboarding(name.isNotEmpty ? name : 'משתמש', _selectedLang);
+                                        final chosenName = name.isNotEmpty ? name : 'משתמש';
+                                        app.completeOnboarding(chosenName, _selectedLang);
+                                        Navigator.of(context).pushReplacement(
+                                          PageRouteBuilder(
+                                            transitionDuration: const Duration(milliseconds: 500),
+                                            pageBuilder: (_, __, ___) => const MainDashboard(),
+                                            transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+                                          ),
+                                        );
                                       },
                                       child: Text(
                                         t['continue_btn']!,
-                                        style: TextStyle(color: palette.highlight, fontSize: 16, fontWeight: FontWeight.w900),
+                                        style: TextStyle(
+                                          color: palette.highlight,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w900,
+                                          decoration: TextDecoration.none,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -4728,14 +4772,18 @@ jobs:
             }
 
             void _initTTS() async {
-              final app = CyberPillMasterApp.of(context);
-              Map<String, String> langMap = {
-                'he': 'he-IL', 'en': 'en-US', 'ar': 'ar-SA',
-                'ru': 'ru-RU', 'fr': 'fr-FR', 'es': 'es-ES'
-              };
-              await flutterTts.setLanguage(langMap[app.currentLang] ?? 'he-IL');
-              await flutterTts.setSpeechRate(0.48);
-              await flutterTts.setVolume(app.soundVolume);
+              try {
+                final app = CyberPillMasterApp.of(context);
+                Map<String, String> langMap = {
+                  'he': 'he-IL', 'en': 'en-US', 'ar': 'ar-SA',
+                  'ru': 'ru-RU', 'fr': 'fr-FR', 'es': 'es-ES'
+                };
+                await flutterTts.setLanguage(langMap[app.currentLang] ?? 'he-IL');
+                await flutterTts.setSpeechRate(0.48);
+                await flutterTts.setVolume(app.soundVolume);
+              } catch (e) {
+                debugPrint('TTS init error: $e');
+              }
             }
 
             void _startLiveReminderMonitor() {
@@ -4994,18 +5042,28 @@ jobs:
             }
 
             void _loadData() async {
-              final prefs = await SharedPreferences.getInstance();
-              final schedStr = prefs.getString('c_schedules');
-              final appStr = prefs.getString('c_apps');
+              try {
+                final prefs = await SharedPreferences.getInstance();
+                final schedStr = prefs.getString('c_schedules');
+                final appStr = prefs.getString('c_apps');
 
-              setState(() {
-                if (schedStr != null && schedStr.isNotEmpty) {
-                  _schedules = (jsonDecode(schedStr) as List).map((i) => ScheduleGroup.fromJson(i)).toList();
+                if (mounted) {
+                  setState(() {
+                    if (schedStr != null && schedStr.isNotEmpty) {
+                      try {
+                        _schedules = (jsonDecode(schedStr) as List).map((i) => ScheduleGroup.fromJson(i)).toList();
+                      } catch (_) {}
+                    }
+                    if (appStr != null && appStr.isNotEmpty) {
+                      try {
+                        _apps = (jsonDecode(appStr) as List).map((i) => AppointmentModel.fromJson(i)).toList();
+                      } catch (_) {}
+                    }
+                  });
                 }
-                if (appStr != null && appStr.isNotEmpty) {
-                  _apps = (jsonDecode(appStr) as List).map((i) => AppointmentModel.fromJson(i)).toList();
-                }
-              });
+              } catch (e) {
+                debugPrint('Data load error: $e');
+              }
             }
 
             void _saveSchedules() async {
@@ -7979,3 +8037,4 @@ jobs:
         with:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
+
