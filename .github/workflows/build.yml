@@ -669,12 +669,12 @@ jobs:
               'city': 'עיר / יישוב',
               'full_address': 'כתובת מלאה:',
               'select_city_chip': 'בחר עיר מהרשימה:',
-              'free_time_meds': 'שעת נטילה חופשית:',
+              'free_time_meds': 'שעת נטילה:',
               'app_info_title': 'אודות CYBER PHARMA 3D',
               'developer_credit': 'יוצר ומפתח המערכת: רוני שניידר',
               'credit_tag': 'פותח על ידי רוני שניידר',
               'sound_opt_voice': '🗣️ חיווי קולי חכם (תזכורת כללית)',
-              'sound_opt_chime': '🎵 סייבר צ\'יים הרמוני',
+              'sound_opt_chime': '🎵 סייבר צ\\',
               'sound_opt_electric': '⚡ סייבר אלקטרוני (Pulse)',
               'sound_opt_gong': '🔔 גונג טיבטי עמוק',
               'sound_opt_alarm': '🚨 סירנה טקטית חדה',
@@ -687,7 +687,7 @@ jobs:
               'sound_opt_klaxon': '⚠️ אזעקת קלאקסון חירום',
               'sound_opt_harp': '🪕 נבל ניאו-קלאסי מרגיע',
               'sound_opt_digital_drop': '💧 נטיף זרחני נקי',
-              'sound_opt_synth_wave': '🎹 גל סינת\'סייזר רטרו',
+              'sound_opt_synth_wave': '🎹 גל סינת\\',
               'preview_3d_title': 'תצוגת מסך מקדימה לרקע 3D',
               'preview_3d_btn': '🔍 תצוגה מקדימה במסך מלא',
               'apply_bg': 'החל רקע זה',
@@ -752,8 +752,8 @@ jobs:
               'btn_taken': 'נלקח כעת',
               'btn_snooze': 'דחה ב-10 דק׳',
               'btn_skip': 'בטל הפעם',
-              'snooze_10m': 'דחה ב-10 דק\'',
-              'snooze_15m': 'דחה ב-15 דק\'',
+              'snooze_10m': 'דחה ב-10 דק\\',
+              'snooze_15m': 'דחה ב-15 דק\\',
               'snooze_success': 'התזכורת נדחתה בהצלחה!',
               'tts_alert': 'תזכורת. הגיע הזמן לקחת את התרופה',
               'tts_phrase': 'הגיע הזמן לקחת את התרופה',
@@ -775,8 +775,14 @@ jobs:
               'bg_matrix': 'מטריקס סייבר 3D',
               'bg_nebula': 'ערפילית סערה קוסמית 3D',
               'help_title': 'מדריך הפעלה לקונסולה',
-              'help_text': 'ברוכים הבאים למערכת CYBER PHARMA 3D!\n\n1. תזמון תרופות ובדיקת רופא הוחלפו לשמאל/ימין לנוחות מרבית.\n2. ניתן לערוך תזמונים קיימים באמצעות כפתור העריכה.\n3. תפריט ערכות צבע כולל כעת מסך תצוגה מקדימה נגלל בדיוק כמו מצבי התצוגה.\n4. שמות תרופות וערים כוללים השלמה אוטומטית מלאה ממאגרים מתעדכנים.',
+              'help_text': 'ברוכים הבאים למערכת CYBER PHARMA 3D!\\n\\n1. תזמון תרופות ובדיקת רופא הוחלפו לשמאל/ימין לנוחות מרבית.\\n2. ניתן לערוך תזמונים קיימים באמצעות כפתור העריכה.\\n3. תפריט ערכות צבע כולל כעת מסך תצוגה מקדימה נגלל בדיוק כמו מצבי התצוגה.\\n4. שמות תרופות וערים כוללים השלמה אוטומטית מלאה ממאגרים מתעדכנים.',
               'close': 'סגור',
+              'dial_title': (dict[CyberPillMasterApp.of(context).currentLang]?['dial_title'] ?? 'חוגת עוצמת שמע 3D (Master Volume)'),
+              'dial_hint': (dict[CyberPillMasterApp.of(context).currentLang]?['dial_hint'] ?? 'סובב את החוגה או החלק למעלה/למטה לכיוון רציף'),
+              'mute': 'השתק',
+              'prev': 'הקודם',
+              'next': 'הבא',
+              'use_entered_address': 'השתמש בכתובת זו',
             },
             'en': {
               'google_waze_search': '🌐 Live Address Search (Google / Waze)',
@@ -802,7 +808,7 @@ jobs:
               'city': 'City / Locality',
               'full_address': 'Full Address:',
               'select_city_chip': 'Select city from list:',
-              'free_time_meds': 'Custom dosage time:',
+              'free_time_meds': 'Dose Time:',
               'app_info_title': 'About CYBER PHARMA 3D',
               'developer_credit': 'Created and developed by Roni Schneider',
               'credit_tag': 'Developed by Roni Schneider',
@@ -839,7 +845,7 @@ jobs:
               'enter_name_title': 'Initial Console Setup',
               'name_hint': 'Enter your name...',
               'continue_btn': 'Enter System',
-              'meds_tab': 'Medication Schedules',
+              'meds_tab': 'Medications',
               'appointments_tab': 'Doctor Visits',
               'save_schedule_action': 'Create Schedule',
               'book_appointment_action': 'Book Visit',
@@ -908,22 +914,28 @@ jobs:
               'bg_matrix': 'Cyber Matrix 3D',
               'bg_nebula': 'Cosmic Nebula 3D',
               'help_title': 'Console Operation Guide',
-              'help_text': 'Welcome to CYBER PHARMA 3D!\n\n1. Track your medication schedules and doctor visits with ease.\n2. Built-in high-contrast mode, 14 animated 3D backgrounds, and 16 sound options.',
+              'help_text': 'Welcome to CYBER PHARMA 3D!\\n\\n1. Track your medication schedules and doctor visits with ease.\\n2. Built-in high-contrast mode, 14 animated 3D backgrounds, and 16 sound options.',
               'close': 'Close',
+              'dial_title': '3D Master Volume Dial',
+              'dial_hint': 'Rotate dial or drag to adjust volume',
+              'mute': 'Mute',
+              'prev': 'Previous',
+              'next': 'Next',
+              'use_entered_address': 'Use this address',
             },
             'fr': {
-              'google_waze_search': '🌐 Recherche d\'adresse en direct (Google / Waze)',
+              'google_waze_search': '🌐 Recherche d\\',
               'google_waze_hint': 'Tapez rue, clinique, hôpital ou ville (Google/Waze)...',
               'searching_google_waze': 'Récupération en direct depuis Waze et Google...',
               'no_google_waze_results': 'Aucune adresse trouvée sur Google et Waze.',
               'source_waze': '🚙 Waze',
               'source_google': '🔍 Google',
-              'network_address_search': 'Recherche d\'adresse en ligne',
+              'network_address_search': 'Recherche d\\',
               'search_address_online_hint': 'Tapez rue, clinique, hôpital ou ville (en direct du réseau)...',
-              'fetching_from_web': 'Récupération d\'adresses en direct...',
-              'online_address_picker': '🌐 Recherche d\'adresse en ligne (OSM / GPS)',
+              'fetching_from_web': 'Récupération d\\',
+              'online_address_picker': '🌐 Recherche d\\',
               'online_badge': '🌐 Réseau',
-              'no_address_found': 'Aucune adresse trouvée en ligne. Essayez d\'autres termes.',
+              'no_address_found': 'Aucune adresse trouvée en ligne. Essayez d\\',
               'sound_opt_custom': '📁 Fichier audio personnalisé du téléphone',
               'pick_custom_file': 'Choisir un fichier du téléphone',
               'custom_file_selected': 'Fichier audio sélectionné:',
@@ -935,7 +947,7 @@ jobs:
               'city': 'Ville / Localité',
               'full_address': 'Adresse complète:',
               'select_city_chip': 'Choisir la ville dans la liste:',
-              'free_time_meds': 'Heure de dose personnalisée:',
+              'free_time_meds': 'Heure de dose:',
               'app_info_title': 'À propos de CYBER PHARMA 3D',
               'developer_credit': 'Créé et développé par Roni Schneider',
               'credit_tag': 'Développé par Roni Schneider',
@@ -950,16 +962,16 @@ jobs:
               'sound_opt_laser': '💫 Goutte laser futuriste',
               'sound_opt_space': '🪐 Tonalité spatiale cosmique',
               'sound_opt_telemetry': '🛰️ Bip de télémétrie rapide',
-              'sound_opt_klaxon': '⚠️ Klaxon d\'urgence',
+              'sound_opt_klaxon': '⚠️ Klaxon d\\',
               'sound_opt_harp': '🪕 Harpe néoclassique zen',
               'sound_opt_digital_drop': '💧 Gouttelette néon pure',
               'sound_opt_synth_wave': '🎹 Accord synthwave rétro',
-              'preview_3d_title': 'Moniteur d\'arrière-plan 3D',
+              'preview_3d_title': 'Moniteur d\\',
               'preview_3d_btn': '🔍 Aperçu plein écran',
               'apply_bg': 'Appliquer ce fond',
               'back_to_settings': 'Retour aux paramètres',
               'live_preview_badge': 'APERÇU EN DIRECT',
-              'pick_time': 'Sélection d\'heure libre',
+              'pick_time': 'Sélection d\\',
               'pick_date': 'Sélectionner une date',
               'selected_time': 'Heure du rendez-vous',
               'selected_date': 'Date du rendez-vous',
@@ -972,12 +984,12 @@ jobs:
               'enter_name_title': 'Configuration de la console',
               'name_hint': 'Entrez votre nom...',
               'continue_btn': 'Entrer dans le système',
-              'meds_tab': 'Horaires des médicaments',
-              'appointments_tab': 'Rendez-vous médicaux',
+              'meds_tab': 'Médicaments',
+              'appointments_tab': 'Rendez-vous',
               'save_schedule_action': 'Créer horaire',
               'book_appointment_action': 'Prendre RDV',
               'add_med': 'Ajouter un horaire',
-              'edit_schedule': 'Modifier l\'horaire',
+              'edit_schedule': 'Modifier l\\',
               'add_appointment': 'Prendre rendez-vous',
               'add_pill_btn': '+ Ajouter un médicament',
               'pill_name': 'Nom du médicament',
@@ -1007,9 +1019,9 @@ jobs:
               'empty_meds': 'Aucun médicament prévu',
               'empty_apps': 'Aucun rendez-vous à venir',
               'settings': 'Paramètres de la console',
-              'language': 'Langue de l\'interface',
+              'language': 'Langue de l\\',
               'voice_alerts': 'Alertes vocales (TTS)',
-              'alert_sound': 'Son d\'alerte',
+              'alert_sound': 'Son d\\',
               'sound_vol': 'Volume principal',
               'themes_title': 'Thèmes de couleurs 3D',
               'bg_style': 'Arrière-plan 3D (14 styles)',
@@ -1023,7 +1035,7 @@ jobs:
               'snooze_success': 'Rappel reporté avec succès!',
               'tts_alert': 'Rappel: il est temps de prendre vos médicaments',
               'tts_phrase': 'Il est temps de prendre votre médicament',
-              'select_all_localities': '📜 Toutes les localités d\'Israël',
+              'select_all_localities': '📜 Toutes les localités d\\',
               'search_locality': 'Rechercher ville, village...',
               'medication_search_hint': 'Nom du médicament (autocomplétion)...',
               'bg_butterflies': 'Papillons 3D',
@@ -1041,8 +1053,14 @@ jobs:
               'bg_matrix': 'Matrice Cyber 3D',
               'bg_nebula': 'Nébuleuse 3D',
               'help_title': 'Guide de la console',
-              'help_text': 'Bienvenue sur CYBER PHARMA 3D!\n\n1. Planifiez vos prises de médicaments.\n2. Naviguez avec Waze et Google Maps.\n3. 14 arrière-plans 3D animés.',
+              'help_text': 'Bienvenue sur CYBER PHARMA 3D!\\n\\n1. Planifiez vos prises de médicaments.\\n2. Naviguez avec Waze et Google Maps.\\n3. 14 arrière-plans 3D animés.',
               'close': 'Fermer',
+              'dial_title': 'Cadran de volume 3D',
+              'dial_hint': 'Tournez pour ajuster le volume',
+              'mute': 'Muet',
+              'prev': 'Précédent',
+              'next': 'Suivant',
+              'use_entered_address': 'Utiliser cette adresse',
             },
             'ar': {
               'google_waze_search': '🌐 بحث مباشر عن العناوين من Google / Waze',
@@ -1068,7 +1086,7 @@ jobs:
               'city': 'المدينة / البلدة',
               'full_address': 'العنوان الكامل:',
               'select_city_chip': 'اختر المدينة من القائمة:',
-              'free_time_meds': 'وقت الجرعة المخصص:',
+              'free_time_meds': 'وقت الجرعة:',
               'app_info_title': 'حول CYBER PHARMA 3D',
               'developer_credit': 'تم الإنشاء والتطوير بواسطة روني شنايدر',
               'credit_tag': 'تطوير روني شنايدر',
@@ -1174,8 +1192,14 @@ jobs:
               'bg_matrix': 'ماتريكس سيبراني 3D',
               'bg_nebula': 'سديم كوني 3D',
               'help_title': 'دليل استخدام الكونسول',
-              'help_text': 'مرحباً بك في CYBER PHARMA 3D!\n\n1. تابع مواعيد أدويتك وزيارات الأطباء بسهولة.\n2. يدعم الملاحة التلقائية عبر Waze وGoogle Maps.',
+              'help_text': 'مرحباً بك في CYBER PHARMA 3D!\\n\\n1. تابع مواعيد أدويتك وزيارات الأطباء بسهولة.\\n2. يدعم الملاحة التلقائية عبر Waze وGoogle Maps.',
               'close': 'إغلاق',
+              'dial_title': 'قرص مستوى الصوت 3D',
+              'dial_hint': 'قم بتدوير القرص للضبط المستمر',
+              'mute': 'كتم',
+              'prev': 'السابق',
+              'next': 'التالي',
+              'use_entered_address': 'استخدم هذا العنوان',
             },
             'ru': {
               'google_waze_search': '🌐 Поиск адреса онлайн (Google / Waze)',
@@ -1201,7 +1225,7 @@ jobs:
               'city': 'Город / Населенный пункт',
               'full_address': 'Полный адрес:',
               'select_city_chip': 'Выберите город из списка:',
-              'free_time_meds': 'Свободное время приема:',
+              'free_time_meds': 'Время приема:',
               'app_info_title': 'О программе CYBER PHARMA 3D',
               'developer_credit': 'Создатель и разработчик: Рони Шнайдер',
               'credit_tag': 'Разработано Рони Шнайдером',
@@ -1238,7 +1262,7 @@ jobs:
               'enter_name_title': 'Начальная настройка консоли',
               'name_hint': 'Введите ваше имя...',
               'continue_btn': 'Войти в систему',
-              'meds_tab': 'График лекарств',
+              'meds_tab': 'Лекарства',
               'appointments_tab': 'Визиты к врачу',
               'save_schedule_action': 'Создать график',
               'book_appointment_action': 'Записаться к врачу',
@@ -1307,8 +1331,14 @@ jobs:
               'bg_matrix': 'Кибер-матрица 3D',
               'bg_nebula': 'Космическая туманность 3D',
               'help_title': 'Руководство пользователя',
-              'help_text': 'Добро пожаловать в CYBER PHARMA 3D!\n\n1. Управляйте расписанием приема лекарств и визитами к врачу.\n2. Быстрая навигация через Waze и Google Maps.',
+              'help_text': 'Добро пожаловать в CYBER PHARMA 3D!\\n\\n1. Управляйте расписанием приема лекарств и визитами к врачу.\\n2. Быстрая навигация через Waze и Google Maps.',
               'close': 'Закрыть',
+              'dial_title': '3D Регулятор громкости',
+              'dial_hint': 'Вращайте диск для плавной настройки',
+              'mute': 'Без звука',
+              'prev': 'Назад',
+              'next': 'Далее',
+              'use_entered_address': 'Использовать этот адрес',
             },
             'es': {
               'google_waze_search': '🌐 Búsqueda de dirección en vivo (Google / Waze)',
@@ -1334,7 +1364,7 @@ jobs:
               'city': 'Ciudad / Localidad',
               'full_address': 'Dirección completa:',
               'select_city_chip': 'Elegir ciudad de la lista:',
-              'free_time_meds': 'Hora de dosis personalizada:',
+              'free_time_meds': 'Hora de dosis:',
               'app_info_title': 'Acerca de CYBER PHARMA 3D',
               'developer_credit': 'Creado y desarrollado por Roni Schneider',
               'credit_tag': 'Desarrollado por Roni Schneider',
@@ -1371,8 +1401,8 @@ jobs:
               'enter_name_title': 'Configuración de la consola',
               'name_hint': 'Escribe tu nombre...',
               'continue_btn': 'Entrar al sistema',
-              'meds_tab': 'Horarios de medicamentos',
-              'appointments_tab': 'Citas médicas',
+              'meds_tab': 'Medicamentos',
+              'appointments_tab': 'Citas Médicas',
               'save_schedule_action': 'Crear horario',
               'book_appointment_action': 'Programar cita',
               'add_med': 'Añadir horario de medicación',
@@ -1440,8 +1470,14 @@ jobs:
               'bg_matrix': 'Matriz Cyber 3D',
               'bg_nebula': 'Nebulosa cósmica 3D',
               'help_title': 'Guía de la consola',
-              'help_text': '¡Bienvenido a CYBER PHARMA 3D!\n\n1. Administre sus medicamentos y citas médicas con facilidad.\n2. Navegación directa con Waze y Google Maps.',
+              'help_text': '¡Bienvenido a CYBER PHARMA 3D!\\n\\n1. Administre sus medicamentos y citas médicas con facilidad.\\n2. Navegación directa con Waze y Google Maps.',
               'close': 'Cerrar',
+              'dial_title': 'Dial de volumen 3D',
+              'dial_hint': 'Gire el dial para ajustar el volumen',
+              'mute': 'Silencio',
+              'prev': 'Anterior',
+              'next': 'Siguiente',
+              'use_entered_address': 'Usar esta dirección',
             },
           };
 
@@ -1688,16 +1724,10 @@ jobs:
                 letterSpacing: 0.6,
                 wordSpacing: wordSpacing,
                 shadows: [
-                  // Crisp high-contrast rim occlusion
-                  Shadow(color: Colors.black.withOpacity(0.98), offset: const Offset(-1.5, -1.5), blurRadius: 1.0),
-                  Shadow(color: Colors.black.withOpacity(0.98), offset: const Offset(1.5, -1.5), blurRadius: 1.0),
-                  Shadow(color: Colors.black.withOpacity(0.98), offset: const Offset(-1.5, 1.5), blurRadius: 1.0),
-                  Shadow(color: Colors.black.withOpacity(0.98), offset: const Offset(1.5, 1.5), blurRadius: 1.0),
-                  // Deep physical bevel cast shadows
-                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(3.0, 4.0), blurRadius: 3.0),
-                  Shadow(color: Colors.black.withOpacity(0.90), offset: const Offset(5.0, 7.0), blurRadius: 8.0),
-                  // Atmospheric floating 3D neon glow
-                  Shadow(color: glow.withOpacity(0.85), offset: const Offset(0.0, 0.0), blurRadius: 16.0),
+                  Shadow(color: Colors.white.withOpacity(0.35), offset: const Offset(0, -1.0), blurRadius: 1.0),
+                  Shadow(color: Colors.black.withOpacity(0.95), offset: const Offset(0, 2.5), blurRadius: 3.0),
+                  Shadow(color: Colors.black.withOpacity(0.70), offset: const Offset(0, 4.0), blurRadius: 8.0),
+                  Shadow(color: glow.withOpacity(0.75), offset: const Offset(0.0, 0.0), blurRadius: 12.0),
                 ],
               ),
             );
@@ -1955,8 +1985,9 @@ jobs:
                                     fit: BoxFit.scaleDown,
                                     child: Text(
                                       label,
+                                      maxLines: 1,
                                       style: TextStyle(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w900,
                                         letterSpacing: 0.8,
                                         color: isSel ? neon : const Color(0xFFE2E8F0),
@@ -2054,17 +2085,17 @@ jobs:
                       child: Row(
                         children: [
                           _metalBtn(
-                            index: 1,
-                            label: widget.appointmentsTabLabel,
-                            icon: Icons.calendar_month_rounded,
-                            count: widget.appointmentsCount,
-                          ),
-                          const SizedBox(width: 4),
-                          _metalBtn(
                             index: 0,
                             label: widget.medsTabLabel,
                             icon: Icons.medication_liquid_rounded,
                             count: widget.medsCount,
+                          ),
+                          const SizedBox(width: 4),
+                          _metalBtn(
+                            index: 1,
+                            label: widget.appointmentsTabLabel,
+                            icon: Icons.calendar_month_rounded,
+                            count: widget.appointmentsCount,
                           ),
                         ],
                       ),
@@ -2111,9 +2142,9 @@ jobs:
               super.initState();
               _animController = AnimationController(
                 vsync: this,
-                duration: const Duration(milliseconds: 90),
+                duration: const Duration(milliseconds: 80),
               );
-              _scaleAnimation = Tween<double>(begin: 1.0, end: 0.96).animate(
+              _scaleAnimation = Tween<double>(begin: 1.0, end: 0.97).animate(
                 CurvedAnimation(parent: _animController, curve: Curves.easeInOut),
               );
             }
@@ -2128,7 +2159,7 @@ jobs:
             Widget build(BuildContext context) {
               final glowColor = widget.customGlow ?? widget.palette.glow;
               final bool pressed = _down || widget.isPushed;
-              final double currentOffset = pressed ? widget.depth : 0.0;
+              final double currentOffset = pressed ? (widget.depth * 0.55).clamp(3.0, 5.0) : 0.0;
 
               return GestureDetector(
                 onTapDown: (_) {
@@ -2151,7 +2182,7 @@ jobs:
                   builder: (ctx, ch) => Transform.scale(
                     scale: _scaleAnimation.value,
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 90),
+                      duration: const Duration(milliseconds: 80),
                       curve: Curves.easeOutQuad,
                       height: widget.height,
                       width: widget.width,
@@ -2175,37 +2206,37 @@ jobs:
                         ),
                         border: Border.all(
                           color: pressed ? glowColor : widget.palette.primary.withOpacity(0.9),
-                          width: pressed ? 2.6 : 2.0,
+                          width: pressed ? 2.4 : 1.8,
                         ),
                         boxShadow: pressed
                             ? [
                                 BoxShadow(
-                                  color: glowColor.withOpacity(0.9),
-                                  blurRadius: 18,
-                                  spreadRadius: 2,
+                                  color: glowColor.withOpacity(0.85),
+                                  blurRadius: 12,
+                                  spreadRadius: 1,
                                 ),
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.95),
-                                  offset: const Offset(0, 2),
-                                  blurRadius: 4,
+                                  offset: const Offset(0, 1.5),
+                                  blurRadius: 3,
                                 ),
                               ]
                             : [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.95),
-                                  offset: Offset(0, widget.depth + 3),
-                                  blurRadius: 10,
+                                  offset: Offset(0, widget.depth + 2),
+                                  blurRadius: 8,
                                 ),
                                 BoxShadow(
-                                  color: glowColor.withOpacity(0.6),
-                                  offset: Offset(0, widget.depth * 0.6),
-                                  blurRadius: 16,
+                                  color: glowColor.withOpacity(0.55),
+                                  offset: Offset(0, widget.depth * 0.5),
+                                  blurRadius: 14,
                                   spreadRadius: 1,
                                 ),
                                 BoxShadow(
-                                  color: Colors.white.withOpacity(0.4),
-                                  offset: const Offset(0, -1.5),
-                                  blurRadius: 1.5,
+                                  color: Colors.white.withOpacity(0.35),
+                                  offset: const Offset(0, -1.2),
+                                  blurRadius: 1.2,
                                 ),
                               ],
                       ),
@@ -2216,6 +2247,7 @@ jobs:
               );
             }
           }
+
           class MechModuleCard extends StatelessWidget {
             final Widget child;
             final Color accentColor;
@@ -2711,7 +2743,7 @@ jobs:
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [0.0, 0.25, 0.50, 0.75, 1.0].map((preset) {
                           final bool isCurr = (_currentVol * 100).round() == (preset * 100).round();
-                          final String label = preset == 0.0 ? 'השתק' : '${(preset * 100).toInt()}%';
+                          final String label = preset == 0.0 ? (dict[CyberPillMasterApp.of(context).currentLang]?['mute'] ?? 'השתק') : '${(preset * 100).toInt()}%';
                           return SizedBox(
                             height: 32,
                             width: 52,
@@ -4375,6 +4407,7 @@ jobs:
                                         onChanged: (newLang) {
                                           if (newLang != null) {
                                             setState(() => _selectedLang = newLang);
+                                            app.setLanguage(newLang);
                                           }
                                         },
                                       ),
@@ -5192,105 +5225,112 @@ jobs:
                                 ],
                               ),
                               const SizedBox(height: 12),
-                              // FREE-CHOICE HOURS SELECTION
+                              // FREE-CHOICE HOURS SELECTION (Interactive 3D Display + Steppers)
                               MechModuleCard(
                                 accentColor: const Color(0xFF00F0FF),
                                 showLed: true,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: [
                                       Row(
                                         children: [
-                                          const Icon(Icons.access_time_filled_rounded, color: Color(0xFF00F0FF), size: 24),
+                                          const Icon(Icons.access_time_filled_rounded, color: Color(0xFF00F0FF), size: 22),
                                           const SizedBox(width: 8),
                                           Expanded(
                                             child: Text(
-                                              t['free_time_meds'] ?? 'שעת נטילה חופשית:',
+                                              t['free_time_meds'] ?? 'שעת נטילה:',
                                               style: TextStyle(
                                                 color: hc ? const Color(0xFFFFE500) : palette.textColor,
-                                                fontSize: 13,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w900,
                                               ),
                                             ),
                                           ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                            decoration: BoxDecoration(
-                                              color: Colors.black.withOpacity(0.6),
-                                              borderRadius: BorderRadius.circular(8),
-                                              border: Border.all(color: const Color(0xFF00F0FF), width: 1.2),
-                                            ),
-                                            child: Text(
-                                              '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
-                                              style: const TextStyle(
-                                                color: Color(0xFF00F0FF),
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w900,
-                                                letterSpacing: 1.2,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: Pneumatic3DButton(
-                                              height: 42,
-                                              palette: palette,
-                                              customGlow: const Color(0xFF00F0FF),
-                                              onTap: () async {
-                                                HapticFeedback.lightImpact();
-                                                final picked = await showTimePicker(
-                                                  context: context,
-                                                  initialTime: TimeOfDay(hour: hour, minute: minute),
-                                                  builder: (ctx3, child) => Theme(
-                                                    data: ThemeData.dark().copyWith(
-                                                      colorScheme: ColorScheme.dark(
-                                                        primary: palette.primary,
-                                                        onPrimary: Colors.black,
-                                                        surface: palette.surface,
-                                                        onSurface: Colors.white,
-                                                      ),
+                                          // Interactive 3D Time Display Badge (Tap to pick time)
+                                          GestureDetector(
+                                            onTap: () async {
+                                              HapticFeedback.heavyImpact();
+                                              final picked = await showTimePicker(
+                                                context: context,
+                                                initialTime: TimeOfDay(hour: hour, minute: minute),
+                                                builder: (ctx3, child) => Theme(
+                                                  data: ThemeData.dark().copyWith(
+                                                    colorScheme: ColorScheme.dark(
+                                                      primary: palette.primary,
+                                                      onPrimary: Colors.black,
+                                                      surface: palette.surface,
+                                                      onSurface: Colors.white,
                                                     ),
-                                                    child: child!,
                                                   ),
-                                                );
-                                                if (picked != null) {
-                                                  setDlg(() {
-                                                    hour = picked.hour;
-                                                    minute = picked.minute;
-                                                    autoTitle = '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
-                                                  });
-                                                }
-                                              },
+                                                  child: child!,
+                                                ),
+                                              );
+                                              if (picked != null) {
+                                                setDlg(() {
+                                                  hour = picked.hour;
+                                                  minute = picked.minute;
+                                                  autoTitle = '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+                                                });
+                                              }
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                                              decoration: BoxDecoration(
+                                                gradient: const LinearGradient(
+                                                  colors: [Color(0xFF0F1E36), Color(0xFF060B14)],
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                ),
+                                                borderRadius: BorderRadius.circular(12),
+                                                border: Border.all(color: const Color(0xFF00F0FF), width: 1.8),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: const Color(0xFF00F0FF).withOpacity(0.55),
+                                                    blurRadius: 10,
+                                                    spreadRadius: 1,
+                                                  ),
+                                                  BoxShadow(
+                                                    color: Colors.black.withOpacity(0.9),
+                                                    offset: const Offset(0, 3),
+                                                    blurRadius: 4,
+                                                  ),
+                                                ],
+                                              ),
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  const Icon(Icons.touch_app_rounded, size: 18, color: Color(0xFF00F0FF)),
+                                                  const Icon(Icons.touch_app_rounded, color: Color(0xFF00F0FF), size: 16),
                                                   const SizedBox(width: 6),
-                                                  FittedBox(
-                                                    fit: BoxFit.scaleDown,
-                                                    child: Text(
-                                                      t['pick_time'] ?? 'בחר שעה מלוח',
-                                                      style: const TextStyle(color: Color(0xFF00F0FF), fontWeight: FontWeight.bold, fontSize: 13),
+                                                  Text(
+                                                    '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
+                                                    style: const TextStyle(
+                                                      color: Color(0xFF00F0FF),
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.w900,
+                                                      letterSpacing: 1.5,
+                                                      shadows: [
+                                                        Shadow(color: Color(0xFF00F0FF), blurRadius: 10),
+                                                      ],
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(width: 6),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      // Spacious Stepper Buttons: -15 min and +15 min
+                                      Row(
+                                        children: [
                                           Expanded(
-                                            flex: 2,
                                             child: Pneumatic3DButton(
                                               height: 42,
                                               palette: palette,
                                               onTap: () {
+                                                HapticFeedback.lightImpact();
                                                 setDlg(() {
                                                   int totalM = hour * 60 + minute - 15;
                                                   if (totalM < 0) totalM += 1440;
@@ -5299,21 +5339,26 @@ jobs:
                                                   autoTitle = '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
                                                 });
                                               },
-                                              child: const Center(
-                                                child: Text(
-                                                  "-15 דק'",
-                                                  style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
-                                                ),
+                                              child: const Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(Icons.remove_circle_outline_rounded, color: Colors.white70, size: 16),
+                                                  SizedBox(width: 6),
+                                                  Text(
+                                                    "-15 דק'",
+                                                    style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(width: 6),
+                                          const SizedBox(width: 10),
                                           Expanded(
-                                            flex: 2,
                                             child: Pneumatic3DButton(
                                               height: 42,
                                               palette: palette,
                                               onTap: () {
+                                                HapticFeedback.lightImpact();
                                                 setDlg(() {
                                                   int totalM = hour * 60 + minute + 15;
                                                   if (totalM >= 1440) totalM -= 1440;
@@ -5322,11 +5367,16 @@ jobs:
                                                   autoTitle = '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
                                                 });
                                               },
-                                              child: const Center(
-                                                child: Text(
-                                                  "+15 דק'",
-                                                  style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
-                                                ),
+                                              child: const Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(Icons.add_circle_outline_rounded, color: Colors.white70, size: 16),
+                                                  SizedBox(width: 6),
+                                                  Text(
+                                                    "+15 דק'",
+                                                    style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
@@ -5374,7 +5424,7 @@ jobs:
                                                     onChanged: (v) => pill.name = v,
                                                     style: TextStyle(color: palette.highlight, fontWeight: FontWeight.bold, fontSize: 14),
                                                     decoration: InputDecoration(
-                                                      hintText: '${t['pill_name']!} ${idx + 1}',
+                                                      hintText: t['pill_name']!,
                                                       hintStyle: const TextStyle(color: Colors.white38),
                                                       border: InputBorder.none,
                                                       prefixIcon: Icon(Icons.medication_rounded, size: 18, color: palette.highlight),
@@ -5735,6 +5785,9 @@ jobs:
               String selectedType = t['doc_doctor']!;
               DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
               TimeOfDay selectedTime = const TimeOfDay(hour: 10, minute: 0);
+              List<String> liveSuggestions = [];
+              bool isSearchingAddress = false;
+              Timer? addressDebounce;
 
               final typesList = [t['doc_doctor']!, t['doc_nurse']!, t['doc_test']!, t['doc_treatment']!];
 
@@ -5816,7 +5869,7 @@ jobs:
                                   ),
                                   const SizedBox(height: 12),
 
-                                  // 100% Live Google & Waze Address Selection (No Local Database)
+                                  // 100% Live Google & Waze Address Selection with Free-form Input
                                   Container(
                                     padding: const EdgeInsets.all(12),
                                     decoration: BoxDecoration(
@@ -5856,9 +5909,140 @@ jobs:
                                         ),
                                         const SizedBox(height: 10),
 
-                                        // Button: Dedicated Google & Waze Live Address Search
+                                        // Free-form TextField with live suggestions
+                                        TextField(
+                                          controller: streetCtrl,
+                                          onChanged: (v) {
+                                            setDlg(() {
+                                              cityCtrl.text = '';
+                                            });
+                                            addressDebounce?.cancel();
+                                            if (v.trim().length >= 2) {
+                                              setDlg(() => isSearchingAddress = true);
+                                              addressDebounce = Timer(const Duration(milliseconds: 320), () async {
+                                                final items = await GoogleWazeAddressService.search(v);
+                                                setDlg(() {
+                                                  liveSuggestions = items.map((i) => i.address).take(6).toList();
+                                                  isSearchingAddress = false;
+                                                });
+                                              });
+                                            } else {
+                                              setDlg(() {
+                                                liveSuggestions = [];
+                                                isSearchingAddress = false;
+                                              });
+                                            }
+                                          },
+                                          textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
+                                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                                          decoration: InputDecoration(
+                                            labelText: t['street_address'] ?? 'כתובת מרפאה (הקלדה חופשית)',
+                                            labelStyle: TextStyle(color: palette.highlight),
+                                            hintText: t['search_address_online_hint'] ?? 'הקלד רחוב, מרפאה, בית חולים או עיר...',
+                                            hintStyle: const TextStyle(color: Colors.white38, fontSize: 12),
+                                            prefixIcon: Icon(Icons.edit_location_alt_rounded, color: palette.highlight),
+                                            suffixIcon: streetCtrl.text.isNotEmpty
+                                                ? IconButton(
+                                                    icon: const Icon(Icons.clear_rounded, color: Colors.white70, size: 18),
+                                                    onPressed: () {
+                                                      setDlg(() {
+                                                        streetCtrl.clear();
+                                                        liveSuggestions = [];
+                                                        isSearchingAddress = false;
+                                                      });
+                                                    },
+                                                  )
+                                                : null,
+                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(12),
+                                              borderSide: BorderSide(color: palette.primary.withOpacity(0.6), width: 1.2),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(12),
+                                              borderSide: BorderSide(color: palette.highlight, width: 1.8),
+                                            ),
+                                          ),
+                                        ),
+
+                                        if (isSearchingAddress) ...[
+                                          const SizedBox(height: 6),
+                                          Row(
+                                            children: [
+                                              const SizedBox(
+                                                width: 14,
+                                                height: 14,
+                                                child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF00E5FF)),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                t['searching_google_waze'] ?? 'שואב נתונים חיים מ-Waze ומ-Google...',
+                                                style: const TextStyle(color: Color(0xFF00E5FF), fontSize: 11),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+
+                                        // Inline non-obstructive suggestion box
+                                        if (liveSuggestions.isNotEmpty) ...[
+                                          const SizedBox(height: 8),
+                                          Container(
+                                            constraints: const BoxConstraints(maxHeight: 180),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFF0B132B),
+                                              borderRadius: BorderRadius.circular(12),
+                                              border: Border.all(color: palette.highlight.withOpacity(0.8), width: 1.4),
+                                              boxShadow: [
+                                                BoxShadow(color: Colors.black.withOpacity(0.85), offset: const Offset(0, 4), blurRadius: 8),
+                                              ],
+                                            ),
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              physics: const BouncingScrollPhysics(),
+                                              itemCount: liveSuggestions.length,
+                                              itemBuilder: (ctxS, sIdx) {
+                                                final sAddr = liveSuggestions[sIdx];
+                                                return InkWell(
+                                                  onTap: () {
+                                                    HapticFeedback.selectionClick();
+                                                    setDlg(() {
+                                                      streetCtrl.text = sAddr;
+                                                      liveSuggestions = [];
+                                                      isSearchingAddress = false;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                                    decoration: BoxDecoration(
+                                                      border: sIdx < liveSuggestions.length - 1
+                                                          ? Border(bottom: BorderSide(color: Colors.white.withOpacity(0.08)))
+                                                          : null,
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(Icons.location_on_rounded, size: 16, color: palette.highlight),
+                                                        const SizedBox(width: 8),
+                                                        Expanded(
+                                                          child: Text(
+                                                            sAddr,
+                                                            style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                                                          ),
+                                                        ),
+                                                        const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.white38),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
+
+                                        const SizedBox(height: 8),
+
+                                        // Dedicated Full Search button
                                         Pneumatic3DButton(
-                                          height: 46,
+                                          height: 40,
                                           palette: palette,
                                           customGlow: const Color(0xFF00E5FF),
                                           onTap: () {
@@ -5867,6 +6051,7 @@ jobs:
                                               setDlg(() {
                                                 streetCtrl.text = liveAddr;
                                                 cityCtrl.text = '';
+                                                liveSuggestions = [];
                                               });
                                             });
                                           },
@@ -5875,100 +6060,20 @@ jobs:
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                const Icon(Icons.satellite_alt_rounded, size: 20, color: Color(0xFF00E5FF)),
+                                                const Icon(Icons.satellite_alt_rounded, size: 18, color: Color(0xFF00E5FF)),
                                                 const SizedBox(width: 8),
                                                 Flexible(
                                                   child: Text(
                                                     t['google_waze_search'] ?? '🌐 חיפוש כתובת חי מתוך Google / Waze',
                                                     overflow: TextOverflow.ellipsis,
-                                                    style: const TextStyle(color: Color(0xFF00E5FF), fontSize: 13, fontWeight: FontWeight.w900),
+                                                    style: const TextStyle(color: Color(0xFF00E5FF), fontSize: 12, fontWeight: FontWeight.w900),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(height: 10),
 
-                                        // Live Autocomplete TextField powered by Google & Waze
-                                        Autocomplete<String>(
-                                          initialValue: TextEditingValue(text: streetCtrl.text.isNotEmpty ? streetCtrl.text : cityCtrl.text),
-                                          optionsBuilder: (TextEditingValue textEditingValue) async {
-                                            if (textEditingValue.text.trim().length < 2) {
-                                              return const Iterable<String>.empty();
-                                            }
-                                            final items = await GoogleWazeAddressService.search(textEditingValue.text);
-                                            return items.map((i) => i.address).take(8);
-                                          },
-                                          onSelected: (String selection) {
-                                            setDlg(() {
-                                              streetCtrl.text = selection;
-                                              cityCtrl.text = '';
-                                            });
-                                          },
-                                          fieldViewBuilder: (ctxF, textCtrl, focusNode, onSubmitted) {
-                                            return TextField(
-                                              controller: textCtrl,
-                                              focusNode: focusNode,
-                                              onChanged: (v) {
-                                                streetCtrl.text = v;
-                                                cityCtrl.text = '';
-                                              },
-                                              textAlign: (app.currentLang == 'he' || app.currentLang == 'ar') ? TextAlign.right : TextAlign.left,
-                                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                                              decoration: InputDecoration(
-                                                labelText: t['street_address'] ?? 'כתובת מרפאה (רחוב, מספר, עיר)',
-                                                labelStyle: TextStyle(color: palette.highlight),
-                                                hintText: 'הקלד לחיפוש חי ב-Google ו-Waze...',
-                                                hintStyle: const TextStyle(color: Colors.white38, fontSize: 12),
-                                                prefixIcon: Icon(Icons.travel_explore_rounded, color: palette.highlight),
-                                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                              ),
-                                            );
-                                          },
-                                          optionsViewBuilder: (context, onSelected, options) {
-                                            return Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Material(
-                                                elevation: 12.0,
-                                                color: const Color(0xFF0F172A),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(14),
-                                                  side: BorderSide(color: palette.highlight, width: 1.5),
-                                                ),
-                                                child: ConstrainedBox(
-                                                  constraints: const BoxConstraints(maxHeight: 220, maxWidth: 320),
-                                                  child: ListView.builder(
-                                                    padding: const EdgeInsets.symmetric(vertical: 4),
-                                                    shrinkWrap: true,
-                                                    itemCount: options.length,
-                                                    itemBuilder: (BuildContext context, int optIndex) {
-                                                      final String option = options.elementAt(optIndex);
-                                                      return InkWell(
-                                                        onTap: () => onSelected(option),
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                                          child: Row(
-                                                            children: [
-                                                              Icon(Icons.location_on_rounded, size: 16, color: palette.highlight),
-                                                              const SizedBox(width: 8),
-                                                              Expanded(
-                                                                child: Text(
-                                                                  option,
-                                                                  style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
                                         const SizedBox(height: 8),
                                         Text(
                                           '${t['full_address'] ?? 'כתובת מלאה:'} ${streetCtrl.text.trim().isNotEmpty ? streetCtrl.text.trim() : (cityCtrl.text.trim().isNotEmpty ? cityCtrl.text.trim() : "")}',
@@ -6879,7 +6984,6 @@ jobs:
 
             void _openSettingsDialog() {
               final app = CyberPillMasterApp.of(context);
-              final t = dict[app.currentLang] ?? dict['he']!;
               final hc = app.highContrast;
               final palette = app.currentPalette;
 
@@ -6893,287 +6997,332 @@ jobs:
               bool tempHc = app.highContrast;
               bool tempVoice = app.voiceAlerts;
 
-              final soundOptions = [
-                {'key': 'voice', 'label': t['sound_opt_voice'] ?? '🗣️ חיווי קולי חכם (תזכורת כללית)'},
-                {'key': 'chime', 'label': t['sound_opt_chime'] ?? "🎵 סייבר צ'יים הרמוני"},
-                {'key': 'electric', 'label': t['sound_opt_electric'] ?? '⚡ סייבר אלקטרוני (Pulse)'},
-                {'key': 'gong', 'label': t['sound_opt_gong'] ?? '🔔 גונג טיבטי עמוק'},
-                {'key': 'alarm', 'label': t['sound_opt_alarm'] ?? '🚨 סירנה טקטית חדה'},
-                {'key': 'bell', 'label': t['sound_opt_bell'] ?? '⏱️ פעמון קריסטל נקי'},
-                {'key': 'radar', 'label': t['sound_opt_radar'] ?? '📡 סריקת מכ"ם קוונטי'},
-                {'key': 'sonar', 'label': t['sound_opt_sonar'] ?? '🌊 פעימת סונאר תת-ימי'},
-                {'key': 'custom', 'label': t['sound_opt_custom'] ?? '📁 קובץ שמע מותאם אישית מהמכשיר'},
-                {'key': 'laser', 'label': t['sound_opt_laser'] ?? '💫 טיפת לייזר עתידנית'},
-                {'key': 'space', 'label': t['sound_opt_space'] ?? '🪐 צליל חללי עמוק'},
-                {'key': 'telemetry', 'label': t['sound_opt_telemetry'] ?? '🛰️ ביפ טלמטריה מהיר'},
-                {'key': 'klaxon', 'label': t['sound_opt_klaxon'] ?? '⚠️ אזעקת קלאקסון חירום'},
-                {'key': 'harp', 'label': t['sound_opt_harp'] ?? '🪕 נבל ניאו-קלאסי מרגיע'},
-                {'key': 'digital_drop', 'label': t['sound_opt_digital_drop'] ?? '💧 נטיף זרחני נקי'},
-                {'key': 'synth_wave', 'label': t['sound_opt_synth_wave'] ?? "🎹 גל סינת'סייזר רטרו"},
-              ];
-
-              final bgStyles = [
-                {'key': 'butterflies', 'label': t['bg_butterflies'] ?? 'פרפרים זרחניים 3D'},
-                {'key': 'planets', 'label': t['bg_planets'] ?? 'כוכבי לכת ומסלולים 3D'},
-                {'key': 'flowers', 'label': t['bg_flowers'] ?? 'פרחי לוטוס זוהרים 3D'},
-                {'key': 'space', 'label': t['bg_space'] ?? 'חלל ושדה כוכבים 3D'},
-                {'key': 'aurora', 'label': t['bg_aurora'] ?? 'זוהר קטבים ופלזמה 3D'},
-                {'key': 'fireflies', 'label': t['bg_fireflies'] ?? 'גחליליות זוהרות 3D'},
-                {'key': 'tunnel', 'label': t['bg_tunnel'] ?? 'מנהרת טרון 3D'},
-                {'key': 'blackhole', 'label': t['bg_blackhole'] ?? 'חור שחור קוסמי 3D'},
-                {'key': 'reactor', 'label': t['bg_reactor'] ?? 'כור תעשייתי ובוכנות 3D'},
-                {'key': 'crystal', 'label': t['bg_crystal'] ?? 'מארג גבישים קוונטי 3D'},
-                {'key': 'dna', 'label': t['bg_dna'] ?? 'סליל DNA זוהר 3D'},
-                {'key': 'supernova', 'label': t['bg_supernova'] ?? 'סופרנובה וגלי הלם 3D'},
-                {'key': 'matrix', 'label': t['bg_matrix'] ?? 'מטריקס סייבר 3D'},
-                {'key': 'nebula', 'label': t['bg_nebula'] ?? 'ערפילית סערה קוסמית 3D'},
-              ];
-
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: hc ? Colors.black : palette.surface,
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
                 builder: (ctx) => StatefulBuilder(
-                  builder: (ctx2, setDlg) => Directionality(
-                    textDirection: (tempLang == 'he' || tempLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: 16,
-                        left: 16,
-                        right: 16,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-                      ),
-                      child: SafeArea(
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Center(
-                                child: textChannel3D(
-                                  t['settings']!,
-                                  fontSize: hc ? 22 : 18,
-                                  color: hc ? const Color(0xFFFFE500) : palette.primary,
-                                ),
-                              ),
-                              const SizedBox(height: 14),
+                  builder: (ctx2, setDlg) {
+                    final curT = dict[tempLang] ?? dict['he']!;
+                    final bool isRtl = tempLang == 'he' || tempLang == 'ar';
 
-                              // Top Language Bar with 3D selector
-                              Pneumatic3DButton(
-                                height: 48,
-                                palette: palette,
-                                onTap: () {
-                                  Navigator.pop(ctx);
-                                  _openLanguagePicker();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.language_rounded, size: 22, color: palette.highlight),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Text(
-                                          '${t['language']!}: ${_allLanguages.firstWhere((l) => l['code'] == tempLang, orElse: () => _allLanguages.first)['flag']} ${_allLanguages.firstWhere((l) => l['code'] == tempLang, orElse: () => _allLanguages.first)['label']}',
-                                          style: TextStyle(
-                                            color: hc ? const Color(0xFFFFE500) : palette.textColor,
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                      Icon(Icons.arrow_forward_ios_rounded, size: 14, color: palette.highlight),
-                                    ],
+                    final soundOptions = [
+                      {'key': 'voice', 'label': curT['sound_opt_voice'] ?? '🗣️ חיווי קולי חכם (תזכורת כללית)'},
+                      {'key': 'chime', 'label': curT['sound_opt_chime'] ?? "🎵 סייבר צ'יים הרמוני"},
+                      {'key': 'electric', 'label': curT['sound_opt_electric'] ?? '⚡ סייבר אלקטרוני (Pulse)'},
+                      {'key': 'gong', 'label': curT['sound_opt_gong'] ?? '🔔 גונג טיבטי עמוק'},
+                      {'key': 'alarm', 'label': curT['sound_opt_alarm'] ?? '🚨 סירנה טקטית חדה'},
+                      {'key': 'bell', 'label': curT['sound_opt_bell'] ?? '⏱️ פעמון קריסטל נקי'},
+                      {'key': 'radar', 'label': curT['sound_opt_radar'] ?? '📡 סריקת מכ"ם קוונטי'},
+                      {'key': 'sonar', 'label': curT['sound_opt_sonar'] ?? '🌊 פעימת סונאר תת-ימי'},
+                      {'key': 'custom', 'label': curT['sound_opt_custom'] ?? '📁 קובץ שמע מותאם אישית מהמכשיר'},
+                      {'key': 'laser', 'label': curT['sound_opt_laser'] ?? '💫 טיפת לייזר עתידנית'},
+                      {'key': 'space', 'label': curT['sound_opt_space'] ?? '🪐 צליל חללי עמוק'},
+                      {'key': 'telemetry', 'label': curT['sound_opt_telemetry'] ?? '🛰️ ביפ טלמטריה מהיר'},
+                      {'key': 'klaxon', 'label': curT['sound_opt_klaxon'] ?? '⚠️ אזעקת קלאקסון חירום'},
+                      {'key': 'harp', 'label': curT['sound_opt_harp'] ?? '🪕 נבל ניאו-קלאסי מרגיע'},
+                      {'key': 'digital_drop', 'label': curT['sound_opt_digital_drop'] ?? '💧 נטיף זרחני נקי'},
+                      {'key': 'synth_wave', 'label': curT['sound_opt_synth_wave'] ?? "🎹 גל סינת'סייזר רטרו"},
+                    ];
+
+                    final bgStyles = [
+                      {'key': 'butterflies', 'label': curT['bg_butterflies'] ?? 'פרפרים זרחניים 3D'},
+                      {'key': 'planets', 'label': curT['bg_planets'] ?? 'כוכבי לכת ומסלולים 3D'},
+                      {'key': 'flowers', 'label': curT['bg_flowers'] ?? 'פרחי לוטוס זוהרים 3D'},
+                      {'key': 'space', 'label': curT['bg_space'] ?? 'חלל ושדה כוכבים 3D'},
+                      {'key': 'aurora', 'label': curT['bg_aurora'] ?? 'זוהר קטבים ופלזמה 3D'},
+                      {'key': 'fireflies', 'label': curT['bg_fireflies'] ?? 'גחליליות זוהרות 3D'},
+                      {'key': 'tunnel', 'label': curT['bg_tunnel'] ?? 'מנהרת טרון 3D'},
+                      {'key': 'blackhole', 'label': curT['bg_blackhole'] ?? 'חור שחור קוסמי 3D'},
+                      {'key': 'reactor', 'label': curT['bg_reactor'] ?? 'כור תעשייתי ובוכנות 3D'},
+                      {'key': 'crystal', 'label': curT['bg_crystal'] ?? 'מארג גבישים קוונטי 3D'},
+                      {'key': 'dna', 'label': curT['bg_dna'] ?? 'סליל DNA זוהר 3D'},
+                      {'key': 'supernova', 'label': curT['bg_supernova'] ?? 'סופרנובה וגלי הלם 3D'},
+                      {'key': 'matrix', 'label': curT['bg_matrix'] ?? 'מטריקס סייבר 3D'},
+                      {'key': 'nebula', 'label': curT['bg_nebula'] ?? 'ערפילית סערה קוסמית 3D'},
+                    ];
+
+                    final curPalette = themePalettes[tempThemeKey] ?? palette;
+
+                    return Directionality(
+                      textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                      child: SafeArea(
+                        child: Container(
+                          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.88),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Center(
+                                  child: Container(
+                                    width: 48,
+                                    height: 5,
+                                    margin: const EdgeInsets.only(bottom: 12),
+                                    decoration: BoxDecoration(color: Colors.white24, borderRadius: BorderRadius.circular(10)),
                                   ),
                                 ),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // 1. COLOR THEMES WITH DEDICATED VIEWPORT MONITOR PREVIEW (סעיף 8)
-                              Text(
-                                t['themes_title']!,
-                                style: TextStyle(
-                                  color: hc ? const Color(0xFFFFE500) : palette.textColor,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 16,
-                                  decoration: TextDecoration.none,
+                                Center(
+                                  child: textChannel3D(
+                                    curT['settings']!,
+                                    fontSize: hc ? 24 : 20,
+                                    color: hc ? const Color(0xFFFFE500) : curPalette.primary,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
+                                const SizedBox(height: 14),
 
-                              // Dedicated Theme Viewport Monitor Box
-                              MechModuleCard(
-                                accentColor: (themePalettes[tempThemeKey] ?? palette).primary,
-                                showLed: true,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.palette_rounded, color: (themePalettes[tempThemeKey] ?? palette).highlight, size: 18),
-                                              const SizedBox(width: 6),
-                                              Text(
-                                                'תצוגה מקדימה לערכת צבעים (Theme Monitor)',
+                                // Top Language Bar with 3D selector
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(Icons.language_rounded, size: 20, color: curPalette.highlight),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          curT['language']!,
+                                          style: TextStyle(
+                                            color: hc ? const Color(0xFFFFE500) : curPalette.textColor,
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 15,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                      decoration: BoxDecoration(
+                                        color: curPalette.chassis,
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(color: curPalette.primary.withOpacity(0.6), width: 1.5),
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton<String>(
+                                          value: tempLang,
+                                          dropdownColor: curPalette.surface,
+                                          isDense: true,
+                                          icon: Icon(Icons.arrow_drop_down, color: curPalette.highlight),
+                                          items: _allLanguages.map((lang) {
+                                            return DropdownMenuItem<String>(
+                                              value: lang['code'],
+                                              child: Text(
+                                                '${lang['flag']} ${lang['label']}',
+                                                style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                                              ),
+                                            );
+                                          }).toList(),
+                                          onChanged: (newLang) {
+                                            if (newLang != null) {
+                                              setDlg(() => tempLang = newLang);
+                                              app.setLanguage(newLang);
+                                              setState(() {});
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+
+                                // LIVE 3D PREVIEW MONITOR WINDOW (חלונית תצוגה מקדימה 3D)
+                                MechModuleCard(
+                                  accentColor: curPalette.primary,
+                                  showLed: true,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.tv_rounded, color: curPalette.highlight, size: 20),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  curT['preview_3d_title'] ?? 'חלונית תצוגה מקדימה 3D',
+                                                  style: TextStyle(
+                                                    color: curPalette.textColor,
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w900,
+                                                    decoration: TextDecoration.none,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black.withOpacity(0.7),
+                                                borderRadius: BorderRadius.circular(6),
+                                                border: Border.all(color: curPalette.highlight, width: 1),
+                                              ),
+                                              child: Text(
+                                                'LIVE 3D VIEWPORT',
                                                 style: TextStyle(
-                                                  color: palette.textColor,
-                                                  fontSize: 12,
+                                                  color: curPalette.highlight,
+                                                  fontSize: 10,
                                                   fontWeight: FontWeight.w900,
+                                                  letterSpacing: 1.0,
+                                                  decoration: TextDecoration.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        // Live animated canvas viewport
+                                        Container(
+                                          height: 140,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(14),
+                                            border: Border.all(color: curPalette.primary.withOpacity(0.8), width: 1.8),
+                                            color: curPalette.background,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: curPalette.glow.withOpacity(0.4),
+                                                blurRadius: 16,
+                                              ),
+                                            ],
+                                          ),
+                                          clipBehavior: Clip.antiAlias,
+                                          child: Stack(
+                                            children: [
+                                              Positioned.fill(
+                                                child: Interactive3DGlassBackground(
+                                                  palette: curPalette,
+                                                  isHighContrast: false,
+                                                  style: tempBgStyle,
+                                                  child: const SizedBox(),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                height: 2,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Colors.transparent,
+                                                        Colors.white.withOpacity(0.5),
+                                                        Colors.transparent,
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                bottom: 8,
+                                                left: 8,
+                                                right: 8,
+                                                child: Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black.withOpacity(0.75),
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    border: Border.all(color: Colors.white24, width: 1),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        curPalette.name,
+                                                        style: TextStyle(
+                                                          color: curPalette.primary,
+                                                          fontSize: 11,
+                                                          fontWeight: FontWeight.bold,
+                                                          decoration: TextDecoration.none,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        bgStyles.firstWhere((b) => b['key'] == tempBgStyle, orElse: () => {'label': tempBgStyle})['label']!,
+                                                        style: TextStyle(
+                                                          color: curPalette.highlight,
+                                                          fontSize: 11,
+                                                          fontWeight: FontWeight.bold,
+                                                          decoration: TextDecoration.none,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        // Fullscreen trigger button
+                                        Pneumatic3DButton(
+                                          height: 38,
+                                          palette: curPalette,
+                                          customGlow: curPalette.highlight,
+                                          onTap: () {
+                                            HapticFeedback.lightImpact();
+                                            _showFullScreen3DPreview(
+                                              initialStyle: tempBgStyle,
+                                              themeKey: tempThemeKey,
+                                              bgStyles: bgStyles,
+                                              palette: curPalette,
+                                              t: curT,
+                                              onSelect: (selectedStyle) {
+                                                setDlg(() => tempBgStyle = selectedStyle);
+                                                app.setBgStyle(selectedStyle);
+                                                setState(() {});
+                                              },
+                                            );
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(Icons.fullscreen_rounded, size: 20, color: Color(0xFF00F0FF)),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                curT['preview_3d_btn'] ?? '🔍 תצוגה מקדימה במסך מלא',
+                                                style: const TextStyle(
+                                                  color: Color(0xFF00F0FF),
+                                                  fontWeight: FontWeight.w900,
+                                                  fontSize: 13,
                                                   decoration: TextDecoration.none,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                            decoration: BoxDecoration(
-                                              color: Colors.black.withOpacity(0.6),
-                                              borderRadius: BorderRadius.circular(6),
-                                              border: Border.all(color: (themePalettes[tempThemeKey] ?? palette).primary.withOpacity(0.7), width: 1),
-                                            ),
-                                            child: Text(
-                                              (themePalettes[tempThemeKey] ?? palette).name,
-                                              style: TextStyle(
-                                                color: (themePalettes[tempThemeKey] ?? palette).highlight,
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w900,
-                                                decoration: TextDecoration.none,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      // Mini Live Theme Console Box
-                                      Container(
-                                        height: 90,
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              (themePalettes[tempThemeKey] ?? palette).chassis,
-                                              (themePalettes[tempThemeKey] ?? palette).surface,
-                                            ],
-                                          ),
-                                          border: Border.all(
-                                            color: (themePalettes[tempThemeKey] ?? palette).primary,
-                                            width: 2.0,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: (themePalettes[tempThemeKey] ?? palette).glow.withOpacity(0.35),
-                                              blurRadius: 12,
-                                            ),
-                                          ],
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  width: 32,
-                                                  height: 32,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: (themePalettes[tempThemeKey] ?? palette).primary,
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: (themePalettes[tempThemeKey] ?? palette).primary.withOpacity(0.8),
-                                                        blurRadius: 10,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 4),
-                                                const Text('Primary', style: TextStyle(color: Colors.white70, fontSize: 10)),
-                                              ],
-                                            ),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  width: 32,
-                                                  height: 32,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: (themePalettes[tempThemeKey] ?? palette).highlight,
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: (themePalettes[tempThemeKey] ?? palette).highlight.withOpacity(0.8),
-                                                        blurRadius: 10,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 4),
-                                                const Text('Highlight', style: TextStyle(color: Colors.white70, fontSize: 10)),
-                                              ],
-                                            ),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Pneumatic3DButton(
-                                                  height: 36,
-                                                  palette: themePalettes[tempThemeKey] ?? palette,
-                                                  onTap: () {},
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '3D כפתור',
-                                                        style: TextStyle(
-                                                          color: (themePalettes[tempThemeKey] ?? palette).highlight,
-                                                          fontSize: 11,
-                                                          fontWeight: FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 4),
-                                                const Text('Sample', style: TextStyle(color: Colors.white70, fontSize: 10)),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
+                                const SizedBox(height: 16),
 
-                              // Scrollable Horizontal Carousel of Theme Palettes
-                              SizedBox(
-                                height: 78,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: themePalettes.values.length,
-                                  itemBuilder: (ctxT, idx) {
-                                    final p = themePalettes.values.elementAt(idx);
+                                // SECTION 1: COLOR THEMES (ערכות צבע - גלילה כלפי מטה)
+                                Text(
+                                  curT['themes_title']!,
+                                  style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900, fontSize: 16, decoration: TextDecoration.none),
+                                ),
+                                const SizedBox(height: 10),
+                                Wrap(
+                                  spacing: 8.0,
+                                  runSpacing: 8.0,
+                                  alignment: WrapAlignment.center,
+                                  children: themePalettes.values.map((p) {
                                     final bool active = tempThemeKey == p.id;
-
-                                    return Container(
-                                      width: 140,
-                                      margin: const EdgeInsets.only(right: 8),
+                                    return SizedBox(
+                                      width: 155,
                                       child: Pneumatic3DButton(
-                                        height: 74,
+                                        height: 58,
                                         palette: p,
                                         isPushed: active,
                                         customGlow: active ? p.glow : Colors.transparent,
                                         onTap: () {
-                                          HapticFeedback.lightImpact();
+                                          HapticFeedback.heavyImpact();
                                           setDlg(() => tempThemeKey = p.id);
                                           app.setThemeKey(p.id);
                                           setState(() {});
@@ -7186,508 +7335,368 @@ jobs:
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
-                                                  Container(width: 12, height: 12, decoration: BoxDecoration(color: p.primary, shape: BoxShape.circle)),
+                                                  Container(width: 10, height: 10, decoration: BoxDecoration(color: p.primary, shape: BoxShape.circle)),
                                                   const SizedBox(width: 6),
-                                                  Container(width: 12, height: 12, decoration: BoxDecoration(color: p.highlight, shape: BoxShape.circle)),
+                                                  Container(width: 10, height: 10, decoration: BoxDecoration(color: p.highlight, shape: BoxShape.circle)),
                                                 ],
                                               ),
                                               const SizedBox(height: 4),
-                                              FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  p.name,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: active ? p.highlight : Colors.white,
-                                                    fontWeight: FontWeight.w900,
-                                                    fontSize: 11,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // 2. 3D DISPLAY MODES WITH LIVE MONITOR PREVIEW & SCROLLABLE SELECTION (סעיף 9)
-                              Text(
-                                t['bg_style']!,
-                                style: TextStyle(
-                                  color: hc ? const Color(0xFFFFE500) : palette.textColor,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 16,
-                                  decoration: TextDecoration.none,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-
-                              // Dedicated 3D Monitor Viewport Box
-                              MechModuleCard(
-                                accentColor: palette.primary,
-                                showLed: true,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.tv_rounded, color: palette.highlight, size: 18),
-                                              const SizedBox(width: 6),
                                               Text(
-                                                'מסך תצוגה מקדימה (3D Viewport Monitor)',
+                                                p.name,
+                                                textAlign: TextAlign.center,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                  color: palette.textColor,
-                                                  fontSize: 12,
+                                                  color: active ? p.highlight : Colors.white,
                                                   fontWeight: FontWeight.w900,
+                                                  fontSize: 11,
                                                   decoration: TextDecoration.none,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                            decoration: BoxDecoration(
-                                              color: Colors.black.withOpacity(0.6),
-                                              borderRadius: BorderRadius.circular(6),
-                                              border: Border.all(color: palette.primary.withOpacity(0.7), width: 1),
-                                            ),
-                                            child: Text(
-                                              'LIVE 3D',
-                                              style: TextStyle(
-                                                color: palette.highlight,
-                                                fontSize: 9,
-                                                fontWeight: FontWeight.w900,
-                                                letterSpacing: 1.0,
-                                                decoration: TextDecoration.none,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      // Live Viewport Window with Real-time 3D Animation
-                                      Container(
-                                        height: 125,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
-                                          border: Border.all(color: palette.bevelLight.withOpacity(0.6), width: 1.6),
-                                          color: palette.background,
-                                          boxShadow: [
-                                            BoxShadow(color: palette.glow.withOpacity(0.2), blurRadius: 10),
-                                          ],
-                                        ),
-                                        clipBehavior: Clip.antiAlias,
-                                        child: Stack(
-                                          children: [
-                                            Positioned.fill(
-                                              child: Interactive3DGlassBackground(
-                                                palette: themePalettes[tempThemeKey] ?? palette,
-                                                isHighContrast: false,
-                                                style: tempBgStyle,
-                                                child: const SizedBox(),
-                                              ),
-                                            ),
-                                            Positioned(
-                                              bottom: 6,
-                                              right: 8,
-                                              child: Container(
-                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black.withOpacity(0.75),
-                                                  borderRadius: BorderRadius.circular(6),
-                                                  border: Border.all(color: palette.highlight.withOpacity(0.5), width: 1),
-                                                ),
-                                                child: Text(
-                                                  bgStyles.firstWhere((b) => b['key'] == tempBgStyle, orElse: () => {'label': tempBgStyle})['label']!,
-                                                  style: TextStyle(
-                                                    color: palette.highlight,
-                                                    fontSize: 11,
-                                                    fontWeight: FontWeight.bold,
-                                                    decoration: TextDecoration.none,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      // Fullscreen 3D Preview Trigger Button
-                                      Pneumatic3DButton(
-                                        height: 40,
-                                        palette: palette,
-                                        customGlow: const Color(0xFF00E5FF),
-                                        onTap: () {
-                                          HapticFeedback.lightImpact();
-                                          _showFullScreen3DPreview(
-                                            initialStyle: tempBgStyle,
-                                            themeKey: tempThemeKey,
-                                            bgStyles: bgStyles,
-                                            palette: palette,
-                                            t: t,
-                                            onSelect: (selectedStyle) {
-                                              setDlg(() => tempBgStyle = selectedStyle);
-                                              app.setBgStyle(selectedStyle);
-                                              setState(() {});
-                                            },
-                                          );
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(Icons.fullscreen_rounded, size: 20, color: Color(0xFF00E5FF)),
-                                            const SizedBox(width: 8),
-                                            Text(
-                                              t['preview_3d_btn'] ?? '🔍 תצוגה מקדימה במסך מלא',
-                                              style: const TextStyle(
-                                                color: Color(0xFF00E5FF),
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: 13,
-                                                decoration: TextDecoration.none,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-
-                              // Scrollable Horizontal Carousel of Background Styles (סעיף 9)
-                              SizedBox(
-                                height: 52,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: bgStyles.length,
-                                  itemBuilder: (ctxB, idx) {
-                                    final item = bgStyles[idx];
-                                    final bool active = tempBgStyle == item['key'];
-
-                                    return Container(
-                                      margin: const EdgeInsets.only(right: 8),
-                                      child: Pneumatic3DButton(
-                                        height: 48,
-                                        palette: palette,
-                                        isPushed: active,
-                                        customGlow: active ? palette.glow : Colors.transparent,
-                                        onTap: () {
-                                          HapticFeedback.lightImpact();
-                                          setDlg(() => tempBgStyle = item['key']!);
-                                          app.setBgStyle(item['key']!);
-                                          setState(() {});
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                                          child: Center(
-                                            child: Text(
-                                              item['label']!,
-                                              style: TextStyle(
-                                                color: active ? palette.highlight : palette.textColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                                decoration: TextDecoration.none,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // Sound Alert Types
-                              Text(
-                                t['alert_sound']!,
-                                style: TextStyle(
-                                  color: hc ? const Color(0xFFFFE500) : palette.textColor,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 16,
-                                  decoration: TextDecoration.none,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              MechModuleCard(
-                                accentColor: palette.primary,
-                                showLed: false,
-                                child: Column(
-                                  children: soundOptions.map((s) {
-                                    final bool active = tempSoundType == s['key'];
-                                    return ListTile(
-                                      dense: true,
-                                      contentPadding: EdgeInsets.zero,
-                                      title: Text(
-                                        s['label']!,
-                                        style: TextStyle(
-                                          color: active ? (hc ? const Color(0xFFFFE500) : palette.primary) : palette.textColor,
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 13,
-                                          decoration: TextDecoration.none,
-                                        ),
-                                      ),
-                                      leading: Radio<String>(
-                                        value: s['key']!,
-                                        groupValue: tempSoundType,
-                                        activeColor: palette.primary,
-                                        onChanged: (val) {
-                                          if (val != null) {
-                                            setDlg(() => tempSoundType = val);
-                                          }
-                                        },
-                                      ),
-                                      trailing: Pneumatic3DButton(
-                                        height: 38,
-                                        width: 44,
-                                        palette: palette,
-                                        onTap: () {
-                                          SoundGenerator.playAlertTone(
-                                            s['key']!,
-                                            tempVolume,
-                                            lang: tempLang,
-                                            voiceText: s['key'] == 'voice' ? _getGenericVoiceReminderText(tempLang) : null,
-                                          );
-                                        },
-                                        child: Icon(
-                                          s['key'] == 'voice' ? Icons.record_voice_over_rounded : Icons.play_arrow_rounded,
-                                          color: palette.highlight,
-                                          size: 20,
                                         ),
                                       ),
                                     );
                                   }).toList(),
                                 ),
-                              ),
+                                const SizedBox(height: 16),
 
-                              const SizedBox(height: 10),
-                              // Custom Audio File Picker from Phone
-                              Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.65),
-                                  borderRadius: BorderRadius.circular(14),
-                                  border: Border.all(
-                                    color: tempSoundType == 'custom' ? palette.highlight : Colors.white24,
-                                    width: tempSoundType == 'custom' ? 1.8 : 1.0,
-                                  ),
+                                // SECTION 2: 3D DISPLAY MODES (מצבי תצוגה תלת-מימדיים - גלילה כלפי מטה)
+                                Text(
+                                  curT['bg_style']!,
+                                  style: TextStyle(color: hc ? const Color(0xFFFFE500) : Colors.white, fontWeight: FontWeight.w900, fontSize: 16, decoration: TextDecoration.none),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(Icons.audio_file_rounded, color: palette.highlight, size: 22),
-                                        const SizedBox(width: 8),
-                                        Expanded(
-                                          child: Text(
-                                            t['custom_file_selected'] ?? 'קובץ שמע מותאם מהמכשיר:',
-                                            style: TextStyle(color: palette.textSecondary, fontSize: 12, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      tempCustomSoundName.isNotEmpty ? tempCustomSoundName : (t['no_file_selected'] ?? 'לא נבחר קובץ מהמכשיר'),
-                                      style: TextStyle(
-                                        color: tempCustomSoundName.isNotEmpty ? palette.highlight : Colors.white54,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w900,
-                                        decoration: TextDecoration.none,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 2,
-                                          child: Pneumatic3DButton(
-                                            height: 40,
-                                            palette: palette,
-                                            customGlow: palette.highlight,
-                                            onTap: () async {
-                                              HapticFeedback.lightImpact();
-                                              final result = await FilePicker.platform.pickFiles(
-                                                type: FileType.custom,
-                                                allowedExtensions: ['mp3', 'wav', 'ogg', 'm4a', 'aac', 'flac'],
-                                              );
-                                              if (result != null && result.files.single.path != null) {
-                                                setDlg(() {
-                                                  tempCustomSoundPath = result.files.single.path!;
-                                                  tempCustomSoundName = result.files.single.name;
-                                                  tempSoundType = 'custom';
-                                                });
-                                                await SoundGenerator.playAlertTone('custom', tempVolume, customFilePath: tempCustomSoundPath);
-                                              }
-                                            },
-                                            child: Center(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  const Icon(Icons.folder_open_rounded, size: 16, color: Colors.white),
-                                                  const SizedBox(width: 6),
-                                                  Text(
-                                                    t['pick_custom_file'] ?? 'בחר קובץ מהטלפון',
-                                                    style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                const SizedBox(height: 10),
+                                Wrap(
+                                  spacing: 8.0,
+                                  runSpacing: 8.0,
+                                  alignment: WrapAlignment.center,
+                                  children: bgStyles.map((item) {
+                                    final bool active = tempBgStyle == item['key'];
+                                    return SizedBox(
+                                      width: 155,
+                                      child: Pneumatic3DButton(
+                                        height: 50,
+                                        palette: curPalette,
+                                        isPushed: active,
+                                        customGlow: active ? curPalette.glow : Colors.transparent,
+                                        onTap: () {
+                                          HapticFeedback.heavyImpact();
+                                          setDlg(() => tempBgStyle = item['key']!);
+                                          app.setBgStyle(item['key']!);
+                                          setState(() {});
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.blur_on_rounded,
+                                                size: 16,
+                                                color: active ? curPalette.highlight : Colors.white70,
+                                              ),
+                                              const SizedBox(width: 6),
+                                              Expanded(
+                                                child: Text(
+                                                  item['label']!,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    color: active ? curPalette.highlight : Colors.white,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 11,
+                                                    decoration: TextDecoration.none,
                                                   ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
                                         ),
-                                        if (tempCustomSoundPath.isNotEmpty) ...[
-                                          const SizedBox(width: 8),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Pneumatic3DButton(
-                                              height: 40,
-                                              palette: palette,
-                                              customGlow: const Color(0xFF00FF66),
-                                              onTap: () async {
-                                                HapticFeedback.lightImpact();
-                                                await SoundGenerator.playAlertTone('custom', tempVolume, customFilePath: tempCustomSoundPath);
-                                              },
-                                              child: const Center(
-                                                child: Icon(Icons.play_arrow_rounded, color: Color(0xFF00FF66), size: 22),
-                                              ),
-                                            ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                                const SizedBox(height: 16),
+
+                                // Sound Alert Types
+                                Text(
+                                  curT['alert_sound']!,
+                                  style: TextStyle(
+                                    color: hc ? const Color(0xFFFFE500) : curPalette.textColor,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 16,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                MechModuleCard(
+                                  accentColor: curPalette.primary,
+                                  showLed: false,
+                                  child: Column(
+                                    children: soundOptions.map((s) {
+                                      final bool active = tempSoundType == s['key'];
+                                      return ListTile(
+                                        dense: true,
+                                        contentPadding: EdgeInsets.zero,
+                                        title: Text(
+                                          s['label']!,
+                                          style: TextStyle(
+                                            color: active ? (hc ? const Color(0xFFFFE500) : curPalette.primary) : curPalette.textColor,
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 13,
+                                            decoration: TextDecoration.none,
                                           ),
-                                        ],
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              const SizedBox(height: 14),
-
-                              // Master Volume Controller With 3D Tactile Rotary Knob
-                              RotaryVolumeDial3D(
-                                volume: tempVolume,
-                                palette: palette,
-                                highContrast: hc,
-                                onChanged: (v) {
-                                  setDlg(() => tempVolume = v);
-                                },
-                              ),
-
-                              const SizedBox(height: 12),
-
-                              // High Contrast & Voice Switches
-                              SwitchListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(
-                                  t['high_contrast']!,
-                                  style: TextStyle(
-                                    color: hc ? const Color(0xFFFFE500) : palette.textColor,
-                                    fontWeight: FontWeight.w900,
-                                    decoration: TextDecoration.none,
+                                        ),
+                                        leading: Radio<String>(
+                                          value: s['key']!,
+                                          groupValue: tempSoundType,
+                                          activeColor: curPalette.primary,
+                                          onChanged: (val) {
+                                            if (val != null) {
+                                              setDlg(() => tempSoundType = val);
+                                            }
+                                          },
+                                        ),
+                                        trailing: Pneumatic3DButton(
+                                          height: 38,
+                                          width: 44,
+                                          palette: curPalette,
+                                          onTap: () => SoundGenerator.playAlertTone(s['key']!, tempVolume, lang: tempLang),
+                                          child: Icon(
+                                            s['key'] == 'voice' ? Icons.record_voice_over : Icons.volume_up,
+                                            size: 18,
+                                            color: curPalette.highlight,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
                                   ),
                                 ),
-                                value: tempHc,
-                                activeColor: const Color(0xFFFFE500),
-                                onChanged: (v) {
-                                  setDlg(() => tempHc = v);
-                                  app.saveFullSettings(hc: v);
-                                  setState(() {});
-                                },
-                              ),
-                              SwitchListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(
-                                  t['voice_alerts']!,
-                                  style: TextStyle(
-                                    color: hc ? const Color(0xFFFFE500) : palette.textColor,
-                                    fontWeight: FontWeight.w900,
-                                    decoration: TextDecoration.none,
-                                  ),
-                                ),
-                                value: tempVoice,
-                                activeColor: palette.primary,
-                                onChanged: (v) => setDlg(() => tempVoice = v),
-                              ),
+                                const SizedBox(height: 10),
 
-                              const SizedBox(height: 20),
-
-                              // Dedicated Physical Mechanical Save Button
-                              Pneumatic3DButton(
-                                height: 56,
-                                palette: palette,
-                                customGlow: const Color(0xFF00FF88),
-                                onTap: () async {
-                                  await app.saveFullSettings(
-                                    lang: tempLang,
-                                    theme: tempThemeKey,
-                                    bgStyle: tempBgStyle,
-                                    sound: tempSoundType,
-                                    volume: tempVolume,
-                                    hc: tempHc,
-                                    voice: tempVoice,
-                                    customSoundPath: tempCustomSoundPath,
-                                    customSoundName: tempCustomSoundName,
-                                  );
-                                  setState(() {});
-                                  Navigator.pop(ctx);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: palette.surface,
-                                      duration: const Duration(seconds: 2),
-                                      content: Directionality(
-                                        textDirection: (tempLang == 'he' || tempLang == 'ar') ? TextDirection.rtl : TextDirection.ltr,
-                                        child: Row(
+                                // Custom Audio File Picker from Phone
+                                MechModuleCard(
+                                  accentColor: curPalette.highlight,
+                                  showLed: false,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        Row(
                                           children: [
-                                            const Icon(Icons.check_circle, color: Color(0xFF00FF88)),
+                                            Icon(Icons.audio_file_rounded, color: curPalette.highlight, size: 20),
                                             const SizedBox(width: 8),
-                                            Expanded(
-                                              child: Text(
-                                                t['settings_saved'] ?? 'ההגדרות ומצב התצוגה נשמרו בהצלחה!',
-                                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                            Text(
+                                              curT['sound_opt_custom'] ?? 'קובץ שמע מותאם אישית מהמכשיר',
+                                              style: TextStyle(
+                                                color: curPalette.textColor,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w900,
+                                                decoration: TextDecoration.none,
                                               ),
                                             ),
                                           ],
                                         ),
-                                      ),
+                                        const SizedBox(height: 6),
+                                        Text(
+                                          tempCustomSoundName.isNotEmpty
+                                              ? '${curT['custom_file_selected'] ?? 'קובץ שנבחר:'} $tempCustomSoundName'
+                                              : (curT['no_file_selected'] ?? 'טרם נבחר קובץ (משתמש בברירת מחדל)'),
+                                          style: TextStyle(
+                                            color: tempCustomSoundName.isNotEmpty ? curPalette.highlight : Colors.white54,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w900,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 2,
+                                              child: Pneumatic3DButton(
+                                                height: 40,
+                                                palette: curPalette,
+                                                customGlow: curPalette.highlight,
+                                                onTap: () async {
+                                                  HapticFeedback.lightImpact();
+                                                  final result = await FilePicker.platform.pickFiles(
+                                                    type: FileType.custom,
+                                                    allowedExtensions: ['mp3', 'wav', 'ogg', 'm4a', 'aac', 'flac'],
+                                                  );
+                                                  if (result != null && result.files.single.path != null) {
+                                                    setDlg(() {
+                                                      tempCustomSoundPath = result.files.single.path!;
+                                                      tempCustomSoundName = result.files.single.name;
+                                                      tempSoundType = 'custom';
+                                                    });
+                                                    await SoundGenerator.playAlertTone('custom', tempVolume, customFilePath: tempCustomSoundPath);
+                                                  }
+                                                },
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      const Icon(Icons.folder_open_rounded, size: 16, color: Colors.white),
+                                                      const SizedBox(width: 6),
+                                                      Text(
+                                                        curT['pick_custom_file'] ?? 'בחר קובץ מהטלפון',
+                                                        style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            if (tempCustomSoundPath.isNotEmpty) ...[
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Pneumatic3DButton(
+                                                  height: 40,
+                                                  palette: curPalette,
+                                                  customGlow: const Color(0xFF00FF66),
+                                                  onTap: () async {
+                                                    HapticFeedback.lightImpact();
+                                                    await SoundGenerator.playAlertTone('custom', tempVolume, customFilePath: tempCustomSoundPath);
+                                                  },
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      const Icon(Icons.play_arrow_rounded, color: Color(0xFF00FF66), size: 16),
+                                                      const SizedBox(width: 4),
+                                                      Text(
+                                                        curT['test_sound'] ?? 'השמע',
+                                                        style: const TextStyle(color: Color(0xFF00FF66), fontSize: 11, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.check_circle_rounded, color: Color(0xFF00FF88), size: 24),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      t['save_settings_btn'] ?? 'אישור ושמירת הגדרות',
-                                      style: const TextStyle(
-                                        color: Color(0xFF00FF88),
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 16,
-                                        decoration: TextDecoration.none,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                            ],
+                                const SizedBox(height: 14),
+
+                                // Master Volume Controller With 3D Tactile Rotary Knob
+                                RotaryVolumeDial3D(
+                                  volume: tempVolume,
+                                  palette: curPalette,
+                                  highContrast: hc,
+                                  onChanged: (v) => setDlg(() => tempVolume = v),
+                                ),
+                                const SizedBox(height: 12),
+
+                                // High Contrast & Voice Switches
+                                SwitchListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(
+                                    curT['high_contrast']!,
+                                    style: TextStyle(
+                                      color: hc ? const Color(0xFFFFE500) : curPalette.textColor,
+                                      fontWeight: FontWeight.w900,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                  ),
+                                  value: tempHc,
+                                  activeColor: const Color(0xFFFFE500),
+                                  onChanged: (v) {
+                                    setDlg(() => tempHc = v);
+                                    app.saveFullSettings(hc: v);
+                                    setState(() {});
+                                  },
+                                ),
+                                SwitchListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(
+                                    curT['voice_alerts']!,
+                                    style: TextStyle(
+                                      color: hc ? const Color(0xFFFFE500) : curPalette.textColor,
+                                      fontWeight: FontWeight.w900,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                  ),
+                                  value: tempVoice,
+                                  activeColor: curPalette.primary,
+                                  onChanged: (v) => setDlg(() => tempVoice = v),
+                                ),
+
+                                const SizedBox(height: 20),
+
+                                // Dedicated Physical Mechanical Save Button
+                                Pneumatic3DButton(
+                                  height: 56,
+                                  palette: curPalette,
+                                  customGlow: const Color(0xFF00FF88),
+                                  onTap: () async {
+                                    await app.saveFullSettings(
+                                      lang: tempLang,
+                                      theme: tempThemeKey,
+                                      bgStyle: tempBgStyle,
+                                      sound: tempSoundType,
+                                      volume: tempVolume,
+                                      hc: tempHc,
+                                      voice: tempVoice,
+                                      customSoundPath: tempCustomSoundPath,
+                                      customSoundName: tempCustomSoundName,
+                                    );
+                                    setState(() {});
+                                    Navigator.pop(ctx);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: curPalette.surface,
+                                        duration: const Duration(seconds: 2),
+                                        content: Directionality(
+                                          textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                                          child: Row(
+                                            children: [
+                                              const Icon(Icons.check_circle, color: Color(0xFF00FF88)),
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                child: Text(
+                                                  curT['settings_saved'] ?? 'ההגדרות ומצב התצוגה נשמרו בהצלחה!',
+                                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.check_circle_rounded, color: Color(0xFF00FF88), size: 24),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        curT['save_settings_btn'] ?? 'אישור ושמירת הגדרות',
+                                        style: const TextStyle(
+                                          color: Color(0xFF00FF88),
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 16,
+                                          decoration: TextDecoration.none,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               );
             }
@@ -8014,7 +8023,6 @@ jobs:
             }
 
           }
-
           EOF
 
       - name: Install dependencies
